@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  ibmexample:
+    image: ibmexample
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+

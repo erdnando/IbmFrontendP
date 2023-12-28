@@ -1,0 +1,26 @@
+<div class="body">
+
+    <mat-toolbar  class="title-form">
+        <h1>Edicion de Usuario:</h1>
+      </mat-toolbar>
+    
+        <div class="example-container" [formGroup]="userForm">
+            
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Seleccione el rol del usuario: </mat-label>
+                <mat-select formControlName="rol" >
+                    <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
+                        {{cliente.nameRole}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+    
+        <div style="text-align: center;">
+            <button mat-button (click)="onSubmit()"  class="button-close"> Actualizar </button>
+        </div>
+        
+    
+    </div>
+    

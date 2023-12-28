@@ -1,0 +1,32 @@
+<div class="body">
+
+    <mat-toolbar  class="title-form">
+        <h1>Perfil</h1>
+      </mat-toolbar>
+    
+        <div class="example-container">
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Limites legales diarios: </mat-label>
+                <input matInput type="number" placeholder="45" [formControl]="limitDay">
+            </mat-form-field>
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Limites legales semanales: </mat-label>
+                <input matInput type="number" placeholder="45" [formControl]="limitWeek">
+            </mat-form-field>
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Limites legales mensuales: </mat-label>
+                <input matInput type="number" placeholder="45" [formControl]="limitMonth">
+            </mat-form-field>
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Limites legales anuales: </mat-label>
+                <input matInput type="number" placeholder="45" [formControl]="limitYear">
+            </mat-form-field>
+        </div>
+    
+        <div style="text-align: center;">
+            <button mat-button (click)="guardarCambios()"  class="button-close"> Guardar cambios </button>
+        </div>
+        
+    
+    </div>
+    

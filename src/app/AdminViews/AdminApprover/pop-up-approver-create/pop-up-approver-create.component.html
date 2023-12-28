@@ -1,0 +1,27 @@
+<div class="body">
+
+    <mat-toolbar  class="title-form">
+        <h1>Aprobador</h1>
+      </mat-toolbar>
+    
+        <div class="example-container" [formGroup]="userForm" >
+
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Descripcion: </mat-label>
+                <input matInput placeholder="" formControlName="descripcion">
+            </mat-form-field>            
+    
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Nivel: </mat-label>
+                <input matInput type="number" placeholder="" formControlName="nivel">
+            </mat-form-field>   
+                     
+        </div>
+    
+        <div style="text-align: center;">
+            <button mat-button (click)="onSubmit()" class="button-close"> Crear </button>
+        </div>
+        
+    
+    </div>
+    

@@ -1,0 +1,13 @@
+
+<router-outlet *ngIf="prueba2 === '/login'"></router-outlet>
+
+<router-outlet *ngIf="prueba2 !== '/login' ">
+    <app-sidenav (onToggleSideNav)="onToggleSideNav($event)">
+        <!-- <app-body [collapsed]="isSideNavCollapsed"
+        [screenWidth]="screenWidth">
+            
+    
+    </app-body> -->
+    </app-sidenav>
+</router-outlet>
+

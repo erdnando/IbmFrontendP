@@ -1,0 +1,55 @@
+.title-form {
+    width: 60%;
+      height: 50px;
+      color: white; 
+      margin-bottom: 10px;
+      background: linear-gradient(130deg,#548CA8 85%, transparent 15%);
+  }
+
+mat-header-cell {
+    background-color: #548CA8 !important;
+    color: white;
+}
+
+.table {
+    margin-top: 10px;
+}
+
+.body {
+    padding: 50px;
+    margin-left: 60px;
+}
+
+.filter-text {
+    margin: 10px 5px;
+    padding: 10px 0px;
+    color: #4a4a4a;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.filter-divider {
+    padding: 10px;
+    border: none;
+    border-top: 2px solid #4a4a4a;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 60%;
+}
+
+.field-width {
+    width: 100%;
+}
+
+.div-h3{
+    width: 40%;
+}
+
+.h3{
+    color: #034370; /* Cambia el color del texto */
+    background-color: #F0F0F0; /* Cambia el color de fondo */
+    padding: 10px; /* Añade espacio alrededor del texto */
+    border-radius: 5px; /* Redondea las esquinas del fondo */
+}

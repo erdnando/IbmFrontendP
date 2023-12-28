@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e1d199de-a3ff-4617-b71e-86298019b6fa/resourceGroups/IBM-CLOUD-01/providers/Microsoft.Web/sites/IBM-FRONT-A",
+    "appService.deploySubpath": "dist\\ibm.hours",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}

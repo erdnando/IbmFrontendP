@@ -1,0 +1,70 @@
+
+<div class="body">
+
+    <div>
+
+
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Historial De Horas</strong></h1>
+        <hr class="divider">
+
+    </div>
+
+    <div class="div-em">
+        <em>Encuentra informacion sobre tu reporte .Haz clic en el estado de tu interes para obtener mas detalles</em>
+    </div>
+
+    <mat-table [dataSource]="mListHorusReport" class="mat-elevation-z8">
+
+        <!-- Fecha envio -->
+        <ng-container matColumnDef="fechaEnvio">
+            <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd'}} </mat-cell>
+        </ng-container>
+
+        <!-- N° Cliente  -->
+        <ng-container matColumnDef="cliente">
+            <mat-header-cell *matHeaderCellDef> N° Cliente </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.clientEntity.nameClient}} </mat-cell>
+        </ng-container>
+
+        <!-- N° Reporte  -->
+        <ng-container matColumnDef="reporte">
+            <mat-header-cell *matHeaderCellDef> N° Reporte </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.numberReport}} </mat-cell>
+        </ng-container>
+
+        <!-- Aprobador  -->
+        <ng-container matColumnDef="aprobador">
+            <mat-header-cell *matHeaderCellDef> Aprobador </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.approverId}} </mat-cell>
+        </ng-container>
+
+        <!-- Reporte Horas  -->
+        <ng-container matColumnDef="horas">
+            <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.countHours}} </mat-cell>
+        </ng-container>
+
+        <!-- Estado  -->
+        <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-button class="button-stade"
+                    [ngStyle]="{'background-color': getColor(Aprobacion[element.startTime])}"
+                    (click)="openDialog(element.idHorusReport)" [title]="Aprobacion[element.startTime]">
+                    <mat-icon style="font-size: 20px;">
+                        {{cargarIcono(Aprobacion[element.startTime])}}
+                    </mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+
+</div>

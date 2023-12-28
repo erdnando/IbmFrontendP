@@ -1,0 +1,61 @@
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MCountryEntity } from 'src/app/Models/MCountryEntiry';
+import { CountryCreateService } from 'src/app/AdminViews/AdminCountries/services/countryCreate/country-create.service';
+import { ListCountryService } from 'src/app/AdminViews/AdminCountries/services/list-country/list-country.service';
+import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
+import { ApiParameters } from 'src/app/Views/parameters/services/parameters/api.parameters';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-pop-up-countries-create',
+  templateUrl: './pop-up-countries-create.component.html',
+  styleUrls: ['./pop-up-countries-create.component.css']
+})
+export class PopUpCountriesCreateComponent {
+
+  MCountry: MCountryEntity;
+
+
+  userForm = new FormGroup({
+    nombre: new FormControl('', [Validators.required]),
+  });
+  
+  constructor(public dialogRef: MatDialogRef<PopUpCountriesCreateComponent>, private apiCreateCountry: CountryCreateService, private apiListCountry: ListCountryService, private refresh: ObtenerlistaService) {
+    this.MCountry = {} as MCountryEntity;
+  }
+
+  onSubmit() {
+    
+    
+    this.MCountry.nameCountry = this.userForm.value.nombre as unknown as string;
+    
+    console.log(this.MCountry.nameCountry);
+    
+    this.apiCreateCountry.PostCreateCountry(this.MCountry).subscribe(data=> {
+      console.log(data);
+      if (data.data) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Cambios Guardados Correctamente',
+        });
+        this.refresh.loadCountriesRefresh();
+        this.dialogRef.close();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error, los datos no se pudieron cambiar',
+        });
+      }
+    }) ;
+
+
+  }
+
+  onClose(): void {
+    this.dialogRef.close();
+  }
+
+}

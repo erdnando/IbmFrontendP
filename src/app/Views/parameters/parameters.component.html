@@ -1,0 +1,487 @@
+<div class="body">
+
+        <div class="div-form">
+            <mat-toolbar class="title-form">
+                <h1>Parametros De Horas</h1>
+            </mat-toolbar>
+        </div>
+
+        <!-- Botones-->
+    <div *ngIf="Approving" >
+
+        <mat-tab-group *ngIf="Approving" (selectedTabChange)="onTabChanged($event)">
+            <mat-tab>
+                <ng-template mat-tab-label >
+                    <mat-icon class="example-tab-icon">celebration</mat-icon>
+                    Festividades
+                </ng-template>
+            </mat-tab>
+    
+            <mat-tab>
+                <ng-template mat-tab-label >
+                    <mat-icon class="example-tab-icon">more_time</mat-icon>
+                    Overtime
+                </ng-template>
+            </mat-tab>
+    
+            <mat-tab>
+                <ng-template mat-tab-label >
+                    <mat-icon class="example-tab-icon">event_available</mat-icon>
+                    Standby
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label >
+                    <mat-icon class="example-tab-icon">event_note</mat-icon>
+                    Horarios
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+
+     <!--   <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <button class="button-options" (click)="botonPresionado = 'festividades'">
+                        Festividades
+                    </button>
+
+                </td>
+                <td>
+                    <button class="button-options" (click)="botonPresionado = 'overtime'">
+                        Overtime
+                    </button>
+                </td>
+                <td>
+                    <button class="button-options" (click)="botonPresionado = 'standby'">
+                        Standby
+                    </button>
+                </td>
+                <td>
+                    <button class="button-options" (click)="botonPresionado = 'horarios'">
+                        Horarios
+                    </button>
+                </td>
+            </tr>
+        </table> -->
+
+        <!-- Seccion festividades-->
+        <div *ngIf="botonPresionado === 'festividades'">
+
+            <!-- Campos Formulario-->
+            <table>
+                <tr>
+                    <td>
+                        <div class="field-form-pp">
+                            <mat-form-field style="width: 100%;" appearance="outline">
+                                <mat-label>Pais</mat-label>
+                                <mat-select [formControl]="pais" (selectionChange)="select(pais)">
+                                    <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
+                                        {{cliente.nameCountry}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="add-fest" *ngIf="this.pais.value !== ''">
+                            <button class="button-add-fest" (click)="openDialog()">Agregar Festivos</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <em class="filter-text"><strong>Festivos Agregados:</strong></em>
+             <hr class="filter-divider">
+
+            <!-- Calendario y fechas festivos -->
+
+            <div class="calendar-fest">
+
+                <ng-container [ngSwitch]="agregarFestivos">
+                    <div *ngSwitchCase="true" class="fest">
+                        <div style="overflow: auto; max-height: 300x;">
+                            <ul id="date-list" class="list-fest">
+                                <li style="margin-top: 5px; width: 80%; ;" *ngFor="let festivo of festivos">{{festivo}}
+                                    <button class="button-delete" (click)="eliminarFestivo(festivo)">Eliminar</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <ng-container *ngSwitchCase="false">
+                        <div class="fest" *ngIf="MFestivosList.length; else noData">
+                            <ul id="date-list" class="list-fest" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                <li style="margin-top: 5px; width: 90%;" *ngFor="let festivo of MFestivosList">
+                                    {{festivo.diaFestivo | date:'yyyy-MM-dd'}}
+                                </li>
+                            </ul>
+                        </div>
+                        <ng-template #noData>
+                            <div class="fest">
+                                <ul id="date-list" class="list-fest">
+                                    <li style="margin-top: 5px; width: 90%;">
+                                        No Hay Festivos
+                                    </li>
+                                </ul>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+            <hr class="filter-divider">
+            <!-- Botones  parte inferior festividades-->
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td *ngIf="habilitarExcel">
+                        <button class="button-options-excel" (click)="exportToExcel()">
+                            Descargar Plantilla(CSV)
+                            <mat-icon>
+                                download
+                            </mat-icon> 
+                        </button>
+                    </td>
+                    <td *ngIf="habilitarExcel">
+                        <button class="button-options-excel" (click)="cargarArchivo()">
+                            Subir Plantilla
+                            <mat-icon>
+                                upload
+                            </mat-icon> 
+                        </button>
+                        <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivo($event)" />
+                    </td>
+                    <td *ngIf="agregarFestivos">
+                        <button class="button-options-excel" (click)="falseAgregarFestivos()">
+                            Guardar Cambios
+                            <mat-icon>
+                                save
+                            </mat-icon> 
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- Seccion overtime -->
+        <div *ngIf="botonPresionado === 'overtime'">
+
+            <div class="field-form-p">
+                <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
+                    appearance="outline">
+                    <mat-label>Pais</mat-label>
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" required>
+                        <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
+                            {{pais.nameCountry}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="field-form">
+                <table class="example-full-width" cellspacing="0">
+                    <ng-container *ngIf="ListparametersOver.length; else noData">
+                        <tr *ngFor="let item of ListparametersOver">
+                            <td>
+                                <mat-form-field style="text-align: left; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales diarios: </mat-label>
+                                    <input matInput type="number" placeholder="40" [formControl]="limitDay"
+                                        [(ngModel)]="item.targetTimeDay" name="targetTimeDay">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field style="text-align: center; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales semanales: </mat-label>
+                                    <input matInput type="number" [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
+                                        name="targetHourWeek">
+                                </mat-form-field>
+
+                            </td>
+                            <td>
+                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales mensuales: </mat-label>
+                                    <input matInput type="number" [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
+                                        name="targetHourMonth">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales anuales: </mat-label>
+                                    <input matInput type="number" [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
+                                        name="targetHourYear">
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div style="text-align: right;">
+                                    <button mat-raised-button class="button-update"
+                                        (click)="updateParameters()">Actualizar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </table>
+                <table>
+                    <ng-template #noData>
+                        <tr>
+                            <td colspan="4">No se han registrado horas en este pais.</td>
+                        </tr>
+                        <div style="text-align: right; ">
+                            <button mat-raised-button class="button-update" (click)="crearParametro()">Crear</button>
+                        </div>
+                    </ng-template>
+                </table>
+
+
+
+            </div>
+
+        </div>
+
+        <!-- Seccion standby -->
+        <div *ngIf="botonPresionado === 'standby'">
+
+            <div class="field-form-p">
+                <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
+                    appearance="outline">
+                    <mat-label>Pais</mat-label>
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" required>
+                        <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
+                            {{pais.nameCountry}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="field-form">
+                <table class="example-full-width" cellspacing="0">
+                    <ng-container *ngIf="ListparametersStand.length; else noData">
+                        <tr *ngFor="let item of ListparametersStand">
+                            <td>
+                                <mat-form-field style="text-align: left; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales diarios: </mat-label>
+                                    <input matInput type="number" placeholder="40" [formControl]="limitDay"
+                                        [(ngModel)]="item.targetTimeDay" name="targetTimeDay">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field style="text-align: center; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales semanales: </mat-label>
+                                    <input matInput type="number" [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
+                                        name="targetHourWeek">
+                                </mat-form-field>
+
+                            </td>
+                            <td>
+                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales mensuales: </mat-label>
+                                    <input matInput type="number" [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
+                                        name="targetHourMonth">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
+                                    appearance="outline">
+                                    <mat-label> Limites legales anuales: </mat-label>
+                                    <input matInput type="number" [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
+                                        name="targetHourYear">
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div style="text-align: right;">
+                                    <button mat-raised-button class="button-update"
+                                        (click)="updateParameters()">Actualizar</button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </ng-container>
+                </table>
+                <table>
+                    <ng-template #noData>
+                        <tr>
+                            <td colspan="4">No se han registrado horas en este pais.</td>
+                        </tr>
+                        <div style="text-align: right; ">
+                            <button mat-raised-button class="button-update" (click)="crearParametro()">Crear</button>
+                        </div>
+                    </ng-template>
+                </table>
+
+
+
+            </div>
+
+        </div>
+
+        <!-- Seccion horarios -->
+        <div *ngIf="botonPresionado === 'horarios'">
+
+            <div class="field-form-p">
+                <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
+                    appearance="outline">
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" required>
+                        <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
+                            {{pais.nameCountry}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="horarios">
+                <fieldset class="table-h">
+
+                    <legend>Turnos: </legend>
+
+                    <mat-table [dataSource]="Datos" *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha  && !this.agregarHorariosexcel" >
+
+                        <!-- Dias -->
+                        <ng-container matColumnDef="dias">
+                            <mat-cell *matCellDef="let element"> {{element.day}} </mat-cell>
+                        </ng-container>
+
+                        <!-- inicio  -->
+                        <ng-container matColumnDef="inicio">
+                            <mat-cell   *matCellDef="let element">
+                                <input *ngIf="element.editable" type="time" [formControl]="horaInicio">
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- a  -->
+                        <ng-container matColumnDef="a">
+                            <mat-cell *matCellDef="let element">a</mat-cell>
+                        </ng-container>
+
+                        <!-- fin  -->
+                        <ng-container matColumnDef="fin">
+                            <mat-cell  *matCellDef="let element">
+                                <input *ngIf="element.editable" style="width: 100%;" type="time" [formControl]="horaFin" 
+                                    (change)="guardarValorInicio([element.day])">
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Checkbox -->
+    <ng-container matColumnDef="checkbox">
+        <mat-cell *matCellDef="let element">
+            <mat-checkbox (change)="element.editable = $event.checked"></mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+                        <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+
+                    </mat-table>
+
+                    <mat-table [dataSource]="diasdelHorarios"  *ngIf="this.agregarHorariosexcel">
+
+                        <!-- Dias -->
+                        <ng-container matColumnDef="dias">
+                            <mat-cell *matCellDef="let element"> {{element.day}} </mat-cell>
+                        </ng-container>
+
+                        <!-- inicio  -->
+                        <ng-container matColumnDef="inicio">
+                            <mat-cell  *matCellDef="let element">
+                                {{element.horaInicio}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- a  -->
+                        <ng-container matColumnDef="a">
+                            <mat-cell *matCellDef="let element">a</mat-cell>
+                        </ng-container>
+
+                        <!-- fin  -->
+                        <ng-container matColumnDef="fin">
+                            <mat-cell  *matCellDef="let element">
+                                {{element.horaFin}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+
+                    </mat-table>
+
+                </fieldset>
+
+                <table class="example-full-width">
+
+                    <div class="field-form-h">
+                        <mat-form-field *ngIf="habilitarExcel" style="text-align: right; width: 95%; height: 70px;" appearance="outline">
+                            <mat-label> Codigo empleado: </mat-label>
+                            <input  matInput  (blur)="applyFilter($event)" placeholder="Ex. ium" [formControl]="codeEmployed">
+                        </mat-form-field>
+
+                        <mat-form-field style="text-align: right; width: 95%; height: 70px; " appearance="outline">
+                            <mat-label> Semana: </mat-label>
+                            <input [disabled]="!habilitarExcel" matInput  [matDatepicker]="picker" (dateChange)="onDateChange($event)"
+                                [formControl]="date">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field style="text-align: right; width: 95%; height: 70px;" appearance="outline">
+                            <mat-label> Numero de la semana del año:: </mat-label>
+                            <input matInput [ngModel]="semanaAno" readonly>
+                        </mat-form-field>
+
+                        <mat-checkbox color="primary" labelPosition="after">Se ha realizado una revision exhaustiva de
+                            las horas registradas, y se ha confirmado que cumple con los etandares establecidos por la
+                            compañia y con las normativas legales vigentes antes de su aprobacion.</mat-checkbox>
+                    </div>
+
+                </table>
+
+            </div>
+
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td >
+                        <button class="button-options-excel" (click)="exportToExcelHours()">
+                            Descargar Plantilla(CSV)
+                            <mat-icon>
+                                download
+                            </mat-icon> 
+                        </button>
+                    </td>
+                  <!---  <td *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha">
+                        <button class="button-options-excel" (click)="cargarArchivoHorarios()">
+                            Subir Plantilla(CSV)
+                            <mat-icon>
+                                upload
+                            </mat-icon> 
+                        </button>
+                        <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorarios($event)" />
+                    </td> -->
+                    <td *ngIf="mHorarioList.length">
+                        <button  class="button-options-excel" (click)="crearHorario()">
+                            Guardar Cambios
+                            <mat-icon>
+                                save
+                            </mat-icon> 
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+    </div>
+
+</div>

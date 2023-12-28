@@ -1,0 +1,261 @@
+.title-form {
+    width: 60%;
+      height: 50px;
+      color: white; 
+      margin-bottom: 10px;
+      background: linear-gradient(130deg,#548CA8 85%, transparent 15%);
+  }
+
+.example-full-width {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.field-width{
+    width: 100%;
+    height: 70%;
+    text-align: center;
+}
+
+.example-full-width td {
+    text-align: center;
+}
+
+.button-options {
+    width: 80%;
+    background-color: #548CA8;
+    padding: 15px 15px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button-update{
+    width: 30%;
+    background-color: #548CA8 !important;
+    border: none;
+    color: white !important;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 2px;
+    cursor: pointer;
+}
+
+.calendar {
+    width: 60%;
+    height: 20%;
+    margin: 10px;
+}
+
+.field-form-p {
+    margin-top: 10px;
+    width: 90%;
+}
+
+.field-form-pp {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.field-form-h {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 100%;
+}
+
+.body {
+    padding: 60px;
+    margin-left: 60px;
+}
+.horarios {
+    display: flex;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+}
+
+
+.calendar-fest {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    max-height: 400px;
+    width: 100%;
+}
+
+.fest {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%;
+    max-height: 300px;
+    
+    
+
+}
+
+.add-fest {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.button-fest {
+    width: 40%;
+    background-color: #548CA8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-confirm {
+    width: 100%;
+    background-color: #548CA8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-delete {
+    text-align: right;
+    height: auto;
+    width: 40%;
+    background-color: #18a549;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.list-fest {
+    background-color: rgb(215, 209, 209);
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 20px;
+    border-radius: 5px;
+    overflow: auto;
+    height: 280px;
+    max-height: 280px;
+}
+
+.table{
+    margin-top: 10px;
+    width: 50%;
+}
+
+.table-h{
+    border: none;
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 100%;
+}
+
+
+.div-h3{
+    width: 40%;
+}
+
+.h3{
+    color: #034370; 
+    background-color: #F0F0F0; 
+    padding: 10px; 
+    border-radius: 5px; 
+}
+
+.demo-inline-calendar-card {
+    width: 300px;
+  }
+
+  .special-date {
+    background-color: red !important;
+    border-radius: 100%;
+}
+
+em.filter-text {
+    font-size: 1.5em; 
+    color: #333; 
+}
+
+hr.filter-divider {
+    border: 1px solid #334257; 
+    width: 100%; 
+}
+
+
+.button-add-fest {
+    width: 60%;
+    background-color: #548CA8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease 0s; 
+}
+
+.button-add-fest:hover {
+    background-color: #334257; 
+    box-shadow: 0px 15px 20px rgba(84, 140, 168,0.4); 
+    color: #fff; 
+    transform: translateY(-7px); 
+}
+
+.button-options-excel {
+    width: 250px;
+    background-color: #548CA8;
+    padding: 12px 12px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease 0s; 
+}
+.button-options-excel:hover {
+    background-color: #334257; 
+    box-shadow: 0px 15px 20px rgba(84, 140, 168,0.4); 
+    color: #fff; 
+    transform: translateY(-7px); 
+}

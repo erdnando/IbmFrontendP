@@ -1,0 +1,85 @@
+
+
+    <div class="body">
+
+        <div class="div-h3">
+        <h3 class="h3">IBM//Admin/Usuarios</h3>
+    </div>
+
+        <div class="div-form">
+            <mat-toolbar  class="title-form">
+                <h1>Usuarios</h1>
+              </mat-toolbar>
+        </div>
+
+        <em class="filter-text">Filtrar por:</em>
+        <hr class="filter-divider">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td [formGroup]="userForm">
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label> Rol: </mat-label>
+                        <mat-select formControlName="rol" (selectionChange)="select($event.value)">
+                            <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
+                                {{cliente.nameRole}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label> Nombre o correo:  </mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+        <div class="mat-elevation-z8">
+            <mat-table [dataSource]="MUsers" >
+                
+                <!-- Nombre -->
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.nameUser+" "+element.surnameUser}} </mat-cell>
+            </ng-container>
+
+            <!-- Correo   -->
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef> Correo Electronico </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+            </ng-container>
+
+            <!-- Rol  -->
+            <ng-container matColumnDef="rol">
+                <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.roleEntity.nameRole}} </mat-cell>
+            </ng-container>
+
+            <!-- Pais  -->
+            <ng-container matColumnDef="pais">
+                <mat-header-cell *matHeaderCellDef> Pais </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.countryEntity.nameCountry}}</mat-cell>
+            </ng-container>
+
+                <ng-container matColumnDef="editar">
+                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button (click)="editar(element)" class="button-review">Editar<mat-icon>edit_note</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+     
+                <mat-header-row *matHeaderRowDef="columnasAMostrar.concat('editar')"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: columnasAMostrar.concat('editar');"></mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+        </div>
+
+
+    </div>
+
+
+

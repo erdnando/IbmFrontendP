@@ -1,0 +1,75 @@
+<div class="body">
+    <div class="div-form">
+        <mat-toolbar class="title-form">
+            <h1>Cargue de archivos:</h1>
+        </mat-toolbar>
+    </div>
+
+
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">upload_file</mat-icon>
+                Subir Archivos ARP/TSE/STE
+        </ng-template>
+        <br>
+
+    <div class="body-excel">
+
+        <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+
+        <div>
+            <label class="mi-etiqueta">
+                Archivo ARP <br>
+                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('ARP')" #fileInput1>
+            </label>
+
+
+        </div>
+
+        <div>
+            <label class="mi-etiqueta">
+                Archivo TSE: <br>
+                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos TSE:" accept=".xlsx, .xls" (change)="activarARP('TSE')" #fileInput2>
+            </label>
+
+        </div>
+        
+        <div>
+            <label class="mi-etiqueta">
+                Archivo STE: <br>
+                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos STE:" accept=".xlsx, .xls" (change)="activarARP('STE')" #fileInput3>
+            </label>
+
+        </div>
+
+        <button [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" class="boton" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos</button>
+
+    </div>
+        
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">upload_file</mat-icon>
+            Subir Plantilla Excel
+        </ng-template>
+        <br>
+        <div class="body-excel">
+            <div class="centrado">
+            <label class="mi-etiqueta">
+                Cargar plantilla de horarios 
+                <br>
+                <input type="file" (change)="activarARP('Horario')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+            </label>
+        </div>
+
+        <button class="boton" *ngIf="botonHorario" (click)="readExcelHorario(fileInput4)">
+            Subir Archivo
+        </button>
+        </div>
+       
+    </mat-tab>
+</mat-tab-group>
+
+    </div>

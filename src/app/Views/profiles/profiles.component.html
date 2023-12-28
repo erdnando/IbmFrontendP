@@ -1,0 +1,80 @@
+<app-toolbar>
+
+    <div class="body">
+
+     
+        <!--Campo Buscar-->
+        <div class="field-form" style="display: flexbox;">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label> Buscar por ID Usuario</mat-label>
+                <input matInput placeholder="Buscar">
+            </mat-form-field>
+        </div>
+
+        <form action="" >
+            <fieldset>
+                <legend>Datos Personales</legend>
+
+                <!--Primer fila formulario -->
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="full-width-l" appearance="outline">
+                                <mat-label> ID Usuario: </mat-label>
+                                <input matInput (input)="onIdChange($event)" placeholder="Ex. ium" #input>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="full-width-r" appearance="outline">
+                                <mat-label> Correo Electrónico: </mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+
+                <!--Segunda fila formulario -->
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="full-width-l" appearance="outline">
+                                <mat-label> Nombre: </mat-label>
+                                <input matInput placeholder="alguien@example.com">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="full-width-r" appearance="outline">
+                                <mat-label> Pais: </mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+
+                <!--tercer fila formulario -->
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="full-width-l" appearance="outline">
+                                <mat-label> Apellidos: </mat-label>
+                                <input matInput placeholder="alguien@example.com">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="full-width-r" appearance="outline">
+                                <mat-label> Rol del usuario: </mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <!--Boton formulario -->
+            <div style="text-align: right; margin-right: 40px; padding-right: 35px;">
+                <button mat-raised-button class="button-save">GUARDAR CAMBIOS</button>
+            </div>
+        </form>
+
+    </div>
+</app-toolbar>

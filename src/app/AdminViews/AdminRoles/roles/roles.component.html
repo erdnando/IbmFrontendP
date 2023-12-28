@@ -1,0 +1,141 @@
+<div class="body">
+
+
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">list</mat-icon>
+                Roles
+            </ng-template>
+            <br>
+            <div *ngIf="Approving">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Roles</ng-template>
+                    <div style="text-align: right; ">
+                        <button mat-raised-button class="button-options" (click)="crearRol()">Crear</button>
+                    </div>
+                    <mat-table [dataSource]="MRoles" class="mat-elevation-z8">
+                        <!-- Nombre -->
+                        <ng-container matColumnDef="nombre">
+                            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.nameRole}} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="editar">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button (click)="openDialog(element.idRole, element.nameRole)"
+                                    class="button-review">Editar</button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="eliminar">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button class="button-delete">Eliminar</button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row
+                            *matHeaderRowDef="columnasAMostrar.concat('editar','eliminar')"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar','eliminar');"></mat-row>
+                    </mat-table>
+                </form>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">supervisor_account</mat-icon>
+                Usuarios
+            </ng-template>
+            <br>
+            <div class="div-form">
+                <mat-toolbar class="title-form">
+                    <h1>Asignacion De Perfiles De Usuario</h1>
+                </mat-toolbar>
+            </div>
+            <br>
+            <div *ngIf="Approving">
+                <em class="filter-text">Filtrar por:</em>
+                <hr class="filter-divider">
+                <div *ngIf="Approving">
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td [formGroup]="userForm">
+                                <mat-form-field class="field-width" appearance="outline">
+                                    <mat-label> Rol: </mat-label>
+                                    <mat-select formControlName="rol" (selectionChange)="select($event.value)">
+                                        <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
+                                            {{cliente.nameRole}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="field-width" appearance="outline">
+                                    <mat-label> Nombre o correo: </mat-label>
+                                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="mat-elevation-z8">
+                    <mat-table [dataSource]="MUsers">
+
+                        <!-- Nombre -->
+                        <ng-container matColumnDef="nombre">
+                            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.nameUser+" "+element.surnameUser}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Correo   -->
+                        <ng-container matColumnDef="email">
+                            <mat-header-cell *matHeaderCellDef> Correo Electronico </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Rol  -->
+                        <ng-container matColumnDef="rol">
+                            <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.roleEntity.nameRole}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Pais  -->
+                        <ng-container matColumnDef="pais">
+                            <mat-header-cell *matHeaderCellDef> Pais </mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.countryEntity.nameCountry}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="editar">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button (click)="editar(element)" class="button-review">Editar</button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="excepcion">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button (click)="excepcion(element)" class="button-review">Excepción</button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="columnasAMostrarUser.concat('editar','excepcion')"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnasAMostrarUser.concat('editar','excepcion');"></mat-row>
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                        aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+    </div>
+</div>

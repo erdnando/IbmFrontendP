@@ -1,0 +1,30 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { MClientEntity } from "src/app/Models/MClienteEntity";
+import { MCountryEntity } from "src/app/Models/MCountryEntiry";
+import { MParameters } from "src/app/Models/MParameters";
+import { MResponse } from "src/app/Models/MResponse";
+import { Global } from 'src/app/global';
+
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CountryCreateService {
+
+  private URLLocal = Global.Url;
+  //url:string ="http://localhost:2429/";
+
+  constructor(private http:HttpClient)
+  { }
+
+  PostCreateCountry(mCountry:MCountryEntity):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Country/create";
+    console.log(direccion);
+    return this.http.post<MResponse>(direccion,mCountry);
+
+  }
+}

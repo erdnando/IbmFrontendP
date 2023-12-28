@@ -1,0 +1,75 @@
+<div class="body" style="margin-left: 70px;padding: 40px;margin-top: 10px;">
+
+    <div>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Dashboard</strong></h1>
+        <hr class="divider">
+    </div>
+
+    <div class="col-md-12">
+        <div style="margin-bottom: 35px;"></div>
+        <div class="col-md-12">
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Semana</mat-label>
+                <input matInput type="number" [(ngModel)]="noSemana" name="InpNoSemana" max=52 maxlength=2 min=1 (ngModelChange)="valuechange($event)">
+            </mat-form-field>
+        </div>
+        
+        <h1 style="color: #61677A; font-size: 1em;"><strong>Horas reportadas en CAS / Horas  (Suma Total)</strong></h1>
+        <hr class="divider">
+        <div class="col-md-12">
+            <table id="tbl_ReporteHoras" datatable class="styled-table" *ngIf="_reporteGral.length >0" style="width: 95%;">
+                <thead class="thead-blue">
+                    <tr>
+                        <th scope="col" class="text-center align-middle" style="font-weight: bold;">TOOL</th>
+                        <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;">{{item.fecha}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let items of repGralDias" >
+                        <td style="font-weight: bold;">{{items.tool}}</td>
+                        <td>{{items.dia1}}</td>
+                        <td>{{items.dia2}}</td>
+                        <td>{{items.dia3}}</td>
+                        <td>{{items.dia4}}</td>
+                        <td>{{items.dia5}}</td>
+                        <td>{{items.dia6}}</td>
+                        <td>{{items.dia7}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+    </div>
+
+    <!--The content below is only a placeholder and can be replaced.-->
+
+    <div style="background-color: white;">
+        <div style="margin-bottom: 35px;"></div>
+        <div class="wrapper">
+            
+            <app-gauge etiqueta="xxxx"></app-gauge>
+           
+            <apx-chart
+             [series]="chartOptions.series!"
+             [chart]="chartOptions.chart!"
+             [xaxis]="chartOptions.xaxis!"
+             [title]="chartOptions.title!"></apx-chart> 
+        </div>
+
+        
+        <hr style="margin-top: 0px;margin-bottom: 25px;">
+        
+
+        <div class="wrapper">
+           
+            <app-gauge etiqueta="yyyyy"></app-gauge>
+           
+            <apx-chart
+             [series]="chartOptions.series!"
+             [chart]="chartOptions.chart!"
+             [xaxis]="chartOptions.xaxis!"
+             [title]="chartOptions.title!"></apx-chart> 
+        </div>
+    </div> 
+</div>

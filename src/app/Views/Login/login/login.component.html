@@ -1,0 +1,26 @@
+
+<mat-grid-list cols="8" row rowHeight="100%">
+  <mat-grid-tile [colspan]="5">
+     <img src="https://images.pexels.com/photos/5740996/pexels-photo-5740996.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="3" class="image">
+    <div   class="login"  >
+      <mat-card-header>
+        <mat-card-title class="Titulo">Hola,<br></mat-card-title>
+        <mat-card-title class="Titulo"> Bienvenido de nuevo</mat-card-title>
+      </mat-card-header>
+      <form class="example-form">
+        <mat-card-content class="Content">
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Usuario" [formControl]="user">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"  [formControl]="password">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-stroked-button color="accent" class="btn-block"(click)="Login()">Log in</button>
+      </form>
+   </div>
+  </mat-grid-tile>
+</mat-grid-list>
+

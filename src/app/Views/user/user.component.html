@@ -1,0 +1,82 @@
+
+
+  <div class="body">
+
+
+    <div class="div-form">
+      <mat-toolbar  class="title-form">
+        <h1>Perfil</h1>
+      </mat-toolbar>
+
+      <form class="container" style="padding-top: 20px;">
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>ID Usuario</mat-label>
+                <input matInput [(ngModel)]="MUser.employeeCode" name="employeeCode" readonly>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Correo Electrónico</mat-label>
+                <input matInput matInput [(ngModel)]="MUser.email" name="email" readonly>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput [(ngModel)]="MUser.nameUser" name="nameUser" readonly>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width" appearance="outline" >
+                <mat-label>Pais</mat-label>
+                <input matInput [(ngModel)]="MUser.countryEntity.nameCountry" name="countryEntityId" readonly>
+                 
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="example-width" appearance="outline">
+                <mat-label>Apellidos</mat-label>
+                <input matInput [(ngModel)]="MUser.surnameUser" name="surnameUser" readonly>
+              </mat-form-field>
+            </td>
+          </tr>
+
+        </table>
+
+        <hr>
+
+        <table class="example-full-width" cellspacing="0" style="padding-top: 20px;">
+          <tr>
+            <td>
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nombre Gerente</mat-label>
+                <input matInput readonly>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="example-full-width" appearance="outline"
+              style="background-color: #f5f5f5;">
+                <mat-label>Correo Gerente</mat-label>
+                <input matInput readonly>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+
+      </form>
+
+    </div>
+  </div>

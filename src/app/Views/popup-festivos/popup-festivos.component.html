@@ -1,0 +1,19 @@
+<div class="body">
+
+    <mat-toolbar  class="title-form">
+        <h1>Festivos</h1>
+      </mat-toolbar>
+    
+      <mat-form-field appearance="fill">
+        <mat-label>Elige el festivo</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    
+        <div style="text-align: center;">
+            <button mat-button   class="button-close" (click)="onClose()" > ACeptar</button>
+        </div>
+        
+    
+    </div>

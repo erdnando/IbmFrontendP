@@ -1,0 +1,119 @@
+<!-- <div>
+  <mat-toolbar color="primary" class="toolBar">
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="example-spacer "></span>
+
+    <div>
+      
+    </div>
+    <div fxFlex fxLayoutAlign="flex-end center">
+
+      <button *ngIf="EnableButton==true" class="CountryButton" mat-icon-button style="margin: 2% 8%;">
+        <mat-icon style="margin-bottom: -0.5vh;">public</mat-icon> {{paisSeleccionado}}
+      </button>
+      <button *ngIf="EnableButton==false" class="CountryButton" mat-icon-button  style="margin: 2% 8%;" [matMenuTriggerFor]="menu">
+        <mat-icon style="margin-bottom: -0.5vh;">public</mat-icon> {{ paisSeleccionado || 'Pais' }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let pais of ListCountry" (click)="seleccionarPais(pais.nameCountry, pais.idCounty)">
+          {{ pais.nameCountry }}
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+  
+  
+  <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container">
+      <button class="logo" (click)="toggleCollapse()">I</button>
+      <div class="logo-text" @fadeInOut *ngIf="collapsed"> IBM</div>
+      <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  
+    <ol class="sidenav-nav">
+      <li class="sidenav-nav-item" *ngFor="let data of Mmen">
+        <a href="" class="sidenav-nav-link" [routerLink]="['/' + data.menuEntity.path]" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <mat-icon class="sidenav-link-icon">{{data.menuEntity.icon}}</mat-icon>
+          <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.menuEntity.nameMenu}}</span>
+        </a>
+      </li>
+      <li class="sidenav-nav-item">
+        <a href="" class="sidenav-nav-link" (click)="cerrarSesion()" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <mat-icon class="sidenav-link-icon">close</mat-icon>
+          <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">CERRAR SESION</span>
+        </a>
+      </li>
+    </ol>
+  </div>
+</div> -->
+
+<mat-sidenav-container class="example-container"  (click)="onContentClickSidenav()">
+  <mat-sidenav #sidenav mode="side" opened>
+    <!-- Contenido del sidenav aquí -->
+    <mat-nav-list>
+      <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+        <div class="logo-container">
+          <button class="logo" (click)="toggleCollapse()">I</button>
+          <div class="logo-text" @fadeInOut *ngIf="collapsed"> IBM</div>
+          <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      
+        <ol class="sidenav-nav">
+          <li class="sidenav-nav-item" *ngFor="let data of Mmen">
+            <a href="" class="sidenav-nav-link" [routerLink]="['/' + data.menuEntity.path]" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <mat-icon class="sidenav-link-icon">{{data.menuEntity.icon}}</mat-icon>
+              <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.menuEntity.nameMenu}}</span>
+            </a>
+          </li>
+          <li class="sidenav-nav-item">
+            <a href="" class="sidenav-nav-link" (click)="cerrarSesion()" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
+              <mat-icon class="sidenav-link-icon">close</mat-icon>
+              <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">CERRAR SESION</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- Contenido principal aquí -->
+    <mat-toolbar color="#61677A" class="toolBar">
+      <!-- <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button> -->
+      <span style="color: #61677A;" ></span>
+  
+      <div>
+        
+      </div>
+      <div fxFlex fxLayoutAlign="flex-end center">
+  
+        <button style="color: #45474B" *ngIf="EnableButton==true" class="CountryButton" mat-icon-button style="margin: 2% 8%;">
+          <mat-icon style="color: #0A6EBD">public</mat-icon> <span style="color: #45474B">{{paisSeleccionado}}</span>
+        </button>
+        <button style="color: #45474B" *ngIf="EnableButton==false" class="CountryButton" mat-icon-button  style="margin: 2% 8%;" [matMenuTriggerFor]="menu">
+          <mat-icon style="color: #0A6EBD" class="CountryIcon">public</mat-icon> <span style="color: #45474B">{{ paisSeleccionado || 'Pais' }}</span>
+        </button>
+        <mat-menu #menu="matMenu" style="color: #45474B">
+          <button style="color: #45474B" mat-menu-item *ngFor="let pais of ListCountry" (click)="seleccionarPais(pais.nameCountry, pais.idCounty)">
+            {{ pais.nameCountry }}
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    <hr class="divider">
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+

@@ -1,0 +1,76 @@
+.body{
+    padding: 50px;
+    margin-left: 60px;
+}
+
+mat-header-cell {
+    background-color: #f3f3f3 !important;
+    color: #45474B; 
+}
+
+.title-form {
+    width: 60%;
+      height: 50px;
+      color: white; 
+      margin-bottom: 10px;
+      background: linear-gradient(130deg,#548CA8 85%, transparent 15%);
+  }
+
+.table{
+    margin-top: 10px;
+}
+
+.button-stade {
+  padding: 5px 5px;
+  border: none; 
+  color: white !important; 
+  text-align: center !important; 
+  text-decoration: none !important; 
+  border-radius: 8px;
+  display: inline-block !important;
+  margin: auto !important; 
+  cursor: pointer; 
+}
+
+  .button-review {
+    background-color: #186AA5; 
+    padding: 10px 10px;
+    border: none; 
+    color: white; 
+    text-align: center; 
+    text-decoration: none; 
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; 
+  }
+
+  .div-h3{
+    width: 40%;
+}
+
+.h3{
+    color: #034370; /* Cambia el color del texto */
+    background-color: #F0F0F0; /* Cambia el color de fondo */
+    padding: 10px; /* Añade espacio alrededor del texto */
+    border-radius: 5px; /* Redondea las esquinas del fondo */
+}
+
+/*.divider{
+  background-color: #ffbd08;
+  color: #ffbd08 !important;
+  font-size: 1.2em !important;
+  margin-bottom: 10px;
+}*/
+
+.divider {
+  padding: 10px;
+  border: none;
+  border-top: 2px solid #808388;
+  width: 100%;
+}
+
+.div-em{
+  margin-bottom: 20px;
+}

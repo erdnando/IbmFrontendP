@@ -1,0 +1,53 @@
+<div class="body">
+
+
+    <div class="div-form">
+        <mat-toolbar class="title-form">
+            <h1>Aprobadores</h1>
+        </mat-toolbar>
+    </div>
+    <div *ngIf="Approving">
+        <div style="text-align: right; ">
+            <button mat-raised-button class="button-options" (click)="crearUsuario()">Crear</button>
+        </div>
+
+        <div>
+            <mat-table [dataSource]="MApprover" class="table">
+                <!-- Nombre -->
+                <ng-container matColumnDef="descripcion">
+                    <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+                </ng-container>
+
+                <!-- Nivel -->
+                <ng-container matColumnDef="nivel">
+                    <mat-header-cell *matHeaderCellDef> Nivel </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nivel}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="editar">
+                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button (click)="openDialog(element.idAprobador, element.descripcion,element.nivel)"
+                            class="button-review">Editar <mat-icon>edit_note</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="eliminar">
+                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button class="button-delete">Eliminar <mat-icon>delete</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columnasAMostrar.concat('editar','eliminar')"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar','eliminar');"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+    </div>
+
+</div>

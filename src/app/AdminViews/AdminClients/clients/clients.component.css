@@ -1,0 +1,84 @@
+.body{
+    padding: 40px;
+    margin-left: 60px;
+  }
+  
+  mat-header-cell {
+    background-color: #E9B824 !important;
+    color: white; 
+  }
+  
+  .title-form{
+    width: 60%;
+    height: 50px;
+    color: white; 
+    margin-bottom: 10px;
+    background: linear-gradient(130deg,#E9B824 85%, transparent 15%);
+  }
+  
+  .table{
+    margin-top: 10px;
+  }
+  
+  .button-review {
+    background-color: #548CA8; 
+    padding: 10px 10px;
+    border: none; 
+    color: white !important; 
+    text-align: center; 
+    text-decoration: none; 
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer !important; 
+  }
+  
+  .button-delete {
+    background-color: #D83F31; 
+    padding: 10px 10px;
+    border: none; 
+    color: white !important; 
+    text-align: center; 
+    text-decoration: none; 
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer !important; 
+  }
+  
+  .button-options{
+    text-align: right !important;
+    width: 20%;
+    background-color: #219C90 !important; 
+    border: none !important; 
+    border-radius: 10px !important;
+    color: white !important; 
+    text-align: center !important; 
+    text-decoration: none !important; 
+    display: inline-block !important;
+    font-size: 16px !important;
+    cursor: pointer !important; 
+    
+  }
+  
+  .example-full-width{
+    display: flexbox;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 100%;
+  
+  }
+  
+  .div-h3{
+    width: 40%;
+  }
+  
+  .h3{
+    color: #034370; /* Cambia el color del texto */
+    background-color: #F0F0F0; /* Cambia el color de fondo */
+    padding: 10px; /* Añade espacio alrededor del texto */
+    border-radius: 5px; /* Redondea las esquinas del fondo */
+  }
+

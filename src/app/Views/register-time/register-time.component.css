@@ -1,0 +1,80 @@
+.mi-estilo {
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px; 
+    background-color: #548CA8; 
+    color: #f8f9fa; 
+    font-size: 1.2em; 
+    border-top-left-radius: 5px ;
+    border-top-right-radius: 5px;
+    margin-bottom: 10px;
+    
+}
+
+table {
+    width: 100%;
+  }
+
+.example-container mat-form-field+mat-form-field {
+
+    margin-left: 8px;
+}
+
+.field-width {
+    height: 70px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+    height: 70px
+}
+
+fieldset {
+    border: none;
+}
+
+.div-form{
+    padding: 50px;
+    margin-left: 60px;
+
+}
+
+.body{
+    padding: 50px;
+    background-color: #EEEEEE;
+}
+
+.button-send{
+    background-color: #548CA8 !important; 
+    padding: 10px 10px !important;
+    border: none; 
+    color: white !important; 
+    text-align: center !important; 
+    text-decoration: none !important; 
+    border-radius: 10px ;
+    display: inline-block !important ;
+    font-size: 16px !important;
+    margin: 4px 2px !important;
+    cursor: pointer; 
+}
+
+.div-h3{
+    width: 40%;
+}
+
+.h3{
+    color: #034370; /* Cambia el color del texto */
+    background-color: #F0F0F0; /* Cambia el color de fondo */
+    padding: 10px; /* Añade espacio alrededor del texto */
+    border-radius: 5px; /* Redondea las esquinas del fondo */
+}
+
+.title-form {
+    width: 60%;
+      height: 50px;
+      color: white; 
+      margin-bottom: 10px;
+      background: linear-gradient(130deg,#548CA8 85%, transparent 15%);
+  }

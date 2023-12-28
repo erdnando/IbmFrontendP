@@ -1,0 +1,50 @@
+<div class="body">
+
+    <mat-toolbar class="title-form">
+        <h1>Horario de la semana </h1>
+    </mat-toolbar>
+
+<mat-table [dataSource]="nuevoHorario" class="mat-elevation-z8">
+
+    <!-- Dias -->
+    <ng-container matColumnDef="dias">
+        <mat-cell *matCellDef="let element"> {{element.day}} </mat-cell>
+    </ng-container>
+
+    <!-- inicio  -->
+    <ng-container matColumnDef="inicio">
+        <mat-cell   *matCellDef="let element">
+            <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="miFuncion($event.target, element.day)" type="time" >
+        </mat-cell>
+    </ng-container>
+
+    <!-- a  -->
+    <ng-container matColumnDef="a">
+        <mat-cell *matCellDef="let element">a</mat-cell>
+    </ng-container>
+
+    <!-- fin  -->
+    <ng-container matColumnDef="fin">
+        <mat-cell  *matCellDef="let element">
+            <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="guardarValoresInFin(element, $event.target)">
+        </mat-cell>
+    </ng-container>
+
+    <!-- editar  -->
+    <ng-container matColumnDef="checkbox">
+        <mat-cell *matCellDef="let element">
+            <mat-checkbox [(ngModel)]="element.editable" [disabled]="element.editable" (change)="element.editable = $event.checked"></mat-checkbox>
+        </mat-cell>
+    </ng-container>
+
+
+    <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('checkbox');"></mat-row>
+
+</mat-table>
+
+<div style="text-align: center;">
+    <button mat-button (click)="actualizarHorario()"  class="button-close"> Actualizar </button>
+    <button mat-button (click)="cancelar()"  class="button-close"> Cancelar </button>
+</div>
+
+</div>

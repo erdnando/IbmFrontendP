@@ -1,0 +1,83 @@
+<div class="body">
+
+
+    <mat-toolbar class="title-form">
+        <h1>Consulta Registros De Horas</h1>
+    </mat-toolbar>
+    <div *ngIf="Approving" >
+        <em class="filter-text">Filtrar por:</em>
+        <hr class="filter-divider">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+
+                <td>
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label> Nombre o correo: </mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+        <mat-table [dataSource]="mListHorusReport" class="table">
+
+            <!-- Nombre-->
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.userEntity.nameUser+ " "+element.userEntity.surnameUser}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- ID Usuario  -->
+            <ng-container matColumnDef="empleado">
+                <mat-header-cell *matHeaderCellDef> ID Usuario </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.userEntity.employeeCode}}</mat-cell>
+            </ng-container>
+
+
+            <!-- N° Reporte  -->
+            <ng-container matColumnDef="correo">
+                <mat-header-cell *matHeaderCellDef> Correo Electronico</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.userEntity.email}} </mat-cell>
+            </ng-container>
+
+            <!-- Pais  -->
+            <ng-container matColumnDef="pais">
+                <mat-header-cell *matHeaderCellDef>Pais</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.userEntity.countryEntity.nameCountry}} </mat-cell>
+            </ng-container>
+
+            <!-- N° Reporte  -->
+            <ng-container matColumnDef="reporte">
+                <mat-header-cell *matHeaderCellDef> N° Reporte</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.numberReport}} </mat-cell>
+            </ng-container>
+
+            <!-- Horas reportadas  -->
+            <ng-container matColumnDef="horas">
+                <mat-header-cell *matHeaderCellDef> Horas Reportadas</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.countHours}} </mat-cell>
+            </ng-container>
+
+
+            <!-- editar  -->
+            <ng-container matColumnDef="editar">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <a (click)="openDialog(element. idHorusReport)"
+                        style="cursor: pointer; color: blue; text-decoration: underline;">Ver detalles
+                        <mat-icon>search</mat-icon></a>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnasAMostrar.concat('editar')"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar');"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+    </div>
+</div>

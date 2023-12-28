@@ -1,0 +1,48 @@
+mat-header-cell {
+    background-color: #548CA8 !important;
+    color: white;
+}
+
+article {
+    background-color: #f9f9f9; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); 
+}
+p{
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border-radius: 5px;
+}
+
+b {
+    color: #333; 
+    font-size: 1.2em; 
+}
+
+.button-close{
+    width: 200px;
+    background-color: #0d6efd !important; 
+    padding: 10px 10px;
+    border: none; 
+    color: white !important; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 5px;
+    cursor: pointer; 
+  }
+
+  .button-stade {
+    padding: 5px 5px;
+    border: none; 
+    color: white !important; 
+    text-align: center !important; 
+    text-decoration: none !important; 
+    border-radius: 8px;
+    display: inline-block !important;
+    margin: auto !important; 
+    cursor: pointer; 
+  }
