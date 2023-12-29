@@ -8,17 +8,49 @@
       <mat-card-header>
         <mat-card-title class="Titulo">Hola,<br></mat-card-title>
         <mat-card-title class="Titulo"> Bienvenido de nuevo</mat-card-title>
+      <br/><br/>
       </mat-card-header>
       <form class="example-form">
         <mat-card-content class="Content">
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Usuario" [formControl]="user">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"  [formControl]="password">
-          </mat-form-field>
+          <table class="example-full-width" cellspacing="0">
+            <ng-container>
+                <tr>
+                    <td colspan="4" >
+                      <mat-form-field class="example-full-width" >
+                        <mat-label>Autenticar con:</mat-label>
+                        <mat-select [formControl]="tipoIniSes" (selectionChange)="select(tipoIniSes)" >
+                            <mat-option [value]="1">
+                                IBMId
+                            </mat-option>
+                            <mat-option [value]="2">
+                              Local
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                    <td colspan="8">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Usuario" [formControl]="user">
+                      </mat-form-field>  
+                    </td>
+                </tr>
+                <tr *ngIf="verpas">
+                    <td colspan="10">
+                      <mat-form-field class="example-full-width">
+                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"  [formControl]="password">
+                      </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                  <td colspan="10">
+                    <button mat-stroked-button color="accent" class="btn-block"(click)="Login()" style="width: 100%;">Continuar -></button>
+                  </td>
+              </tr>
+  
+            </ng-container>
+          </table>
         </mat-card-content>
-        <button mat-stroked-button color="accent" class="btn-block"(click)="Login()">Log in</button>
+        
       </form>
    </div>
   </mat-grid-tile>

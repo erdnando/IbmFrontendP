@@ -14,7 +14,7 @@
             </mat-form-field>
         </div>
         
-        <h1 style="color: #61677A; font-size: 1em;"><strong>Horas reportadas en CAS / Horas  (Suma Total)</strong></h1>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Horas reportadas en CAS / Horas  (Suma Total)</strong></h1>
         <hr class="divider">
         <div class="col-md-12">
             <table id="tbl_ReporteHoras" datatable class="styled-table" *ngIf="_reporteGral.length >0" style="width: 95%;">
@@ -38,17 +38,78 @@
                 </tbody>
             </table>
         </div>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Registros aprobados en el portal TLS / Horas & Week</strong></h1>
+        <hr class="divider">
+        <div class="col-md-12">
+            <div class="col-md-5">
+                <table id="tbl_ReporteHorasStandby" datatable class="styled-table" *ngIf="_reporteGralStandBy.length >0" style="width: 95%;">
+                    <thead class="thead-blue">
+                        <tr>
+                            <th scope="col" class="text-center align-middle" style="font-weight: bold;">StandBy</th>
+                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;">{{item.fecha}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let items of repGralDiasStandBy" >
+                            <td style="font-weight: bold;">{{items.tool}}</td>
+                            <td>{{items.dia1}}</td>
+                            <td>{{items.dia2}}</td>
+                            <td>{{items.dia3}}</td>
+                            <td>{{items.dia4}}</td>
+                            <td>{{items.dia5}}</td>
+                            <td>{{items.dia6}}</td>
+                            <td>{{items.dia7}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5">
+                <table id="tbl_ReporteHorasStandby" datatable class="styled-table" *ngIf="_reporteGralOver.length >0" style="width: 95%;">
+                    <thead class="thead-blue">
+                        <tr>
+                            <th scope="col" class="text-center align-middle" style="font-weight: bold;">OverTime</th>
+                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;">{{item.fecha}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let items of repGralDiasOver" >
+                            <td style="font-weight: bold;">{{items.tool}}</td>
+                            <td>{{items.dia1}}</td>
+                            <td>{{items.dia2}}</td>
+                            <td>{{items.dia3}}</td>
+                            <td>{{items.dia4}}</td>
+                            <td>{{items.dia5}}</td>
+                            <td>{{items.dia6}}</td>
+                            <td>{{items.dia7}}</td>
+                        </tr>
+                    </tbody>
+                </table>                
+            </div>
+            
+            
+        </div>
         
         
     </div>
 
     <!--The content below is only a placeholder and can be replaced.-->
-
+    <hr class="divider">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <h1 style="color: #61677A; font-size: 2em;"><strong>Avance de horas aprobadas </strong></h1>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Año:</mat-label>
+                <input matInput type="number" [(ngModel)]="noAno" name="InpNoAño" max=2050 maxlength=4 min=2023 (ngModelChange)="valuechangeAno($event)">
+            </mat-form-field>
+        </div>  
+    </div>
     <div style="background-color: white;">
         <div style="margin-bottom: 35px;"></div>
         <div class="wrapper">
             
-            <app-gauge etiqueta="xxxx"></app-gauge>
+            <app-gauge id="GraphSTB" etiqueta="xxxx" [series]="seriesStandBy"></app-gauge>
            
             <apx-chart
              [series]="chartOptions.series!"
@@ -63,13 +124,13 @@
 
         <div class="wrapper">
            
-            <app-gauge etiqueta="yyyyy"></app-gauge>
+            <app-gauge id="GraphOVT" etiqueta="yyyyy" [series]="seriesOverTime"></app-gauge>
            
             <apx-chart
-             [series]="chartOptions.series!"
-             [chart]="chartOptions.chart!"
-             [xaxis]="chartOptions.xaxis!"
-             [title]="chartOptions.title!"></apx-chart> 
+             [series]="chartOptionsOvertime.series!"
+             [chart]="chartOptionsOvertime.chart!"
+             [xaxis]="chartOptionsOvertime.xaxis!"
+             [title]="chartOptionsOvertime.title!"></apx-chart> 
         </div>
     </div> 
 </div>

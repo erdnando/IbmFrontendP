@@ -28,18 +28,23 @@ export type ChartOptions = {
 export class GaugeComponent {
    
   @Input() etiqueta:string | undefined;
+  @Input() series!:number;
 
   @ViewChild("chart") chart!: ChartComponent ;
   
   chartOptions!: ChartOptions;
+  serieEnv!: number;
 
   constructor() {
-     
+    this.serieEnv = this.series;
   }
 
   ngOnInit(){
+
+    
+
     this.chartOptions = {
-      series: [75],
+      series: [this.series],
       chart: {
         height: 180,
         type: "radialBar",
@@ -49,8 +54,8 @@ export class GaugeComponent {
       },
       plotOptions: {
         radialBar: {
-          startAngle: -105,
-          endAngle: 173,
+          startAngle: -100,
+          endAngle: 90,
           hollow: {
             margin: 0,
             size: "50%",

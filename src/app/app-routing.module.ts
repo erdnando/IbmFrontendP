@@ -40,11 +40,13 @@ import { UsersExceptionsComponent } from './AdminViews/usersExceptions/users-exc
 import { PopUpAddExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-exception/pop-up-add-exception.component';
 import { PopUpUpdateExceptionComponent } from './AdminViews/usersExceptions/pop-up-update-exception/pop-up-update-exception.component';
 import { GaugeComponent } from './Views/gauge/gauge.component'
+import { SamlCallbackComponent } from './Views/saml-callback/saml-callback.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'callback', component: SamlCallbackComponent },
   { path: 'toolbar', component: ToolbarComponent },
   { path: 'user', component: UserComponent },
   { path: 'resgitertime', component: RegisterTimeComponent },
@@ -60,6 +62,7 @@ const routes: Routes = [
   { path: 'admin/roles', component: RolesComponent },
   { path: 'arpcomponent', component: ARPComponent },
   { path: 'admin/users-exception', component: UsersExceptionsComponent },
+  //{ path:'',redirectTo:'login', pathMatch: 'full'}
   //{path:'profiles',component:ProfilesComponent},  SE QUITA
 ];
 
@@ -71,6 +74,7 @@ export class AppRoutingModule {}
 export const routingComponents = [
   LoginComponent,
   DashboardComponent,
+  SamlCallbackComponent,
   ToolbarComponent,
   UserComponent,
   RegisterTimeComponent,

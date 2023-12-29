@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void{
       
     this.rutaActual.pathActual.subscribe(local => {
+      console.log("login::::::::::");
       console.log(typeof local +"APPP***");
       this.prueba2 = local;
     })

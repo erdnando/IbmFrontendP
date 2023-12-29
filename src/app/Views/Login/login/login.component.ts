@@ -24,6 +24,8 @@ export class LoginComponent {
   Userlogin : MLogin;
   password = new FormControl('');
   user = new FormControl('');
+  tipoIniSes = new FormControl('');
+  verpas:boolean=false;
 
   constructor(private router:Router,private apiLogin:ApiLogin, private storageService: StorageService)
   {
@@ -85,7 +87,14 @@ Login(){
 
 }
 
+select(tip: any) {
 
+  if (tip.value ==2) {
+    this.verpas = true;
+  } else {
+    this.verpas = false;
+  }
+}
 
 
 
