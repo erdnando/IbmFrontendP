@@ -62,7 +62,7 @@ const routes: Routes = [
   { path: 'admin/roles', component: RolesComponent },
   { path: 'arpcomponent', component: ARPComponent },
   { path: 'admin/users-exception', component: UsersExceptionsComponent },
-  //{ path:'',redirectTo:'login', pathMatch: 'full'}
+  { path: '**', component: LoginComponent }
   //{path:'profiles',component:ProfilesComponent},  SE QUITA
 ];
 

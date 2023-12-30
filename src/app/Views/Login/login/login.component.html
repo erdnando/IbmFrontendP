@@ -1,26 +1,25 @@
 
 <mat-grid-list cols="8" row rowHeight="100%">
-  <mat-grid-tile [colspan]="5">
+  <mat-grid-tile [colspan]="3">
      <img src="https://images.pexels.com/photos/5740996/pexels-photo-5740996.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" class="image">
+  <mat-grid-tile [colspan]="5" class="image">
     <div   class="login"  >
       <mat-card-header>
         <mat-card-title class="Titulo">Hola,<br></mat-card-title>
         <mat-card-title class="Titulo"> Bienvenido de nuevo</mat-card-title>
-      <br/><br/>
       </mat-card-header>
       <form class="example-form">
         <mat-card-content class="Content">
           <table class="example-full-width" cellspacing="0">
             <ng-container>
                 <tr>
-                    <td colspan="4" >
-                      <mat-form-field class="example-full-width" >
+                    <td colspan="12">
+                      <mat-form-field class="example-full-width">
                         <mat-label>Autenticar con:</mat-label>
-                        <mat-select [formControl]="tipoIniSes" (selectionChange)="select(tipoIniSes)" >
+                        <mat-select [formControl]="tipoIniSes" (selectionChange)="select(tipoIniSes)">
                             <mat-option [value]="1">
-                                IBMId
+                              IBMId
                             </mat-option>
                             <mat-option [value]="2">
                               Local
@@ -28,11 +27,13 @@
                         </mat-select>
                       </mat-form-field>
                     </td>
-                    <td colspan="8">
-                      <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Usuario" [formControl]="user">
-                      </mat-form-field>  
-                    </td>
+                </tr>
+                <tr *ngIf="verpas">
+                  <td colspan="10">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Usuario" [formControl]="user">
+                    </mat-form-field>  
+                  </td>
                 </tr>
                 <tr *ngIf="verpas">
                     <td colspan="10">
