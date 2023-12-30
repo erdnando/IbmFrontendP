@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'callback', component: SamlCallbackComponent },
+  { path: '', component: SamlCallbackComponent },
   { path: 'toolbar', component: ToolbarComponent },
   { path: 'user', component: UserComponent },
   { path: 'resgitertime', component: RegisterTimeComponent },
@@ -62,7 +62,7 @@ const routes: Routes = [
   { path: 'admin/roles', component: RolesComponent },
   { path: 'arpcomponent', component: ARPComponent },
   { path: 'admin/users-exception', component: UsersExceptionsComponent },
-  { path: '**', component: LoginComponent }
+  //{ path: '**', component: LoginComponent }
   //{path:'profiles',component:ProfilesComponent},  SE QUITA
 ];
 
