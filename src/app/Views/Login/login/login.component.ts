@@ -40,7 +40,7 @@ Login(){
 
   if (this.verpas==false) {
    //call saml sso
-   window.location.href = 'https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-front.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
+   window.location.href = 'https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
    
    return;
   } 
