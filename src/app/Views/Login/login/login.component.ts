@@ -53,6 +53,21 @@ Login(){
       //this.resultStatusText = "OK";
       console.log("regreso...................");
       console.log(data);
+
+      const datosMapeados = {
+      
+        idUser: "1",
+        email: "",
+        nameUser: "",
+        surnameUser: "",
+        employeeCode: "",
+        roleEntityId: "",
+        countryEntityId: "",
+        countryEntity: "",
+        rolEntity: ""
+      };
+      this.storageService.guardarDatosMapeados(datosMapeados)
+
       this.router.navigate(['dashboard']);
       //this.isSpinnerVisible = false;
       },
