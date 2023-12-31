@@ -53,6 +53,7 @@ Login(){
       //this.resultStatusText = "OK";
       console.log("regreso...................");
       console.log(data);
+      this.router.navigate(['dashboard']);
       //this.isSpinnerVisible = false;
       },
       error: (err: HttpErrorResponse) => {
