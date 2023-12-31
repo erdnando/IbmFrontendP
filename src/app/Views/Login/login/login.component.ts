@@ -7,6 +7,7 @@ import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { ApiLogin } from 'src/app/Views/Login/services/login/api.login';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
 import Swal from 'sweetalert2';
+import { HttpErrorResponse , HttpClientModule, HttpClient } from '@angular/common/http';
 
 
 
@@ -26,8 +27,10 @@ export class LoginComponent {
   user = new FormControl('');
   tipoIniSes = new FormControl('');
   verpas:boolean=false;
+  urlw3id : string | undefined;
+  
 
-  constructor(private router:Router,private apiLogin:ApiLogin, private storageService: StorageService)
+  constructor(private router:Router,private apiLogin:ApiLogin, private storageService: StorageService,private http: HttpClient)
   {
     this.Userlogin = {} as MLogin;
   }
@@ -40,59 +43,77 @@ Login(){
 
   if (this.verpas==false) {
    //call saml sso2
-   window.location.href = 'https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
-   
-   return;
-  } 
-  
-
-  this.Userlogin.userName = this.user.value as string;
-  this.Userlogin.password = this.password.value as string;
-
-
-  this.apiLogin.GetLogin(this.Userlogin).pipe(
-    map((data: any) => {
-
-      if (data && data.data) {
-        const datosMapeados = {
-
-          idUser: data.data.idUser,
-          email: data.data.email,
-          nameUser: data.data.nameUser,
-          surnameUser: data.data.surnameUser,
-          employeeCode: data.data.employeeCode,
-          roleEntityId: data.data.roleEntityId,
-          countryEntityId: data.data.countryEntityId,
-          countryEntity: data.data.countryEntity,
-          rolEntity: data.data.roleEntity
-        };
-        this.storageService.guardarDatosMapeados(datosMapeados)
-        return datosMapeados;
-      } else {
-
-        return null;
+   //window.location.href = 'https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
+   //this.urlw3id ='https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
+   setTimeout(() => {
+    this.http.get<any>('https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud', { withCredentials:true }).subscribe({
+    next: (data: any) => {
+      //this.apiResult += " done.";
+      //this.resultStatus = 200;
+      //this.resultStatusText = "OK";
+      console.log("regreso...................");
+      console.log(data);
+      //this.isSpinnerVisible = false;
+      },
+      error: (err: HttpErrorResponse) => {
+      //this.apiResult += " done.";
+      //this.resultStatus = err.status;
+      //this.resultStatusText = err.statusText;
+      //this.resultMessage = "Error";
+      //this.isSpinnerVisible = false;
       }
-    })
-  ).subscribe(dataMapeada => {
-    if (dataMapeada) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Bienvenido',
       });
+      }, 1000);
+
+
+
+      }else{
+
+        this.Userlogin.userName = this.user.value as string;
+        this.Userlogin.password = this.password.value as string;
       
-      this.router.navigate(['dashboard']);
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Error en el inicio de sesión, correo o contraseña incorrectos.',
-      });
-    }
-  });
+      
+        this.apiLogin.GetLogin(this.Userlogin).pipe(
+          map((data: any) => {
+      
+            if (data && data.data) {
+              const datosMapeados = {
+      
+                idUser: data.data.idUser,
+                email: data.data.email,
+                nameUser: data.data.nameUser,
+                surnameUser: data.data.surnameUser,
+                employeeCode: data.data.employeeCode,
+                roleEntityId: data.data.roleEntityId,
+                countryEntityId: data.data.countryEntityId,
+                countryEntity: data.data.countryEntity,
+                rolEntity: data.data.roleEntity
+              };
+              this.storageService.guardarDatosMapeados(datosMapeados)
+              return datosMapeados;
+            } else {
+      
+              return null;
+            }
+          })
+        ).subscribe(dataMapeada => {
+          if (dataMapeada) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Bienvenido',
+            });
+            
+            this.router.navigate(['dashboard']);
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Error en el inicio de sesión, correo o contraseña incorrectos.',
+            });
+          }
+        });
 
-
-
-
+      }
 }
 
 select(tip: any) {
