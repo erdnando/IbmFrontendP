@@ -72,6 +72,8 @@ Login(){
       //this.isSpinnerVisible = false;
       },
       error: (err: HttpErrorResponse) => {
+
+        console.log("error" + err.statusText);
       //this.apiResult += " done.";
       //this.resultStatus = err.status;
       //this.resultStatusText = err.statusText;
