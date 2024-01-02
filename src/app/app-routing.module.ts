@@ -46,7 +46,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: '', component: SamlCallbackComponent },
+  { path: 'callback', component: SamlCallbackComponent },
   { path: 'toolbar', component: ToolbarComponent },
   { path: 'user', component: UserComponent },
   { path: 'resgitertime', component: RegisterTimeComponent },

@@ -1,10 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, catchError, tap } from "rxjs";
 import { MLogin } from "src/app/Models/MLogin";
 import { MResponse } from "src/app/Models/MResponse";
 import { Global } from 'src/app/global';
-
 
 
 
@@ -26,6 +25,5 @@ export class ApiLogin {
     return this.http.post<MResponse>(direccion,muser);
 
   }
-
 
 }

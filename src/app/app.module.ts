@@ -12,7 +12,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { SublevelMenuComponent } from './Plantillas/sidenav/sidenav/sublevel-menu.component';
 import { BodyComponent } from './Plantillas/sidenav/body/body.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     SweetAlert2Module,
     NgApexchartsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

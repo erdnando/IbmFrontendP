@@ -7,7 +7,8 @@ import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { ApiLogin } from 'src/app/Views/Login/services/login/api.login';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
 import Swal from 'sweetalert2';
-import { HttpErrorResponse , HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpErrorResponse , HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -29,8 +30,13 @@ export class LoginComponent {
   verpas:boolean=false;
   urlw3id : string | undefined;
   
+  private httpOptions = { headers: new HttpHeaders({ 'Content-Type':'application/json;charset=utf-8;','Access-Control-Allow-Origins':'*',
+  'Accept':'*/*'})};
+  
+  constructor(private router:Router,private apiLogin:ApiLogin, private storageService: StorageService,private http: HttpClient,
+    private cookieService: CookieService
 
-  constructor(private router:Router,private apiLogin:ApiLogin, private storageService: StorageService,private http: HttpClient)
+    )
   {
     this.Userlogin = {} as MLogin;
   }
@@ -42,49 +48,10 @@ export class LoginComponent {
 Login(){
 
   if (this.verpas==false) {
-   //call saml sso2
-   //window.location.href = 'https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
-   //this.urlw3id ='https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
-   setTimeout(() => {
-    this.http.get<any>('https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud', { withCredentials:true }).subscribe({
-    next: (data: any) => {
-      //this.apiResult += " done.";
-      //this.resultStatus = 200;
-      //this.resultStatusText = "OK";
-      console.log("regreso...................");
-      console.log(data);
 
-      const datosMapeados = {
-      
-        idUser: "1",
-        email: "",
-        nameUser: "",
-        surnameUser: "",
-        employeeCode: "",
-        roleEntityId: "",
-        countryEntityId: "",
-        countryEntity: "",
-        rolEntity: ""
-      };
-      this.storageService.guardarDatosMapeados(datosMapeados)
-
-      this.router.navigate(['dashboard']);
-      //this.isSpinnerVisible = false;
-      },
-      error: (err: HttpErrorResponse) => {
-
-        console.log("error" + err.statusText);
-      //this.apiResult += " done.";
-      //this.resultStatus = err.status;
-      //this.resultStatusText = err.statusText;
-      //this.resultMessage = "Error";
-      //this.isSpinnerVisible = false;
-      }
-      });
-      }, 1000);
-
-
-
+         // this.cookieService.delete('cookieSAML2');
+         window.location.href='https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
+  
       }else{
 
         this.Userlogin.userName = this.user.value as string;

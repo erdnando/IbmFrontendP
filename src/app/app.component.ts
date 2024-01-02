@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void{
-      
+      console.log("app.component...");
     this.rutaActual.pathActual.subscribe(local => {
       console.log("login::::::::::");
       console.log(typeof local +"APPP***");
