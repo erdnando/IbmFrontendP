@@ -35,12 +35,14 @@ interface SideNavTogg1e {
 }
 @Component({
   selector: 'app-dashboard',
-  templateUrl:'./Dashboard.component.html',
-  styleUrls: ['./Dashboard.component.css']
+  templateUrl:'./dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
 
-  @ViewChild("chartObj") chart!: ChartComponent ;
+  @ViewChild("chartBar1") chart!: ChartComponent ;
+  @ViewChild("chartBar2") chart2!: ChartComponent ;
+
   public chartOptions: Partial<ChartOptions>;
   public chartOptionsOvertime: Partial<ChartOptions>;
 
@@ -61,11 +63,12 @@ export class DashboardComponent {
   weekNumber:number=0;
 
   constructor(private storageData: StorageService, private router: Router,private _apiDashboard:ApiDashboard) {
+
     this.chartOptions = {
       series: [
         {
           name: "Mi serie",
-          data: [10,41,35,51,49,62,91,148]
+          data: [0,0,0,0,0,0,0,0]
         }
       ],
       chart:{
@@ -85,7 +88,7 @@ export class DashboardComponent {
       series: [
         {
           name: "Mi serie",
-          data: [10,41,35,51,49,62,91,148]
+          data: [0,0,0,0,0,0,0,0]
         }
       ],
       chart:{
@@ -126,7 +129,7 @@ export class DashboardComponent {
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
     this.noSemana = Math.ceil(days / 7);
-    this.getReqRepHorasTLS();
+   // this.getReqRepHorasTLS();
     
     this.dtOptions={
       pagingType:'full_numbers',
@@ -143,7 +146,7 @@ export class DashboardComponent {
         icon: 'warning',
         title: 'Atención!',
         text:'El número de semana deberá estar entre 1 y 52'
-    });
+        });
     }else {
       this.noSemana = newValue;
       console.log(newValue);
@@ -163,7 +166,7 @@ export class DashboardComponent {
     }else {
       this.noAno = newValue;
       console.log(newValue);
-      //this.getReqRepAnioTLS();
+      this.getReqRepAnioTLS();
     }
     
   }
@@ -406,6 +409,7 @@ export class DashboardComponent {
           this.repGralDias=[];
           this.repGralDiasStandBy=[];
           this.repGralDiasOver=[];
+
           if (data && data.data) {
             this.mListHorusReport=data.data
             this._reporteGral=data.data.reposterGral[0].reportesTLS;

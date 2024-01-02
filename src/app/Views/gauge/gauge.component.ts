@@ -41,8 +41,6 @@ export class GaugeComponent {
 
   ngOnInit(){
 
-    
-
     this.chartOptions = {
       series: [this.series],
       chart: {
