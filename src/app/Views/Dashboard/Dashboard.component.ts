@@ -40,8 +40,8 @@ interface SideNavTogg1e {
 })
 export class DashboardComponent {
 
-  @ViewChild("chartBar1") chart!: ChartComponent ;
-  @ViewChild("chartBar2") chart2!: ChartComponent ;
+  @ViewChild("chartObject") chart!: ChartComponent ;
+ // @ViewChild("chartBar2") chart2!: ChartComponent ;
 
   public chartOptions: Partial<ChartOptions>;
   public chartOptionsOvertime: Partial<ChartOptions>;
@@ -68,7 +68,7 @@ export class DashboardComponent {
       series: [
         {
           name: "Mi serie",
-          data: [0,0,0,0,0,0,0,0]
+          data: [10,34,12,0,30,0,0,20]
         }
       ],
       chart:{
@@ -88,7 +88,7 @@ export class DashboardComponent {
       series: [
         {
           name: "Mi serie",
-          data: [0,0,0,0,0,0,0,0]
+          data: [10,0,20,0,40,0,20,6]
         }
       ],
       chart:{
@@ -129,7 +129,7 @@ export class DashboardComponent {
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
     this.noSemana = Math.ceil(days / 7);
-   // this.getReqRepHorasTLS();
+    this.getReqRepHorasTLS();
     
     this.dtOptions={
       pagingType:'full_numbers',
@@ -150,7 +150,7 @@ export class DashboardComponent {
     }else {
       this.noSemana = newValue;
       console.log(newValue);
-      this.getReqRepHorasTLS();
+      //this.getReqRepHorasTLS();
     }
     
   }
