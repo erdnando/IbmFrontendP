@@ -24,7 +24,7 @@ export class ApiDashboard {
 
     let direccion = this.URLLocal +"Dashoard/Reporte1/";
     console.log(direccion);
-    return this.http.get<MResponse>(direccion+mDashboard.semana+"/"+mDashboard.usuario);
+    return this.http.get<MResponse>(direccion+mDashboard.semana+"/"+mDashboard.usuario+"/"+mDashboard.anio);
   }
 
   GetReporteAnioTLS(mDashboard:ReqRepanioTLS):Observable<MResponse> | undefined{

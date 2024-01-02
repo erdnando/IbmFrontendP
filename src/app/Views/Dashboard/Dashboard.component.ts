@@ -5,7 +5,7 @@ import { MonthTls, ReporteHorasMesTLS, ReqRepHorasTLS, ReqRepanioTLS } from "src
 import { ReporteHorasTLS } from "src/app/Models/MReporteHorasTLS";
 import { WeekDaysTls } from "src/app/Models/MReporteHorasTLS";
 import { RepGralHoras } from "src/app/Models/MReporteHorasTLS";
-import { ApiDashboard } from 'src/app/Views/Dashboard/services/api.Dashboard';
+import { ApiDashboard } from 'src/app/Views/dashboard/services/api.Dashboard';
 import { MatTableDataSource } from '@angular/material/table';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { Observable, map } from 'rxjs';
@@ -126,6 +126,7 @@ export class DashboardComponent {
 
 
   ngOnInit() {
+    this.noAno=this.currentDate.getFullYear();
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
     this.noSemana = Math.ceil(days / 7);
@@ -150,7 +151,7 @@ export class DashboardComponent {
     }else {
       this.noSemana = newValue;
       console.log(newValue);
-      //this.getReqRepHorasTLS();
+      this.getReqRepHorasTLS();
     }
     
   }
@@ -397,7 +398,7 @@ export class DashboardComponent {
   getReqRepHorasTLS(){
     this._reqRepHorasTLS.semana=this.noSemana;
     this._reqRepHorasTLS.usuario=this.MUser.employeeCode.toString();
-    
+    this._reqRepHorasTLS.anio=this.noAno;
     
     //this._reqRepHorasTLS.usuario=sessionStorage.getItem("User").toString();
 

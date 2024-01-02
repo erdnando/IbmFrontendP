@@ -63,6 +63,7 @@ export class RutaActualService {
           this._rutaActuales$.next(this.rutaActual);
           console.log(this.rutaActual);
           //refresh
+          //this.router.navigate(['dashboard']);
          // location.reload();
          }, 500);
         

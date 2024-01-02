@@ -20,6 +20,7 @@ export interface WeekDaysTls {
 export interface ReqRepHorasTLS {
   semana: number;
   usuario: string;
+  anio: number;
 }
 export interface ReqRepanioTLS {
   anio: number;
