@@ -22,6 +22,7 @@ export class RutaActualService {
         const urlParams = new URLSearchParams(window.location.search);
         const xmlParam = urlParams.get('uxm_erd');
         console.log("parametro obtenido:"+ xmlParam);
+        console.log('version 1.0.0.2');
         if(xmlParam!=null){
           console.log("flujo sso");
           
