@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SamlComponent } from './saml.component';
+import { SamlCallbackComponent } from './saml-callback.component';
 
-describe('DashboardComponent', () => {
-  let component: SamlComponent;
-  let fixture: ComponentFixture<SamlComponent>;
+describe('SamlCallbackComponent', () => {
+  let component: SamlCallbackComponent;
+  let fixture: ComponentFixture<SamlCallbackComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SamlComponent]
+      declarations: [SamlCallbackComponent]
     });
-    fixture = TestBed.createComponent(SamlComponent);
+    fixture = TestBed.createComponent(SamlCallbackComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

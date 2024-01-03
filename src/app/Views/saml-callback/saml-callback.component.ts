@@ -1,7 +1,7 @@
 import { Component, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
-import { ApiDashboard } from 'src/app/Views/dashboard/services/api.Dashboard';
+import { ApiDashboard } from 'src/app/Views/Dashboard/services/api.Dashboard';
 import { MatTableDataSource } from '@angular/material/table';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { Observable, map } from 'rxjs';

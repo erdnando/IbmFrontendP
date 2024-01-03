@@ -5,7 +5,7 @@ import { MonthTls, ReporteHorasMesTLS, ReqRepHorasTLS, ReqRepanioTLS } from "src
 import { ReporteHorasTLS } from "src/app/Models/MReporteHorasTLS";
 import { WeekDaysTls } from "src/app/Models/MReporteHorasTLS";
 import { RepGralHoras } from "src/app/Models/MReporteHorasTLS";
-import { ApiDashboard } from 'src/app/Views/dashboard/services/api.Dashboard';
+import { ApiDashboard } from 'src/app/Views/Dashboard/services/api.Dashboard';
 import { MatTableDataSource } from '@angular/material/table';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { Observable, map } from 'rxjs';
@@ -35,8 +35,8 @@ interface SideNavTogg1e {
 }
 @Component({
   selector: 'app-dashboard',
-  templateUrl:'./dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  templateUrl:'./Dashboard.component.html',
+  styleUrls: ['./Dashboard.component.css']
 })
 export class DashboardComponent {
 
