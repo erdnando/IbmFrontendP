@@ -23,6 +23,7 @@ import {
 import * as ApexCharts from 'apexcharts';
 
 export type ChartOptions = {
+  id: string;
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
@@ -65,6 +66,7 @@ export class DashboardComponent {
   constructor(private storageData: StorageService, private router: Router,private _apiDashboard:ApiDashboard) {
 
     this.chartOptions = {
+      id:"uno",
       series: [
         {
           name: "Mi serie",
@@ -85,6 +87,7 @@ export class DashboardComponent {
     };
 
     this.chartOptionsOvertime = {
+      id:"dos",
       series: [
         {
           name: "Mi serie",
@@ -203,6 +206,7 @@ export class DashboardComponent {
             
             //------------------------------------------------------------------------------------
             this.chartOptions = {
+              id:"uno",
               series: [
                 {
                 name: "Mi serie",
@@ -240,6 +244,7 @@ export class DashboardComponent {
             //--------------------------------------------------------------------------
 
             this.chartOptionsOvertime = {
+              id:"dos",
               series: [
                 {
                 name: "Mi serie",
