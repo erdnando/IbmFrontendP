@@ -30,6 +30,15 @@ export type ChartOptions = {
   title: ApexTitleSubtitle;
 };
 
+export type ChartOptionsGauge = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  labels: string[];
+  plotOptions: ApexPlotOptions;
+  fill: ApexFill;
+  stroke: ApexStroke;
+};
+
 interface SideNavTogg1e {
   screenWidth: number;
   collapsed: boolean;
@@ -41,11 +50,13 @@ interface SideNavTogg1e {
 })
 export class DashboardComponent {
 
-  @ViewChild("chartObject") chart!: ChartComponent ;
- // @ViewChild("chartBar2") chart2!: ChartComponent ;
+  @ViewChild("chart") chart!: ChartComponent ;
+ 
 
   public chartOptions: Partial<ChartOptions>;
   public chartOptionsOvertime: Partial<ChartOptions>;
+  public chartOptionsG1: Partial<ChartOptionsGauge>;
+  public chartOptionsG2: Partial<ChartOptionsGauge>;
 
   _reqRepHorasTLS : ReqRepHorasTLS;
   _reqRepAnioTLS :ReqRepanioTLS  
@@ -100,11 +111,169 @@ export class DashboardComponent {
         type:"bar"
       },
       title:{
-        text:"StandBy"
+        text:"Over Timer"
       },
       xaxis:{
         categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
       }
+    };
+
+    this.chartOptionsG1 = {
+      series: [0],
+      chart: {
+        height: 180,
+        type: "radialBar",
+        toolbar: {
+          show: true   
+        }
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: -100,
+          endAngle: 90,
+          hollow: {
+            margin: 0,
+            size: "50%",
+            background: "#fff",
+            image: undefined,
+            position: "front",
+            dropShadow: {
+              enabled: true,
+              top: 3,
+              left: 0,
+              blur: 4,
+              opacity: 0.24
+            }
+          },
+          track: {
+            background: "#fff",
+            strokeWidth: "75%",
+            margin: 0, // margin is in pixels
+            dropShadow: {
+              enabled: true,
+              top: -3,
+              left: 0,
+              blur: 4,
+              opacity: 0.35
+            }
+          },
+
+          dataLabels: {
+            show: true,
+            name: {
+              offsetY: -10,
+              show: true,
+              color: "#888",
+              fontSize: "15px"
+            },
+            value: {
+              formatter: function(val) {
+                return parseInt(val.toString(), 10).toString();
+              },
+              color: "#111",
+              fontSize: "26px",
+              offsetY:2,
+              show: true
+            }
+          }
+        }
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "horizontal",
+          shadeIntensity: 0.5,
+          gradientToColors: ["#ABE5A1"],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        lineCap: "round"
+      },
+      labels: ["valor"]
+    };
+
+    this.chartOptionsG2 = {
+      series: [0],
+      chart: {
+        height: 180,
+        type: "radialBar",
+        toolbar: {
+          show: true   
+        }
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: -100,
+          endAngle: 90,
+          hollow: {
+            margin: 0,
+            size: "50%",
+            background: "#fff",
+            image: undefined,
+            position: "front",
+            dropShadow: {
+              enabled: true,
+              top: 3,
+              left: 0,
+              blur: 4,
+              opacity: 0.24
+            }
+          },
+          track: {
+            background: "#fff",
+            strokeWidth: "75%",
+            margin: 0, // margin is in pixels
+            dropShadow: {
+              enabled: true,
+              top: -3,
+              left: 0,
+              blur: 4,
+              opacity: 0.35
+            }
+          },
+
+          dataLabels: {
+            show: true,
+            name: {
+              offsetY: -10,
+              show: true,
+              color: "#888",
+              fontSize: "15px"
+            },
+            value: {
+              formatter: function(val) {
+                return parseInt(val.toString(), 10).toString();
+              },
+              color: "#111",
+              fontSize: "26px",
+              offsetY:2,
+              show: true
+            }
+          }
+        }
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "horizontal",
+          shadeIntensity: 0.5,
+          gradientToColors: ["#ABE5A1"],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        lineCap: "round"
+      },
+      labels: ["valor"]
     };
 
     this._reqRepHorasTLS= {} as ReqRepHorasTLS;
@@ -115,6 +284,7 @@ export class DashboardComponent {
     this.repgralUnit={} as RepGralHoras;
     this.MUser = this.storageData.obtenerDatosMapeados();
    // this.getReqRepAnioTLS();
+   //this.seriesStandBy=0;
   }
 
   isSideNavCoIIapsed = false;
@@ -170,6 +340,7 @@ export class DashboardComponent {
         text:'El número de año deberá ser mayor 2023'
     });
     }else {
+      
       this.noAno = newValue;
       console.log(newValue);
       this.getReqRepAnioTLS();
@@ -188,8 +359,8 @@ export class DashboardComponent {
             let totHorasanuales = (160*12);
             let totalHorasRespServicioStanBy= 0.0;
             let totalHorasRespServicioOverTime= 0.0;
-            let arrMonthsStandBy=[];
-            let arrMonthsOverTime=[];
+            let arrMonthsStandBy: number[]=[];
+            let arrMonthsOverTime: number[]=[];
 
             dataGraf.data.reportesGral[0].monthTls.forEach((dat: MonthTls)  => {
               totalHorasRespServicioStanBy = totalHorasRespServicioStanBy + dat.totalHoras;
@@ -201,16 +372,18 @@ export class DashboardComponent {
               arrMonthsOverTime.push(dat.totalHoras); 
             });
 
-            this.seriesStandBy= ((totalHorasRespServicioStanBy/totHorasanuales)*100);
-            this.seriesOverTime= ((totalHorasRespServicioOverTime/totHorasanuales)*100);
-            
+            //testing data
+            this.seriesStandBy=268;// ((totalHorasRespServicioStanBy/totHorasanuales)*100);
+            this.seriesOverTime=256;// ((totalHorasRespServicioOverTime/totHorasanuales)*100);
+            arrMonthsStandBy=[8,8,16,16,24,40,36,24,24,8,40,40]; //arrMonthsStandBy
+            arrMonthsOverTime=[8,8,16,40,40,40,40,16,16,16,8,8]; //arrMonthsOverTime
             //------------------------------------------------------------------------------------
             this.chartOptions = {
               id:"uno",
               series: [
                 {
                 name: "Mi serie",
-                data: [90,94,90,90,30,90,90,20,0,0,0,10]
+                data: arrMonthsStandBy
                 }
               ],
               chart: {
@@ -228,19 +401,86 @@ export class DashboardComponent {
                 categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
               }
             }
-
-            var chart = new ApexCharts(
-              document.querySelector("#GraphSTB"),
-              this.chartOptions
-            );
-
-            chart.updateSeries([{
-              name: 'Sales',
-              data: [90,94,90,90,30,90,90,20,0,0,0,10]
-            }])
-            
-            //new ApexCharts(document.querySelector("#GraphSTB"), this.chartOptions).render();
-
+            //----------------------------------------------------------------------------------------        
+            //gauge seriesStandBy
+            this.chartOptionsG1 = {
+              series: [this.seriesStandBy],
+              chart: {
+                height: 180,
+                type: "radialBar",
+                toolbar: {
+                  show: true   
+                }
+              },
+              plotOptions: {
+                radialBar: {
+                  startAngle: -100,
+                  endAngle: 90,
+                  hollow: {
+                    margin: 0,
+                    size: "50%",
+                    background: "#fff",
+                    image: undefined,
+                    position: "front",
+                    dropShadow: {
+                      enabled: true,
+                      top: 3,
+                      left: 0,
+                      blur: 4,
+                      opacity: 0.24
+                    }
+                  },
+                  track: {
+                    background: "#fff",
+                    strokeWidth: "75%",
+                    margin: 0, // margin is in pixels
+                    dropShadow: {
+                      enabled: true,
+                      top: -3,
+                      left: 0,
+                      blur: 4,
+                      opacity: 0.35
+                    }
+                  },
+        
+                  dataLabels: {
+                    show: true,
+                    name: {
+                      offsetY: -10,
+                      show: true,
+                      color: "#888",
+                      fontSize: "15px"
+                    },
+                    value: {
+                      formatter: function(val) {
+                        return parseInt(val.toString(), 10).toString();
+                      },
+                      color: "#111",
+                      fontSize: "26px",
+                      offsetY:2,
+                      show: true
+                    }
+                  }
+                }
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                  shade: "dark",
+                  type: "horizontal",
+                  shadeIntensity: 0.5,
+                  gradientToColors: ["#ABE5A1"],
+                  inverseColors: true,
+                  opacityFrom: 1,
+                  opacityTo: 1,
+                  stops: [0, 100]
+                }
+              },
+              stroke: {
+                lineCap: "round"
+              },
+              labels: ["valor"]
+            };
             //--------------------------------------------------------------------------
 
             this.chartOptionsOvertime = {
@@ -248,7 +488,7 @@ export class DashboardComponent {
               series: [
                 {
                 name: "Mi serie",
-                data: [10,4,7,0,3,9,90,0,0,0,0,90]
+                data: arrMonthsOverTime
                 }
               ],
               chart: {
@@ -266,20 +506,85 @@ export class DashboardComponent {
                 categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
               }
             }
-            //new ApexCharts(document.querySelector("#GraphOVT"), this.chartOptionsOvertime).render();
-            var chart = new ApexCharts(
-              document.querySelector("#GraphOVT"),
-              this.chartOptionsOvertime
-            );
-
-            chart.updateSeries([{
-              name: 'Sales',
-              data: [10,4,7,0,3,9,90,0,0,0,0,90]
-            }])
-
-
-
-
+            //gauge seriesOverTime
+             this.chartOptionsG2 = {
+              series: [this.seriesOverTime],
+              chart: {
+                height: 180,
+                type: "radialBar",
+                toolbar: {
+                  show: true   
+                }
+              },
+              plotOptions: {
+                radialBar: {
+                  startAngle: -100,
+                  endAngle: 90,
+                  hollow: {
+                    margin: 0,
+                    size: "50%",
+                    background: "#fff",
+                    image: undefined,
+                    position: "front",
+                    dropShadow: {
+                      enabled: true,
+                      top: 3,
+                      left: 0,
+                      blur: 4,
+                      opacity: 0.24
+                    }
+                  },
+                  track: {
+                    background: "#fff",
+                    strokeWidth: "75%",
+                    margin: 0, // margin is in pixels
+                    dropShadow: {
+                      enabled: true,
+                      top: -3,
+                      left: 0,
+                      blur: 4,
+                      opacity: 0.35
+                    }
+                  },
+        
+                  dataLabels: {
+                    show: true,
+                    name: {
+                      offsetY: -10,
+                      show: true,
+                      color: "#888",
+                      fontSize: "15px"
+                    },
+                    value: {
+                      formatter: function(val) {
+                        return parseInt(val.toString(), 10).toString();
+                      },
+                      color: "#111",
+                      fontSize: "26px",
+                      offsetY:2,
+                      show: true
+                    }
+                  }
+                }
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                  shade: "dark",
+                  type: "horizontal",
+                  shadeIntensity: 0.5,
+                  gradientToColors: ["#ABE5A1"],
+                  inverseColors: true,
+                  opacityFrom: 1,
+                  opacityTo: 1,
+                  stops: [0, 100]
+                }
+              },
+              stroke: {
+                lineCap: "round"
+              },
+              labels: ["valor"]
+            };
 
             return this.mListAnioReport;
           } else {

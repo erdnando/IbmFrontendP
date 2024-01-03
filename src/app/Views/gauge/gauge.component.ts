@@ -37,6 +37,7 @@ export class GaugeComponent {
 
   constructor() {
     this.serieEnv = this.series;
+    
   }
 
   ngOnInit(){

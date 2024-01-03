@@ -24,14 +24,21 @@
     <div style="margin-bottom: 35px;"></div>
     <div class="wrapper">
         
-        <app-gauge id="GraphSTB" etiqueta="xxxx" [series]="seriesStandBy"></app-gauge>
-       
-            <apx-chart
+        <!--<app-gauge id="GraphSTB" etiqueta="xxxx" [series]="this.seriesStandBy"></app-gauge>-->
+            <apx-chart id="gauge1"
+            [series]="chartOptionsG1.series!"
+            [chart]="chartOptionsG1.chart!"
+            [plotOptions]="chartOptionsG1.plotOptions!"
+            [labels]="chartOptionsG1.labels!"
+            [fill]="chartOptionsG1.fill!"></apx-chart>
+
+
+
+            <apx-chart id="aaaa"
             [series]="chartOptions.series!"
             [chart]="chartOptions.chart!"
             [xaxis]="chartOptions.xaxis!"
             [title]="chartOptions.title!"></apx-chart> 
-        
     </div>
 
     
@@ -40,10 +47,15 @@
 
     <div class="wrapper">
        
-        <app-gauge id="GraphOVT" etiqueta="yyyyy" [series]="seriesOverTime"></app-gauge>
+        <!--<app-gauge id="GraphOVT" etiqueta="yyyyy" [series]="this.seriesOverTime"></app-gauge>-->
+        <apx-chart id="gauge2"
+        [series]="chartOptionsG2.series!"
+        [chart]="chartOptionsG2.chart!"
+        [plotOptions]="chartOptionsG2.plotOptions!"
+        [labels]="chartOptionsG2.labels!"
+        [fill]="chartOptionsG2.fill!"></apx-chart>
        
-        
-        <apx-chart
+        <apx-chart id="bbbb"
          [series]="chartOptionsOvertime.series!"
          [chart]="chartOptionsOvertime.chart!"
          [xaxis]="chartOptionsOvertime.xaxis!"
