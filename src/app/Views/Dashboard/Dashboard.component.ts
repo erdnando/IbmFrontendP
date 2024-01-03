@@ -68,7 +68,7 @@ export class DashboardComponent {
       series: [
         {
           name: "Mi serie",
-          data: [10,34,12,0,30,0,0,20]
+          data: [90,0,60,0,0,0,70,0,0,0,40,0]
         }
       ],
       chart:{
@@ -88,7 +88,7 @@ export class DashboardComponent {
       series: [
         {
           name: "Mi serie",
-          data: [10,0,20,0,40,0,20,6]
+          data: [10,33,22,0,89,0,0,70,0,10,0,90]
         }
       ],
       chart:{
@@ -97,7 +97,7 @@ export class DashboardComponent {
         type:"bar"
       },
       title:{
-        text:"Overt Timer"
+        text:"StandBy"
       },
       xaxis:{
         categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -130,6 +130,8 @@ export class DashboardComponent {
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
     this.noSemana = Math.ceil(days / 7);
+
+    this.valuechangeAno(this.noAno)
     this.getReqRepHorasTLS();
     
     this.dtOptions={
@@ -183,176 +185,93 @@ export class DashboardComponent {
             let totHorasanuales = (160*12);
             let totalHorasRespServicioStanBy= 0.0;
             let totalHorasRespServicioOverTime= 0.0;
+            let arrMonthsStandBy=[];
+            let arrMonthsOverTime=[];
 
             dataGraf.data.reportesGral[0].monthTls.forEach((dat: MonthTls)  => {
               totalHorasRespServicioStanBy = totalHorasRespServicioStanBy + dat.totalHoras;
+              arrMonthsStandBy.push(dat.totalHoras);
   
             });
             dataGraf.data.reportesGral[1].monthTls.forEach((dat: MonthTls)  => {
-              totalHorasRespServicioOverTime = totalHorasRespServicioOverTime + dat.totalHoras;  
+              totalHorasRespServicioOverTime = totalHorasRespServicioOverTime + dat.totalHoras; 
+              arrMonthsOverTime.push(dat.totalHoras); 
             });
 
             this.seriesStandBy= ((totalHorasRespServicioStanBy/totHorasanuales)*100);
             this.seriesOverTime= ((totalHorasRespServicioOverTime/totHorasanuales)*100);
             
-            var options = {
-              series: [this.seriesStandBy],
+            //------------------------------------------------------------------------------------
+            this.chartOptions = {
+              series: [
+                {
+                name: "Mi serie",
+                data: [90,94,90,90,30,90,90,20,0,0,0,10]
+                }
+              ],
               chart: {
-              height: 180,
-              type: "radialBar",
+              height: 230,
+              width:700,
+              type: "bar",
               toolbar: {
                   show: true   
                 }
               },
-              plotOptions: {
-              radialBar: {
-              startAngle: -100,
-              endAngle: 90,
-              hollow: {
-                margin: 0,
-                size: "50%",
-                background: "#fff",
-                image: undefined,
-                position: "front",
-                dropShadow: {
-                      enabled: true,
-                      top: 3,
-                      left: 0,
-                      blur: 4,
-                      opacity: 0.24
-                    }
-                  },
-                  track: {
-                    background: "#fff",
-                    strokeWidth: "75%",
-                    margin: 0, // margin is in pixels
-                    dropShadow: {
-                       enabled: true,
-                       top: -3,
-                       left: 0,
-                       blur: 4,
-                       opacity: 0.35
-                     }
-                   },
-                   dataLabels: {
-                    show: true,
-                    name: {
-                      offsetY: -10,
-                      show: true,
-                      color: "#888",
-                      fontSize: "15px"
-                    },
-                    value: {
-                      formatter: function(val: { toString: () => string; }) {
-                        return parseInt(val.toString(), 10).toString();
-                      },
-                      color: "#111",
-                      fontSize: "26px",
-                      offsetY:2,
-                      show: true
-                    }
-                  }
-                }
+              title:{
+                text:"StandBy"
               },
-              fill: {
-                type: "gradient",
-                gradient: {
-                  shade: "dark",
-                  type: "horizontal",
-                  shadeIntensity: 0.5,
-                  gradientToColors: ["#ABE5A1"],
-                  inverseColors: true,
-                  opacityFrom: 1,
-                  opacityTo: 1,
-                  stops: [0, 100]
-                }
-              },
-              stroke: {
-                lineCap: "round"
-              },
-              labels: ["valor"]
+              xaxis:{
+                categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+              }
             }
-            new ApexCharts(document.querySelector("#GraphSTB"), options).render();
 
-            var options = {
-              series: [this.seriesOverTime],
+            var chart = new ApexCharts(
+              document.querySelector("#GraphSTB"),
+              this.chartOptions
+            );
+
+            chart.updateSeries([{
+              name: 'Sales',
+              data: [90,94,90,90,30,90,90,20,0,0,0,10]
+            }])
+            
+            //new ApexCharts(document.querySelector("#GraphSTB"), this.chartOptions).render();
+
+            //--------------------------------------------------------------------------
+
+            this.chartOptionsOvertime = {
+              series: [
+                {
+                name: "Mi serie",
+                data: [10,4,7,0,3,9,90,0,0,0,0,90]
+                }
+              ],
               chart: {
-              height: 180,
-              type: "radialBar",
+              height: 230,
+              width:700,
+              type: "bar",
               toolbar: {
                   show: true   
                 }
               },
-              plotOptions: {
-              radialBar: {
-              startAngle: -100,
-              endAngle: 90,
-              hollow: {
-                margin: 0,
-                size: "50%",
-                background: "#fff",
-                image: undefined,
-                position: "front",
-                dropShadow: {
-                      enabled: true,
-                      top: 3,
-                      left: 0,
-                      blur: 4,
-                      opacity: 0.24
-                    }
-                  },
-                  track: {
-                    background: "#fff",
-                    strokeWidth: "75%",
-                    margin: 0, // margin is in pixels
-                    dropShadow: {
-                       enabled: true,
-                       top: -3,
-                       left: 0,
-                       blur: 4,
-                       opacity: 0.35
-                     }
-                   },
-                   dataLabels: {
-                    show: true,
-                    name: {
-                      offsetY: -10,
-                      show: true,
-                      color: "#888",
-                      fontSize: "15px"
-                    },
-                    value: {
-                      formatter: function(val: { toString: () => string; }) {
-                        return parseInt(val.toString(), 10).toString();
-                      },
-                      color: "#111",
-                      fontSize: "26px",
-                      offsetY:2,
-                      show: true
-                    }
-                  }
-                }
+              title:{
+                text:"Over Timer"
               },
-              fill: {
-                type: "gradient",
-                gradient: {
-                  shade: "dark",
-                  type: "horizontal",
-                  shadeIntensity: 0.5,
-                  gradientToColors: ["#ABE5A1"],
-                  inverseColors: true,
-                  opacityFrom: 1,
-                  opacityTo: 1,
-                  stops: [0, 100]
-                }
-              },
-              stroke: {
-                lineCap: "round"
-              },
-              labels: ["valor"]
+              xaxis:{
+                categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+              }
             }
-            new ApexCharts(document.querySelector("#GraphOVT"), options).render();
-            
+            //new ApexCharts(document.querySelector("#GraphOVT"), this.chartOptionsOvertime).render();
+            var chart = new ApexCharts(
+              document.querySelector("#GraphOVT"),
+              this.chartOptionsOvertime
+            );
+
+            chart.updateSeries([{
+              name: 'Sales',
+              data: [10,4,7,0,3,9,90,0,0,0,0,90]
+            }])
+
 
 
 

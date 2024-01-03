@@ -7,7 +7,7 @@ import { MAprobador } from 'src/app/Models/MAprobador';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
-
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-approver',

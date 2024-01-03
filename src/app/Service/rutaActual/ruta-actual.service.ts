@@ -58,7 +58,8 @@ export class RutaActualService {
         
         
         setTimeout(() => {
-          this.rutaActual =  '/dashboard';//this.router.url;
+          this.rutaActual =  '/dashboard';
+          //this.router.url;
           console.log(' this.rutaActual: ',  this.rutaActual);
           this._rutaActuales$.next(this.rutaActual);
           console.log(this.rutaActual);
