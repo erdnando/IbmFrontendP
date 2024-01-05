@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { StorageService } from '../storage-service/storage.service';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class RutaActualService {
         const urlParams = new URLSearchParams(window.location.search);
         const xmlParam = urlParams.get('uxm_erd');
         console.log("parametro obtenido:"+ xmlParam);
-        console.log('version 1.0.0.4');
+        console.log('version 1.0.0.5');
         if(xmlParam!=null){
           console.log("flujo sso");
           
@@ -35,10 +36,15 @@ export class RutaActualService {
         },
         queryParamsHandling: 'merge'
         });
-       //decode param
-        //TODO
-
-        //add to local storage
+       
+       
+        //decode param base 64 y obtener los valores
+        
+        //validar que el usuario (email) exista
+        //si no existe, insertarlo via el api
+        //si si existe, no hacer nada
+     
+        //actualizar local storage
         const datosMapeados = {
           "idUser":"3696718d-d05a-4831-96ce-ed500c5bbc97",
           "email":"felipe@gmail.com",
