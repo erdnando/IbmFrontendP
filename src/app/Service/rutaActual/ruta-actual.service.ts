@@ -29,11 +29,15 @@ export class RutaActualService {
         //catch xml data 
         const urlParams = new URLSearchParams(window.location.search);
         const xmlParam = urlParams.get('uxm_erd');
+        
+
         console.log("parametro obtenido:"+ xmlParam);
         console.log('version 1.0.0.5');
         if(xmlParam!=null){
           console.log("flujo sso");
-          
+          //TODO
+          //si el contenido emieza con ERROR, redirigir a la pagina d eerro con el mensaje de error
+          //si no, continuar...
 
 
         //remove from query string uxm_erd
@@ -70,7 +74,7 @@ export class RutaActualService {
           "email":this.objJson.email,
           "nameUser":this.objJson.nombre,
           "surnameUser":this.objJson.lastName,
-          "employeeCode":this.objJson.nameid,
+          "employeeCode":this.objJson.employeeCode,
           "roleEntityId":this.objJson.roleEntityId,
           "countryEntityId":this.objJson.countryEntityId,
           "countryEntity":{"idCounty":this.objJson.countryEntityId,
