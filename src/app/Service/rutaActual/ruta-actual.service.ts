@@ -32,7 +32,7 @@ export class RutaActualService {
         
 
         console.log("parametro obtenido:"+ xmlParam);
-        console.log('version 1.0.0.5');
+        console.log('version 1.0.0.6');
         if(xmlParam!=null){
           console.log("flujo sso");
           //TODO
