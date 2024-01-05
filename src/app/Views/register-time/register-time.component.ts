@@ -142,7 +142,9 @@ export class RegisterTimeComponent {
 
   async enviar() {
     let todayWithPipe = null;
-    todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy/MM/dd');
+    //2023-12-14T00:00:00.0000000
+   // todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy/MM/dd');
+    todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd 00:00:00:0000');
 
     this.MHours.userEntityId = this.MUser.idUser as Guid;
     this.MHours.startDate = ((todayWithPipe?.toString() as unknown as string) + ' ' + this.horaInicio.value) as string;
