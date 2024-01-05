@@ -4,6 +4,8 @@ import { Observable } from "rxjs";
 import { MResponse } from "src/app/Models/MResponse";
 import { Guid } from 'guid-typescript';
 import { Global } from 'src/app/global';
+import { MLogin } from 'src/app/Models/MLogin';
+import { MUserCreate } from 'src/app/Models/MUserCreate';
 
 
 @Injectable({
@@ -23,5 +25,19 @@ export class UserConsultByCodeEmService {
     console.log(direccion);
     return this.http.get<MResponse>(direccion);
 
+  }
+  GetUserByEmail(emailUser: string):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"User/GetByEmail?EmailUser=" + emailUser;
+    console.log(direccion);
+    return this.http.get<MResponse>(direccion);
+
+  }
+
+  PostNewUser(NewUsr: MUserCreate):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"User/create";
+    console.log(direccion);
+    return this.http.post<MResponse>(direccion,NewUsr);
   }
 }

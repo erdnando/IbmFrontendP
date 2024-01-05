@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, map } from 'rxjs';
 import { StorageService } from '../storage-service/storage.service';
 import { Guid } from 'guid-typescript';
+import { UserConsultByCodeEmService } from 'src/app/Views/user/services/userConsultByCodeEm/user-consult-by-code-em.service';
+import { MUserCreate } from 'src/app/Models/MUserCreate';
+import { MLogin } from 'src/app/Models/MLogin';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +16,13 @@ export class RutaActualService {
   private _rutaActuales$ = new Subject<any>();
   private _datosPais$ = new Subject<any>();
   private _globalVar : string = "";
+  private ExisteUsr: boolean = false;
+  private objJson:any;
+  NewUser : MUserCreate;
 
 
-  constructor(private router: Router,private storageService: StorageService) {
+  constructor(private router: Router,private storageService: StorageService, private UserCosult:UserConsultByCodeEmService) {
+    this.NewUser = {} as MUserCreate;
     this.router.events.subscribe((evento) => {
       if (evento instanceof NavigationEnd) {
 
@@ -39,16 +46,19 @@ export class RutaActualService {
        
        
         //decode param base 64 y obtener los valores
-        var encodedStringAtoB = "eyJlbWFpbCI6Im9tYXJhbHZhcmV6MDFAZ21haWwuY29tIiwibm9tYnJlIjoib21hciIsImxhc3ROYW1lIjoiQWx2YXJleiIsImxvY2F0aW9uIjoiTWV4aWNvIiwidXBuIjoiYXNkc2EiLCJjb21wYW55IjoiT2NpIiwiZGVwYXJ0bWVudCI6IkZpbmFuemFzIiwibmFtZWlkIjoic2RhcyIsInBob25lIjoiYXNkYSJ9";
+        //var encodedStringAtoB = "eyJlbWFpbCI6Im9tYXJhbHZhcmV6MDFAZ21haWwuY29tIiwibm9tYnJlIjoib21hciIsImxhc3ROYW1lIjoiQWx2YXJleiIsImxvY2F0aW9uIjoiTWV4aWNvIiwidXBuIjoiYXNkc2EiLCJjb21wYW55IjoiT2NpIiwiZGVwYXJ0bWVudCI6IkZpbmFuemFzIiwibmFtZWlkIjoic2RhcyIsInBob25lIjoiYXNkYSJ9";
 
         // Decode the String
-        var decodedStringAtoB = atob(encodedStringAtoB);
+        var decodedStringAtoB = atob(xmlParam);
         console.log("decodificado: " + decodedStringAtoB);
-        
+       
         //validar que el usuario (email) exista
         // decodificado: {"email":"omaralvarez01@gmail.com","nombre":"omar","lastName":"Alvarez","location":"Mexico","upn":"asdsa","company":"Oci","department":"Finanzas","nameid":"sdas","phone":"asda"}
-        var objJson = JSON.parse(decodedStringAtoB);
-        console.log("ObjetoJason: " + objJson.email);
+        this.objJson = JSON.parse(decodedStringAtoB);
+        console.log("ObjetoJason: " + this.objJson.email);
+        
+
+        //this.GetUser(this.objJson.email);
 
 
         //si no existe, insertarlo via el api
@@ -56,17 +66,17 @@ export class RutaActualService {
      
         //actualizar local storage
         const datosMapeados = {
-          "idUser":"3696718d-d05a-4831-96ce-ed500c5bbc97",
-          "email":"felipe@gmail.com",
-          "nameUser":"Felipe",
-          "surnameUser":"Rodriguez",
-          "employeeCode":"1",
-          "roleEntityId":"a8781b60-0bda-4e9d-a8c1-114bebd1877e",
-          "countryEntityId":"908465f1-4848-4c86-9e30-471982c01a2d",
-          "countryEntity":{"idCounty":"908465f1-4848-4c86-9e30-471982c01a2d",
-          "nameCountry":"Colombia"},
-          "rolEntity":{"idRole":"a8781b60-0bda-4e9d-a8c1-114bebd1877e",
-          "nameRole":"Super Administrador",
+          "idUser":this.objJson.idUser,
+          "email":this.objJson.email,
+          "nameUser":this.objJson.nombre,
+          "surnameUser":this.objJson.lastName,
+          "employeeCode":this.objJson.nameid,
+          "roleEntityId":this.objJson.roleEntityId,
+          "countryEntityId":this.objJson.countryEntityId,
+          "countryEntity":{"idCounty":this.objJson.countryEntityId,
+          "nameCountry":this.objJson.nameCountry},
+          "rolEntity":{"idRole":this.objJson.roleEntityId,
+          "nameRole":this.objJson.nameRole,
           "menuEntity":null}};
         this.storageService.guardarDatosMapeados(datosMapeados)
     
@@ -120,5 +130,7 @@ export class RutaActualService {
     get datosPais(){
       return this._datosPais$.asObservable();
     }
+
+    
 
 }
