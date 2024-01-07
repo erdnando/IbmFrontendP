@@ -1,3 +1,4 @@
+import {LOCALE_ID} from '@angular/core';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
@@ -31,6 +32,9 @@ import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.servic
 import * as XLSX from 'xlsx';
 import { PopUpHorarioComponent } from '../pop-up-horario/pop-up-horario.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+
+
+
 
 interface MiObjeto {
   [key: string]: any;
@@ -119,6 +123,8 @@ export class ParametersComponent implements OnInit {
     private consultUserByEmployee: UserConsultByCodeEmService,
     private rutaActual: RutaActualService
   ) {
+
+    
     this.MListCountry = [];
     this.EntityFestivos = [];
     this.MFestivosList = [];
@@ -326,6 +332,42 @@ export class ParametersComponent implements OnInit {
     }
   }
 
+  CommaFormatted(event: { which: number; }) {
+    // skip for arrow keys
+    if(event.which >= 37 && event.which <= 40) return;
+   
+    // format number
+    if (this.limitWeek) {
+      let aux = this.limitWeek.value!.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+     this.limitWeek.setValue(aux);
+    }}
+   
+   numberCheck (args: { key: string; }) {
+   if (args.key === 'e' || args.key === '+' || args.key === '-') {
+     return false;
+   } else {
+     return true;
+   }
+  }
+
+  formatComma(n: string) {
+    console.log(n);
+    if(!isNaN(Number(n))) return Number(n);
+
+    'use strict';
+    n = n.replace(/\./g, '').replace(',', '.');
+    console.log(n);
+    return Number(n);
+}
+
+  ngOnChanges(changes: any) {
+        
+   // this.doSomething(changes.categoryId.currentValue);
+    // You can also use categoryId.previousValue and 
+    // categoryId.firstChange for comparing old and new values
+    
+}
+
   // METODO ACTULIZAR HORAS PARAMETROS
   updateParameters() {
     if (this.pais.value !== null) {
@@ -341,9 +383,9 @@ export class ParametersComponent implements OnInit {
 
       this.MParameter.countryEntityId = this.pais.value as unknown as Guid;
       this.MParameter.targetTimeDay = Number(this.limitDay.value);
-      this.MParameter.targetHourWeek = Number(this.limitWeek.value);
-      this.MParameter.targetHourMonth = Number(this.limitMonth.value);
-      this.MParameter.targetHourYear = Number(this.limitYear.value);
+      this.MParameter.targetHourWeek = Number(this.formatComma(this.limitWeek.value!));
+      this.MParameter.targetHourMonth = Number(this.formatComma(this.limitMonth.value!));
+      this.MParameter.targetHourYear = Number(this.formatComma(this.limitYear.value!));
       this.MParameter.typeLimits = 0;
 
       this.apiParameters

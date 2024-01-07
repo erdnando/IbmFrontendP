@@ -195,8 +195,8 @@
                                 <mat-form-field style="text-align: center; width: 95%; height: 70px;"
                                     appearance="outline">
                                     <mat-label> Limites legales semanales: </mat-label>
-                                    <input matInput type="number" [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
-                                        name="targetHourWeek">
+                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="."  [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
+                                        name="targetHourWeek"  >
                                 </mat-form-field>
 
                             </td>
@@ -204,7 +204,7 @@
                                 <mat-form-field style="text-align: right; width: 95%; height: 70px;"
                                     appearance="outline">
                                     <mat-label> Limites legales mensuales: </mat-label>
-                                    <input matInput type="number" [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
+                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
                                         name="targetHourMonth">
                                 </mat-form-field>
                             </td>
@@ -212,7 +212,7 @@
                                 <mat-form-field style="text-align: right; width: 95%; height: 70px;"
                                     appearance="outline">
                                     <mat-label> Limites legales anuales: </mat-label>
-                                    <input matInput type="number" [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
+                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
                                         name="targetHourYear">
                                 </mat-form-field>
                             </td>
@@ -276,7 +276,7 @@
                                 <mat-form-field style="text-align: center; width: 95%; height: 70px;"
                                     appearance="outline">
                                     <mat-label> Limites legales semanales: </mat-label>
-                                    <input matInput type="number" [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
+                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
                                         name="targetHourWeek">
                                 </mat-form-field>
 
@@ -285,7 +285,7 @@
                                 <mat-form-field style="text-align: right; width: 95%; height: 70px;"
                                     appearance="outline">
                                     <mat-label> Limites legales mensuales: </mat-label>
-                                    <input matInput type="number" [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
+                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
                                         name="targetHourMonth">
                                 </mat-form-field>
                             </td>
@@ -293,7 +293,7 @@
                                 <mat-form-field style="text-align: right; width: 95%; height: 70px;"
                                     appearance="outline">
                                     <mat-label> Limites legales anuales: </mat-label>
-                                    <input matInput type="number" [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
+                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
                                         name="targetHourYear">
                                 </mat-form-field>
                             </td>

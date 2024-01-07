@@ -14,6 +14,8 @@ import { BodyComponent } from './Plantillas/sidenav/body/body.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import {CookieService} from 'ngx-cookie-service';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
