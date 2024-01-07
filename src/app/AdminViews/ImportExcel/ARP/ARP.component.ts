@@ -70,6 +70,7 @@ export class ARPComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error:  Uno o más archivos no pasaron la validación, solo se permiten archivos .xls o .xlsx',
+          confirmButtonColor: '#0A6EBD',
         });
         return false;
       } 
@@ -90,6 +91,7 @@ export class ARPComponent {
       Swal.fire({
         icon: 'success',
         title: 'Carga de archivos completada.',
+        confirmButtonColor: '#0A6EBD',
       });
   }, 4 * 60 * 1000);
   }
@@ -179,6 +181,7 @@ export class ARPComponent {
   //           icon: 'error',
   //           title: 'Oops...',
   //           text: 'Error:  Se ha seleccionado un archivo vacio.',
+  //           confirmButtonColor: '#0A6EBD',
   //         });
   //         return
   //       }
@@ -275,6 +278,7 @@ export class ARPComponent {
               Swal.fire({
                 icon: 'success',
                 title: 'Carga de archivo completada.',
+                confirmButtonColor: '#0A6EBD',
               });
               this.fileInput4.nativeElement.value = null;
             }else{
@@ -282,6 +286,7 @@ export class ARPComponent {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                confirmButtonColor: '#0A6EBD',
               });
               this.fileInput4.nativeElement.value = null;
             }
@@ -294,6 +299,7 @@ export class ARPComponent {
             icon: 'error',
             title: 'Oops...',
             text: 'Error:  Archivo vacio.',
+            confirmButtonColor: '#0A6EBD',
           });
           this.botonHorario = false;
         }

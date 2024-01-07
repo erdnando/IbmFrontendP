@@ -25,7 +25,7 @@ export class PopupFestivosComponent {
   onDateChange(event: any) {
 
     this.dates= [];
-
+    console.log("on onDateChange");
     let date = new Date(this.date.value as unknown as Date);
     let day = date.getDate(); 
     let month = date.getMonth() + 1; 
@@ -39,13 +39,14 @@ let monthStr = month < 10 ? '0' + month.toString() : month.toString();
     this.dates.push(year)
     let retorno = this.guardar.guardarDiasFestivos(this.dates)
     if (retorno){
-      console.log(this.dates+" esto es en el popUp")
+      console.log(this.dates+" esto es en el popUp");
     }
     else{
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Estos datos ya existen',
+        confirmButtonColor: '#0A6EBD',
       });
     }
     

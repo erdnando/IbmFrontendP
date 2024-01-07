@@ -72,6 +72,7 @@ export class PopUpAddExceptionComponent {
         Swal.fire({
           icon: 'success',
           title: 'Excepción Guardada Correctamente',
+          confirmButtonColor: '#0A6EBD',
         });
         this.dialogRef.close();
       } else {
@@ -79,6 +80,7 @@ export class PopUpAddExceptionComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error, los datos no se pudieron cambiar',
+          confirmButtonColor: '#0A6EBD',
         });
       }
     }) ;

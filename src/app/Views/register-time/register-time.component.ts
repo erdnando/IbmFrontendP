@@ -117,6 +117,7 @@ export class RegisterTimeComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'El rango de horas ingresado no es correcto.',
+          confirmButtonColor: '#0A6EBD',
         });
         this.horaFin.reset();
         this.cantidadHoras = 0;
@@ -133,6 +134,7 @@ export class RegisterTimeComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'El rango de horas ingresado no es correcto.',
+          confirmButtonColor: '#0A6EBD',
         });
         this.horaFin.reset();
       }
@@ -164,12 +166,14 @@ export class RegisterTimeComponent {
             icon: 'error',
             title: 'Oops...',
             text: 'Error en el registro de horas (registro existente).',
+            confirmButtonColor: '#0A6EBD',
           });
         } else {
           if (data.data || data) {
             Swal.fire({
               icon: 'success',
               title: 'Registro de horas se genero correctamente',
+              confirmButtonColor: '#0A6EBD',
             });
             this.fecha.reset();
             this.fecha.reset();
@@ -183,6 +187,7 @@ export class RegisterTimeComponent {
               icon: 'error',
               title: 'Oops...',
               text: 'Error en el registro de horas.',
+              confirmButtonColor: '#0A6EBD',
             });
           }
         }
@@ -212,6 +217,7 @@ export class RegisterTimeComponent {
         icon: 'error',
         title: 'Oops...',
         text: 'XXXXXXXX.',
+        confirmButtonColor: '#0A6EBD',
       });
       this.horaFin = new FormControl();
       this.MHours.countHours = '0';

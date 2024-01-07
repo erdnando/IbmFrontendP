@@ -86,6 +86,7 @@ Login(){
             Swal.fire({
               icon: 'success',
               title: 'Bienvenido',
+              confirmButtonColor: '#0A6EBD',
             });
             
             this.router.navigate(['dashboard']);
@@ -94,6 +95,7 @@ Login(){
               icon: 'error',
               title: 'Oops...',
               text: 'Error en el inicio de sesión, correo o contraseña incorrectos.',
+              confirmButtonColor: '#0A6EBD',
             });
           }
         });

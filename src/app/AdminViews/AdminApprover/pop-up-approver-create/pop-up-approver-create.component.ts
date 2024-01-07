@@ -41,6 +41,7 @@ export class PopUpApproverCreateComponent {
         Swal.fire({
           icon: 'success',
           title: 'Cambios Guardados Correctamente',
+          confirmButtonColor: '#0A6EBD',
         });
         this.refreshClients.loadApproversRefresh();
         this.dialogRef.close();
@@ -49,6 +50,7 @@ export class PopUpApproverCreateComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error, los datos no se pudieron cambiar',
+          confirmButtonColor: '#0A6EBD',
         });
       }
     }) ;

@@ -23,6 +23,7 @@ import { ParameterUpdateService } from 'src/app/Views/parameters/services/parame
 import { MFestivos } from 'src/app/Models/MFestivos';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { FestivosCreateService } from 'src/app/Views/parameters/services/festivosCreate/festivos-create.service';
+import { FestivosDeleteService } from 'src/app/Views/parameters/services/festivosDelete/festivos-delete.service';
 import * as _moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { HorarioCreateService } from 'src/app/Views/parameters/services/horarioCreate/horario-create.service';
@@ -119,6 +120,7 @@ export class ParametersComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private serviceList: ObtenerlistaService,
     private apiFestivosCreate: FestivosCreateService,
+    private apiFestivosDelete: FestivosDeleteService,
     private horarioCreate: HorarioCreateService,
     private consultUserByEmployee: UserConsultByCodeEmService,
     private rutaActual: RutaActualService
@@ -210,6 +212,49 @@ export class ParametersComponent implements OnInit {
     this.storageFestivos.eliminarFestivo(festivo);
   }
 
+  eliminarFestivoDB(festivo: any) {
+
+   // this.storageFestivos.eliminarFestivo(festivo);
+
+    this.apiFestivosDelete
+    .PostDeleteFestivo(festivo)
+    .subscribe((data) => {
+      if (data.data) {
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Acción completada.',
+          confirmButtonColor: '#0A6EBD',
+        });
+
+        this.suscriptionFestivosdb = this.serviceList
+          .loadFestivos(this.pais.value as unknown as string)
+          .subscribe((festivo) => {
+            festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
+              - new Date(b.diaFestivo).getTime());
+            this.MFestivosList = festivo;
+          });
+        this.agregarFestivos = false;
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error, los datos no se pudieron borrar',
+          confirmButtonColor: '#0A6EBD',
+        });
+      }
+    });
+
+  this.storageFestivos.limpiarDiasFestivos();
+  this.festivos = [];
+  this.EntityFestivos = [];
+  this.cdr.detectChanges();
+
+  this.storageFestivos.obtenerDiasFestivos().subscribe((festivos) => {
+    this.festivos = festivos;
+  });
+  }
+
   // METODO PARA AGREGAR FESTIVOS A LA LISTA
   openDialog() {
     this.agregarFestivos = true;
@@ -236,6 +281,7 @@ export class ParametersComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Creacion completada.',
+            confirmButtonColor: '#0A6EBD',
           });
           this.suscriptionFestivosdb = this.serviceList
             .loadFestivos(this.pais.value as unknown as string)
@@ -249,7 +295,8 @@ export class ParametersComponent implements OnInit {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Error, los datos no se pudieron crear',
+            text: 'Error, los datos no se pudieron crear, por que ya existe esa fecha registrada',
+            confirmButtonColor: '#0A6EBD',
           });
         }
       });
@@ -395,12 +442,16 @@ export class ParametersComponent implements OnInit {
             Swal.fire({
               icon: 'success',
               title: 'Actualizacion completada correctamente.',
+              confirmButtonColor: '#0A6EBD',
             });
+
+            //reload form
           } else {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'Error, los datos no se pudieron cambiar',
+              confirmButtonColor: '#0A6EBD',
             });
           }
         });
@@ -409,6 +460,7 @@ export class ParametersComponent implements OnInit {
         icon: 'error',
         title: 'Oops...',
         text: 'Primero debe seleccionar un pais.',
+        confirmButtonColor: '#0A6EBD',
       });
     }
   }
@@ -428,6 +480,7 @@ export class ParametersComponent implements OnInit {
         icon: 'error',
         title: 'Oops...',
         text: 'Primero debe seleccionar un pais.',
+        confirmButtonColor: '#0A6EBD',
       });
     }
   }
@@ -459,6 +512,7 @@ export class ParametersComponent implements OnInit {
             icon: 'error',
             title: 'Oops...',
             text: 'El usuario no existe.',
+            confirmButtonColor: '#0A6EBD',
           });
         }
       });
@@ -570,6 +624,7 @@ export class ParametersComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Creacion  completada correctamente.',
+            confirmButtonColor: '#0A6EBD',
           });
           this.resetEditable();
           this.agregarHorariosexcel = false;
@@ -584,6 +639,7 @@ export class ParametersComponent implements OnInit {
             icon: 'error',
             title: 'Oops...',
             text: 'Error, los datos no se pudieron cargar',
+            confirmButtonColor: '#0A6EBD',
           });
         }
       });
@@ -592,6 +648,7 @@ export class ParametersComponent implements OnInit {
         icon: 'error',
         title: 'Oops...',
         text: 'Primero debe registrar un horario',
+        confirmButtonColor: '#0A6EBD',
       });
     }
     
@@ -687,6 +744,7 @@ export class ParametersComponent implements OnInit {
     }
   }
 
+  //subir plantilla
   manejarArchivo(event: any) {
     const target: DataTransfer = <DataTransfer>(event.target);
 
@@ -701,7 +759,7 @@ export class ParametersComponent implements OnInit {
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       /* Guarda los datos en un array */
-      const data = <Aoa>(XLSX.utils.sheet_to_json(ws, {header: 1}));
+      const data = <Aoa>(XLSX.utils.sheet_to_json(ws, {header: 1,raw: true,dateNF:'yyyy-mm-dd'}));
       /* Convierte el array a una lista de objetos */
       const listaObjetos = data.slice(1).map(row => {
         console.log('Fila:', row);  

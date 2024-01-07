@@ -102,8 +102,10 @@
                     <div *ngSwitchCase="true" class="fest">
                         <div style="overflow: auto; max-height: 300x;">
                             <ul id="date-list" class="list-fest">
-                                <li style="margin-top: 5px; width: 80%; ;" *ngFor="let festivo of festivos">{{festivo}}
-                                    <button class="button-delete" (click)="eliminarFestivo(festivo)">Eliminar</button>
+                                <li style="margin-top: 0px;margin-bottom: 5px; width: 80%; ;" *ngFor="let festivo of festivos">{{festivo}}
+                                    <button class="delete-icon icon-grow-shadow" (click)="eliminarFestivo(festivo)">
+                                        <mat-icon style="position: absolute;top: 5px;left:10px">remove_circle</mat-icon>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -111,9 +113,12 @@
 
                     <ng-container *ngSwitchCase="false">
                         <div class="fest" *ngIf="MFestivosList.length; else noData">
-                            <ul id="date-list" class="list-fest" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                                <li style="margin-top: 5px; width: 90%;" *ngFor="let festivo of MFestivosList">
+                            <ul id="date-list" class="list-fest" style="display: flex; justify-content:start ; align-items: center; flex-direction: column;">
+                                <li style="margin-top: 0px;margin-bottom: 5px; width: 90%;" *ngFor="let festivo of MFestivosList">
                                     {{festivo.diaFestivo | date:'yyyy-MM-dd'}}
+                                    <button class="delete-icon icon-grow-shadow"  (click)="eliminarFestivoDB(festivo)">
+                                        <mat-icon style="position: absolute;top: 5px;left:10px">remove_circle</mat-icon>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

@@ -72,6 +72,7 @@ export class PopUpAprovveComponent {
         Swal.fire({
           icon: 'success',
           title: 'Aprobacion creada',
+          confirmButtonColor: '#0A6EBD',
         });
         this.dialogRef.close();  
         this.obtnerLista.loadApproverTime(this.idUser)
@@ -80,6 +81,7 @@ export class PopUpAprovveComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error, revisa los datos.',
+          confirmButtonColor: '#0A6EBD',
         });
       }
     }) ;

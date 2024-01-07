@@ -104,6 +104,7 @@ export class PopUpHorarioComponent {
             Swal.fire({
               icon: 'success',
               title: 'Actualizacion completada correctamente.',
+              confirmButtonColor: '#0A6EBD',
             });
             this.dialogRef.close();
             this.mHorarioList = [];
@@ -112,6 +113,7 @@ export class PopUpHorarioComponent {
               icon: 'error',
               title: 'Oops...',
               text: 'Error, los datos no se pudieron cargar',
+              confirmButtonColor: '#0A6EBD',
             });
           }
         });
@@ -120,6 +122,7 @@ export class PopUpHorarioComponent {
         icon: 'error',
         title: 'Oops...',
         text: 'Error, esta intentando car gar un horario vacio.',
+        confirmButtonColor: '#0A6EBD',
       });
     }
 

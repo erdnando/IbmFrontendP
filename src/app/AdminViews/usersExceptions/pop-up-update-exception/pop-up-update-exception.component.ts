@@ -76,6 +76,7 @@ export class PopUpUpdateExceptionComponent {
         Swal.fire({
           icon: 'success',
           title: 'Excepción Editada Correctamente',
+          confirmButtonColor: '#0A6EBD',
         });
         this.obtnerLista.loadListUsersExceptions();
         this.dialogRef.close();
@@ -84,6 +85,7 @@ export class PopUpUpdateExceptionComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error, los datos no se pudieron cambiar',
+          confirmButtonColor: '#0A6EBD',
         });
       }
     }) ;

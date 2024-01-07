@@ -321,7 +321,8 @@ export class DashboardComponent {
       Swal.fire({
         icon: 'warning',
         title: 'Atención!',
-        text:'El número de semana deberá estar entre 1 y 52'
+        text:'El número de semana deberá estar entre 1 y 52',
+        confirmButtonColor: '#0A6EBD',
         });
     }else {
       this.noSemana = newValue;
@@ -337,7 +338,8 @@ export class DashboardComponent {
       Swal.fire({
         icon: 'warning',
         title: 'Atención!',
-        text:'El número de año deberá ser mayor 2023'
+        text:'El número de año deberá ser mayor 2023',
+        confirmButtonColor: '#0A6EBD',
     });
     }else {
       
@@ -597,6 +599,7 @@ export class DashboardComponent {
           // Swal.fire({
           //   icon: 'success',
           //   title: 'Bienvenido',
+          //   confirmButtonColor: '#0A6EBD',
           // });
           
           
@@ -605,6 +608,7 @@ export class DashboardComponent {
           //   icon: 'error',
           //   title: 'Oops...',
           //   text: 'Error en el inicio de sesión, correo o contraseña incorrectos.',
+          //   confirmButtonColor: '#0A6EBD',
           // });
         }
       },
@@ -613,6 +617,7 @@ export class DashboardComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error al llamar la API: ' + error.message,
+          confirmButtonColor: '#0A6EBD',
         });
       })      
     } catch (error) {
@@ -620,6 +625,7 @@ export class DashboardComponent {
         icon: 'error',
         title: 'Oops...',
         text: 'Error ' + error,
+        confirmButtonColor: '#0A6EBD',
       });
     }  
   }
@@ -722,6 +728,7 @@ export class DashboardComponent {
           icon: 'error',
           title: 'Oops...',
           text: 'Error al llamar la API: ' + error.message,
+          confirmButtonColor: '#0A6EBD',
         });
       })      
     } catch (error) {
@@ -729,6 +736,7 @@ export class DashboardComponent {
         icon: 'error',
         title: 'Oops...',
         text: 'Error ' + error,
+        confirmButtonColor: '#0A6EBD',
       });
     }  
   }
