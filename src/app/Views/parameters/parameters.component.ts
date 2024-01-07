@@ -328,6 +328,55 @@ export class ParametersComponent implements OnInit {
     };
   }
 
+  reloadParameters(_idCountry:string){
+   // this.cdr.detectChanges();
+
+    this.agregarFestivos = false;
+    
+
+    if (this.pais.value !== null) {
+      this.codeEmployed.reset();
+      this.date.reset();
+      this.mHorarioList = []
+      this.habilitarHorario = false;
+      this.habilitarHorariobyFecha = false;
+      this.habilitarExcel = true
+      this.idCountryGlobal = _idCountry;
+      let idCountry: string = _idCountry;
+      let guidIdCountry: Guid = Guid.parse(idCountry);
+      this.apiParametersConsult
+        .GetParametersConsult(guidIdCountry)
+        .pipe(map((data: MiObjetoApp) => data))
+        .subscribe((data) => {
+          let listap = data['data'];
+
+          if (this.pais.value !== '') {
+            this.suscriptionFestivosdb = this.serviceList
+              .loadFestivos(this.pais.value as unknown as string)
+              .subscribe((festivo) => {
+                festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
+                  - new Date(b.diaFestivo).getTime());
+                this.MFestivosList = festivo;
+              });
+          }
+ 
+          this.ListparametersStand = [];
+          this.ListparametersOver = [];
+
+          for (let item of listap) {
+            if (item.typeHours == 0) {
+              this.ListparametersStand.push(item);
+              this.idParametersStand = item.idParametersEntity;
+            } else {
+              this.ListparametersOver.push(item);
+              this.idParametersOver = item.idParametersEntity;
+            }
+          }
+        });
+    } else {
+    }
+  }
+    
   
 
   select(plan: any) {
@@ -446,6 +495,10 @@ export class ParametersComponent implements OnInit {
             });
 
             //reload form
+            //this.MParameter.countryEntityId
+           this.reloadParameters(this.MParameter.countryEntityId.toString());
+
+            //---------------------------------
           } else {
             Swal.fire({
               icon: 'error',
