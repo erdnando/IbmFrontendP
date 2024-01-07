@@ -351,7 +351,7 @@
 
                     <legend>Turnos: </legend>
 
-                    <mat-table [dataSource]="Datos" *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha  && !this.agregarHorariosexcel" >
+                    <mat-table [dataSource]="Datos" *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha  && !this.agregarHorariosexcel" #tabla1>
 
                         <!-- Dias -->
                         <ng-container matColumnDef="dias">
@@ -361,7 +361,7 @@
                         <!-- inicio  -->
                         <ng-container matColumnDef="inicio">
                             <mat-cell   *matCellDef="let element">
-                                <input *ngIf="element.editable" type="time" [formControl]="horaInicio">
+                                <input *ngIf="element.editable" type="time" [formControl]="horaInicio" (change)="guardarValorInicio([element.day])">
                             </mat-cell>
                         </ng-container>
 
@@ -381,7 +381,7 @@
                         <!-- Checkbox -->
     <ng-container matColumnDef="checkbox">
         <mat-cell *matCellDef="let element">
-            <mat-checkbox (change)="element.editable = $event.checked"></mat-checkbox>
+            <mat-checkbox (change)="element.editable = $event.checked; guardarValorInicio([element.day])" ></mat-checkbox>
         </mat-cell>
     </ng-container>
 
