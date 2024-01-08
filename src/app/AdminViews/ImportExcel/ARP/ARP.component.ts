@@ -85,9 +85,11 @@ export class ARPComponent {
       this.botonARP = false;
       this.botonSTE = false;
       this.botonTSE = false;
+      this.botonHorario=false;
       this.fileInput1.nativeElement.value = null;
       this.fileInput2.nativeElement.value = null;
       this.fileInput3.nativeElement.value = null;
+      this.fileInput4.nativeElement.value = null;
       Swal.fire({
         icon: 'success',
         title: 'Carga de archivos completada.',
@@ -380,6 +382,7 @@ export class ARPComponent {
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
     }
+    this.barraProgreso()
   }
 
 
