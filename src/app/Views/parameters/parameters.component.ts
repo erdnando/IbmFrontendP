@@ -1,4 +1,4 @@
-import {LOCALE_ID} from '@angular/core';
+import {LOCALE_ID, ViewChild} from '@angular/core';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { CalendarOptions } from '@fullcalendar/core'; // useful for typechecking
@@ -33,6 +33,8 @@ import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.servic
 import * as XLSX from 'xlsx';
 import { PopUpHorarioComponent } from '../pop-up-horario/pop-up-horario.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTable } from '@angular/material/table';
+import { CdkRowDef } from '@angular/cdk/table';
 
 
 
@@ -52,7 +54,9 @@ type Aoa = any[][];
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.css'],
 })
+
 export class ParametersComponent implements OnInit {
+  
   // VARIABLES
   MListCountry: MCountryEntity[];
   ExcelData: any;
@@ -95,13 +99,13 @@ export class ParametersComponent implements OnInit {
   campoActivar = false;
 
   Datos = [
-    { day: 'Lunes', horaInicio: '8:00', horaFin: '5:00', editable: false },
-    { day: 'Martes', horaInicio: '8:00', horaFin: '5:00', editable: false },
-    { day: 'Miércoles', horaInicio: '8:00', horaFin: '5:00', editable: false },
-    { day: 'Jueves', horaInicio: '8:00', horaFin: '5:00', editable: false },
-    { day: 'Viernes', horaInicio: '8:00', horaFin: '5:00', editable: false },
-    { day: 'Sábado', horaInicio: '8:00', horaFin: '5:00', editable: false },
-    { day: 'Domingo', horaInicio: '8:00', horaFin: '5:00', editable: false },
+    { day: 'Lunes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Martes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Miércoles', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Jueves', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Viernes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Sábado', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Domingo', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
   ];
 
   Seasons = [
@@ -109,6 +113,8 @@ export class ParametersComponent implements OnInit {
   ];
 
   columnasAMostrar = ['dias', 'inicio','a', 'fin', 'checkbox'];
+
+  @ViewChild(MatTable) tabla1!: MatTable<HorarioNew>;
 
 
   constructor(
@@ -577,6 +583,7 @@ export class ParametersComponent implements OnInit {
   valoresInicio: { [dia: string]: string[] } = {};
   mHorario: MCreateHorario;
   mHorarioList: MCreateHorario[] = [];
+  mHorarioListExcel: MCreateHorario[] = [];
   mHoraioConsult: MCreateHorario[] = [];
   semanaAno: string = '';
 
@@ -623,8 +630,10 @@ export class ParametersComponent implements OnInit {
     
         if (index !== -1) {
           this.mHorarioList[index] = this.mHorario;
+          this.mHorarioListExcel[index] = this.mHorario;
         } else {
-          this.mHorarioList.push(this.mHorario);
+          this.mHorarioList
+          this.mHorarioListExcel.push(this.mHorario);
         }
       }  
       console.log(this.mHorarioList)
@@ -661,7 +670,6 @@ export class ParametersComponent implements OnInit {
   }
 
   crearHorario() {
-
     this. mHorarioList = this.mHorarioList.
     filter(horario => horario.horaInicio !== '' && horario.horaFin !== '');
 
@@ -675,18 +683,18 @@ export class ParametersComponent implements OnInit {
         if (data.data) {
           Swal.fire({
             icon: 'success',
-            title: 'Creacion  completada correctamente.',
-            confirmButtonColor: '#0A6EBD',
-          });
-          this.resetEditable();
-          this.agregarHorariosexcel = false;
-          this.habilitarHorario = false;
-          this.codeEmployed.reset();
-          this.horaFin.reset();
-          this.horaInicio.reset();
-          this.date.reset();
-          this.mHorarioList = [];
-        } else {
+           title: 'Creacion  completada correctamente.',
+           confirmButtonColor: '#0A6EBD',
+         });
+         this.resetEditable();
+         this.agregarHorariosexcel = false;
+         this.habilitarHorario = false;
+         this.codeEmployed.reset();
+         this.horaFin.reset();
+         this.horaInicio.reset();
+         this.date.reset();
+         this.mHorarioList = [];
+       } else {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -713,9 +721,31 @@ export class ParametersComponent implements OnInit {
  
   consultarHorarioEmpleado(){
     this.cdr.detectChanges();
+    this.mHorarioListExcel=[];
+    let pais= this.storageFestivos.obtenerDatosMapeados();
   
     if(this.habilitarHorariobyFecha && this.habilitarHorario){
       this.serviceList.loadHorarios(this.idUserByEmployeCode, this.semanaAno, this.fechaSemanaAno).subscribe(horario => {
+        horario.forEach(element => {
+          let rowseasona ={
+            day: element.day, 
+            horaInicio: element.horaInicio, 
+            horaFin: element.horaFin,
+            userEntityId: element.userEntityId,
+            week: element.week,
+            ano: element.ano
+          };
+
+          let index = this.mHorarioListExcel.findIndex(
+            (mHorario) => mHorario.day === element.day
+          );
+      
+          if (index !== -1) {
+            this.mHorarioListExcel[index] = rowseasona;
+          } else {
+            this.mHorarioListExcel.push(rowseasona);
+          }
+        });
         
         console.log(horario,  'lista de horarios');
         if(horario.length >= 1){
@@ -844,36 +874,48 @@ export class ParametersComponent implements OnInit {
 
     let name = "Plantilla_Horarios.xlsx";
     let pais= this.storageFestivos.obtenerDatosMapeados();
-    let season = [
-      { 
-        dia: 'Lunes', 
-        horaInicio: '00:00', 
-        horaFin: '00:00',
-        fecha: 'dd/MM/YYYY', 
-        codigo_Empleado: '255', 
+    let season: any[] =[];
+    this.mHorarioListExcel.forEach(element => {
+      let rowseason ={
+        dia: element.day, 
+        horaInicio: element.horaInicio, 
+        horaFin: element.horaFin,
+        codigo_Empleado: element.userEntityId, 
         pais: pais.countryEntity.nameCountry
-      },
-      { 
-        dia: 'Martes', 
-        horaInicio: '00:00', 
-        horaFin: '00:00' 
-      },
-      { 
-        dia: 'Miércoles', 
-        horaInicio: '00:00', 
-        horaFin: '00:00' 
-      },
-      { 
-        dia: 'Jueves', 
-        horaInicio: '00:00', 
-        horaFin: '00:00' 
-      },
-      { 
-        dia: 'Viernes',
-        horaInicio: '00:00', 
-        horaFin: '00:00' 
-      },
-    ];
+      };
+      season.push(rowseason);
+    });
+    // season = [
+    //   { 
+    //     dia: 'Lunes', 
+    //     horaInicio: '00:00', 
+    //     horaFin: '00:00',
+    //     fecha: 'dd/MM/YYYY', 
+    //     codigo_Empleado: '255', 
+    //     pais: pais.countryEntity.nameCountry
+    //   },
+    //   { 
+    //     dia: 'Martes', 
+    //     horaInicio: '00:00', 
+    //     horaFin: '00:00' 
+    //   },
+    //   { 
+    //     dia: 'Miércoles', 
+    //     horaInicio: '00:00', 
+    //     horaFin: '00:00' 
+    //   },
+    //   { 
+    //     dia: 'Jueves', 
+    //     horaInicio: '00:00', 
+    //     horaFin: '00:00' 
+    //   },
+    //   { 
+    //     dia: 'Viernes',
+    //     horaInicio: '00:00', 
+    //     horaFin: '00:00' 
+    //   },
+    // ];
+
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(season);
 
     const book: XLSX.WorkBook = XLSX.utils.book_new();
@@ -989,4 +1031,9 @@ resetEditable() {
 }
   
 
+}
+
+export class HorarioNew {
+  constructor(public day: string, public horaInicio: string, public horaFin: string, public editable:boolean=false) {
+  }
 }
