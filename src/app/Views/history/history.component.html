@@ -2,16 +2,28 @@
 <div class="body">
 
     <div>
-
-
         <h1 style="color: #61677A; font-size: 2em;"><strong>Historial De Horas</strong></h1>
+        <div class="div-em">
+            <em>Encuentra informacion sobre tu reporte .Haz clic en el estado de tu interes para obtener mas detalles</em>
+            
+        </div>
         <hr class="divider">
-
     </div>
+    
 
-    <div class="div-em">
-        <em>Encuentra informacion sobre tu reporte .Haz clic en el estado de tu interes para obtener mas detalles</em>
-    </div>
+        
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label> Filtar por Cliente, fechas: </mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+
 
     <mat-table [dataSource]="mListHorusReport" class="mat-elevation-z8">
 
@@ -19,6 +31,12 @@
         <ng-container matColumnDef="fechaEnvio">
             <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd'}} </mat-cell>
+        </ng-container>
+
+        <!-- Fecha creacion -->
+        <ng-container matColumnDef="creationDate">
+            <mat-header-cell *matHeaderCellDef> Fecha creacion </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.creationDate | date:'yyyy-MM-dd'}} </mat-cell>
         </ng-container>
 
         <!-- N° Cliente  -->

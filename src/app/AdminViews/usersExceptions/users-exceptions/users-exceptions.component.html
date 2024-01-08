@@ -1,5 +1,14 @@
 <div class="body">
 
+    <div>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Usuarios exceptuados</strong></h1>
+        <div class="div-em">
+            <em>Encuentra informacion sobre excepciones .Haz clic en el estado de tu interes para obtener mas detalles</em>
+            
+        </div>
+        <hr class="divider">
+    </div>
+    <br/>
 
     <mat-tab-group>
         <mat-tab>
@@ -10,15 +19,15 @@
               <br/>
               <!---   Usuarios con excepcion   -->
               <div *ngIf="Approving">
-                <em class="filter-text">Filtrar por:</em>
-                <hr class="filter-divider">
+                
+               
                 <div *ngIf="Approving">
                     <table class="example-full-width" cellspacing="0">
                         <tr>
                             <td>
                                 <mat-form-field class="field-width" appearance="outline">
-                                    <mat-label> Nombre o codigo empleado: </mat-label>
-                                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                                    <mat-label>Filtar por Nombre o codigo empleado: </mat-label>
+                                    <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por Ex. ium" #input>
                                 </mat-form-field>
                             </td>
                         </tr>

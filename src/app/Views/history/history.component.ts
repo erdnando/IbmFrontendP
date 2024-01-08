@@ -26,7 +26,7 @@ interface MiObjetoApp{
 
 export class HistoryComponent {
 
-  columnasAMostrar = ['fechaEnvio', 'cliente', 'reporte', 'aprobador', 'horas','estado'];
+  columnasAMostrar = ['fechaEnvio','creationDate', 'cliente', 'reporte', 'aprobador', 'horas','estado'];
 
   MUser: MUserEntity;
   mListHorusReport = new MatTableDataSource<any>();
@@ -34,6 +34,8 @@ export class HistoryComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  filterValue: string = '';
 
   ngAfterViewInit() {
     this.mListHorusReport.paginator = this.paginator;
@@ -92,6 +94,25 @@ export class HistoryComponent {
       console.log(this.mListHorusReport);
 
     });
+
+  }
+
+  //----new------------------
+  applyFilter(event: any) {
+
+    this.filterValue = (event.target as HTMLInputElement).value;
+    this.mListHorusReport.filterPredicate = (data: any, filter: string) => {
+      console.log(data);
+
+      const approverId = data.approverId.toLowerCase().includes(filter);
+      const nameClient = data.clientEntity.nameClient.toLowerCase().includes(filter);
+      const numberReport = data.numberReport.toString().toLowerCase().includes(filter);
+      const creationDate = data.creationDate.toString().toLowerCase().includes(filter);
+      
+      
+      return approverId || nameClient || numberReport || creationDate;
+    };
+    this.mListHorusReport.filter = this.filterValue.trim().toLowerCase();
 
   }
 
