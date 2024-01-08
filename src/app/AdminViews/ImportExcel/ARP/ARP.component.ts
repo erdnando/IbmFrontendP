@@ -36,6 +36,7 @@ export class ARPComponent {
   botonTSE= false;
   botonSTE = false;
   botonHorario = false;
+  columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
 
 
   constructor(private storageService: StorageService, private loadArpExcelService: LoadArpExcelService) {
@@ -270,42 +271,64 @@ export class ARPComponent {
         var workBook = XLSX.read(fileReader.result, { type: 'binary' });
         var sheetNames = workBook.SheetNames;
         this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-        console.log(this.ExcelData);
-        if(this.ExcelData.length){
-
-          console.log(this.ExcelData);
-          this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe(data => {
-            console.log(data);
-            if(data){
-              Swal.fire({
-                icon: 'success',
-                title: 'Carga de archivo completada.',
-                confirmButtonColor: '#0A6EBD',
-              });
-              this.fileInput4.nativeElement.value = null;
-              this.activarBarra = false;
-            }else{
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
-                confirmButtonColor: '#0A6EBD',
-              });
-              this.fileInput4.nativeElement.value = null;
-            }
-          });
-          
-          console.log("El archivo pasa")
-          this.botonHorario = false;
-        }else{
+        let valiFile = true;
+        this.columnasexcel.forEach(element => {
+          if (!this.ExcelData[0][element]) {
+            valiFile=false; 
+          }   
+        });
+        if (!valiFile) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Error:  Archivo vacio.',
+            text: 'El archivo es inválido por favor verifique: \n * Columnas incorrectas',
             confirmButtonColor: '#0A6EBD',
           });
-          this.botonHorario = false;
+          this.fileInput4.nativeElement.value = null;
+          this.activarBarra = false;
+        }else{
+          let XL_row_object = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+          let json_object = JSON.stringify(XL_row_object);
+          // aqui parseamos a json
+          const datos = JSON.parse(json_object);
+          console.log(this.ExcelData);
+          if(this.ExcelData.length){
+
+            console.log(this.ExcelData);
+            this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe(data => {
+              console.log(data);
+              if(data){
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Carga de archivo completada.',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                this.fileInput4.nativeElement.value = null;
+                this.activarBarra = false;
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                this.fileInput4.nativeElement.value = null;
+              }
+            });
+            
+            console.log("El archivo pasa")
+            this.botonHorario = false;
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Error:  Archivo vacio.',
+              confirmButtonColor: '#0A6EBD',
+            });
+            this.botonHorario = false;
+          }
         }
+        
 
         
       }
