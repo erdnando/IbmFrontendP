@@ -135,6 +135,7 @@ export class SidenavComponent implements OnInit {
   }
 
   async cergarMenuList() {
+    
     this.MUser = this.storageService.obtenerDatosMapeados();
     if (this.MUser) {
       (await this.loadToolbarService.PostLoadToolbar(this.MUser.roleEntityId))

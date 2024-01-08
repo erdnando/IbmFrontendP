@@ -495,7 +495,6 @@ export class ParametersComponent implements OnInit {
             });
 
             //reload form
-            //this.MParameter.countryEntityId
            this.reloadParameters(this.MParameter.countryEntityId.toString());
 
             //---------------------------------
@@ -588,7 +587,7 @@ export class ParametersComponent implements OnInit {
     }
 
     if(dia.length === 1){
-      console.log('este el el primerlengt', dia)
+      console.log('este el el primer lengt', dia)
       this.mHorario = {
         horaInicio: this.horaInicio.value as string,
         horaFin: this.horaFin.value as string,
@@ -629,7 +628,7 @@ export class ParametersComponent implements OnInit {
         }
       }  
       console.log(this.mHorarioList)
-      console.log(this.mHorario,' esta es la lista dl excel')    
+      console.log(this.mHorario,' esta es la lista del excel')    
     }
 
   }

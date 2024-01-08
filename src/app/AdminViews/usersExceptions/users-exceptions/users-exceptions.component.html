@@ -1,78 +1,186 @@
 <div class="body">
 
-    <div class="div-form">
+
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">list</mat-icon>
+                Usuarios con Excepción
+            </ng-template>
+              <br/>
+              <!---   Usuarios con excepcion   -->
+              <div *ngIf="Approving">
+                <em class="filter-text">Filtrar por:</em>
+                <hr class="filter-divider">
+                <div *ngIf="Approving">
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td>
+                                <mat-form-field class="field-width" appearance="outline">
+                                    <mat-label> Nombre o codigo empleado: </mat-label>
+                                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+        
+                <div class="mat-elevation-z8">
+                    <mat-table [dataSource]="datesTable">
+        
+                        <!-- Nombre -->
+                        <ng-container matColumnDef="nombre">
+                            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.user.nameUser+" "+element.user.surnameUser}}
+                            </mat-cell>
+                        </ng-container>
+        
+                        <!-- codigo   -->
+                        <ng-container matColumnDef="codigo">
+                            <mat-header-cell *matHeaderCellDef> Codigo Empleado </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.user.employeeCode}} </mat-cell>
+                        </ng-container>
+        
+                        <!-- fecha  -->
+                        <ng-container matColumnDef="fecha">
+                            <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd'}} </mat-cell>
+                        </ng-container>
+        
+                        <!-- hora inicio  -->
+                        <ng-container matColumnDef="horaInicio">
+                            <mat-header-cell *matHeaderCellDef> Horas Exceptuadas </mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.horas}}</mat-cell>
+                        </ng-container>
+        
+                        
+        
+                        <ng-container matColumnDef="editar">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button (click)="editar(element)" class="button-review">Editar</button>
+                            </mat-cell>
+                        </ng-container>
+        
+                        
+        
+                        <mat-header-row *matHeaderRowDef="columnasAMostrarUser.concat('editar')"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnasAMostrarUser.concat('editar');"></mat-row>
+                    </mat-table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
+                        aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                </div>
+              </div>
+
+              <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+                <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+              </div>
+              <!---   Usuarios con excepcion   -->
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">supervisor_account</mat-icon>
+                Usuarios a excepcionar
+            </ng-template>
+            <br>
+            <div *ngIf="Approving">
+                <em class="filter-text">Filtrar por:</em>
+                <hr class="filter-divider">
+
+                <div *ngIf="Approving">
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td [formGroup]="userForm">
+                                <mat-form-field class="field-width" appearance="outline">
+                                    <mat-label> Rol: </mat-label>
+                                    <mat-select formControlName="rol" (selectionChange)="_select($event.value)">
+                                        <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
+                                            {{cliente.nameRole}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="field-width" appearance="outline">
+                                    <mat-label> Nombre o correo: </mat-label>
+                                    <input matInput (keyup)="_applyFilter($event)" placeholder="Ex. ium" #input>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                
+                <div class="mat-elevation-z8">
+                    <mat-table [dataSource]="MUsers">
+
+                         <!-- Nombre -->
+                         <ng-container matColumnDef="nombre">
+                            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.nameUser+" "+element.surnameUser}}
+                            </mat-cell>
+                        </ng-container>
+
+                         <!-- Correo   -->
+                         <ng-container matColumnDef="email">
+                            <mat-header-cell *matHeaderCellDef> Correo Electronico </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Rol  -->
+                        <ng-container matColumnDef="rol">
+                            <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.roleEntity.nameRole}} </mat-cell>
+                        </ng-container>
+
+                        <!-- Pais  -->
+                        <ng-container matColumnDef="pais">
+                            <mat-header-cell *matHeaderCellDef> Pais </mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element.countryEntity.nameCountry}}</mat-cell>
+                        </ng-container>
+
+                      
+
+                        <ng-container matColumnDef="excepcion">
+                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button (click)="_excepcion(element)" class="button-review">Excepción</button>
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <mat-header-row *matHeaderRowDef="columnasAMostrarUserExceptuado.concat('excepcion')"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnasAMostrarUserExceptuado.concat('excepcion');"></mat-row>
+                    </mat-table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+
+                </div>
+
+
+
+            </div>
+
+            <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+                <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
+
+   <!-- <div class="div-form">
         <mat-toolbar class="title-form">
             <h1>Usuarios con Excepción</h1>
         </mat-toolbar>
-    </div>
+    </div>-->
 
-    <div *ngIf="Approving">
-        <em class="filter-text">Filtrar por:</em>
-        <hr class="filter-divider">
-        <div *ngIf="Approving">
-            <table class="example-full-width" cellspacing="0">
-                <tr>
-                    <td>
-                        <mat-form-field class="field-width" appearance="outline">
-                            <mat-label> Nombre o codigo empleado: </mat-label>
-                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-                        </mat-form-field>
-                    </td>
-                </tr>
-            </table>
-        </div>
+   
 
-        <div class="mat-elevation-z8">
-            <mat-table [dataSource]="datesTable">
-
-                <!-- Nombre -->
-                <ng-container matColumnDef="nombre">
-                    <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.user.nameUser+" "+element.user.surnameUser}}
-                    </mat-cell>
-                </ng-container>
-
-                <!-- codigo   -->
-                <ng-container matColumnDef="codigo">
-                    <mat-header-cell *matHeaderCellDef> Codigo Empleado </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.user.employeeCode}} </mat-cell>
-                </ng-container>
-
-                <!-- fecha  -->
-                <ng-container matColumnDef="fecha">
-                    <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd'}} </mat-cell>
-                </ng-container>
-
-                <!-- hora inicio  -->
-                <ng-container matColumnDef="horaInicio">
-                    <mat-header-cell *matHeaderCellDef> Horas Exceptuadas </mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element.horas}}</mat-cell>
-                </ng-container>
-
-                
-
-                <ng-container matColumnDef="editar">
-                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        <button mat-button (click)="editar(element)" class="button-review">Editar</button>
-                    </mat-cell>
-                </ng-container>
-
-                
-
-                <mat-header-row *matHeaderRowDef="columnasAMostrarUser.concat('editar')"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columnasAMostrarUser.concat('editar');"></mat-row>
-            </mat-table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                aria-label="Select page of periodic elements">
-            </mat-paginator>
-        </div>
-    </div>
-
-    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
-        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
-    </div>
+    
 
     <!--
 <div class="div-form">

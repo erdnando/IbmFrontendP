@@ -379,11 +379,11 @@
                         </ng-container>
 
                         <!-- Checkbox -->
-    <ng-container matColumnDef="checkbox">
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox (change)="element.editable = $event.checked"></mat-checkbox>
-        </mat-cell>
-    </ng-container>
+                        <ng-container matColumnDef="checkbox">
+                            <mat-cell *matCellDef="let element">
+                                <mat-checkbox (change)="element.editable = $event.checked"></mat-checkbox>
+                            </mat-cell>
+                        </ng-container>
 
                         <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
 
@@ -430,7 +430,7 @@
                         </mat-form-field>
 
                         <mat-form-field style="text-align: right; width: 95%; height: 70px; " appearance="outline">
-                            <mat-label> Semana: </mat-label>
+                            <mat-label> Dia de la Semana: </mat-label>
                             <input [disabled]="!habilitarExcel" matInput  [matDatepicker]="picker" (dateChange)="onDateChange($event)"
                                 [formControl]="date">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

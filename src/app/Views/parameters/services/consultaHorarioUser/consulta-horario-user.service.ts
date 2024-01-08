@@ -11,7 +11,6 @@ import { Global } from 'src/app/global';
 export class ConsultaHorarioUserService {
 
   private URLLocal = Global.Url;
-  //url:string ="http://localhost:2429/";
 
   constructor(private http:HttpClient)
   { }

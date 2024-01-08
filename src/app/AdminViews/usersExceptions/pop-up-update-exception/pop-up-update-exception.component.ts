@@ -54,6 +54,7 @@ export class PopUpUpdateExceptionComponent {
   ngOnInit(){
     this.MUserEntity = this.data.user.user;
     this.mUsersExceptionEdit = this.data.user;
+    console.log("ngOnInit 1");
     console.log(this.data)
     console.log(this.mUsersExceptionEdit)
     
@@ -67,6 +68,7 @@ export class PopUpUpdateExceptionComponent {
     this.mUsersException.description = this.userForm.value.descripcion!;
     this.mUsersException.assignedUserId = this.mUsersExceptionEdit.assignedUserId;
     this.mUsersException.userid = this.MUserEntity.idUser;
+    
     
     console.log(this.mUsersException);
 

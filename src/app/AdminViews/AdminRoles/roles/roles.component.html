@@ -117,17 +117,17 @@
                             </mat-cell>
                         </ng-container>
 
-                        <ng-container matColumnDef="excepcion">
+                     <!--   <ng-container matColumnDef="excepcion">
                             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                             <mat-cell *matCellDef="let element">
                                 <button mat-button (click)="excepcion(element)" class="button-review">Excepción</button>
                             </mat-cell>
-                        </ng-container>
+                        </ng-container>-->
 
-                        <mat-header-row *matHeaderRowDef="columnasAMostrarUser.concat('editar','excepcion')"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: columnasAMostrarUser.concat('editar','excepcion');"></mat-row>
+                        <mat-header-row *matHeaderRowDef="columnasAMostrarUser.concat('editar')"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnasAMostrarUser.concat('editar');"></mat-row>
                     </mat-table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
                         aria-label="Select page of periodic elements">
                     </mat-paginator>
                 </div>
