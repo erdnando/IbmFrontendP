@@ -61,7 +61,7 @@
             <label class="mi-etiqueta">
                 Cargar plantilla de horarios 
                 <br>
-                <input type="file" (change)="activarARP('Horario')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+                <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
             </label>
         </div>
 

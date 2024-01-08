@@ -723,6 +723,11 @@ export class ParametersComponent implements OnInit {
     this.cdr.detectChanges();
     this.mHorarioListExcel=[];
     let pais= this.storageFestivos.obtenerDatosMapeados();
+    let date = new Date(this.date.value as unknown as Date);
+    let fechadia = date.getDate();
+    let fechames = (date.getMonth()+1);
+    let fechaanio = date.getFullYear();
+    
   
     if(this.habilitarHorariobyFecha && this.habilitarHorario){
       this.serviceList.loadHorarios(this.idUserByEmployeCode, this.semanaAno, this.fechaSemanaAno).subscribe(horario => {
@@ -733,7 +738,8 @@ export class ParametersComponent implements OnInit {
             horaFin: element.horaFin,
             userEntityId: element.userEntityId,
             week: element.week,
-            ano: element.ano
+            ano: element.ano,
+            fecha:fechadia+"/"+fechames+"/"+fechaanio
           };
 
           let index = this.mHorarioListExcel.findIndex(
@@ -875,11 +881,17 @@ export class ParametersComponent implements OnInit {
     let name = "Plantilla_Horarios.xlsx";
     let pais= this.storageFestivos.obtenerDatosMapeados();
     let season: any[] =[];
+    let date = new Date(this.date.value as unknown as Date);
+    let fechadia = date.getDate();
+    let fechames = (date.getMonth()+1);
+    let fechaanio = date.getFullYear();
+    let fechadiast = fechadia<10?"0"+fechadia:fechadia
     this.mHorarioListExcel.forEach(element => {
       let rowseason ={
         dia: element.day, 
         horaInicio: element.horaInicio, 
         horaFin: element.horaFin,
+        fecha: fechaanio+"/"+ (fechames<10?"0"+fechames:fechames)+"/"+ (fechadia<10?"0"+fechadia:fechadia),
         codigo_Empleado: element.userEntityId, 
         pais: pais.countryEntity.nameCountry
       };

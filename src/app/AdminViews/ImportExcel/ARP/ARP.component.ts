@@ -283,6 +283,7 @@ export class ARPComponent {
                 confirmButtonColor: '#0A6EBD',
               });
               this.fileInput4.nativeElement.value = null;
+              this.activarBarra = false;
             }else{
               Swal.fire({
                 icon: 'error',
