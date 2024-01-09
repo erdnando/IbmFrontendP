@@ -1,4 +1,8 @@
-  .body-excel {
+.body{
+  padding: 40px;
+  margin-left: 60px;
+}
+.body-excel {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -46,16 +50,13 @@
     color: #333; 
     padding: 10px;
 }
-
+/* 
 .title-form{
   width: 60%;
   height: 50px;
   color: white; 
   margin-bottom: 10px;
   background: linear-gradient(130deg,#548CA8 85%, transparent 15%);
-}
-.body{
-  padding: 40px;
-  margin-left: 60px;
-}
+} */
+
 

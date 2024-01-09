@@ -1,14 +1,14 @@
 
 <div class="body">
-
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Historial De Horas</strong></h1>
         <div class="div-em">
-            <em>Encuentra informacion sobre tu reporte .Haz clic en el estado de tu interes para obtener mas detalles</em>
+            <em>Encuentra informacion sobre el historial de horas .Haz clic en el estado de tu interes para obtener mas detalles</em>
             
         </div>
         <hr class="divider">
     </div>
+    <br/>
     
 
         
@@ -66,7 +66,7 @@
         <!-- Estado  -->
         <ng-container matColumnDef="estado">
             <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let element">
+            <mat-cell *matCellDef="let element" style="text-align: center;">
                 <button mat-button class="button-stade"
                     [ngStyle]="{'background-color': 'white'}"
                     (click)="openDialog(element.idHorusReport)" [title]="Aprobacion[element.startTime]">
