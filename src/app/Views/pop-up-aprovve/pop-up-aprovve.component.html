@@ -1,4 +1,4 @@
-<div style="width: 500px; height: 500px; padding: 40px;">
+<div style="width: 500px; height: 600px; padding: 40px;">
   <article>
       <b>Nombre:</b> {{mApprover.horusReportEntity.userEntity.nameUser}}
       <br>
@@ -12,7 +12,8 @@
       <br>
       <b> Reporte de horas: </b> {{mApprover.horusReportEntity.countHours}}
       <br>
-      <b> Cliente: </b> {{mApprover.horusReportEntity.clientEntityId}}
+     <!-- <b> Cliente: </b> {{mApprover.horusReportEntity.clientEntityId}}-->
+     <b> Cliente: </b> {{mApprover.horusReportEntity.userEntity.idUser}}
 
   </article>
 
@@ -41,7 +42,7 @@
   </div>
   </div>
 
-    <div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center; margin-top: 40px;">
       <button mat-button (click)="crearAprobacion()"  class="button-close"> Guardar </button>
   </div>
     

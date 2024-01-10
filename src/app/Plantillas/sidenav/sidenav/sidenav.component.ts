@@ -138,12 +138,14 @@ export class SidenavComponent implements OnInit {
     
     this.MUser = this.storageService.obtenerDatosMapeados();
     if (this.MUser) {
+      console.log("Rol autenticado:::"+this.MUser.roleEntityId);
       (await this.loadToolbarService.PostLoadToolbar(this.MUser.roleEntityId))
         .pipe(map((data: MiObjetoApp) => data))
         .subscribe((data) => {
           let listap = data['data'];
 
           this.Mmen = listap;
+         
         });
     } else {
       console.log("No se puede cargar el rol")

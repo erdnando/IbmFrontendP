@@ -8,4 +8,7 @@ export interface MApproverTimeCreate {
     horusReportEntityId: Guid;
     state: number;
     description: string;
+    aprobador1UserEntityId: Guid;
+    aprobador2UserEntityId: Guid;
+    empleadoUserEntityId: Guid;
   }

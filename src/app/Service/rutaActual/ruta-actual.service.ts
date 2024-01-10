@@ -32,7 +32,7 @@ export class RutaActualService {
         
 
         console.log("parametro obtenido:"+ xmlParam);
-        console.log('version 1.0.0.6');
+        console.log('version 1.0.0.7');
         if(xmlParam!=null){
           console.log("flujo sso");
           //TODO
@@ -48,25 +48,14 @@ export class RutaActualService {
         queryParamsHandling: 'merge'
         });
        
-       
-        //decode param base 64 y obtener los valores
-        //var encodedStringAtoB = "eyJlbWFpbCI6Im9tYXJhbHZhcmV6MDFAZ21haWwuY29tIiwibm9tYnJlIjoib21hciIsImxhc3ROYW1lIjoiQWx2YXJleiIsImxvY2F0aW9uIjoiTWV4aWNvIiwidXBuIjoiYXNkc2EiLCJjb21wYW55IjoiT2NpIiwiZGVwYXJ0bWVudCI6IkZpbmFuemFzIiwibmFtZWlkIjoic2RhcyIsInBob25lIjoiYXNkYSJ9";
-
+  
         // Decode the String
         var decodedStringAtoB = atob(xmlParam);
         console.log("decodificado: " + decodedStringAtoB);
        
         //validar que el usuario (email) exista
-        // decodificado: {"email":"omaralvarez01@gmail.com","nombre":"omar","lastName":"Alvarez","location":"Mexico","upn":"asdsa","company":"Oci","department":"Finanzas","nameid":"sdas","phone":"asda"}
         this.objJson = JSON.parse(decodedStringAtoB);
         console.log("ObjetoJason: " + this.objJson.email);
-        
-
-        //this.GetUser(this.objJson.email);
-
-
-        //si no existe, insertarlo via el api
-        //si si existe, no hacer nada
      
         //actualizar local storage
         const datosMapeados = {

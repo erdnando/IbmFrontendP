@@ -57,14 +57,22 @@ export class PopUpAprovveComponent {
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
     this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
     this.mApproverCreate.description = this.userForm.value.descripcion!;
+
+    //aprovador 2 -camilo
     if(this.userForm.value.aprobacion == '1'){
       this.mApproverCreate.userId = this.aprobador.value as unknown as Guid;
     }else{
       this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
     }
+    //aprovador 1 -harold
+    this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
+    //aprovador 2 -camilo
+    this.mApproverCreate.aprobador2UserEntityId= this.aprobador.value as unknown as Guid;
+    //trabajador -felipe
+    this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
 
     
-    
+    console.log(this.mApproverCreate);
 
     this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe(data=> {
       console.log(data);
@@ -85,6 +93,8 @@ export class PopUpAprovveComponent {
         });
       }
     }) ;
+    
+
   }
 
   Aproved()
