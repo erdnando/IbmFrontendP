@@ -160,7 +160,7 @@ export class RegisterTimeComponent {
     this.MHours.approverId = this.aprobador.value?.toString() as unknown as string;
 
     console.log(this.MHours);
-/*
+
     (await this.apiReportHours.PostCreateReport(this.MHours)).subscribe(
       (data) => {
         if (data.data == null) {
@@ -195,7 +195,7 @@ export class RegisterTimeComponent {
         }
       }
     );
-    */
+    
   }
 
   ngOnInit(): void {
