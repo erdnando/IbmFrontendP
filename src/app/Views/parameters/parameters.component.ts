@@ -489,6 +489,8 @@ export class ParametersComponent implements OnInit {
       this.MParameter.targetHourMonth = Number(this.formatComma(this.limitMonth.value!));
       this.MParameter.targetHourYear = Number(this.formatComma(this.limitYear.value!));
       this.MParameter.typeLimits = 0;
+      this.MParameter.empleadoUserEntityId =this.MUser.idUser;
+      console.log(this.MUser.idUser);
 
       this.apiParameters
         .PostUpdateParameter(this.MParameter)

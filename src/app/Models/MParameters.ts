@@ -10,4 +10,5 @@ export interface MParameters{
     typeLimits:number;
     typeHours:number;
     countryEntityId:Guid;
+    empleadoUserEntityId:Guid;
 }
