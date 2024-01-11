@@ -14,6 +14,7 @@ import { guid } from '@fullcalendar/core/internal';
 import Swal from 'sweetalert2';
 import { formatRange } from '@fullcalendar/core';
 import { DatePipe } from '@angular/common';
+import { MHorarioRegistrado } from 'src/app/Models/MHorarioRegistrado';
 
 interface MiObjeto {
   [key: string]: any;
@@ -36,6 +37,7 @@ interface SideNavTogg1e {
 export class RegisterTimeComponent {
   MUser: MUserEntity;
   MHours: MCreateHorusReport;
+  MHorarioR: MHorarioRegistrado;
   MClient: MClientEntity[];
   MAprobadorUser: MAprobadorUsuario[];
   clientes: [] = [];
@@ -63,6 +65,7 @@ export class RegisterTimeComponent {
   ) {
     this.MUser = {} as MUserEntity;
     this.MHours = {} as MCreateHorusReport;
+    this.MHorarioR = {} as MHorarioRegistrado;
     this.horaInicio.valueChanges.subscribe(() => {
       this.calcularHoras();
     });
@@ -81,6 +84,14 @@ export class RegisterTimeComponent {
 
     this.inicio = this.horaInicio.value;
     this.fin = this.horaInicio.value;
+
+    
+  }
+
+  getWeek(date: Date): number {
+    let onejan = new Date(date.getFullYear(), 0, 1);
+    return Math.ceil(
+      ((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) /7);
   }
 
   generarCodigo(): void {
@@ -148,53 +159,89 @@ export class RegisterTimeComponent {
     //todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy/MM/dd');
     todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd');
 
-    this.MHours.userEntityId = this.MUser.idUser as Guid;
-    this.MHours.startDate = ((todayWithPipe?.toString() as unknown as string) + ' ' + this.horaInicio.value) as string;
-    this.MHours.startTime = this.horaInicio.value as string;
-    this.MHours.endTime = this.horaFin.value as string;
-    this.MHours.clientEntityId = null as unknown as Guid;
-    this.MHours.description = this.descripcion.value as string;
-    this.MHours.tipoReporte = 1;
-    this.MHours.acitivity = this.actividad.value as unknown as number;
-    this.MHours.countHours = this.cantidadHoras.toString() as unknown as string;
-    this.MHours.approverId = this.aprobador.value?.toString() as unknown as string;
+    let fechaSeleccionada = new Date(todayWithPipe?.toString() as unknown as string);
+    //------------validacion horario definido----------------------------------------------------------
+    this.MHorarioR.ano=fechaSeleccionada.getFullYear().toString();
+    this.MHorarioR.userEntityId= this.MUser.idUser as Guid;
+    this.MHorarioR.week=this.getWeek(new Date(todayWithPipe?.toString() as unknown as string)).toString();
+    console.log(this.MHorarioR);
 
-    console.log(this.MHours);
+    (await this.apiReportHours.GetConsultHorarioByWeek(this.MHorarioR)).subscribe(
+      async (data) => {
+        
+        console.log(data);
 
-    (await this.apiReportHours.PostCreateReport(this.MHours)).subscribe(
-      (data) => {
+
         if (data.data == null) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Error en el registro de horas (registro existente).',
+            text: 'Su reporte no puede ser enviado ya que no tiene un horario asignado, por favor comuníquese con su coordinador para que se ejecute ese proceso.',
             confirmButtonColor: '#0A6EBD',
           });
         } else {
-          if (data.data || data) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Registro de horas se genero correctamente',
-              confirmButtonColor: '#0A6EBD',
-            });
-            this.fecha.reset();
-            this.fecha.reset();
-            this.horaInicio.reset();
-            this.horaFin.reset();
-            this.descripcion.reset();
-            this.actividad.reset();
-            this.aprobador.reset();
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Error en el registro de horas.',
-              confirmButtonColor: '#0A6EBD',
-            });
-          }
-        }
+            //continua con el proceso
+            let todayWithPipe = null;
+            todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd');
+            
+            this.MHours.userEntityId = this.MUser.idUser as Guid;
+            this.MHours.startDate = ((todayWithPipe?.toString() as unknown as string) + ' ' + this.horaInicio.value) as string;
+            this.MHours.startTime = this.horaInicio.value as string;
+            this.MHours.endTime = this.horaFin.value as string;
+            this.MHours.clientEntityId = null as unknown as Guid;
+            this.MHours.description = this.descripcion.value as string;
+            this.MHours.tipoReporte = 1;
+            this.MHours.acitivity = this.actividad.value as unknown as number;
+            this.MHours.countHours = this.cantidadHoras.toString() as unknown as string;
+            this.MHours.approverId = this.aprobador.value?.toString() as unknown as string;
+
+            console.log(this.MHours);
+
+            (await this.apiReportHours.PostCreateReport(this.MHours)).subscribe(
+              (data) => {
+                if (data.data == null) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error en el registro de horas (registro existente).',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                } else {
+                  if (data.data || data) {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Registro de horas se genero correctamente',
+                      confirmButtonColor: '#0A6EBD',
+                    });
+                    this.fecha.reset();
+                    this.fecha.reset();
+                    this.horaInicio.reset();
+                    this.horaFin.reset();
+                    this.descripcion.reset();
+                    this.actividad.reset();
+                    this.aprobador.reset();
+                  } else {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Error en el registro de horas.',
+                      confirmButtonColor: '#0A6EBD',
+                    });
+                  }
+                }
+              }
+            );
+
+         //------------------------
+        }//end else
+
       }
     );
+
+
+    //------------validacion horario definido----------------------------------------------------------
+
+    
     
   }
 
@@ -209,6 +256,10 @@ export class RegisterTimeComponent {
 
         this.MClient = lista;
       });
+
+
+
+      
   }
 
   changeHandler() {
@@ -219,7 +270,7 @@ export class RegisterTimeComponent {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'XXXXXXXX.',
+        text: 'Horas mayores a 23.',
         confirmButtonColor: '#0A6EBD',
       });
       this.horaFin = new FormControl();

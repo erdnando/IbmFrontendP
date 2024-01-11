@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { MHorarioRegistrado } from "src/app/Models/MHorarioRegistrado";
 import { MCreateHorusReport } from "src/app/Models/MHorusReport";
 import { MResponse } from "src/app/Models/MResponse";
 import { Global } from 'src/app/global';
@@ -24,6 +25,15 @@ export class RegisterTimeService {
     console.log(mReport);
     console.log(JSON.stringify(mReport));
     return await this.http.post<MResponse>(direccion,mReport);
+
+  }
+
+  async GetConsultHorarioByWeek(fechaP:MHorarioRegistrado):Promise<Observable<MResponse>>{
+
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+fechaP.userEntityId+"&week="+fechaP.week+"&ano="+fechaP.ano;
+    
+    console.log(direccion);
+    return await this.http.get<MResponse>(direccion);
 
   }
 
