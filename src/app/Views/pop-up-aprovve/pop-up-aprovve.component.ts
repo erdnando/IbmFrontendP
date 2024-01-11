@@ -61,15 +61,21 @@ export class PopUpAprovveComponent {
     //aprovador 2 -camilo
     if(this.userForm.value.aprobacion == '1'){
       this.mApproverCreate.userId = this.aprobador.value as unknown as Guid;
+       //aprovador 1 -harold
+      this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
+      //aprovador 2 -camilo
+      this.mApproverCreate.aprobador2UserEntityId= this.aprobador.value as unknown as Guid;
+      //trabajador -felipe
+      this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
     }else{
       this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+      this.mApproverCreate.aprobador2UserEntityId=  '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+       //aprovador 1 -harold
+      this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
+      //trabajador -felipe
+      this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
     }
-    //aprovador 1 -harold
-    this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
-    //aprovador 2 -camilo
-    this.mApproverCreate.aprobador2UserEntityId= this.aprobador.value as unknown as Guid;
-    //trabajador -felipe
-    this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
+   
 
     
     console.log(this.mApproverCreate);
@@ -77,11 +83,22 @@ export class PopUpAprovveComponent {
     this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe(data=> {
       console.log(data);
       if (data.data) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Aprobacion creada',
-          confirmButtonColor: '#0A6EBD',
-        });
+
+        if(this.userForm.value.aprobacion == '1'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Aprobacion creada',
+            confirmButtonColor: '#0A6EBD',
+          });
+        }
+        else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Aprobacion rechazada',
+            confirmButtonColor: '#0A6EBD',
+          });
+        }
+        
         this.dialogRef.close();  
         this.obtnerLista.loadApproverTime(this.idUser)
       } else {

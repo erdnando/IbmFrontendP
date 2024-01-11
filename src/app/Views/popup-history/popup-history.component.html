@@ -36,9 +36,9 @@
                 <mat-cell *matCellDef="let element">
                     <button 
                             mat-button class="button-stade" 
-                            [ngStyle]="{'background-color': getColor(Aprobacion[element.estadoAprobadorNIvel1])}"
+                            [ngStyle]="{'background-color':'white'}"
                             [title]="Aprobacion[element.estadoAprobadorNIvel1]">
-                            <mat-icon style="font-size: 20px;">
+                            <mat-icon style="font-size: 20px;"  [ngStyle]="{'color': getColor(Aprobacion[element.estadoAprobadorNIvel1])}">
                                 {{cargarIcono(Aprobacion[element.estadoAprobadorNIvel1])}}
                             </mat-icon>                        
                         </button>                   

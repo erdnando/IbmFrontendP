@@ -98,9 +98,9 @@
                 <mat-cell *matCellDef="let element">
                     <button 
                     mat-button class="button-stade"  
-                    [ngStyle]="{'background-color': getColor(Aprobacion[element.state])}" 
+                    [ngStyle]="{'background-color': 'transparent'}" 
                     [title]="Aprobacion[element.state]">
-                        <mat-icon style="font-size: 20px;">
+                        <mat-icon  [ngStyle]="{'color': getColor(Aprobacion[element.state])}">
                             {{cargarIcono(Aprobacion[element.state])}}
                         </mat-icon>
 
