@@ -108,7 +108,7 @@ export class RegistersComponent {
       let ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
       this.mListHorusReportList = listap;
       this.mListHorusReport.data = ListaFilt;
-      this.ngOnInit();
+     // this.ngOnInit(); //no debe ir
     });
   }
 
