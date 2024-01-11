@@ -75,6 +75,29 @@
         </div>
        
     </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">upload_file</mat-icon>
+            Subir Plantilla Workday Gerentes
+        </ng-template>
+        <br>
+        <div class="body-excel">
+            <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+            <div class="centrado">
+            <label class="mi-etiqueta">
+                Cargar plantilla de Workday Gerentes 
+                <br>
+                <input type="file" [disabled]="activarBarra" (change)="activarARP('WorkdayG')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInputWorkdayG>
+            </label>
+        </div>
+
+        <button class="boton" *ngIf="botonWorkdayG" (click)="readExcelWorkdayG(fileInputWorkdayG)">
+            Subir Archivo
+        </button>
+        </div>
+       
+    </mat-tab>
 </mat-tab-group>
 
     </div>

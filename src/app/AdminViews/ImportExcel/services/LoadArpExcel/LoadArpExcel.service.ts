@@ -41,6 +41,11 @@ export class LoadArpExcelService {
     console.log(direccion);
     return this.http.post<boolean>(direccion,data);
   }
+  PostLoadHorariosWorkdayG(data:object):Observable<boolean>{
+    let direccion = this.URLLocal +"Horario/LoadExcelMan";
+    console.log(direccion);
+    return this.http.post<boolean>(direccion,data);
+  }
 
   PostLoadFinal(data: object, data2: object, data3: object): Observable<boolean> {
     let direccion = this.URLLocal + "Load/CreateFinal";
@@ -54,4 +59,24 @@ export class LoadArpExcelService {
     console.log(direccion);
     return this.http.post<boolean>(direccion, requestData);
   }
+
+  UploadARP(data: object): Observable<boolean> {
+    let direccion = this.URLLocal + "Load/UploadARP";
+    console.log(direccion);
+    return this.http.post<boolean>(direccion, data);
+  }
+
+  UploadTSE(data: object): Observable<boolean> {
+    let direccion = this.URLLocal + "Load/UploadTSE";
+    console.log(direccion);
+    return this.http.post<boolean>(direccion, data);
+  }
+
+  UploadSTE(data: object): Observable<boolean> {
+    let direccion = this.URLLocal + "Load/UploadSTE";
+    console.log(direccion);
+    return this.http.post<boolean>(direccion, data);
+  }
+
+  
 }

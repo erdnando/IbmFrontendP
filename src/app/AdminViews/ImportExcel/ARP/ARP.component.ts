@@ -13,12 +13,14 @@ import Swal from "sweetalert2";
   templateUrl: './ARP.component.html',
   styleUrls: ['./ARP.component.css']
 })
+
 export class ARPComponent {
 
   @ViewChild('fileInput1') fileInput1: any;
   @ViewChild('fileInput2') fileInput2: any;
   @ViewChild('fileInput3') fileInput3: any;
   @ViewChild('fileInput4') fileInput4: any;
+  @ViewChild('fileInputWorkdayG') fileInputWorkdayG: any;
 
   ExcelData: any;
   excelData1: any;
@@ -36,7 +38,11 @@ export class ARPComponent {
   botonTSE= false;
   botonSTE = false;
   botonHorario = false;
+  botonWorkdayG = false;
   columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
+  columnasexcelWorkdayG:string[]=["Employee ID","Worker","Time Type","Reported Date","Calculated Quantity","Status"];
+  
+  
 
 
   constructor(private storageService: StorageService, private loadArpExcelService: LoadArpExcelService) {
@@ -87,10 +93,12 @@ export class ARPComponent {
       this.botonSTE = false;
       this.botonTSE = false;
       this.botonHorario=false;
+      this.botonWorkdayG=false;
       this.fileInput1.nativeElement.value = null;
       this.fileInput2.nativeElement.value = null;
       this.fileInput3.nativeElement.value = null;
       this.fileInput4.nativeElement.value = null;
+      this.fileInputWorkdayG.nativeElement.valu=null;
       Swal.fire({
         icon: 'success',
         title: 'Carga de archivos completada.',
@@ -112,6 +120,9 @@ export class ARPComponent {
         return
       case 'Horario':
         this.botonHorario = true;
+        return
+      case 'WorkdayG':
+        this.botonWorkdayG = true;
         return
     }
 
@@ -336,6 +347,84 @@ export class ARPComponent {
       console.error("No se ha seleccionado ningún archivo.");
     }
   }
+
+  readFileWorkdayG(fileInput: any) {
+    let file = fileInput[0]; // Accede al primer archivo seleccionado
+
+    if (file) {
+      let fileReader = new FileReader();
+
+      fileReader.readAsBinaryString(file);
+
+      fileReader.onload = (e) => {
+        var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+        var sheetNames = workBook.SheetNames;
+        this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+        let valiFile = true;
+        this.columnasexcelWorkdayG.forEach(element => {
+          if (!this.ExcelData[0][element]) {
+            valiFile=false; 
+          }   
+        });
+        if (!valiFile) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'El archivo es inválido por favor verifique: \n * Columnas incorrectas',
+            confirmButtonColor: '#0A6EBD',
+          });
+          this.fileInputWorkdayG.nativeElement.value = null;
+          this.activarBarra = false;
+        }else{
+          let XL_row_object = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+          let json_object = JSON.stringify(XL_row_object);
+          // aqui parseamos a json
+          const datos = JSON.parse(json_object);
+          console.log(this.ExcelData);
+          if(this.ExcelData.length){
+
+            console.log(this.ExcelData);
+            this.loadArpExcelService.PostLoadHorariosWorkdayG(this.ExcelData).subscribe(data => {
+              console.log(data);
+              if(data){
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Carga de archivo completada.',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                this.fileInputWorkdayG.nativeElement.value = null;
+                this.activarBarra = false;
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                this.fileInputWorkdayG.nativeElement.value = null;
+              }
+            });
+            
+            console.log("El archivo pasa")
+            this.botonWorkdayG = false;
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Error:  Archivo vacio.',
+              confirmButtonColor: '#0A6EBD',
+            });
+            this.botonWorkdayG = false;
+          }
+        }
+        
+
+        
+      }
+    } else {
+      console.error("No se ha seleccionado ningún archivo.");
+    }
+  }
  
   readfilefinal(fileInput: any,fileInput2: any,fileInput3: any){
 
@@ -349,41 +438,39 @@ export class ARPComponent {
       let fileReader1 = new FileReader();
       let fileReader2 = new FileReader();
 
-      fileReader.readAsBinaryString(file);
+      //fileReader.readAsBinaryString(file);
       fileReader1.readAsBinaryString(file2);
-      fileReader2.readAsBinaryString(file3);
+      //fileReader2.readAsBinaryString(file3);
 
-    fileReader.onload = (e) => {
-        var workBook = XLSX.read(fileReader.result, { type: 'binary' });
-        var sheetNames = workBook.SheetNames;
-        this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-        console.log(this.ExcelData);
-
-        fileReader1.onload = (e) => {
-          var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
-          var sheetNames1 = workBook1.SheetNames;
-          this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
-          console.log(this.ExcelData1);
-  
-        }
-
-        fileReader2.onload = (e) => {
-          var workBook2 = XLSX.read(fileReader2.result, { type: 'binary' });
-          var sheetNames2 = workBook2.SheetNames;
-          this.ExcelData2 = XLSX.utils.sheet_to_json(workBook2.Sheets[sheetNames2[0]], { raw: false });
-          console.log(this.ExcelData2);
-
-          this.loadArpExcelService.PostLoadFinal(this.ExcelData,this.ExcelData1,this.ExcelData2).subscribe( data => { 
+      fileReader.onload = (e) => {
+          var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+          var sheetNames = workBook.SheetNames;
+          this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+          console.log(this.ExcelData);
+          this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
             console.log(data)
-            });
-        }
+            });       
+      }
+      fileReader1.onload = (e) => {
+        var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
+        var sheetNames1 = workBook1.SheetNames;
+        this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
+        console.log(this.ExcelData1);
+        this.loadArpExcelService.UploadTSE(this.ExcelData1).subscribe( data => { 
+          console.log(data)
+          });        
       }
 
-     
+      fileReader2.onload = (e) => {
+        var workBook2 = XLSX.read(fileReader2.result, { type: 'binary' });
+        var sheetNames2 = workBook2.SheetNames;
+        this.ExcelData2 = XLSX.utils.sheet_to_json(workBook2.Sheets[sheetNames2[0]], { raw: false });
+        console.log(this.ExcelData2);
 
-  
-
-      
+        this.loadArpExcelService.UploadSTE(this.ExcelData2).subscribe( data => { 
+          console.log(data)
+          });       
+      }
 
     } else {
       console.error("No se ha seleccionado ningún archivo.");
@@ -391,9 +478,7 @@ export class ARPComponent {
 
   }
   
-
-
-
+  
   validateRole() {
     if (this.MUser.rolEntity.nameRole == 'Administrador' || this.MUser.rolEntity.nameRole == 'Super Administrador') {
       this.Approving = true;
@@ -409,5 +494,17 @@ export class ARPComponent {
     this.barraProgreso()
   }
 
+  readExcelWorkdayG(file: any) {
+    if (this.validarArchivo(file)) {
+      this.readFileWorkdayG(file.files);
+    } else {
+      console.log('Error: Uno o más archivos no pasaron la validación');
+    }
+    this.barraProgreso()
+  }
+
+  
+
 
 }
+
