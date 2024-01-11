@@ -438,9 +438,9 @@ export class ARPComponent {
       let fileReader1 = new FileReader();
       let fileReader2 = new FileReader();
 
-      //fileReader.readAsBinaryString(file);
-      fileReader1.readAsBinaryString(file2);
-      //fileReader2.readAsBinaryString(file3);
+      fileReader.readAsBinaryString(file);
+      
+      
 
       fileReader.onload = (e) => {
           var workBook = XLSX.read(fileReader.result, { type: 'binary' });
@@ -449,6 +449,7 @@ export class ARPComponent {
           console.log(this.ExcelData);
           this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
             console.log(data)
+            fileReader1.readAsBinaryString(file2);
             });       
       }
       fileReader1.onload = (e) => {
@@ -457,6 +458,7 @@ export class ARPComponent {
         this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
         console.log(this.ExcelData1);
         this.loadArpExcelService.UploadTSE(this.ExcelData1).subscribe( data => { 
+          fileReader2.readAsBinaryString(file3);
           console.log(data)
           });        
       }
