@@ -435,8 +435,8 @@ export class ARPComponent {
     if (file && file2 && file3) 
     {
       let fileReader = new FileReader();
-      let fileReader1 = new FileReader();
-      let fileReader2 = new FileReader();
+      //let fileReader1 = new FileReader();
+      //let fileReader2 = new FileReader();
 
       fileReader.readAsBinaryString(file);
       
@@ -446,13 +446,13 @@ export class ARPComponent {
           var workBook = XLSX.read(fileReader.result, { type: 'binary' });
           var sheetNames = workBook.SheetNames;
           this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-          console.log(this.ExcelData);
+         // console.log(this.ExcelData);
           this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
             console.log(data)
-            fileReader1.readAsBinaryString(file2);
+           // fileReader1.readAsBinaryString(file2);
             });       
       }
-      fileReader1.onload = (e) => {
+      /*fileReader1.onload = (e) => {
         var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
         var sheetNames1 = workBook1.SheetNames;
         this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
@@ -472,7 +472,7 @@ export class ARPComponent {
         this.loadArpExcelService.UploadSTE(this.ExcelData2).subscribe( data => { 
           console.log(data)
           });       
-      }
+      }*/
 
     } else {
       console.error("No se ha seleccionado ningún archivo.");
