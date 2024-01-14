@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { MResponse } from "src/app/Models/MResponse";
 import { Guid } from 'guid-typescript';
 import { Global } from 'src/app/global';
+//import { Global } from 'src/app/global';
 
 @Injectable({
   providedIn: 'root'

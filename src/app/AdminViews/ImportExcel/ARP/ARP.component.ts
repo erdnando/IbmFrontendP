@@ -435,8 +435,8 @@ export class ARPComponent {
     if (file && file2 && file3) 
     {
       let fileReader = new FileReader();
-      //let fileReader1 = new FileReader();
-      //let fileReader2 = new FileReader();
+      let fileReader1 = new FileReader();
+      let fileReader2 = new FileReader();
 
       fileReader.readAsBinaryString(file);
       
@@ -449,10 +449,10 @@ export class ARPComponent {
          // console.log(this.ExcelData);
           this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
             console.log(data)
-           // fileReader1.readAsBinaryString(file2);
+            fileReader1.readAsBinaryString(file2);
             });       
       }
-      /*fileReader1.onload = (e) => {
+      fileReader1.onload = (e) => {
         var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
         var sheetNames1 = workBook1.SheetNames;
         this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
@@ -468,11 +468,24 @@ export class ARPComponent {
         var sheetNames2 = workBook2.SheetNames;
         this.ExcelData2 = XLSX.utils.sheet_to_json(workBook2.Sheets[sheetNames2[0]], { raw: false });
         console.log(this.ExcelData2);
-
         this.loadArpExcelService.UploadSTE(this.ExcelData2).subscribe( data => { 
           console.log(data)
-          });       
-      }*/
+          this.activarBarra = false;
+          this.botonARP = false;
+          this.botonSTE = false;
+          this.botonTSE = false;
+          this.botonHorario=false;
+          this.botonWorkdayG=false;
+          this.fileInput1.nativeElement.value = null;
+          this.fileInput2.nativeElement.value = null;
+          this.fileInput3.nativeElement.value = null;
+          Swal.fire({
+            icon: 'success',
+            title: 'Carga de archivos completada.',
+            confirmButtonColor: '#0A6EBD',
+          });
+        });       
+      }
 
     } else {
       console.error("No se ha seleccionado ningún archivo.");
