@@ -8,5 +8,6 @@ export interface MCreateHorario{
   horaFin: string;
   day: string;
   ano: string;
+  fechaWorking: Date;
 
 }
