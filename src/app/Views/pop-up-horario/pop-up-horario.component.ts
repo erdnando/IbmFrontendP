@@ -51,7 +51,8 @@ export class PopUpHorarioComponent {
       week: object.week,
       userEntityId: object.userEntityId,
       day: object.day,
-      ano: object.ano
+      ano: object.ano,
+      fechaWorking:object.fechaWorking
     };
 
     console.log(this.mHorario)
@@ -170,7 +171,8 @@ export class PopUpHorarioComponent {
           horaInicio: '',
           horaFin: '',
           day: dia,
-          ano: horarios[0].ano
+          ano: horarios[0].ano,
+          fechaWorking:horarios[0].fechaWorking
         });
       }
     });

@@ -14,7 +14,7 @@ import { MenusListService } from '../../AdminViews/AdminRoles/services/menusList
 import { MMenu } from 'src/app/Models/MMenu';
 import { UserConsultRolService } from '../../Views/user/services/userConsultRol/user-consult-rol.service';
 import { ListUsersService } from '../../AdminViews/AdminRoles/services/listUsers/list-users.service';
-import { Global } from 'src/app/global';
+//import { Global } from 'src/app/global';
 import { ConsultaHorarioUserService } from 'src/app/Views/parameters/services/consultaHorarioUser/consulta-horario-user.service';
 import { MCreateHorario } from 'src/app/Models/MHorario';
 import { ApproverTimeService } from 'src/app/Views/aprovve-time/services/approverTime/approver-time.service';

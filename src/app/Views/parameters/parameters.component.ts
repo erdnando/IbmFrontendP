@@ -95,6 +95,7 @@ export class ParametersComponent implements OnInit {
   };
 
   datosTable:any [] = [];
+  week1:any[] = [];
 
   campoActivar = false;
 
@@ -603,6 +604,7 @@ export class ParametersComponent implements OnInit {
         week: this.semanaAno,
         userEntityId: this.idUserByEmployeCode,
         day: dia[0],
+        fechaWorking: this.obtenerFecha(dia[0]),
         ano: this.fechaSemanaAno
       };
       let index = this.mHorarioList.findIndex(
@@ -623,7 +625,8 @@ export class ParametersComponent implements OnInit {
           week: this.semanaAno,
           userEntityId: this.idUserByEmployeCode,
           day: x.day,
-          ano: this.fechaSemanaAno 
+          ano: this.fechaSemanaAno,
+          fechaWorking:this.obtenerFecha(x.day),
         }; 
         console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
         let index = this.mHorarioList.findIndex(
@@ -658,6 +661,12 @@ export class ParametersComponent implements OnInit {
       );
     }
 
+    
+
+    this.week1 = [];    
+
+    
+
     let date = new Date(this.date.value as unknown as Date);
     let year = date.getFullYear().toString();
     let week = getWeek(date);
@@ -665,6 +674,19 @@ export class ParametersComponent implements OnInit {
     this.fechaSemanaAno = year;
     console.log(this.fechaSemanaAno,' ano ', this.semanaAno, ' semana')
     this.habilitarHorariobyFecha = true;
+
+    var current = new Date(date);
+    if(current.getDay() != 0){
+        current.setDate(((current.getDate() - current.getDay())));
+    }
+    this.week1.push(new Date(current));//Agrega el primer dia al array
+
+    for (let index = 1; index < 7; index++) {
+      current.setDate((current.getDate() - current.getDay())+index);//Define el septimo dia
+      this.week1.push(new Date(current));
+      
+    }
+
 
     if(this.habilitarHorariobyFecha && this.habilitarHorario){
       this.consultarHorarioEmpleado();
@@ -692,6 +714,7 @@ export class ParametersComponent implements OnInit {
          this.agregarHorariosexcel = false;
          this.habilitarHorario = false;
          this.codeEmployed.reset();
+         this.codeEmployed = new FormControl("");
          this.horaFin.reset();
          this.horaInicio.reset();
          this.date.reset();
@@ -741,7 +764,7 @@ export class ParametersComponent implements OnInit {
             userEntityId: element.userEntityId,
             week: element.week,
             ano: element.ano,
-            fecha:fechadia+"/"+fechames+"/"+fechaanio
+            fechaWorking: element.fechaWorking
           };
 
           let index = this.mHorarioListExcel.findIndex(
@@ -889,11 +912,14 @@ export class ParametersComponent implements OnInit {
     let fechaanio = date.getFullYear();
     let fechadiast = fechadia<10?"0"+fechadia:fechadia
     this.mHorarioListExcel.forEach(element => {
+      let fechsplit = new Date(element.fechaWorking.toString()).toLocaleDateString();
+      let diafor=fechsplit.split("/");
+      let diaformat = diafor[2] + "/" + (diafor[1].length==1? "0"+diafor[1]:diafor[1]) +"/"+(diafor[0].length==1? "0"+diafor[0]:diafor[0])
       let rowseason ={
         dia: element.day, 
         horaInicio: element.horaInicio, 
         horaFin: element.horaFin,
-        fecha: fechaanio+"/"+ (fechames<10?"0"+fechames:fechames)+"/"+ (fechadia<10?"0"+fechadia:fechadia),
+        fechaWorking: diaformat,
         codigo_Empleado: element.userEntityId, 
         pais: pais.countryEntity.nameCountry
       };
@@ -1042,6 +1068,37 @@ resetEditable() {
   this.Datos.forEach(dato => {
     dato.editable = false;
   });
+}
+
+obtenerFecha(diain:string){
+  var dia;
+  var diafor="";
+  switch(diain){
+    case "Lunes":
+      diafor = this.week1[1].toLocaleDateString().split("/");
+      break;
+    case "Martes":
+      diafor = this.week1[2].toLocaleDateString().split("/");
+      break;
+    case "Miércoles":
+      diafor = this.week1[3].toLocaleDateString().split("/");
+      break;
+    case "Jueves":
+      diafor = this.week1[4].toLocaleDateString().split("/");
+      break;
+    case "Viernes":
+      diafor = this.week1[5].toLocaleDateString().split("/");
+      break;
+    case "Sábado":
+      diafor = this.week1[6].toLocaleDateString().split("/");
+      break;
+    case "Domingo":
+      diafor = this.week1[0].toLocaleDateString().split("/");
+      break;
+  }
+  dia = new Date(diafor[2] + "/" + (diafor[1].length==1? "0"+diafor[1]:diafor[1]) +"/"+(diafor[0].length==1? "0"+diafor[0]:diafor[0]));
+  return dia
+
 }
   
 
