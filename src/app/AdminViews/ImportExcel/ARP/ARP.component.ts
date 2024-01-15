@@ -59,11 +59,14 @@ export class ARPComponent {
     // this.readFile3(file3.files);
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
+      this.barraProgreso(true);
       this.readfilefinal(file1.files,file2.files,file3.files);
+      this.barraProgreso(false)
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
+      this.barraProgreso(false)
     }
-    this.barraProgreso()
+    
   }
   
   validarArchivo(event: any) {
@@ -85,26 +88,27 @@ export class ARPComponent {
     return true;
   }
 
-  barraProgreso(){
-    this.activarBarra = true;
-    setTimeout(() => {
-      this.activarBarra = false;
-      this.botonARP = false;
-      this.botonSTE = false;
-      this.botonTSE = false;
-      this.botonHorario=false;
-      this.botonWorkdayG=false;
-      this.fileInput1.nativeElement.value = null;
-      this.fileInput2.nativeElement.value = null;
-      this.fileInput3.nativeElement.value = null;
-      this.fileInput4.nativeElement.value = null;
-      this.fileInputWorkdayG.nativeElement.valu=null;
-      Swal.fire({
-        icon: 'success',
-        title: 'Carga de archivos completada.',
-        confirmButtonColor: '#0A6EBD',
-      });
-  }, 4 * 60 * 1000);
+  barraProgreso(estatus:boolean){
+    this.activarBarra = estatus;
+   // setTimeout(() => {
+      this.activarBarra = !estatus;
+      this.botonARP = !estatus;
+      this.botonSTE = !estatus;
+      this.botonTSE = !estatus;
+      this.botonHorario=!estatus;
+      this.botonWorkdayG=!estatus;
+      if(!estatus){
+        this.fileInput1.nativeElement.value = null;
+        this.fileInput2.nativeElement.value = null;
+        this.fileInput3.nativeElement.value = null;
+        this.fileInput4.nativeElement.value = null;
+        this.fileInputWorkdayG.nativeElement.value=null;
+
+      }
+     
+
+     
+ // }, 4 * 60 * 1000);
   }
 
   activarARP(boton: string){
@@ -450,6 +454,13 @@ export class ARPComponent {
           this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
             console.log(data)
            // fileReader1.readAsBinaryString(file2);
+
+           this.activarBarra = false;
+           Swal.fire({
+            icon: 'success',
+            title: 'Carga de archivos completada.',
+            confirmButtonColor: '#0A6EBD',
+          });
             });       
       }
       /*fileReader1.onload = (e) => {
@@ -471,7 +482,14 @@ export class ARPComponent {
 
         this.loadArpExcelService.UploadSTE(this.ExcelData2).subscribe( data => { 
           console.log(data)
-          });       
+          });  
+          
+          this.activarBarra = false;
+           Swal.fire({
+            icon: 'success',
+            title: 'Carga de archivos completada.',
+            confirmButtonColor: '#0A6EBD',
+          });
       }*/
 
     } else {
@@ -489,20 +507,24 @@ export class ARPComponent {
 
   readExcelHorario(file: any) {
     if (this.validarArchivo(file)) {
+      this.barraProgreso(true);
       this.readFileHorario(file.files);
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
+      this.barraProgreso(false);
     }
-    this.barraProgreso()
+    
   }
 
   readExcelWorkdayG(file: any) {
     if (this.validarArchivo(file)) {
+      this.barraProgreso(true);
       this.readFileWorkdayG(file.files);
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
+      this.barraProgreso(false);
     }
-    this.barraProgreso()
+   // this.barraProgreso()
   }
 
   
