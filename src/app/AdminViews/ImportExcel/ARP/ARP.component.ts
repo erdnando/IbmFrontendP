@@ -33,6 +33,9 @@ export class ARPComponent {
   selectedFile: File | null = null;
   MUser: MUserEntity;
   Approving: boolean = false;
+  showImgARP: boolean = false;
+  showImgTSE: boolean = false;
+  showImgSTE: boolean = false;
   activarBarra = false;
   botonARP = false;
   botonTSE= false;
@@ -453,18 +456,11 @@ export class ARPComponent {
          // console.log(this.ExcelData);
           this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
             console.log(data)
-           // fileReader1.readAsBinaryString(file2);
-
-           this.activarBarra = false;
-           Swal.fire({
-            icon: 'success',
-            title: 'Carga de archivos completada.',
-            confirmButtonColor: '#0A6EBD',
-          });
-
+            this.showImgARP=data;
+            fileReader1.readAsBinaryString(file2);
             });       
       }
-    /*  fileReader1.onload = (e) => {
+      fileReader1.onload = (e) => {
         var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
         var sheetNames1 = workBook1.SheetNames;
         this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
@@ -472,6 +468,7 @@ export class ARPComponent {
         this.loadArpExcelService.UploadTSE(this.ExcelData1).subscribe( data => { 
           fileReader2.readAsBinaryString(file3);
           console.log(data)
+          this.showImgARP=data;
           });        
       }
 
@@ -481,16 +478,16 @@ export class ARPComponent {
         this.ExcelData2 = XLSX.utils.sheet_to_json(workBook2.Sheets[sheetNames2[0]], { raw: false });
         console.log(this.ExcelData2);
         this.loadArpExcelService.UploadSTE(this.ExcelData2).subscribe( data => { 
-          console.log(data);
-
+          console.log(data)
           this.activarBarra = false;
+          this.showImgARP=data;
            Swal.fire({
             icon: 'success',
             title: 'Carga de archivos completada.',
             confirmButtonColor: '#0A6EBD',
           });
-          });       
-      }*/
+        });       
+      }
 
     } else {
       console.error("No se ha seleccionado ningún archivo.");
