@@ -17,7 +17,6 @@ export class ListCountryService {
   { }
 
   GetCountry():Observable<MResponse>{
-
     let direccion = this.URLLocal +"Country/List";
     console.log(direccion);
     return this.http.get<MResponse>(direccion);

@@ -72,7 +72,8 @@ Login(){
                 roleEntityId: data.data.roleEntityId,
                 countryEntityId: data.data.countryEntityId,
                 countryEntity: data.data.countryEntity,
-                rolEntity: data.data.roleEntity
+                rolEntity: data.data.roleEntity,
+                token:data.data.token
               };
               this.storageService.guardarDatosMapeados(datosMapeados)
               return datosMapeados;
