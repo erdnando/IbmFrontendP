@@ -24,7 +24,7 @@
 
         <div>
             <label class="mi-etiqueta">
-                Archivo ARP<!-- <mat-icon class="example-tab-icon">done-circule</mat-icon> <mat-icon>close</mat-icon><br> -->
+                Archivo ARP: <br><!-- <mat-icon class="example-tab-icon">done-circule</mat-icon> <mat-icon>close</mat-icon><br> -->
                 <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('ARP')" #fileInput1>
             </label>
 
@@ -63,7 +63,7 @@
             <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
             <div class="centrado">
             <label class="mi-etiqueta">
-                Cargar plantilla de horarios 
+                Cargar plantilla GMT 
                 <br>
                 <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
             </label>
