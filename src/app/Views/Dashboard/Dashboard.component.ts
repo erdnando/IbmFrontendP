@@ -375,10 +375,15 @@ export class DashboardComponent {
             });
 
             //testing data
-            this.seriesStandBy=268;// ((totalHorasRespServicioStanBy/totHorasanuales)*100);
-            this.seriesOverTime=256;// ((totalHorasRespServicioOverTime/totHorasanuales)*100);
-            arrMonthsStandBy=[8,8,16,16,24,40,36,24,24,8,40,40]; //arrMonthsStandBy
-            arrMonthsOverTime=[8,8,16,40,40,40,40,16,16,16,8,8]; //arrMonthsOverTime
+            //this.seriesStandBy=268;// ((totalHorasRespServicioStanBy/totHorasanuales)*100);
+            //this.seriesOverTime=256;// ((totalHorasRespServicioOverTime/totHorasanuales)*100);
+            //arrMonthsStandBy=[8,8,16,16,24,40,36,24,24,8,40,40]; //arrMonthsStandBy
+            //arrMonthsOverTime=[8,8,16,40,40,40,40,16,16,16,8,8]; //arrMonthsOverTime
+
+            this.seriesStandBy= ((totalHorasRespServicioStanBy/totHorasanuales)*100);
+            this.seriesOverTime= ((totalHorasRespServicioOverTime/totHorasanuales)*100);
+            arrMonthsStandBy= arrMonthsStandBy
+            arrMonthsOverTime=arrMonthsOverTime
             //------------------------------------------------------------------------------------
             this.chartOptions = {
               id:"uno",
