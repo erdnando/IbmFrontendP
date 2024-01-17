@@ -635,6 +635,17 @@ export class DashboardComponent {
     }  
   }
 
+  getDia(fecha: string){
+
+    try{
+      let date = new Date(fecha);
+      let day = date.toLocaleString('es-mx', {weekday: 'long'});
+      return day;
+    }catch(e){
+      return "";
+    }
+    
+  }
   getReqRepHorasTLS(){
     this._reqRepHorasTLS.semana=this.noSemana;
     this._reqRepHorasTLS.usuario=this.MUser.employeeCode.toString();

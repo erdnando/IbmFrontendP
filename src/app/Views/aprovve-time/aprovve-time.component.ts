@@ -73,7 +73,7 @@ export class AprovveTimeComponent {
   }
 
   ValidateRole() {
-    if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' ||this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2') {
+    if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' ||this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
       this.Approving = true;
       this.obtenerLista.loadApproverTime(this.MUser.idUser);
        

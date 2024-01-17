@@ -90,19 +90,20 @@
                 <thead class="thead-blue">
                     <tr>
                         <th scope="col" class="text-center align-middle" style="font-weight: bold;">TOOL</th>
-                        <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;">{{item.fecha}}</th>
+                        <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}} <br/><div style="text-align: center;">{{getDia(item.fecha)}}</div>  </th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let items of repGralDias" >
                         <td style="font-weight: bold;">{{items.tool}}</td>
-                        <td>{{items.dia1}}</td>
-                        <td>{{items.dia2}}</td>
-                        <td>{{items.dia3}}</td>
-                        <td>{{items.dia4}}</td>
-                        <td>{{items.dia5}}</td>
-                        <td>{{items.dia6}}</td>
-                        <td>{{items.dia7}}</td>
+                        <td style="text-align: center;">{{items.dia1}}</td>
+                        <td style="text-align: center;">{{items.dia2}}</td>
+                        <td style="text-align: center;">{{items.dia3}}</td>
+                        <td style="text-align: center;">{{items.dia4}}</td>
+                        <td style="text-align: center;">{{items.dia5}}</td>
+                        <td style="text-align: center;">{{items.dia6}}</td>
+                        <td style="text-align: center;">{{items.dia7}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -115,19 +116,19 @@
                     <thead class="thead-blue">
                         <tr>
                             <th scope="col" class="text-center align-middle" style="font-weight: bold;">StandBy</th>
-                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;">{{item.fecha}}</th>
+                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}}<br/><div style="text-align: center;">{{getDia(item.fecha)}}</div></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let items of repGralDiasStandBy" >
                             <td style="font-weight: bold;">{{items.tool}}</td>
-                            <td>{{items.dia1}}</td>
-                            <td>{{items.dia2}}</td>
-                            <td>{{items.dia3}}</td>
-                            <td>{{items.dia4}}</td>
-                            <td>{{items.dia5}}</td>
-                            <td>{{items.dia6}}</td>
-                            <td>{{items.dia7}}</td>
+                            <td style="text-align: center;">{{items.dia1}}</td>
+                            <td style="text-align: center;">{{items.dia2}}</td>
+                            <td style="text-align: center;">{{items.dia3}}</td>
+                            <td style="text-align: center;">{{items.dia4}}</td>
+                            <td style="text-align: center;">{{items.dia5}}</td>
+                            <td style="text-align: center;">{{items.dia6}}</td>
+                            <td style="text-align: center;">{{items.dia7}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -137,19 +138,19 @@
                     <thead class="thead-blue">
                         <tr>
                             <th scope="col" class="text-center align-middle" style="font-weight: bold;">OverTime</th>
-                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;">{{item.fecha}}</th>
+                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}}<div style="text-align: center;">{{getDia(item.fecha)}}</div></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let items of repGralDiasOver" >
                             <td style="font-weight: bold;">{{items.tool}}</td>
-                            <td>{{items.dia1}}</td>
-                            <td>{{items.dia2}}</td>
-                            <td>{{items.dia3}}</td>
-                            <td>{{items.dia4}}</td>
-                            <td>{{items.dia5}}</td>
-                            <td>{{items.dia6}}</td>
-                            <td>{{items.dia7}}</td>
+                            <td style="text-align: center;">{{items.dia1}}</td>
+                            <td style="text-align: center;">{{items.dia2}}</td>
+                            <td style="text-align: center;">{{items.dia3}}</td>
+                            <td style="text-align: center;">{{items.dia4}}</td>
+                            <td style="text-align: center;">{{items.dia5}}</td>
+                            <td style="text-align: center;">{{items.dia6}}</td>
+                            <td style="text-align: center;">{{items.dia7}}</td>
                         </tr>
                     </tbody>
                 </table>                

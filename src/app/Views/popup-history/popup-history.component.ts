@@ -80,6 +80,7 @@ cargarIcono(estado: string): string{
       console.log(this.MListHorus)
       console.log(this.data.reporte)
       this.MListHorusResport = listap[0];
+      console.log("MListHorusResport::::")
       console.log(this.MListHorusResport);
     });
 
