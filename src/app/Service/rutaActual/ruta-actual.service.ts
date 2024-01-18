@@ -6,6 +6,8 @@ import { Guid } from 'guid-typescript';
 import { UserConsultByCodeEmService } from 'src/app/Views/user/services/userConsultByCodeEm/user-consult-by-code-em.service';
 import { MUserCreate } from 'src/app/Models/MUserCreate';
 import { MLogin } from 'src/app/Models/MLogin';
+import { MUserEntity } from 'src/app/Models/MUserEntity';
+import { ApiLogin } from 'src/app/Views/Login/services/login/api.login';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +21,14 @@ export class RutaActualService {
   private ExisteUsr: boolean = false;
   private objJson:any;
   NewUser : MUserCreate;
+  MUser: MUserEntity;
+  Userlogin : MLogin;
 
-
-  constructor(private router: Router,private storageService: StorageService, private UserCosult:UserConsultByCodeEmService) {
+  constructor(private router: Router,private storageService: StorageService, private UserCosult:UserConsultByCodeEmService,private apiLogin:ApiLogin) {
     this.NewUser = {} as MUserCreate;
+    this.MUser = this.storageService.obtenerDatosMapeados();
+    this.Userlogin = {} as MLogin;
+
     this.router.events.subscribe((evento) => {
       if (evento instanceof NavigationEnd) {
 
@@ -32,11 +38,11 @@ export class RutaActualService {
         
 
         console.log("parametro obtenido:"+ xmlParam);
-        console.log('version 1.0.0.7');
+        console.log('version 1.0.0.8');
         if(xmlParam!=null){
           console.log("flujo sso");
           //TODO
-          //si el contenido emieza con ERROR, redirigir a la pagina d eerro con el mensaje de error
+          //si el contenido emieza con ERROR, redirigir a la pagina de error con el mensaje de error
           //si no, continuar...
 
 
@@ -71,8 +77,11 @@ export class RutaActualService {
           "rolEntity":{"idRole":this.objJson.roleEntityId,
           "nameRole":this.objJson.nameRole,
           "menuEntity":null}};
-        this.storageService.guardarDatosMapeados(datosMapeados)
-    
+
+        this.storageService.guardarDatosMapeados(datosMapeados);
+
+        //get token
+        this.getAndAddTokenToStorage();
       
         
         
@@ -99,6 +108,41 @@ export class RutaActualService {
 
         
       }
+    });
+  }
+
+  getAndAddTokenToStorage(){
+
+    this.MUser = this.storageService.obtenerDatosMapeados();
+    this.Userlogin.userName = this.MUser.email;
+    this.Userlogin.password = this.MUser.password;
+
+    this.apiLogin.GetLogin(this.Userlogin).pipe(
+      map((data: any) => {
+      console.log(data);
+        if (data && data.data) {
+          const datosMapeados = {
+  
+            idUser: data.data.idUser,
+            email: data.data.email,
+            nameUser: data.data.nameUser,
+            surnameUser: data.data.surnameUser,
+            employeeCode: data.data.employeeCode,
+            roleEntityId: data.data.roleEntityId,
+            countryEntityId: data.data.countryEntityId,
+            countryEntity: data.data.countryEntity,
+            rolEntity: data.data.roleEntity,
+            token:data.data.token
+          };
+          this.storageService.guardarDatosMapeados(datosMapeados)
+          return datosMapeados;
+        } else {
+  
+          return null;
+        }
+      })
+    ).subscribe(dataMapeada => {
+      
     });
   }
 

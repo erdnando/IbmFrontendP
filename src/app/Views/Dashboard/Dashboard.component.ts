@@ -21,6 +21,8 @@ import {
   ApexTitleSubtitle
 } from "ng-apexcharts";
 import * as ApexCharts from 'apexcharts';
+import { ApiLogin } from '../Login/services/login/api.login';
+import { MLogin } from 'src/app/Models/MLogin';
 
 export type ChartOptions = {
   id: string;
@@ -73,6 +75,7 @@ export class DashboardComponent {
   columnasAMostrar = ['Tool', 'dia1', 'dia2', 'dia3', 'dia4','dia5','dia6','dia7'];
   currentDate = new Date();
   weekNumber:number=0;
+ // Userlogin : MLogin;
 
   constructor(private storageData: StorageService, private router: Router,private _apiDashboard:ApiDashboard) {
 
@@ -299,6 +302,7 @@ export class DashboardComponent {
 
 
   ngOnInit() {
+   
     this.noAno=this.currentDate.getFullYear();
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
@@ -314,6 +318,8 @@ export class DashboardComponent {
     };
   
   }
+
+ 
 
   valuechange(newValue:number) {
     
@@ -379,7 +385,8 @@ export class DashboardComponent {
             //this.seriesOverTime=256;// ((totalHorasRespServicioOverTime/totHorasanuales)*100);
             //arrMonthsStandBy=[8,8,16,16,24,40,36,24,24,8,40,40]; //arrMonthsStandBy
             //arrMonthsOverTime=[8,8,16,40,40,40,40,16,16,16,8,8]; //arrMonthsOverTime
-
+            
+            //from API
             this.seriesStandBy= ((totalHorasRespServicioStanBy/totHorasanuales)*100);
             this.seriesOverTime= ((totalHorasRespServicioOverTime/totHorasanuales)*100);
             arrMonthsStandBy= arrMonthsStandBy

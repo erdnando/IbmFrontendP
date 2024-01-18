@@ -15,4 +15,5 @@ export interface MUserEntity{
     countryEntityId: Guid;
     countryEntity: MCountryEntity;
     rolEntity: MRol;
+    token:string;
 }
