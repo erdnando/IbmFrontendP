@@ -62,27 +62,9 @@ export class RutaActualService {
         //validar que el usuario (email) exista
         this.objJson = JSON.parse(decodedStringAtoB);
         console.log("ObjetoJason: " + this.objJson.email);
-     
-        //actualizar local storage
-        const datosMapeados = {
-          "idUser":this.objJson.idUser,
-          "email":this.objJson.email,
-          "nameUser":this.objJson.nombre,
-          "surnameUser":this.objJson.lastName,
-          "employeeCode":this.objJson.employeeCode,
-          "roleEntityId":this.objJson.roleEntityId,
-          "countryEntityId":this.objJson.countryEntityId,
-          "countryEntity":{"idCounty":this.objJson.countryEntityId,
-          "nameCountry":this.objJson.nameCountry},
-          "rolEntity":{"idRole":this.objJson.roleEntityId,
-          "nameRole":this.objJson.nameRole,
-          "menuEntity":null}};
-
-        this.storageService.guardarDatosMapeados(datosMapeados);
-
-        //get token
-        this.getAndAddTokenToStorage();
-      
+        
+        this.getAndAddTokenToStorage(this.objJson);
+          
         
         
         setTimeout(() => {
@@ -111,40 +93,42 @@ export class RutaActualService {
     });
   }
 
-  getAndAddTokenToStorage(){
-
-    this.MUser = this.storageService.obtenerDatosMapeados();
-    this.Userlogin.userName = this.MUser.email;
-    this.Userlogin.password = this.MUser.password;
+  getAndAddTokenToStorage(json:any){
+    console.log(json);
+    this.Userlogin.userName = json.email;
+    this.Userlogin.password = json.code;
 
     this.apiLogin.GetLogin(this.Userlogin).pipe(
       map((data: any) => {
-      console.log(data);
-        if (data && data.data) {
-          const datosMapeados = {
-  
-            idUser: data.data.idUser,
-            email: data.data.email,
-            nameUser: data.data.nameUser,
-            surnameUser: data.data.surnameUser,
-            employeeCode: data.data.employeeCode,
-            roleEntityId: data.data.roleEntityId,
-            countryEntityId: data.data.countryEntityId,
-            countryEntity: data.data.countryEntity,
-            rolEntity: data.data.roleEntity,
-            token:data.data.token
-          };
-          this.storageService.guardarDatosMapeados(datosMapeados)
-          return datosMapeados;
-        } else {
-  
-          return null;
-        }
-      })
+
+        if (data && data.data){
+
+          //actualizar local storage
+        const datosMapeados = {
+          "idUser":this.objJson.idUser,
+          "email":this.objJson.email,
+          "nameUser":this.objJson.nombre,
+          "surnameUser":this.objJson.lastName,
+          "employeeCode":this.objJson.employeeCode,
+          "roleEntityId":this.objJson.roleEntityId,
+          "countryEntityId":this.objJson.countryEntityId,
+          "countryEntity":{"idCounty":this.objJson.countryEntityId,
+          "nameCountry":this.objJson.nameCountry},
+          "rolEntity":{"idRole":this.objJson.roleEntityId,
+          "nameRole":this.objJson.nameRole,
+          "token": data.data.token,
+          "menuEntity":null,
+        }};
+
+        this.storageService.guardarDatosMapeados(datosMapeados);
+
+
+      }
+    })
     ).subscribe(dataMapeada => {
       
-    });
-  }
+  });
+}
 
   get pathActual(){
     return this._rutaActuales$.asObservable();
