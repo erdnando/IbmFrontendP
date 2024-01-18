@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { AppRoutingModule,routingComponents} from './app-routing.module';
-import{HttpClientModule} from '@angular/common/http';
+import{HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
@@ -13,6 +13,7 @@ import { SublevelMenuComponent } from './Plantillas/sidenav/sidenav/sublevel-men
 import { BodyComponent } from './Plantillas/sidenav/body/body.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import {CookieService} from 'ngx-cookie-service';
+import { AppInterceptorService } from './app-interceptor.service';
 
 
 
@@ -36,7 +37,12 @@ import {CookieService} from 'ngx-cookie-service';
     SweetAlert2Module,
     NgApexchartsModule
   ],
-  providers: [CookieService],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AppInterceptorService,
+    multi: true
+  },CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
