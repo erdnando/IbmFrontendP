@@ -117,6 +117,7 @@ export class RutaActualService {
           "rolEntity":{"idRole":this.objJson.roleEntityId,
           "nameRole":this.objJson.nameRole,
           "token": data.data.token,
+          "code":data.data.password,
           "menuEntity":null,
         }};
 

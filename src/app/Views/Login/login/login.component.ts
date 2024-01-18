@@ -73,7 +73,8 @@ Login(){
                 countryEntityId: data.data.countryEntityId,
                 countryEntity: data.data.countryEntity,
                 rolEntity: data.data.roleEntity,
-                token:data.data.token
+                token:data.data.token,
+                code:data.data.password
               };
               this.storageService.guardarDatosMapeados(datosMapeados)
               return datosMapeados;
