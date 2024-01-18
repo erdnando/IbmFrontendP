@@ -114,28 +114,30 @@ export class RutaActualService {
           "countryEntityId":this.objJson.countryEntityId,
           "countryEntity":{"idCounty":this.objJson.countryEntityId,
           "nameCountry":this.objJson.nameCountry},
-          "rolEntity":{"idRole":this.objJson.roleEntityId,
-          "nameRole":this.objJson.nameRole,
           "token": data.data.token,
           "code":data.data.password,
+          "rolEntity":{"idRole":this.objJson.roleEntityId,
+          "nameRole":this.objJson.nameRole,
           "menuEntity":null,
         }};
 
         this.storageService.guardarDatosMapeados(datosMapeados);
+
+        this.rutaActual =  '/dashboard';
+        //this.router.url;
+        console.log(' this.rutaActual: ',  this.rutaActual);
+        this._rutaActuales$.next(this.rutaActual);
+        console.log(this.rutaActual);
+        //refresh
+        this.router.navigate(['dashboard']);
+       // location.reload();
 
 
       }
     })
     ).subscribe(dataMapeada => {
 
-      this.rutaActual =  '/dashboard';
-          //this.router.url;
-          console.log(' this.rutaActual: ',  this.rutaActual);
-          this._rutaActuales$.next(this.rutaActual);
-          console.log(this.rutaActual);
-          //refresh
-          this.router.navigate(['dashboard']);
-         // location.reload();
+     
       
   });
 }
