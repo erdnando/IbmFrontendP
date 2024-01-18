@@ -63,19 +63,19 @@ export class RutaActualService {
         this.objJson = JSON.parse(decodedStringAtoB);
         console.log("ObjetoJason: " + this.objJson.email);
         
-        this.getAndAddTokenToStorage(this.objJson);
+       
           
         
         
         setTimeout(() => {
-          this.rutaActual =  '/dashboard';
+          this.getAndAddTokenToStorage(this.objJson);
+         /* this.rutaActual =  '/dashboard';
           //this.router.url;
           console.log(' this.rutaActual: ',  this.rutaActual);
           this._rutaActuales$.next(this.rutaActual);
           console.log(this.rutaActual);
           //refresh
-          this.router.navigate(['dashboard']);
-         // location.reload();
+          this.router.navigate(['dashboard']);*/
          }, 500);
         
 
@@ -102,7 +102,7 @@ export class RutaActualService {
       map((data: any) => {
 
         if (data && data.data){
-
+           console.log(data.data);
           //actualizar local storage
         const datosMapeados = {
           "idUser":this.objJson.idUser,
@@ -126,6 +126,15 @@ export class RutaActualService {
       }
     })
     ).subscribe(dataMapeada => {
+
+      this.rutaActual =  '/dashboard';
+          //this.router.url;
+          console.log(' this.rutaActual: ',  this.rutaActual);
+          this._rutaActuales$.next(this.rutaActual);
+          console.log(this.rutaActual);
+          //refresh
+          this.router.navigate(['dashboard']);
+         // location.reload();
       
   });
 }
