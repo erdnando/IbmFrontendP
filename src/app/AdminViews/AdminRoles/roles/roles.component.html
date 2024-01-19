@@ -17,11 +17,17 @@
                 Roles
             </ng-template>
             <br>
+            <div class="div-form">
+                <mat-toolbar class="">
+                    <h1>Gestion De Roles</h1>
+                </mat-toolbar>
+            </div>
+
             <div *ngIf="Approving">
                 <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel>Roles</ng-template>
                     <div style="text-align: right; ">
-                        <button mat-raised-button class="button-options" (click)="crearRol()">Crear</button>
+                        <button mat-raised-button color="primary" class="" (click)="crearRol()">Crear<mat-icon>library_add</mat-icon></button>
                     </div>
                     <mat-table [dataSource]="MRoles" class="mat-elevation-z8">
                         <!-- Nombre -->
@@ -33,15 +39,15 @@
                         <ng-container matColumnDef="editar">
                             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                             <mat-cell *matCellDef="let element">
-                                <button mat-button (click)="openDialog(element.idRole, element.nameRole)"
-                                    class="button-review">Editar</button>
+                                <button mat-button style="color:green" (click)="openDialog(element.idRole, element.nameRole)"
+                                    class="">Editar</button>
                             </mat-cell>
                         </ng-container>
 
                         <ng-container matColumnDef="eliminar">
                             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                             <mat-cell *matCellDef="let element">
-                                <button mat-button class="button-delete">Eliminar</button>
+                                <button mat-button style="color: red;" class="">Eliminar</button>
                             </mat-cell>
                         </ng-container>
 
@@ -60,7 +66,7 @@
             </ng-template>
             <br>
             <div class="div-form">
-                <mat-toolbar class="title-form">
+                <mat-toolbar class="">
                     <h1>Asignacion De Perfiles De Usuario</h1>
                 </mat-toolbar>
             </div>
@@ -122,7 +128,7 @@
                         <ng-container matColumnDef="editar">
                             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                             <mat-cell *matCellDef="let element">
-                                <button mat-button (click)="editar(element)" class="button-review">Editar</button>
+                                <button mat-button style="color: green;" (click)="editar(element)" class="">Editar</button>
                             </mat-cell>
                         </ng-container>
 

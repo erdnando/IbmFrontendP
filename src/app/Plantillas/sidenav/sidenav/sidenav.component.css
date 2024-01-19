@@ -128,6 +128,29 @@
     }
 }
 
+.sidenav-nav-linkx {
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    color: #f3f3f3;
+    text-decoration: none;
+    border-radius: 0.625rem;
+    transition: color .3s ease;
+
+    .sidenav-linkx-icon {
+        font-size: 20px;
+        width:1rem;
+        min-width: 2rem;
+        margin: 0 0.5rem;
+        text-align: center;
+    }
+
+    .sidenav-linkx-text{
+        margin-left: 0.2rem;
+    }
+
+}
+
 .active {
     background-color: #fff;
 

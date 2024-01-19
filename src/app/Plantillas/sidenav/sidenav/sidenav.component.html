@@ -59,14 +59,24 @@
     <mat-nav-list>
       <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
         <div class="logo-container">
-          <button class="logo" (click)="toggleCollapse()">I</button>
+          <button mat-button style="color:white"  class="" (click)="toggleCollapse()"><mat-icon>view_headline</mat-icon></button>
           <div class="logo-text" @fadeInOut *ngIf="collapsed"> IBM</div>
+
+          
           <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
             <mat-icon>close</mat-icon>
           </button>
         </div>
       
         <ol class="sidenav-nav">
+         
+          <li class="sidenav-nav-item">
+            <a title="erdnando"  class="sidenav-nav-linkx"   >
+              <mat-icon class="sidenav-linkx-icon">assignment_ind</mat-icon>
+              <span class="sidenav-linkx-text " @fadeInOut *ngIf="collapsed"> erdnando rodriguez vargas</span>
+            </a>
+          </li>
+
           <li class="sidenav-nav-item" *ngFor="let data of Mmen">
             <a title="{{data.menuEntity.nameMenu}}" href="" class="sidenav-nav-link" [routerLink]="['/' + data.menuEntity.path]" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}">

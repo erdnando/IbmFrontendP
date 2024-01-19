@@ -7,8 +7,8 @@
   }
 
 mat-header-cell {
-    background-color: #548CA8 !important;
-    color: white;
+    background-color: #f3f3f3 !important;
+    color: #45474B; 
 }
 
 .table {

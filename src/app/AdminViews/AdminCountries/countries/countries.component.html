@@ -16,7 +16,7 @@
     </div> -->
     <div *ngIf="Approving">
         <div style="text-align: right; ">
-            <button mat-raised-button class="button-options" (click)="crearUsuario()">Crear</button>
+            <button mat-raised-button color="primary" class="" (click)="crearUsuario()">Crear<mat-icon>library_add</mat-icon></button>
         </div>
 
         <div>
@@ -32,14 +32,14 @@
                     <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                     <mat-cell *matCellDef="let element">
                         <button mat-button (click)="openDialog(element.idCounty, element.nameCountry)"
-                            class="button-review">Editar<mat-icon>edit_note</mat-icon></button>
+                            class="" style="color:green">Editar<mat-icon>edit_note</mat-icon></button>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="eliminar">
                     <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        <button mat-button class="button-delete">Eliminar<mat-icon>delete</mat-icon></button>
+                        <button mat-button class="" style="color: red;">Eliminar<mat-icon>delete</mat-icon></button>
                     </mat-cell>
                 </ng-container>
 
