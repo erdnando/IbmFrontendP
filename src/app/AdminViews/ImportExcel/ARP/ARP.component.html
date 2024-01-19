@@ -25,7 +25,7 @@
         <div>
             <label class="mi-etiqueta">
                 Archivo ARP: <br><!-- <mat-icon class="example-tab-icon">done-circule</mat-icon> <mat-icon>close</mat-icon><br> -->
-                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('ARP')" #fileInput1>
+                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('ARP',$event)" #fileInput1>
             </label>
 
 
@@ -34,7 +34,7 @@
         <div>
             <label class="mi-etiqueta">
                 Archivo TSE: <br>
-                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos TSE:" accept=".xlsx, .xls" (change)="activarARP('TSE')" #fileInput2>
+                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos TSE:" accept=".xlsx, .xls" (change)="activarARP('TSE',$event)" #fileInput2>
             </label>
 
         </div>
@@ -42,7 +42,7 @@
         <div>
             <label class="mi-etiqueta">
                 Archivo STE: <br>
-                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos STE:" accept=".xlsx, .xls" (change)="activarARP('STE')" #fileInput3>
+                <input [disabled]="activarBarra" type="file" placeholder="Carga archivos STE:" accept=".xlsx, .xls" (change)="activarARP('STE',$event)" #fileInput3>
             </label>
 
         </div>
@@ -65,7 +65,7 @@
             <label class="mi-etiqueta">
                 Cargar plantilla GMT 
                 <br>
-                <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+                <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
             </label>
         </div>
 
@@ -88,7 +88,7 @@
             <label class="mi-etiqueta">
                 Cargar plantilla de Workday Gerentes 
                 <br>
-                <input type="file" [disabled]="activarBarra" (change)="activarARP('WorkdayG')" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInputWorkdayG>
+                <input type="file" [disabled]="activarBarra" (change)="activarARP('WorkdayG',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInputWorkdayG>
             </label>
         </div>
 
