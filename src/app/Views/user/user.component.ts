@@ -19,6 +19,8 @@ interface SideNavTogg1e {
 export class UserComponent {
 
   MUser:MUserEntity;
+  MManagerNameUser:string="";
+  MManagerEmailUser:string="";
 
   constructor(private apiUser:ApiUser, private apiLogin:ApiLogin,private router:Router, private storageService: StorageService, public dialog: MatDialog)
   {
@@ -35,20 +37,20 @@ export class UserComponent {
 
   ngOnInit():void{
 
-  this.MUser = this.storageService.obtenerDatosMapeados();
-  console.log(this.MUser.surnameUser)
+    this.MUser = this.storageService.obtenerDatosMapeados();
+    console.log(this.MUser.surnameUser)
 
-  
-  
+    this.apiUser.GetGerente(this.MUser.employeeCode).subscribe(data=>{
 
-    // this.apiUser.GetUser().subscribe(data=>{
+      console.log(data);
+      this.MManagerNameUser = data.data.result.managerName;
+      this.MManagerEmailUser = data.data.result.managerEmail;
 
-    //   console.log(data);
-    //   this.MUser = data;
-
-    // })
-
+    });
   }
+
+  
+
 
 
 

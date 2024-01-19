@@ -72,14 +72,14 @@
             <td>
               <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Nombre Gerente</mat-label>
-                <input matInput readonly>
+                <input matInput readonly [(ngModel)]="MManagerNameUser" name="MManagerNameUser">
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="example-full-width" appearance="outline"
               style="background-color: #f5f5f5;">
                 <mat-label>Correo Gerente</mat-label>
-                <input matInput readonly>
+                <input matInput readonly [(ngModel)]="MManagerEmailUser" name="MManagerEmailUser">
               </mat-form-field>
             </td>
           </tr>
