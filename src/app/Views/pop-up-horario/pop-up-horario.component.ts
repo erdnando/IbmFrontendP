@@ -85,8 +85,10 @@ export class PopUpHorarioComponent {
       filter(horario => horario.horaInicio !== '' && horario.horaFin !== '');
 
     console.log(this.nuevoHorario)
-    let diasEditableTrue = this.nuevoHorario.
+
+      let diasEditableTrue = this.nuevoHorario.
       filter(horario => horario.editable).map(horario => horario.day);
+
     console.log(diasEditableTrue)
 
     this.mHorarioList = this.mHorarioList.filter(horario => diasEditableTrue.includes(horario.day));
@@ -188,6 +190,7 @@ export class PopUpHorarioComponent {
 
     this.nuevoHorario = horarios.map(horario => {
       return { ...horario, editable: horario.horaInicio !== '' && horario.horaFin !== '' };
+      //return { ...horario, editable: false };
     });
 
   }

@@ -15,7 +15,7 @@ import { ParameterConsultService } from 'src/app/Views/parameters/services/param
 import { Guid } from 'guid-typescript';
 import {
   MatCalendarCellCssClasses,
-  MatDatepicker,
+  MatDatepicker,MatDatepickerInputEvent
 } from '@angular/material/datepicker';
 import { PopUpCreateParameterComponent } from '../pop-up-create-parameter/pop-up-create-parameter.component';
 import Swal from 'sweetalert2';
@@ -35,6 +35,8 @@ import { PopUpHorarioComponent } from '../pop-up-horario/pop-up-horario.componen
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatTable } from '@angular/material/table';
 import { CdkRowDef } from '@angular/cdk/table';
+import { MatInput } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
 
 
 
@@ -88,6 +90,7 @@ export class ParametersComponent implements OnInit {
   name:string = '';
   habilitarExcel: boolean = false;
   fesitvosExcel: any[] = [];
+  event:string[]=[];
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -117,6 +120,11 @@ export class ParametersComponent implements OnInit {
 
   @ViewChild(MatTable) tabla1!: MatTable<HorarioNew>;
 
+  //@ViewChild(MatDatepicker) picker!:MatDatepicker<_moment.Moment>
+  //@ViewChild(MatDatepicker) picker!:MatDatepicker<Date | null> | undefined;
+  @ViewChild('picker') picker!:MatDatepicker<Date | null> | undefined;
+  
+  
 
   constructor(
     private apiListCountry: ListCountryService,
@@ -175,6 +183,8 @@ export class ParametersComponent implements OnInit {
     });
 
     this.consultarHorarioEmpleado();
+
+    this.selectAux(this.MUser.countryEntityId);
 
     
   }
@@ -383,8 +393,69 @@ export class ParametersComponent implements OnInit {
     } else {
     }
   }
+
+ // 
+  ngAfterViewInit() { 
+   /* this.picker.subscribe(opened => {
+      if (opened) {
+        this.matSelect.panel.nativeElement.addEventListener('mouseleave', () => {
+          this.matSelect.close();
+        })
+      }
+    })*/
+
     
-  
+  }
+    
+  selectAux(countryId:string){
+    this.cdr.detectChanges();
+
+    this.agregarFestivos = false;
+    
+
+    if (this.pais.value !== null) {
+      this.codeEmployed.reset();
+      this.date.reset();
+      this.mHorarioList = []
+      this.habilitarHorario = false;
+      this.habilitarHorariobyFecha = false;
+      this.habilitarExcel = true
+      this.idCountryGlobal = countryId;
+      let idCountry: string = countryId;
+      let guidIdCountry: Guid = Guid.parse(idCountry);
+
+      this.apiParametersConsult
+        .GetParametersConsult(guidIdCountry)
+        .pipe(map((data: MiObjetoApp) => data))
+        .subscribe((data) => {
+          let listap = data['data'];
+
+          if (this.pais.value !== '') {
+            this.suscriptionFestivosdb = this.serviceList
+              .loadFestivos(this.pais.value as unknown as string)
+              .subscribe((festivo) => {
+                festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
+                  - new Date(b.diaFestivo).getTime());
+                this.MFestivosList = festivo;
+              });
+          }
+ 
+          this.ListparametersStand = [];
+          this.ListparametersOver = [];
+
+          for (let item of listap) {
+            if (item.typeHours == 0) {
+              this.ListparametersStand.push(item);
+              this.idParametersStand = item.idParametersEntity;
+            } else {
+              this.ListparametersOver.push(item);
+              this.idParametersOver = item.idParametersEntity;
+            }
+          }
+        });
+    } else {
+    }
+  }
 
   select(plan: any) {
     this.cdr.detectChanges();
@@ -463,8 +534,21 @@ export class ParametersComponent implements OnInit {
     return Number(n);
 }
 
+calendarioClick(changes:any){
+  console.log("algo paso en el calendarioClick");
+  console.log(changes);
+}
+
+resetPicker(){
+  //this.picker.select(undefined!);
+  //this.picker.forEach((data: MatOption) => data.deselect());
+  //(opened)="resetPicker()"
+ // this.selectAux(this.MUser.countryEntityId);
+
+}
+
   ngOnChanges(changes: any) {
-        
+   
    // this.doSomething(changes.categoryId.currentValue);
     // You can also use categoryId.previousValue and 
     // categoryId.firstChange for comparing old and new values
@@ -661,11 +745,7 @@ export class ParametersComponent implements OnInit {
       );
     }
 
-    
-
     this.week1 = [];    
-
-    
 
     let date = new Date(this.date.value as unknown as Date);
     let year = date.getFullYear().toString();
@@ -687,11 +767,13 @@ export class ParametersComponent implements OnInit {
       
     }
 
-
     if(this.habilitarHorariobyFecha && this.habilitarHorario){
       this.consultarHorarioEmpleado();
     }
+
   }
+
+
 
   crearHorario() {
     this. mHorarioList = this.mHorarioList.
@@ -756,6 +838,11 @@ export class ParametersComponent implements OnInit {
   
     if(this.habilitarHorariobyFecha && this.habilitarHorario){
       this.serviceList.loadHorarios(this.idUserByEmployeCode, this.semanaAno, this.fechaSemanaAno).subscribe(horario => {
+        
+        if(horario!=null){
+
+       
+
         horario.forEach(element => {
           let rowseasona ={
             day: element.day, 
@@ -784,7 +871,20 @@ export class ParametersComponent implements OnInit {
           setTimeout(() => {
             this.openDialogHorario(horario);
           }, 3);
+        }else{
+          //this.habilitarHorario=false;
+          //this.habilitarHorariobyFecha = false;
         }
+
+      }else{
+        //this.habilitarHorario=false;
+        //this.habilitarHorariobyFecha = false;
+
+        /*if(this.picker){
+          this.picker?.select(null);
+          }
+          this.semanaAno='';*/
+      }
      
       });
     }
@@ -792,11 +892,28 @@ export class ParametersComponent implements OnInit {
 
   openDialogHorario(horario: any[]) {
     console.log('esto es open dialog de horario ')
-    this.dialog.open(PopUpHorarioComponent, {
+  const dialogRef=  this.dialog.open(PopUpHorarioComponent, {
       data: {
         horario: horario,
       },
     });
+
+    dialogRef.afterClosed().subscribe(
+      (data=>{
+
+        console.log('closing window...');
+        this.semanaAno='';
+        this.ngOnInit();
+        /*if(this.picker){
+          this.picker?.select(null);
+          }
+          this.semanaAno='';
+          this.habilitarHorario=false;
+          this.habilitarHorariobyFecha = false;*/
+      }
+
+      )
+    )
   }
   
   consultcountries() {
@@ -816,10 +933,16 @@ export class ParametersComponent implements OnInit {
           this.MListCountry = MListCountryFilter;
           this.Approving = true;
 
+        }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2') {
+          this.MListCountry = lista;
+          this.Approving = true;
+
         }else{
           this.Approving = false
         }
       });
+
+  
   }
 
 

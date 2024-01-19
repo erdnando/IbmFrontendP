@@ -33,7 +33,7 @@
     <!-- editar  -->
     <ng-container matColumnDef="checkbox">
         <mat-cell *matCellDef="let element">
-            <mat-checkbox [(ngModel)]="element.editable" [disabled]="element.editable" (change)="element.editable = $event.checked"></mat-checkbox>
+            <mat-checkbox [(ngModel)]="element.editable"  (change)="element.editable = $event.checked"></mat-checkbox>
         </mat-cell>
     </ng-container>
 

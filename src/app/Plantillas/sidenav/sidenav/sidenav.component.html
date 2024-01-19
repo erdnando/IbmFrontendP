@@ -68,17 +68,17 @@
       
         <ol class="sidenav-nav">
           <li class="sidenav-nav-item" *ngFor="let data of Mmen">
-            <a href="" class="sidenav-nav-link" [routerLink]="['/' + data.menuEntity.path]" routerLinkActive="active"
+            <a title="{{data.menuEntity.nameMenu}}" href="" class="sidenav-nav-link" [routerLink]="['/' + data.menuEntity.path]" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}">
               <mat-icon class="sidenav-link-icon">{{data.menuEntity.icon}}</mat-icon>
               <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.menuEntity.nameMenu}}</span>
             </a>
           </li>
           <li class="sidenav-nav-item">
-            <a href="" class="sidenav-nav-link" (click)="cerrarSesion()" routerLinkActive="active"
+            <a title="CERRAR SESIÓN" href="" class="sidenav-nav-link" (click)="cerrarSesion()" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}">
               <mat-icon class="sidenav-link-icon">close</mat-icon>
-              <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">CERRAR SESION</span>
+              <span class="sidenav-link-text " @fadeInOut *ngIf="collapsed">CERRAR SESIÓN</span>
             </a>
           </li>
         </ol>

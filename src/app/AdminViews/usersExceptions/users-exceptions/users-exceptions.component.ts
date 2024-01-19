@@ -88,7 +88,8 @@ export class UsersExceptionsComponent {
   validateRole() {
     if (
       this.MUser.rolEntity.nameRole == 'Administrador' ||
-      this.MUser.rolEntity.nameRole == 'Super Administrador'
+      this.MUser.rolEntity.nameRole == 'Super Administrador' ||
+      this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' 
     ) {
       this.Approving = true;
     }

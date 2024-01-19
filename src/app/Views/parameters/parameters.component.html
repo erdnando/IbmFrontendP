@@ -10,7 +10,7 @@
     </div>
     <br/>
 
-        <!-- Botones-->
+        <!-- Tabs-->
     <div *ngIf="Approving" >
 
         <mat-tab-group *ngIf="Approving" (selectedTabChange)="onTabChanged($event)">
@@ -341,7 +341,7 @@
             <div class="field-form-p">
                 <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
                     appearance="outline">
-                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" required>
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)"  [(ngModel)]="this.MUser.countryEntityId" required>
                         <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
                             {{pais.nameCountry}}
                         </mat-option>
@@ -435,7 +435,7 @@
 
                         <mat-form-field style="text-align: right; width: 95%; height: 70px; " appearance="outline">
                             <mat-label> Dia de la Semana: </mat-label>
-                            <input [disabled]="!habilitarExcel" matInput  [matDatepicker]="picker" (dateChange)="onDateChange($event)"
+                            <input #calendario [disabled]="!habilitarExcel" matInput  [matDatepicker]="picker"   (dateChange)="onDateChange($event)"
                                 [formControl]="date">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
