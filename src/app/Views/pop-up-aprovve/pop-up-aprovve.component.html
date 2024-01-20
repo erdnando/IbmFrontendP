@@ -20,6 +20,7 @@
   <div class="example-container">
       
       <div [formGroup]="userForm">
+
       <mat-form-field class="field-width" appearance="outline">
           <mat-label>Indique si desea aprobar o rechazar la solicitud del empleado:</mat-label>
           <mat-select formControlName="aprobacion">
@@ -27,7 +28,8 @@
               <mat-option value=2>Rechazar</mat-option>
             </mat-select>
       </mat-form-field>
-      <mat-form-field class="field-width" appearance="outline" *ngIf="userForm.value.aprobacion == '1'">
+
+      <mat-form-field class="field-width" appearance="outline" *ngIf="userForm.value.aprobacion == '1' && MUser.rolEntity.nameRole != 'Usuario Aprobador N2'">
         <mat-label>Aprobador</mat-label>
         <mat-select [formControl]="aprobador" required>
             <mat-option *ngFor="let aprobador of MAprobadorUser" [value]="aprobador.userEntityId">
@@ -35,10 +37,12 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+
       <mat-form-field class="field-width" appearance="outline">
           <mat-label>Observaciones</mat-label>
           <textarea matInput placeholder="Observaciones" formControlName="descripcion"></textarea>
       </mat-form-field>
+
   </div>
   </div>
 

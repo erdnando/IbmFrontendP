@@ -11,4 +11,5 @@ export interface MApproverTimeCreate {
     aprobador1UserEntityId: Guid;
     aprobador2UserEntityId: Guid;
     empleadoUserEntityId: Guid;
+    roleAprobador:string;
   }

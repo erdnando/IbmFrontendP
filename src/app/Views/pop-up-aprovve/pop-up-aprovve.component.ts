@@ -11,6 +11,8 @@ import { MAprobadorUsuario } from 'src/app/Models/MAprobadorUsuario';
 import { Guid } from 'guid-typescript';
 import { AprovveTimeComponent } from '../aprovve-time/aprovve-time.component';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
+import { MUserEntity } from 'src/app/Models/MUserEntity';
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 interface MiObjeto {
   [key: string]: any;
@@ -28,6 +30,7 @@ export class PopUpAprovveComponent {
   MAprobadorUser: MAprobadorUsuario [];
   aprobador = new FormControl('');
   idUser: any;
+  MUser: MUserEntity;
 
   userForm = new FormGroup({
     aprobacion: new FormControl('', [Validators.required]),
@@ -41,8 +44,10 @@ export class PopUpAprovveComponent {
   public dialogRef: MatDialogRef<PopUpAprovveComponent>,
   private serviceApproverTimeCreate: ApproverTimeCreateService,
   private apiUser: ApiUser,
-  private obtnerLista: ObtenerlistaService
+  private obtnerLista: ObtenerlistaService,
+  private storageService: StorageService,
   ) {
+    this.MUser = this.storageService.obtenerDatosMapeados();
     this.mApprover = {} as MApproverTime;
     this.mApproverCreate = {} as MApproverTimeCreate;
     this.Aproved();
@@ -54,6 +59,7 @@ export class PopUpAprovveComponent {
   crearAprobacion(){
 
     console.log(this.userForm.value.aprobacion);
+    this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole;
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
     this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
     this.mApproverCreate.description = this.userForm.value.descripcion!;
@@ -67,6 +73,15 @@ export class PopUpAprovveComponent {
       this.mApproverCreate.aprobador2UserEntityId= this.aprobador.value as unknown as Guid;
       //trabajador -felipe
       this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
+
+      //validate if it is Aprobador N2
+      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
+        this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+        this.mApproverCreate.aprobador2UserEntityId=  '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+      }
+
+
+
     }else{
       this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
       this.mApproverCreate.aprobador2UserEntityId=  '00000000-0000-0000-0000-000000000000' as unknown as Guid;

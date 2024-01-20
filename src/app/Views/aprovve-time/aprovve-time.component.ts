@@ -43,8 +43,8 @@ export class AprovveTimeComponent {
   Aprobacion = Aprobacion;
 
   filtrarDatos(boton: string) {
-    console.log(boton);
-    console.log('prueba ');
+    //console.log(boton);
+   // console.log('prueba ');
     if (boton == 'aprobadas') {
       this.botonfiltrado = 1;
     } else if (boton == 'rechazadas') {

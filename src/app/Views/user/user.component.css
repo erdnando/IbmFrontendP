@@ -7,13 +7,13 @@
 .example-full-width {
   width: 100%;
   height: 70px;
-  background-color:#EEEEEE;
+  background-color:transparent;
 }
 
 .example-width {
   width: 50%;
   height: 70px;
-  background-color : #EEEEEE;
+  background-color : transparent;
 }
 
 .title-form {
