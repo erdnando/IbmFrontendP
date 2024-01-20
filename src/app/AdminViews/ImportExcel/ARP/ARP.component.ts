@@ -574,7 +574,8 @@ export class ARPComponent {
                 
               }else{
                 // console.log(this.ExcelData);
-                this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
+                var valpais = this.pais.value;
+                this.loadArpExcelService.UploadARP(this.ExcelData,valpais!).subscribe( data => { 
                 console.log(data)
                 this.showImgARP=data;
                 fileReader1.readAsBinaryString(file2);
@@ -628,7 +629,8 @@ export class ARPComponent {
               
             }else{
               // console.log(this.ExcelData);
-              this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
+              var valpais = this.pais.value;
+              this.loadArpExcelService.UploadARP(this.ExcelData,valpais!).subscribe( data => { 
               console.log(data)
               this.showImgARP=data;
               fileReader2.readAsBinaryString(file2);
@@ -683,7 +685,8 @@ export class ARPComponent {
               
             }else{
               // console.log(this.ExcelData);
-              this.loadArpExcelService.UploadARP(this.ExcelData).subscribe( data => { 
+              var valpais = this.pais.value;
+              this.loadArpExcelService.UploadARP(this.ExcelData,valpais!).subscribe( data => { 
               console.log(data)
               this.showImgARP=data;
               this.activarBarra = false;
@@ -755,7 +758,7 @@ export class ARPComponent {
    // this.barraProgreso()
   }
 
-  select(plan: any) {
+  select(selPais: any) {
     
   }
 
