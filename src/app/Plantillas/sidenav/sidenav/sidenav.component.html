@@ -67,14 +67,15 @@
             <mat-icon>close</mat-icon>
           </button>
         </div>
-      
+        
         <ol class="sidenav-nav">
-         
+        
           <li class="sidenav-nav-item">
             <a title="erdnando"  class="sidenav-nav-linkx"   >
               <mat-icon class="sidenav-linkx-icon">assignment_ind</mat-icon>
-              <span class="sidenav-linkx-text " @fadeInOut *ngIf="collapsed"> erdnando rodriguez vargas</span>
+              <span class="sidenav-linkx-text " @fadeInOut *ngIf="collapsed">{{MUser.nameUser +' '+ MUser.surnameUser}}</span>
             </a>
+            <hr style="color:white;margin-bottom: 20px;"/>
           </li>
 
           <li class="sidenav-nav-item" *ngFor="let data of Mmen">
@@ -84,6 +85,7 @@
               <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.menuEntity.nameMenu}}</span>
             </a>
           </li>
+          <hr style="color:white;width:100%"/>
           <li class="sidenav-nav-item">
             <a title="CERRAR SESIÓN" href="" class="sidenav-nav-link" (click)="cerrarSesion()" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}">
