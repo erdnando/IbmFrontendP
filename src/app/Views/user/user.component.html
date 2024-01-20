@@ -13,21 +13,21 @@
 
 
     <div class="div-form">
-      <!-- <mat-toolbar  class="title-form">
-        <h1>Perfil</h1>
-      </mat-toolbar> -->
+       <mat-toolbar  class="">
+        <h1>Datos del empleado</h1>
+      </mat-toolbar> 
 
       <form class="container" style="padding-top: 20px;">
-        <table class="example-full-width" cellspacing="0">
+        <table class="" cellspacing="0">
           <tr>
             <td>
-              <mat-form-field class="example-full-width" appearance="outline">
+              <mat-form-field class="" appearance="outline" >
                 <mat-label>ID Usuario</mat-label>
                 <input matInput [(ngModel)]="MUser.employeeCode" name="employeeCode" readonly>
               </mat-form-field>
             </td>
             <td>
-              <mat-form-field class="example-full-width" appearance="outline">
+              <mat-form-field class="" appearance="outline">
                 <mat-label>Correo Electrónico</mat-label>
                 <input matInput matInput [(ngModel)]="MUser.email" name="email" readonly>
               </mat-form-field>
@@ -35,16 +35,16 @@
           </tr>
         </table>
 
-        <table class="example-full-width" cellspacing="0">
+        <table class="" cellspacing="0">
           <tr>
             <td>
-              <mat-form-field class="example-full-width" appearance="outline">
+              <mat-form-field class="" appearance="outline">
                 <mat-label>Nombre</mat-label>
                 <input matInput [(ngModel)]="MUser.nameUser" name="nameUser" readonly>
               </mat-form-field>
             </td>
             <td>
-              <mat-form-field class="example-full-width" appearance="outline" >
+              <mat-form-field class="" appearance="outline" >
                 <mat-label>Pais</mat-label>
                 <input matInput [(ngModel)]="MUser.countryEntity.nameCountry" name="countryEntityId" readonly>
                  
@@ -53,10 +53,10 @@
           </tr>
         </table>
 
-        <table class="example-full-width" cellspacing="0">
+        <table class="" cellspacing="0">
           <tr>
             <td>
-              <mat-form-field class="example-width" appearance="outline">
+              <mat-form-field class="" appearance="outline">
                 <mat-label>Apellidos</mat-label>
                 <input matInput [(ngModel)]="MUser.surnameUser" name="surnameUser" readonly>
               </mat-form-field>
@@ -67,17 +67,17 @@
 
         <hr>
 
-        <table class="example-full-width" cellspacing="0" style="padding-top: 20px;">
+        <table class="" cellspacing="0" style="padding-top: 20px;">
           <tr>
             <td>
-              <mat-form-field class="example-full-width" appearance="outline">
+              <mat-form-field class="" appearance="outline">
                 <mat-label>Nombre Gerente</mat-label>
                 <input matInput readonly [(ngModel)]="MManagerNameUser" name="MManagerNameUser">
               </mat-form-field>
             </td>
             <td>
-              <mat-form-field class="example-full-width" appearance="outline"
-              style="background-color: #f5f5f5;">
+              <mat-form-field class="" appearance="outline"
+             >
                 <mat-label>Correo Gerente</mat-label>
                 <input matInput readonly [(ngModel)]="MManagerEmailUser" name="MManagerEmailUser">
               </mat-form-field>
