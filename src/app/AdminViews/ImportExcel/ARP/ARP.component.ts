@@ -5,8 +5,13 @@ import * as XLSX from 'xlsx';
 import { FormControl } from "@angular/forms";
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import Swal from "sweetalert2";
+import { MCountryEntity } from "src/app/Models/MCountryEntiry";
+import { ListCountryService } from "../../AdminCountries/services/list-country/list-country.service";
+import { map } from "rxjs";
 
-
+interface MiObjeto {
+  [key: string]: any;
+}
 
 @Component({
   selector: 'app-ARP',
@@ -47,16 +52,20 @@ export class ARPComponent {
   columnasTSE:string[]=["Recurso de servicio: Usuario: ISO 2","TSE: Work Order","Recurso de servicio: Usuario: Número de empleado","Recurso de servicio: Usuario: Zona horaria","Orden de trabajo: Caso: Account CMR Number","Orden de trabajo: Caso: Account Name Text","TSE: Status","TSE: Start Time","TSE: End Time","Duration in Hours","WO: Subject"];
   columnasSTE:string[]=["Session Time Unique ID","Session Time Support Agent Country","Número del caso","Session Time Creator Employee Serial Number","Account CMR Number","Nombre de la cuenta: Nombre de la cuenta","Start Date/Time","End Date/Time","Session Time: Total Duration","Case Subject"];
   columnasexcelWorkdayG:string[]=["Employee ID","Worker","Time Type","Reported Date","Calculated Quantity","Status"];
+  pais = new FormControl('');
+  MListCountry: MCountryEntity[];
   
   
 
 
-  constructor(private storageService: StorageService, private loadArpExcelService: LoadArpExcelService) {
+  constructor(private storageService: StorageService, private loadArpExcelService: LoadArpExcelService,private apiListCountry: ListCountryService,) {
     this.MUser = this.storageService.obtenerDatosMapeados();
+    this.MListCountry = [];
 
   }
   ngOnInit() {
     this.validateRole();
+    this.consultcountries();
   }
 
   readExcel(file1: any, file2: any, file3: any) {
@@ -746,7 +755,38 @@ export class ARPComponent {
    // this.barraProgreso()
   }
 
+  select(plan: any) {
+    
+  }
+
+  consultcountries() {
+    // SERVICIO PARA TRAER LA LISTA DE PAISES
+    this.apiListCountry
+      .GetCountry().pipe(map((data: MiObjeto) => data)).subscribe((data) => {
+        let lista = data['data'];
+
+        let MListCountryFilter = lista.filter((x: any) => x.idCounty == this.MUser.countryEntityId);
+        console.log('Rol',this.MUser.rolEntity.nameRole);
+
+        if (this.MUser.rolEntity.nameRole == 'Super Administrador') {
+          this.MListCountry = lista;
+          this.Approving = true;
+
+        }else if (this.MUser.rolEntity.nameRole == 'Administrador') {
+          this.MListCountry = MListCountryFilter;
+          this.Approving = true;
+
+        }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2') {
+          this.MListCountry = lista;
+          this.Approving = true;
+
+        }else{
+          this.Approving = false
+        }
+      });
+
   
+  }
 
 
 }
