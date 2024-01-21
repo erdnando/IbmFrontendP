@@ -74,21 +74,21 @@ export class LoadArpExcelService {
   UploadTSE(data: object,datpais:string): Observable<boolean> {
     let direccion = this.URLLocal + "Load/UploadTSE";
     console.log(direccion);
-    const datos= {
+    const requestData= {
       data:data,
       paisSel: datpais
     };
-    return this.http.post<boolean>(direccion, datos);
+    return this.http.post<boolean>(direccion, requestData);
   }
 
   UploadSTE(data: object,datpais:string): Observable<boolean> {
     let direccion = this.URLLocal + "Load/UploadSTE";
-    const datos= {
+    const requestData= {
       data:data,
       paisSel: datpais
     };
     console.log(direccion);
-    return this.http.post<boolean>(direccion, datos);
+    return this.http.post<boolean>(direccion, requestData);
   }
 
   

@@ -604,6 +604,10 @@ export class ARPComponent {
             });
           }
       }
+
+
+
+
       fileReader1.onload = (e) => {
         var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
         var sheetNames1 = workBook1.SheetNames;
@@ -630,10 +634,10 @@ export class ARPComponent {
             }else{
               // console.log(this.ExcelData);
               var valpais = this.pais.value;
-              this.loadArpExcelService.UploadARP(this.ExcelData,valpais!).subscribe( data => { 
+              this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!).subscribe( data => { 
               console.log(data)
               this.showImgARP=data;
-              fileReader2.readAsBinaryString(file2);
+              fileReader2.readAsBinaryString(file3);
               });    
             }
 
@@ -659,6 +663,8 @@ export class ARPComponent {
           });
         }
       }
+
+
 
       fileReader2.onload = (e) => {
         var workBook2 = XLSX.read(fileReader2.result, { type: 'binary' });
@@ -686,7 +692,7 @@ export class ARPComponent {
             }else{
               // console.log(this.ExcelData);
               var valpais = this.pais.value;
-              this.loadArpExcelService.UploadARP(this.ExcelData,valpais!).subscribe( data => { 
+              this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!).subscribe( data => { 
               console.log(data)
               this.showImgARP=data;
               this.activarBarra = false;
