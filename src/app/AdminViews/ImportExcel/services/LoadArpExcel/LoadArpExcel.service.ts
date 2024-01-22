@@ -3,7 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { MResponse } from "src/app/Models/MResponse";
 import { Global } from 'src/app/global';
-
+import { MResponseLoadGuid, MSummary } from 'src/app/Models/MSummary';
+import { Guid } from 'guid-typescript';
 
 
 @Injectable({
@@ -61,34 +62,45 @@ export class LoadArpExcelService {
     return this.http.post<boolean>(direccion, requestData);
   }
 
-  UploadARP(data: object,datpais:string): Observable<boolean> {
+  UploadARP(data: object,datpais:string,idCarga:string): Observable<MResponseLoadGuid> {
     let direccion = this.URLLocal + "Load/UploadARP";
     console.log(direccion);
     const requestData= {
       data:data,
-      paisSel: datpais
+      paisSel: datpais,
+      idCarga: idCarga
     };
-    return this.http.post<boolean>(direccion, requestData);
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
 
-  UploadTSE(data: object,datpais:string): Observable<boolean> {
+  UploadTSE(data: object,datpais:string,idCarga:string): Observable<MResponseLoadGuid> {
     let direccion = this.URLLocal + "Load/UploadTSE";
     console.log(direccion);
     const requestData= {
       data:data,
-      paisSel: datpais
+      paisSel: datpais,
+      idCarga: idCarga
     };
-    return this.http.post<boolean>(direccion, requestData);
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
 
-  UploadSTE(data: object,datpais:string): Observable<boolean> {
+  UploadSTE(data: object,datpais:string,idCarga:string): Observable<MSummary> {
     let direccion = this.URLLocal + "Load/UploadSTE";
     const requestData= {
       data:data,
-      paisSel: datpais
+      paisSel: datpais,
+      idCarga: idCarga
     };
     console.log(direccion);
-    return this.http.post<boolean>(direccion, requestData);
+    return this.http.post<MSummary>(direccion, requestData);
+  }
+
+  
+  NotificacionesProceso(idCarga:string): Observable<boolean> {
+    let direccion = this.URLLocal + "Load/Notificaciones";
+   
+    console.log(direccion);
+    return this.http.post<boolean>(direccion,idCarga);
   }
 
   

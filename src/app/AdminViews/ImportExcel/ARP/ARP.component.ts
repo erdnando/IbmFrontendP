@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import { MCountryEntity } from "src/app/Models/MCountryEntiry";
 import { ListCountryService } from "../../AdminCountries/services/list-country/list-country.service";
 import { map } from "rxjs";
+import { MResponseLoadGuid, MSummary } from "src/app/Models/MSummary";
+import { Guid } from "guid-typescript";
 
 interface MiObjeto {
   [key: string]: any;
@@ -54,14 +56,15 @@ export class ARPComponent {
   columnasexcelWorkdayG:string[]=["Employee ID","Worker","Time Type","Reported Date","Calculated Quantity","Status"];
   pais = new FormControl('');
   MListCountry: MCountryEntity[];
-  
-  
+  mSummary: MSummary;
+  mResponseLoadGuid:MResponseLoadGuid;
 
 
   constructor(private storageService: StorageService, private loadArpExcelService: LoadArpExcelService,private apiListCountry: ListCountryService,) {
     this.MUser = this.storageService.obtenerDatosMapeados();
     this.MListCountry = [];
-
+    this.mSummary = {} as MSummary;
+    this.mResponseLoadGuid = {} as MResponseLoadGuid;
   }
   ngOnInit() {
     this.validateRole();
@@ -69,9 +72,7 @@ export class ARPComponent {
   }
 
   readExcel(file1: any, file2: any, file3: any) {
-    // this.readFile(file1.files);
-    // this.readFile2(file2.files);
-    // this.readFile3(file3.files);
+
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
       this.barraProgreso(true);
@@ -235,147 +236,9 @@ export class ARPComponent {
 
   }
 
-  // readFile(fileInput: any[]) {
-
-  //   this.excelData1 = [];
-  //   this.excelData2 = [];
-  //   this.excelData3 = [];
-
-  //   for(let i = 0; i < fileInput.length; i++){
-  //     let files = fileInput[i];
-  //     let file = files[0];
-  //     let count = i + 1;
-
-  //   if (file) {
-
-  //     let fileReader = new FileReader();
-
-  //     fileReader.readAsBinaryString(file);
-
-  //     fileReader.onload = (e) => {
-  //       var workBook = XLSX.read(fileReader.result, { type: 'binary' });
-  //       var sheetNames = workBook.SheetNames;
-  //       this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-  //       console.log(this.ExcelData);
 
 
-  //       if(this.ExcelData.length){
-  //         console.log(count)
-  //          if(count === 1)
-  //          {
-  //           this.excelData1 = this.ExcelData;
-  //           console.log(this.excelData1)
-  //          } 
-  //          else if( count === 2)
-  //          {
-  //           this.excelData2 = this.ExcelData;
-  //          }
-  //           else if( count === 3){
-  //           this.excelData3 = this.ExcelData;
 
-  //           if(this.excelData1.length && this.excelData2.length && this.excelData3.length){
-  //             // envia el primer excel
-  //             console.log(this.excelData1)
-  //             this.loadArpExcelService.PostLoad1(this.excelData1).subscribe(data => {
-  //               console.log(data);
-  //             });
-  //             //envia el segundo excel
-  //             console.log(this.excelData2)
-  //             this.loadArpExcelService.PostLoad2(this.excelData2).subscribe(data => {
-  //               console.log(data);
-  //             });
-  //             // envia el tercer excel
-  //             console.log(this.excelData3)
-  //             this.loadArpExcelService.PostLoad3(this.excelData3).subscribe(data => {
-  //               console.log(data);
-  //             });
-  //             this.barraProgreso();
-        
-  //             console.log('archivos enviados')
-  //           }
-  //          }
-
-           
-          
-  //       }else{
-  //         Swal.fire({
-  //           icon: 'error',
-  //           title: 'Oops...',
-  //           text: 'Error:  Se ha seleccionado un archivo vacio.',
-  //           confirmButtonColor: '#0A6EBD',
-  //         });
-  //         return
-  //       }
-  //     }
-  //   } else {
-  //     console.error("No se ha seleccionado ningún archivo.");
-  //   }
-  // }
-  // }
-
-
- /* readFile2(fileInput2: any) {
-    let file = fileInput2[0]; // Accede al primer archivo seleccionado
-
-    if (file) {
-      let fileReader = new FileReader();
-
-      fileReader.readAsBinaryString(file);
-
-      fileReader.onload = (e) => {
-        var workBook = XLSX.read(fileReader.result, { type: 'binary' });
-        var sheetNames = workBook.SheetNames;
-        this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-        console.log(this.ExcelData);
-        if(this.ExcelData.length){
-          this.loadArpExcelService.PostLoad2(this.ExcelData).subscribe(data => {
-            console.log(data);
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error:  Se ha seleccionado un archivo vacio.',
-          });
-          this.botonHorario = false;
-        }
-      }
-    } else {
-      console.error("No se ha seleccionado ningún archivo.");
-    }
-  }
-
-  readFile3(fileInput3: any) {
-    let file = fileInput3[0]; // Accede al primer archivo seleccionado
-
-    if (file) {
-      let fileReader = new FileReader();
-
-      fileReader.readAsBinaryString(file);
-
-      fileReader.onload = (e) => {
-        var workBook = XLSX.read(fileReader.result, { type: 'binary' });
-        var sheetNames = workBook.SheetNames;
-        this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-        console.log(this.ExcelData);
-        if(this.ExcelData.length){
-          this.loadArpExcelService.PostLoad3(this.ExcelData).subscribe(data => {
-            console.log(data);
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Error:  Se ha seleccionado un archivo vacio.',
-          });
-          this.botonHorario = false;
-        }
-      }
-    } else {
-      console.error("No se ha seleccionado ningún archivo.");
-    }
-  }
-  */
 
   readFileHorario(fileInput: any) {
     let file = fileInput[0]; // Accede al primer archivo seleccionado
@@ -538,6 +401,7 @@ export class ARPComponent {
     let file = fileInput[0]; // Accede al primer archivo seleccionado
     let file2 =  fileInput2[0];
     let file3 =  fileInput3[0];
+    let idCarga='00000000-0000-0000-0000-000000000000';
 
     if (file && file2 && file3) 
     {
@@ -575,9 +439,13 @@ export class ARPComponent {
               }else{
                 // console.log(this.ExcelData);
                 var valpais = this.pais.value;
-                this.loadArpExcelService.UploadARP(this.ExcelData,valpais!).subscribe( data => { 
+                //var idCarga = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+                this.loadArpExcelService.UploadARP(this.ExcelData,valpais!,idCarga!).subscribe( data => { 
                 console.log(data)
-                this.showImgARP=data;
+                this.mResponseLoadGuid=data;
+                idCarga = data.data;
+
+                this.showImgARP=true;
                 fileReader1.readAsBinaryString(file2);
                 });    
               }
@@ -634,9 +502,13 @@ export class ARPComponent {
             }else{
               // console.log(this.ExcelData);
               var valpais = this.pais.value;
-              this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!).subscribe( data => { 
-              console.log(data)
-              this.showImgARP=data;
+              this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!,idCarga!).subscribe( data => { 
+              console.log(data);
+              this.mResponseLoadGuid=data;
+                idCarga = data.data;
+
+                
+              this.showImgARP=true;
               fileReader2.readAsBinaryString(file3);
               });    
             }
@@ -692,27 +564,73 @@ export class ARPComponent {
             }else{
               // console.log(this.ExcelData);
               var valpais = this.pais.value;
-              this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!).subscribe( data => { 
+              this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!,idCarga!).subscribe( data => { 
               console.log(data)
+              this.mSummary = data;
+
               this.showImgARP=true;
               this.activarBarra = false;
               this.fileInput3.nativeElement.value = null;
 
                   Swal.fire({
                     icon: 'success',
-                    title: 'Carga de archivos completada.',
+                    title: this.mSummary.data.mensaje,
+                    allowOutsideClick:false,
                     html: `
-                          
+                    <span>Resumen de la ejecucion:</span>
+                    <span>` +this.mSummary.data.idCarga+`</span>
+                    <hr/>
+                    <br>
+                    <ol>
+
+                      <li>​​En proceso por ARP <b>(` +this.mSummary.data.eN_PROCESO_ARP+`)</b></li>
+                      <li>En proceso por STE <b>(` +this.mSummary.data.​​eN_PROCESO_STE+`)</b></li>
+                      <li>En proceso por TSE <b>(` +this.mSummary.data.​​eN_PROCESO_TSE+`)</b></li>
+                      <br/>
+                      <li>No aplica por horario ARP <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_ARP+`)</b></li>
+                      <li>​No aplica por horario STE <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_STE+`)</b></li>
+                      <li>​No aplica por horario TSE <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_TSE+`)</b></li>
+                      <br/>
+                      <li>No aplica por overlaping ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
+                      <li>No aplica por overlaping STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
+                      <li>No aplica por overlaping TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
+                      <br/>
+                      <li>No aplica por overtime ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_ARP+`)</b></li>
+                      <li>No aplica por overtime STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_STE+`)</b></li>
+                      <li>No aplica por overtime TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_TSE+`)</b></li>
+
+
+                    </ol> 
                         `,
                     confirmButtonColor: '#0A6EBD',
                     showConfirmButton: true,
-                    showCancelButton: true   
+                    showCancelButton: true,
+                    confirmButtonText:'Continuar proceso' , 
+                    cancelButtonText:'Cancelar carga' 
                   }).then((willDelete) => {
 
                     if(willDelete.value){
-                         //acepta carga;
+
+                         //acepta carga;---------------------------------------------
+                         //la nueva carga  pasa a ser la activa y continua con el porceso
+                         this.loadArpExcelService.NotificacionesProceso(idCarga).subscribe( data => { 
+                          console.log(data)
+                          //this.mSummary = data;
+            
+                          this.showImgARP=true;
+                          this.activarBarra = false;
+                          
+            
+                             
+                          
+                          });
+
+                         //-----------------------------------------------------------
                     }else{
                       //no acepta carga;
+                      //-----------------------------------------------------------
+                      //sigue activa la carga anterior
+                      //-----------------------------------------------------------
                     }
             
                   console.log(willDelete)
