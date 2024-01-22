@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { MResponse } from "src/app/Models/MResponse";
 import { Global } from 'src/app/global';
-import { MResponseLoadGuid, MSummary } from 'src/app/Models/MSummary';
+import { MResponseLoadGuid, MResponseNotificaciones, MSummary } from 'src/app/Models/MSummary';
 import { Guid } from 'guid-typescript';
 
 
@@ -96,11 +96,16 @@ export class LoadArpExcelService {
   }
 
   
-  NotificacionesProceso(idCarga:string): Observable<boolean> {
+  NotificacionesProceso(idCarga:string): Observable<MResponseNotificaciones> {
     let direccion = this.URLLocal + "Load/Notificaciones";
    
+    const requestData= {
+     
+      idCarga: idCarga
+    };
+
     console.log(direccion);
-    return this.http.post<boolean>(direccion,idCarga);
+    return this.http.post<MResponseNotificaciones>(direccion,requestData);
   }
 
   

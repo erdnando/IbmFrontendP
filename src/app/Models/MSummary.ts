@@ -35,3 +35,10 @@ export interface MSummary {
     message: any
     data: string
   }
+
+  export interface MResponseNotificaciones {
+    statusCode: number
+    succes: boolean
+    message: any
+    data: boolean
+  }

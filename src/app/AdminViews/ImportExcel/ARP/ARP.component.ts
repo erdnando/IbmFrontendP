@@ -613,7 +613,7 @@ export class ARPComponent {
 
                          //acepta carga;---------------------------------------------
                          //la nueva carga  pasa a ser la activa y continua con el porceso
-                         this.loadArpExcelService.NotificacionesProceso(idCarga).subscribe( data => { 
+                         this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
                           console.log(data)
                           //this.mSummary = data;
             
