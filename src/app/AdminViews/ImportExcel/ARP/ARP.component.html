@@ -27,13 +27,11 @@
                 <mat-label>Pais</mat-label>
                 <mat-select [formControl]="pais" (selectionChange)="select(pais)">
                     <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.nameCountry">
-                        {{cliente.nameCountry}} ({{cliente.zonaHoraria}})
+                        {{cliente.nameCountry}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
-        <br/>
-
         <div>
             <label class="mi-etiqueta">
                 Archivo ARP: <br><!-- <mat-icon class="example-tab-icon">done-circule</mat-icon> <mat-icon>close</mat-icon><br> -->
