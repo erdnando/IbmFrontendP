@@ -694,14 +694,29 @@ export class ARPComponent {
               var valpais = this.pais.value;
               this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!).subscribe( data => { 
               console.log(data)
-              this.showImgARP=data;
+              this.showImgARP=true;
               this.activarBarra = false;
               this.fileInput3.nativeElement.value = null;
+
                   Swal.fire({
                     icon: 'success',
                     title: 'Carga de archivos completada.',
+                    html: `
+                          
+                        `,
                     confirmButtonColor: '#0A6EBD',
-                  });
+                    showConfirmButton: true,
+                    showCancelButton: true   
+                  }).then((willDelete) => {
+
+                    if(willDelete.value){
+                         //acepta carga;
+                    }else{
+                      //no acepta carga;
+                    }
+            
+                  console.log(willDelete)
+                });
               
               });    
             }
