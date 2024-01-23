@@ -11,7 +11,6 @@ import { map } from "rxjs";
 import { MResponseLoadGuid, MSummary } from "src/app/Models/MSummary";
 import { Guid } from "guid-typescript";
 import { MGmt } from 'src/app/Models/MGmt';
-//import { MGmt } from  "src/app/Models/MGMT";
 
 interface MiObjeto {
   [key: string]: any;
