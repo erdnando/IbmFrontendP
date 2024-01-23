@@ -18,6 +18,14 @@ export interface MetricasCarga{
     ​​nO_APLICA_X_OVERTIME_ARP: string;
     ​​nO_APLICA_X_OVERTIME_STE: string;
     ​​nO_APLICA_X_OVERTIME_TSE: string;
+    
+    arP_OMITIDOS:string;
+    stE_OMITIDOS:string;
+    tsE_OMITIDOS:string;
+
+    arP_CARGA:string;
+    stE_CARGA:string;
+    tsE_CARGA:string;
     idCarga: Guid;
 }
 
