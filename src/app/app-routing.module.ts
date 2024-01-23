@@ -63,7 +63,7 @@ const routes: Routes = [
   { path: 'arpcomponent', component: ARPComponent },
   { path: 'admin/users-exception', component: UsersExceptionsComponent },
   //{ path: '**', component: LoginComponent }
-  //{path:'profiles',component:ProfilesComponent},  SE QUITA
+  //{path:'profiles',component:ProfilesComponent},  
 ];
 
 @NgModule({
