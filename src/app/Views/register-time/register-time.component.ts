@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Guid } from 'guid-typescript';
-import { MCreateHorusReport } from 'src/app/Models/MHorusReport';
+import { MCreateHorusReport, MCreatePortalDB, MPortalDBResponse } from 'src/app/Models/MHorusReport';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
 import { ClientService } from 'src/app/AdminViews/AdminClients/services/client/client.service';
@@ -36,7 +36,8 @@ interface SideNavTogg1e {
 })
 export class RegisterTimeComponent {
   MUser: MUserEntity;
-  MHours: MCreateHorusReport;
+  MHours: MCreatePortalDB;
+  MHoursResponse: MPortalDBResponse;
   MHorarioR: MHorarioRegistrado;
   MClient: MClientEntity[];
   MAprobadorUser: MAprobadorUsuario[];
@@ -64,7 +65,7 @@ export class RegisterTimeComponent {
     private apiUser: ApiUser
   ) {
     this.MUser = {} as MUserEntity;
-    this.MHours = {} as MCreateHorusReport;
+    this.MHours = {} as MCreatePortalDB;
     this.MHorarioR = {} as MHorarioRegistrado;
     this.horaInicio.valueChanges.subscribe(() => {
       this.calcularHoras();
@@ -84,6 +85,7 @@ export class RegisterTimeComponent {
 
     this.inicio = this.horaInicio.value;
     this.fin = this.horaInicio.value;
+    this.MHoursResponse = {} as MPortalDBResponse;
 
     
   }
@@ -197,38 +199,91 @@ export class RegisterTimeComponent {
 
             console.log(this.MHours);
 
-            (await this.apiReportHours.PostCreateReport(this.MHours)).subscribe(
+            (await this.apiReportHours.PostCreatePortalDbReport(this.MHours)).subscribe(
               (data) => {
-                if (data.data == null) {
+                console.log(data.data)
+                
+                this.MHoursResponse = data;
+
+                if (this.MHoursResponse.data.state==99) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Error en el registro de horas (registro existente).',
+                    text: 'Error en el registro de horas, no existe horario asignado.',
                     confirmButtonColor: '#0A6EBD',
                   });
-                } else {
-                  if (data.data || data) {
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Registro de horas se genero correctamente',
-                      confirmButtonColor: '#0A6EBD',
-                    });
-                    this.fecha.reset();
-                    this.fecha.reset();
-                    this.horaInicio.reset();
-                    this.horaFin.reset();
-                    this.descripcion.reset();
-                    this.actividad.reset();
-                    this.aprobador.reset();
-                  } else {
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Oops...',
-                      text: 'Error en el registro de horas.',
-                      confirmButtonColor: '#0A6EBD',
-                    });
-                  }
+                } else if (this.MHoursResponse.data.state==100) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error en el registro de horas, por tratar de asignar un horario standby durante horario laboral.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                }else if (this.MHoursResponse.data.state==101) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error en el registro de horas, el registro supera el límite de horas para StandBy.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                }else if (this.MHoursResponse.data.state==102) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error en el registro de horas, existe Overlaping.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                }else {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Registro de horas se genero correctamente',
+                    confirmButtonColor: '#0A6EBD',
+                  });
                 }
+
+
+
+                // if(data.data != null){
+                //   if (data.state==99) {
+                //     Swal.fire({
+                //       icon: 'error',
+                //       title: 'Oops...',
+                //       text: 'Error en el registro de horas, no existe horario asignado.',
+                //       confirmButtonColor: '#0A6EBD',
+                //     });
+                //   } else if (data.IdPortalDb != null) {
+                //     Swal.fire({
+                //       icon: 'success',
+                //       title: 'Registro de horas se genero correctamente',
+                //       confirmButtonColor: '#0A6EBD',
+                //     });
+                //     this.fecha.reset();
+                //     this.fecha.reset();
+                //     this.horaInicio.reset();
+                //     this.horaFin.reset();
+                //     this.descripcion.reset();
+                //     this.actividad.reset();
+                //     this.aprobador.reset();
+                //   }
+                //  }//else if (data.IdPortalDb == null) {
+                //   Swal.fire({
+                //     icon: 'error',
+                //     title: 'Oops...',
+                //     text: 'Error en el registro de horas (registro existente).',
+                //     confirmButtonColor: '#0A6EBD',
+                //   });
+                // } else {
+                //   if (data.data || data) {
+                   
+                //   } else {
+                //     Swal.fire({
+                //       icon: 'error',
+                //       title: 'Oops...',
+                //       text: 'Error en el registro de horas.',
+                //       confirmButtonColor: '#0A6EBD',
+                //     });
+                //   }
+                // }
               }
             );
 

@@ -16,3 +16,44 @@ export interface MCreateHorusReport{
   numberReport: number;
 
 }
+
+export interface MCreatePortalDB{
+  idPortalDb:Guid;
+  userEntityId: Guid;
+  startDate : string;
+  startTime : string;
+  endTime : string;
+  clientEntityId : Guid;
+  description : string;
+  creationDate: Date;
+  tipoReporte :number;
+  acitivity: number;
+  countHours: string;
+  approverId: string;
+  numberReport: number;
+  state:number;
+}
+
+export interface MPortalDBResponse {
+  statusCode: number
+  succes: boolean
+  message: any
+  data: MCreatePortalDB
+}
+
+
+// acitivity
+// approverId
+// clientEntityId
+// countHours
+// creationDate
+// description
+// endTime
+// idPortalDb
+// numberReport
+// startDate
+// startTime
+// state
+// tipoReporte
+// userEntityId
+
