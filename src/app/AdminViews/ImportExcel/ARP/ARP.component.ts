@@ -674,13 +674,14 @@ export class ARPComponent {
                       <li>Carga STE <b>(` +this.mSummary.data.stE_CARGA+`)</b></li>
                       <li>Carga TSE <b>(` +this.mSummary.data.tsE_CARGA+`)</b></li>
                       <br/>
+                      <br/>
+                      <li>Overtime ARP <b>(` +this.mSummary.data.eN_PROCESO_ARP+`)</b></li>
+                      <li>Overtime STE <b>(` +this.mSummary.data.​​eN_PROCESO_STE+`)</b></li>
+                      <li>Overtime TSE <b>(` +this.mSummary.data.​​eN_PROCESO_TSE+`)</b></li>
+                      <br/>
                       <li>​​ARP omitidos por Extracted, etc <b>(` +this.mSummary.data.arP_OMITIDOS+`)</b></li>
                       <li>STE omitidos por Extracted, etc <b>(` +this.mSummary.data.stE_OMITIDOS+`)</b></li>
                       <li>TSE omitidos por Extracted, etc <b>(` +this.mSummary.data.tsE_OMITIDOS+`)</b></li>
-                      <br/>
-                      <li>​​En proceso por ARP <b>(` +this.mSummary.data.eN_PROCESO_ARP+`)</b></li>
-                      <li>En proceso por STE <b>(` +this.mSummary.data.​​eN_PROCESO_STE+`)</b></li>
-                      <li>En proceso por TSE <b>(` +this.mSummary.data.​​eN_PROCESO_TSE+`)</b></li>
                       <br/>
                       <li>No aplica por horario ARP <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_ARP+`)</b></li>
                       <li>​No aplica por horario STE <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_STE+`)</b></li>
@@ -690,9 +691,9 @@ export class ARPComponent {
                       <li>No aplica por overlaping STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
                       <li>No aplica por overlaping TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
                       <br/>
-                      <li>No aplica por overtime ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_ARP+`)</b></li>
-                      <li>No aplica por overtime STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_STE+`)</b></li>
-                      <li>No aplica por overtime TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_TSE+`)</b></li>
+                      <li>No aplica por politica overtime ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_ARP+`)</b></li>
+                      <li>No aplica por politica overtime STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_STE+`)</b></li>
+                      <li>No aplica por politica overtime TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_TSE+`)</b></li>
 
 
                     </ol> 
@@ -707,18 +708,23 @@ export class ARPComponent {
                     if(willDelete.value){
 
                          //acepta carga;---------------------------------------------
-                         //la nueva carga  pasa a ser la activa y continua con el porceso
+                         //notificaciones en proceso
                          this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
                           console.log(data)
                           //this.mSummary = data;
             
                           this.showImgARP=true;
                           this.activarBarra = false;
-                          
-            
-                             
-                          
                           });
+
+                          
+                          this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString()).subscribe( data => { 
+                            console.log(data)
+                            //this.mSummary = data;
+              
+                            this.showImgARP=true;
+                            this.activarBarra = false;
+                            });
 
                          //-----------------------------------------------------------
                     }else{
