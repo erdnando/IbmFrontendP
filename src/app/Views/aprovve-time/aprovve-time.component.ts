@@ -43,15 +43,16 @@ export class AprovveTimeComponent {
   Aprobacion = Aprobacion;
 
   filtrarDatos(boton: string) {
-    //console.log(boton);
-   // console.log('prueba ');
-    if (boton == 'aprobadas') {
-      this.botonfiltrado = 1; //contemplar el 2
-    } else if (boton == 'rechazadas') {
+ 
+     if (boton == 'pendientes') {
+     this.botonfiltrado = 0; 
+    }else if (boton == 'aprobadasN1') {
+      this.botonfiltrado = 1; 
+    }else if (boton == 'aprobadasN2') {
+      this.botonfiltrado = 2; 
+    }else if (boton == 'rechazadas') {
       this.botonfiltrado = 3;
-    } else {
-      this.botonfiltrado = 0;
-    }
+    } 
 
     return this.mApproverTime.filter((dato) => dato.state === this.botonfiltrado);
   }
@@ -73,7 +74,7 @@ export class AprovveTimeComponent {
   }
 
   ValidateRole() {
-    if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' ||this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
+    if (this.MUser.rolEntity.nameRole == 'Usuario estandar' || this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' ||this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
       this.Approving = true;
       this.obtenerLista.loadApproverTime(this.MUser.idUser);
        
@@ -116,14 +117,18 @@ export class AprovveTimeComponent {
   }
 
   onTabChanged(event: MatTabChangeEvent) {
-    if (event.index === 1) { 
-        this.botonPresionado = 'aprobadas';
-    }
+    
     if (event.index === 0) { 
       this.botonPresionado = 'pendientes';
   }
+  if (event.index === 1) { 
+    this.botonPresionado = 'aprobadasN1';
+}
   if (event.index === 2) { 
-    this.botonPresionado = 'rechazadas';
+    this.botonPresionado = 'aprobadasN2';
+}
+if (event.index === 3) { 
+  this.botonPresionado = 'rechazadas';
 }
    
 }

@@ -1198,27 +1198,33 @@ obtenerFecha(diain:string){
   var diafor="";
   switch(diain){
     case "Lunes":
-      diafor = this.week1[1].toLocaleDateString().split("/");
+      diafor = this.week1[1].toLocaleDateString('es-MX').split("/");
       break;
     case "Martes":
-      diafor = this.week1[2].toLocaleDateString().split("/");
+      diafor = this.week1[2].toLocaleDateString('es-MX').split("/");
       break;
     case "Miércoles":
-      diafor = this.week1[3].toLocaleDateString().split("/");
+      diafor = this.week1[3].toLocaleDateString('es-MX').split("/");
       break;
     case "Jueves":
-      diafor = this.week1[4].toLocaleDateString().split("/");
+      diafor = this.week1[4].toLocaleDateString('es-MX').split("/");
       break;
     case "Viernes":
-      diafor = this.week1[5].toLocaleDateString().split("/");
+      diafor = this.week1[5].toLocaleDateString('es-MX').split("/");
       break;
     case "Sábado":
-      diafor = this.week1[6].toLocaleDateString().split("/");
+      diafor = this.week1[6].toLocaleDateString('es-MX').split("/");
       break;
     case "Domingo":
-      diafor = this.week1[0].toLocaleDateString().split("/");
+      diafor = this.week1[0].toLocaleDateString('es-MX').split("/");
       break;
   }
+
+  /*
+  0: "10"
+  1: "20"
+  2: "2023"
+*/
   dia = new Date(diafor[2] + "/" + (diafor[1].length==1? "0"+diafor[1]:diafor[1]) +"/"+(diafor[0].length==1? "0"+diafor[0]:diafor[0]));
   return dia
 
