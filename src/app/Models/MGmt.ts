@@ -8,5 +8,6 @@ export interface MGmt{
     id:number;
     time:string;
     diferencia:number;
+    paisGMT:string;
 
 }

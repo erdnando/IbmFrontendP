@@ -26,7 +26,7 @@
             <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>Time zone</mat-label>
                 <mat-select [formControl]="pais" (selectionChange)="select(pais)">
-                    <mat-option *ngFor="let zona of MListGMT" [value]="zona.diferencia">
+                    <mat-option *ngFor="let zona of MListGMT" [value]="zona.paisGMT">
                         {{zona.time}}
                     </mat-option>
                 </mat-select>
