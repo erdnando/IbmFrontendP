@@ -196,6 +196,12 @@ export class RegisterTimeComponent {
             this.MHours.acitivity = this.actividad.value as unknown as number;
             this.MHours.countHours = this.cantidadHoras.toString() as unknown as string;
             this.MHours.approverId = this.aprobador.value?.toString() as unknown as string;
+            this.MHours.idHorusReport = null as unknown as Guid;
+            this.MHours.creationDate = null as unknown as Date;
+            this.MHours.numberReport = 0;
+            this.MHours.state = 0;
+            this.MHours.dateApprovalSystem = null as unknown as Date;
+            this.MHours.countryId = null as unknown as Guid;
 
             console.log(this.MHours);
 

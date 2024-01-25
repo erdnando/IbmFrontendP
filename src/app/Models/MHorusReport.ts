@@ -14,11 +14,10 @@ export interface MCreateHorusReport{
   countHours: string;
   approverId: string;
   numberReport: number;
-
 }
 
 export interface MCreatePortalDB{
-  idPortalDb:Guid;
+  idHorusReport:Guid;
   userEntityId: Guid;
   startDate : string;
   startTime : string;
@@ -32,6 +31,8 @@ export interface MCreatePortalDB{
   approverId: string;
   numberReport: number;
   state:number;
+  dateApprovalSystem:Date;
+  countryId:Guid
 }
 
 export interface MPortalDBResponse {

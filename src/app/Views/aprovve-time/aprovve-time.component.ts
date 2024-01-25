@@ -46,11 +46,11 @@ export class AprovveTimeComponent {
     //console.log(boton);
    // console.log('prueba ');
     if (boton == 'aprobadas') {
-      this.botonfiltrado = 1;
+      this.botonfiltrado = 1; //contemplar el 2
     } else if (boton == 'rechazadas') {
-      this.botonfiltrado = 2;
-    } else {
       this.botonfiltrado = 3;
+    } else {
+      this.botonfiltrado = 0;
     }
 
     return this.mApproverTime.filter((dato) => dato.state === this.botonfiltrado);
