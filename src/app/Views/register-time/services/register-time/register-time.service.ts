@@ -18,13 +18,13 @@ export class RegisterTimeService {
   constructor(private http:HttpClient)
   { }
 
-  async PostCreateReport(mReport:MCreateHorusReport):Promise<Observable<MResponse>>{
+  async PostCreateReport(mReport:MCreateHorusReport):Promise<Observable<MPortalDBResponse>>{
 
     let direccion = this.URLLocal +"HorusReport/create";
     console.log(direccion);
     console.log(mReport);
     console.log(JSON.stringify(mReport));
-    return await this.http.post<MResponse>(direccion,mReport);
+    return await this.http.post<MPortalDBResponse>(direccion,mReport);
 
   }
   async PostCreatePortalDbReport(mReport:MCreateHorusReport):Promise<Observable<MPortalDBResponse>>{
