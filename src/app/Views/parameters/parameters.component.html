@@ -79,7 +79,7 @@
                         <div class="field-form-pp">
                             <mat-form-field style="width: 100%;" appearance="outline">
                                 <mat-label>Pais</mat-label>
-                                <mat-select [formControl]="pais" (selectionChange)="select(pais)">
+                                <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
                                     <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
                                         {{cliente.nameCountry}}
                                     </mat-option>
@@ -180,7 +180,7 @@
                 <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
                     appearance="outline">
                     <mat-label>Pais</mat-label>
-                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" required>
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
                         <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
                             {{pais.nameCountry}}
                         </mat-option>
@@ -261,7 +261,7 @@
                 <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
                     appearance="outline">
                     <mat-label>Pais</mat-label>
-                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" required>
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
                         <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
                             {{pais.nameCountry}}
                         </mat-option>
