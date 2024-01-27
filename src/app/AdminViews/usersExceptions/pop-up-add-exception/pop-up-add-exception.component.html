@@ -19,10 +19,10 @@
     <div class="example-container">
         
         <div [formGroup]="userForm">
-        
+        <!--[min]="fechaActual"-->
             <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Fecha</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="fecha" [min]="fechaActual" required>
+                <input matInput [matDatepicker]="picker" formControlName="fecha"  required>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

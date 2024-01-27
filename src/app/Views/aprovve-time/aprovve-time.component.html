@@ -16,7 +16,7 @@
         </mat-toolbar>
     </div> -->
 
-    <mat-tab-group *ngIf="Approving" (selectedTabChange)="onTabChanged($event)">
+    <mat-tab-group  (selectedTabChange)="onTabChanged($event)">
         <mat-tab>
             <ng-template mat-tab-label (click)="botonPresionado = 'pendientes'">
                 <mat-icon class="example-tab-icon">watch_later</mat-icon>
@@ -24,10 +24,17 @@
             </ng-template>
         </mat-tab>
 
-        <mat-tab>
-            <ng-template mat-tab-label (click)="botonPresionado = 'aprobadas'">
+        <mat-tab *ngIf="MUser.rolEntity.nameRole == 'Usuario Aprobador N1'">
+            <ng-template  mat-tab-label (click)="botonPresionado = 'aprobadasN1'">
                 <mat-icon class="example-tab-icon">done</mat-icon>
-                Aprobadas
+                Aprobadas N1
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab  *ngIf="MUser.rolEntity.nameRole == 'Usuario Aprobador N2'">
+            <ng-template mat-tab-label (click)="botonPresionado = 'aprobadasN2'">
+                <mat-icon class="example-tab-icon">done</mat-icon>
+                Aprobadas N2
             </ng-template>
         </mat-tab>
 

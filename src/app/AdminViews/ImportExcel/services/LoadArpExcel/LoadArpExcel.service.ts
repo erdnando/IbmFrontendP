@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { MResponse } from "src/app/Models/MResponse";
 import { Global } from 'src/app/global';
-import { MResponseLoadGuid, MResponseNotificaciones, MSummary } from 'src/app/Models/MSummary';
+import { MResponseLoadGuid, MResponseNotificaciones, MResponseOverlapingPortalDB, MSummary } from 'src/app/Models/MSummary';
 import { Guid } from 'guid-typescript';
 
 
@@ -106,6 +106,18 @@ export class LoadArpExcelService {
 
     console.log(direccion);
     return this.http.post<MResponseNotificaciones>(direccion,requestData);
+  }
+
+  ValidaLimitesExcepcionesOverlapping(idCarga:string): Observable<MResponseOverlapingPortalDB> {
+    let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping";
+   
+    const requestData= {
+     
+      idCarga: idCarga
+    };
+
+    console.log(direccion);
+    return this.http.post<MResponseOverlapingPortalDB>(direccion,requestData);
   }
 
   

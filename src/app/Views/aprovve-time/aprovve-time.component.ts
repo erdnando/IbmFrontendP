@@ -7,7 +7,7 @@ import { Guid } from 'guid-typescript';
 import { ApproverTimeService } from 'src/app/Views/aprovve-time/services/approverTime/approver-time.service';
 import { map } from 'rxjs';
 import { MApproverTime } from 'src/app/Models/MApproverTime';
-import { Aprobacion } from 'src/app/enum/aprobacion.enum';
+import { Aprobacion2 } from 'src/app/enum/aprobacion.enum';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -40,18 +40,19 @@ export class AprovveTimeComponent {
   listadoUsuarios: any[] = [];
   mApproverTime: MApproverTime[] = [];
   botonfiltrado: number = 0;
-  Aprobacion = Aprobacion;
+  Aprobacion = Aprobacion2;
 
   filtrarDatos(boton: string) {
-    //console.log(boton);
-   // console.log('prueba ');
-    if (boton == 'aprobadas') {
-      this.botonfiltrado = 1;
-    } else if (boton == 'rechazadas') {
-      this.botonfiltrado = 2;
-    } else {
+ 
+     if (boton == 'pendientes') {
+     this.botonfiltrado = 0; 
+    }else if (boton == 'aprobadasN1') {
+      this.botonfiltrado = 1; 
+    }else if (boton == 'aprobadasN2') {
+      this.botonfiltrado = 2; 
+    }else if (boton == 'rechazadas') {
       this.botonfiltrado = 3;
-    }
+    } 
 
     return this.mApproverTime.filter((dato) => dato.state === this.botonfiltrado);
   }
@@ -73,7 +74,7 @@ export class AprovveTimeComponent {
   }
 
   ValidateRole() {
-    if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' ||this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
+    if (this.MUser.rolEntity.nameRole == 'Usuario estandar' || this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' ||this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
       this.Approving = true;
       this.obtenerLista.loadApproverTime(this.MUser.idUser);
        
@@ -91,8 +92,10 @@ export class AprovveTimeComponent {
 
   getColor(estado: string): string {
     switch (estado) {
-        case "Aprobado":
+        case "AprobadoN1":
             return '#219C90';
+        case "AprobadoN2":
+              return '#219C90';
         case "Rechazado":
             return '#D83F31';
         case "Pendiente":
@@ -104,8 +107,10 @@ export class AprovveTimeComponent {
 
   cargarIcono(estado: string): string{
     switch (estado) {
-      case "Aprobado":
+      case "AprobadoN1":
           return 'check_circle';
+          case "AprobadoN2":
+            return 'check_circle';
       case "Rechazado":
           return 'cancel';
       case "Pendiente":
@@ -116,14 +121,18 @@ export class AprovveTimeComponent {
   }
 
   onTabChanged(event: MatTabChangeEvent) {
-    if (event.index === 1) { 
-        this.botonPresionado = 'aprobadas';
-    }
+    
     if (event.index === 0) { 
       this.botonPresionado = 'pendientes';
   }
+  if (event.index === 1) { 
+    this.botonPresionado = 'aprobadasN1';
+}
   if (event.index === 2) { 
-    this.botonPresionado = 'rechazadas';
+    this.botonPresionado = 'aprobadasN2';
+}
+if (event.index === 3) { 
+  this.botonPresionado = 'rechazadas';
 }
    
 }

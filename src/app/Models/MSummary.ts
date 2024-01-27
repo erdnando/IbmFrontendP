@@ -50,3 +50,10 @@ export interface MSummary {
     message: any
     data: boolean
   }
+
+  export interface MResponseOverlapingPortalDB {
+    statusCode: number
+    succes: boolean
+    message: any
+    data: boolean
+  }
