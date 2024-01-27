@@ -1,4 +1,4 @@
-import { Component, ViewChild  } from '@angular/core';
+import { AfterViewInit, Component, HostListener, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
 import { MonthTls, ReporteHorasMesTLS, ReqRepHorasTLS, ReqRepanioTLS } from "src/app/Models/MReporteHorasTLS";
@@ -50,9 +50,10 @@ interface SideNavTogg1e {
   templateUrl:'./Dashboard.component.html',
   styleUrls: ['./Dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit {
 
-  @ViewChild("chart") chart!: ChartComponent ;
+  @ViewChild("chartStandBy") chartStandBy!: ChartComponent;
+  @ViewChild("chartOvertime") chartOvertime!: ChartComponent;
  
 
   public chartOptions: Partial<ChartOptions>;
@@ -89,8 +90,10 @@ export class DashboardComponent {
       ],
       chart:{
         height:230,
-        width:700,
-        type:"bar"
+        /* width:700, */
+        type:"bar",
+        redrawOnWindowResize: true,
+        redrawOnParentResize: true,
       },
       title:{
         text:"StandBy"
@@ -110,8 +113,10 @@ export class DashboardComponent {
       ],
       chart:{
         height:230,
-        width:700,
-        type:"bar"
+        /* width:700, */
+        type:"bar",
+        redrawOnWindowResize: true,
+        redrawOnParentResize: true,
       },
       title:{
         text:"Over Timer"
@@ -319,6 +324,13 @@ export class DashboardComponent {
   
   }
 
+  ngAfterViewInit() {
+    setTimeout(()=> {
+      console.log('window inner width', window.innerWidth);
+      this.resizeChart(window.innerWidth);
+    }, 1000);
+  }
+
  
 
   valuechange(newValue:number) {
@@ -401,12 +413,14 @@ export class DashboardComponent {
                 }
               ],
               chart: {
-              height: 230,
-              width:700,
-              type: "bar",
-              toolbar: {
-                  show: true   
-                }
+                height: 230,
+                /* width:700, */
+                type: "bar",
+                toolbar: {
+                    show: true   
+                },
+                redrawOnWindowResize: true,
+                redrawOnParentResize: true,
               },
               title:{
                 text:"StandBy"
@@ -506,12 +520,14 @@ export class DashboardComponent {
                 }
               ],
               chart: {
-              height: 230,
-              width:700,
-              type: "bar",
-              toolbar: {
+                height: 230,
+                /* width:700, */
+                type: "bar",
+                toolbar: {
                   show: true   
-                }
+                },
+                redrawOnWindowResize: true,
+                redrawOnParentResize: true,
               },
               title:{
                 text:"Over Timer"
@@ -768,5 +784,21 @@ export class DashboardComponent {
   onToggleSideNav(data: SideNavTogg1e){
     this.screenWidth = data.screenWidth;
     this.isSideNavCoIIapsed = data.collapsed;
+  }
+
+  resizeChart(width: number) {
+    console.log(width);
+    const maxWidth = 1200;
+    this.chartOptions.chart!.width = Math.max(width - 180, 0);
+    this.chartOptions.chart!.width = this.chartOptions.chart!.width > maxWidth? maxWidth : this.chartOptions.chart!.width;
+    this.chartOptionsOvertime.chart!.width = Math.max(width - 180, 0);
+    this.chartOptionsOvertime.chart!.width = this.chartOptionsOvertime.chart!.width > maxWidth? maxWidth : this.chartOptionsOvertime.chart!.width;
+    this.chartStandBy.updateOptions(this.chartOptions);
+    this.chartOvertime.updateOptions(this.chartOptionsOvertime);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.resizeChart(event.target.innerWidth);
   }
 }

@@ -89,5 +89,9 @@
     text-align: left;
   }
 
+  .filters .mat-mdc-form-field {
+    margin: 0 5px;
+  }
+
 
 

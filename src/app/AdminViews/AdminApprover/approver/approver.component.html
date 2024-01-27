@@ -20,8 +20,8 @@
             <button mat-raised-button color="primary" class="" (click)="crearUsuario()">Crear<mat-icon>library_add</mat-icon></button>
         </div>
 
-        <div>
-            <mat-table [dataSource]="MApprover" class="table">
+        <div class="table-container">
+            <mat-table [dataSource]="MApprover" class="table" style="min-width: 500px;">
                 <!-- Nombre -->
                 <ng-container matColumnDef="descripcion">
                     <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>

@@ -7,7 +7,7 @@ import { Guid } from 'guid-typescript';
 import { ApproverTimeService } from 'src/app/Views/aprovve-time/services/approverTime/approver-time.service';
 import { map } from 'rxjs';
 import { MApproverTime } from 'src/app/Models/MApproverTime';
-import { Aprobacion } from 'src/app/enum/aprobacion.enum';
+import { Aprobacion2 } from 'src/app/enum/aprobacion.enum';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -40,7 +40,7 @@ export class AprovveTimeComponent {
   listadoUsuarios: any[] = [];
   mApproverTime: MApproverTime[] = [];
   botonfiltrado: number = 0;
-  Aprobacion = Aprobacion;
+  Aprobacion = Aprobacion2;
 
   filtrarDatos(boton: string) {
  
@@ -92,8 +92,10 @@ export class AprovveTimeComponent {
 
   getColor(estado: string): string {
     switch (estado) {
-        case "Aprobado":
+        case "AprobadoN1":
             return '#219C90';
+        case "AprobadoN2":
+              return '#219C90';
         case "Rechazado":
             return '#D83F31';
         case "Pendiente":
@@ -105,8 +107,10 @@ export class AprovveTimeComponent {
 
   cargarIcono(estado: string): string{
     switch (estado) {
-      case "Aprobado":
+      case "AprobadoN1":
           return 'check_circle';
+          case "AprobadoN2":
+            return 'check_circle';
       case "Rechazado":
           return 'cancel';
       case "Pendiente":

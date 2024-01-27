@@ -35,3 +35,11 @@ body {
         padding: 1rem 1.5rem; 
     }
 }
+
+.mat-grid-tile .mat-grid-tile-content {
+    overflow: hidden;
+}
+
+.table-container {
+    overflow: auto;
+}
