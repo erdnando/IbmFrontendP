@@ -121,10 +121,10 @@
       </div>
       <div fxFlex fxLayoutAlign="flex-end center">
   
-        <button style="color: #45474B" *ngIf="EnableButton==true" class="CountryButton" mat-icon-button style="margin: 2% 8%;">
+        <button style="color: #45474B" *ngIf="EnableButton==true" class="CountryButton" mat-button>
           <mat-icon style="color: #0A6EBD">public</mat-icon> <span style="color: #45474B">{{paisSeleccionado}}</span>
         </button>
-        <button style="color: #45474B" *ngIf="EnableButton==false" class="CountryButton" mat-icon-button  style="margin: 2% 8%;" [matMenuTriggerFor]="menu">
+        <button style="color: #45474B" *ngIf="EnableButton==false" class="CountryButton" mat-button [matMenuTriggerFor]="menu">
           <mat-icon style="color: #0A6EBD" class="CountryIcon">public</mat-icon> <span style="color: #45474B">{{ paisSeleccionado || 'Pais' }}</span>
         </button>
         <mat-menu #menu="matMenu" style="color: #45474B">

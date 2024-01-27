@@ -54,63 +54,65 @@
     </table> -->
 
     <div *ngIf="Approving">
-        <mat-table [dataSource]="filtrarDatos(botonPresionado)" class="table">
-            <!-- Fecha envio -->
-            <ng-container matColumnDef="fechaEnvio">
-                <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                     {{element.horusReportEntity.startDate | date:'yyyy-MM-dd'}} 
-                </mat-cell>
-            </ng-container>
-
-            <!-- empleado  -->
-            <ng-container matColumnDef="empleado">
-                <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.nameUser+"
-                    "+element.horusReportEntity.userEntity.surnameUser}} </mat-cell>
-            </ng-container>
-
-            <!-- Identifiacion  -->
-            <ng-container matColumnDef="identificacion">
-                <mat-header-cell *matHeaderCellDef> Identificacion</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.employeeCode}} </mat-cell>
-            </ng-container>
-
-            <!-- Reporte Horas  -->
-            <ng-container matColumnDef="horas">
-                <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.horusReportEntity.countHours}} </mat-cell>
-            </ng-container>
-
-            <!-- Estado  -->
-            <ng-container *ngIf="botonPresionado == 'pendientes'" matColumnDef="estado">
-                <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    <button mat-button color="primary"  class="" (click)="openDialog(element)">Detalles<mat-icon>search</mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
-
-            <!-- Estado  -->
-            <ng-container *ngIf="botonPresionado == 'aprobadas'  || botonPresionado == 'rechazadas'"
-                matColumnDef="estado">
-                <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    <button 
-                    mat-button class="button-stade"  
-                    [ngStyle]="{'background-color': 'transparent'}" 
-                    [title]="Aprobacion[element.state]">
-                        <mat-icon  [ngStyle]="{'color': getColor(Aprobacion[element.state])}">
-                            {{cargarIcono(Aprobacion[element.state])}}
-                        </mat-icon>
-
-                    </button>
-                </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
-        </mat-table>
+        <div class="table-container">
+            <mat-table [dataSource]="filtrarDatos(botonPresionado)" class="table" style="min-width: 800px;">
+                <!-- Fecha envio -->
+                <ng-container matColumnDef="fechaEnvio">
+                    <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                         {{element.horusReportEntity.startDate | date:'yyyy-MM-dd'}} 
+                    </mat-cell>
+                </ng-container>
+    
+                <!-- empleado  -->
+                <ng-container matColumnDef="empleado">
+                    <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.nameUser+"
+                        "+element.horusReportEntity.userEntity.surnameUser}} </mat-cell>
+                </ng-container>
+    
+                <!-- Identifiacion  -->
+                <ng-container matColumnDef="identificacion">
+                    <mat-header-cell *matHeaderCellDef> Identificacion</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.employeeCode}} </mat-cell>
+                </ng-container>
+    
+                <!-- Reporte Horas  -->
+                <ng-container matColumnDef="horas">
+                    <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.countHours}} </mat-cell>
+                </ng-container>
+    
+                <!-- Estado  -->
+                <ng-container *ngIf="botonPresionado == 'pendientes'" matColumnDef="estado">
+                    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button color="primary"  class="" (click)="openDialog(element)">Detalles<mat-icon>search</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+    
+                <!-- Estado  -->
+                <ng-container *ngIf="botonPresionado == 'aprobadas'  || botonPresionado == 'rechazadas'"
+                    matColumnDef="estado">
+                    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button 
+                        mat-button class="button-stade"  
+                        [ngStyle]="{'background-color': 'transparent'}" 
+                        [title]="Aprobacion[element.state]">
+                            <mat-icon  [ngStyle]="{'color': getColor(Aprobacion[element.state])}">
+                                {{cargarIcono(Aprobacion[element.state])}}
+                            </mat-icon>
+    
+                        </button>
+                    </mat-cell>
+                </ng-container>
+    
+                <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+            </mat-table>
+        </div>
     </div>
 
     <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">

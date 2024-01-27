@@ -29,32 +29,34 @@
                     <div style="text-align: right; ">
                         <button mat-raised-button color="primary" class="" (click)="crearRol()">Crear<mat-icon>library_add</mat-icon></button>
                     </div>
-                    <mat-table [dataSource]="MRoles" class="mat-elevation-z8">
-                        <!-- Nombre -->
-                        <ng-container matColumnDef="nombre">
-                            <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.nameRole}} </mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="editar">
-                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                            <mat-cell *matCellDef="let element">
-                                <button mat-button style="color:green" (click)="openDialog(element.idRole, element.nameRole)"
-                                    class="">Editar</button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="eliminar">
-                            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-                            <mat-cell *matCellDef="let element">
-                                <button mat-button style="color: red;" class="">Eliminar</button>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row
-                            *matHeaderRowDef="columnasAMostrar.concat('editar','eliminar')"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar','eliminar');"></mat-row>
-                    </mat-table>
+                    <div class="table-container">
+                        <mat-table [dataSource]="MRoles" class="mat-elevation-z8" style="min-width: 500px;">
+                            <!-- Nombre -->
+                            <ng-container matColumnDef="nombre">
+                                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.nameRole}} </mat-cell>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="editar">
+                                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <button mat-button style="color:green" (click)="openDialog(element.idRole, element.nameRole)"
+                                        class="">Editar</button>
+                                </mat-cell>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="eliminar">
+                                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <button mat-button style="color: red;" class="">Eliminar</button>
+                                </mat-cell>
+                            </ng-container>
+    
+                            <mat-header-row
+                                *matHeaderRowDef="columnasAMostrar.concat('editar','eliminar')"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar','eliminar');"></mat-row>
+                        </mat-table>
+                    </div>
                 </form>
             </div>
         </mat-tab>
@@ -74,31 +76,26 @@
             <div *ngIf="Approving">
                 <em class="filter-text">Filtrar por:</em>
                 <hr class="filter-divider">
-                <div *ngIf="Approving">
-                    <table class="example-full-width" cellspacing="0">
-                        <tr>
-                            <td [formGroup]="userForm">
-                                <mat-form-field class="field-width" appearance="outline">
-                                    <mat-label> Rol: </mat-label>
-                                    <mat-select formControlName="rol" (selectionChange)="select($event.value)">
-                                        <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
-                                            {{cliente.nameRole}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field class="field-width" appearance="outline">
-                                    <mat-label> Nombre o correo: </mat-label>
-                                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="filters" *ngIf="Approving">
+                    <span [formGroup]="userForm">
+                        <mat-form-field class="field-width" appearance="outline">
+                            <mat-label> Rol: </mat-label>
+                            <mat-select formControlName="rol" (selectionChange)="select($event.value)">
+                                <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
+                                    {{cliente.nameRole}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </span>
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label> Nombre o correo: </mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                    </mat-form-field>
                 </div>
 
-                <div class="mat-elevation-z8">
-                    <mat-table [dataSource]="MUsers">
+                <!-- <div class="mat-elevation-z8"> -->
+                <div class="table-container">
+                    <mat-table [dataSource]="MUsers" style="min-width: 800px;">
 
                         <!-- Nombre -->
                         <ng-container matColumnDef="nombre">
@@ -110,7 +107,7 @@
                         <!-- Correo   -->
                         <ng-container matColumnDef="email">
                             <mat-header-cell *matHeaderCellDef> Correo Electronico </mat-header-cell>
-                            <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                            <mat-cell *matCellDef="let element" style="overflow-wrap: anywhere;"> {{element.email}} </mat-cell>
                         </ng-container>
 
                         <!-- Rol  -->
@@ -142,10 +139,11 @@
                         <mat-header-row *matHeaderRowDef="columnasAMostrarUser.concat('editar')"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: columnasAMostrarUser.concat('editar');"></mat-row>
                     </mat-table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
-                        aria-label="Select page of periodic elements">
-                    </mat-paginator>
                 </div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+                <!-- </div> -->
             </div>
         </mat-tab>
     </mat-tab-group>

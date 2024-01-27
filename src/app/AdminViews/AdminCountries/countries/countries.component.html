@@ -19,8 +19,8 @@
             <button mat-raised-button color="primary" class="" (click)="crearUsuario()">Crear<mat-icon>library_add</mat-icon></button>
         </div>
 
-        <div>
-            <mat-table [dataSource]="MCountry" class="table">
+        <div class="table-container">
+            <mat-table [dataSource]="MCountry" class="table" style="min-width: 500px;">
 
                 <!-- Nombre -->
                 <ng-container matColumnDef="nombre">

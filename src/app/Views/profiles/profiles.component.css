@@ -8,6 +8,12 @@ legend {
 
 fieldset {
     border: none;
+    flex: 1 1 auto;
+}
+
+fieldset .mat-mdc-form-field {
+    width: 100%;
+    flex: 1 1 auto;
 }
 
 .example-full-width {

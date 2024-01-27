@@ -39,7 +39,7 @@
 
 
 
-            <apx-chart id="aaaa"
+            <apx-chart id="aaaa" #chartStandBy
             [series]="chartOptions.series!"
             [chart]="chartOptions.chart!"
             [xaxis]="chartOptions.xaxis!"
@@ -60,7 +60,7 @@
         [labels]="chartOptionsG2.labels!"
         [fill]="chartOptionsG2.fill!"></apx-chart>
        
-        <apx-chart id="bbbb"
+        <apx-chart id="bbbb" #chartOvertime
          [series]="chartOptionsOvertime.series!"
          [chart]="chartOptionsOvertime.chart!"
          [xaxis]="chartOptionsOvertime.xaxis!"
@@ -86,41 +86,17 @@
         <h1 style="color: #61677A; font-size: 2em;"><strong>Horas reportadas en CAS / Horas  (Suma Total)</strong></h1>
         <hr class="divider">
         <div class="col-md-12">
-            <table id="tbl_ReporteHoras" datatable class="styled-table" *ngIf="_reporteGral.length >0" style="width: 95%;">
-                <thead class="thead-blue">
-                    <tr>
-                        <th scope="col" class="text-center align-middle" style="font-weight: bold;">TOOL</th>
-                        <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}} <br/><div style="text-align: center;">{{getDia(item.fecha)}}</div>  </th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let items of repGralDias" >
-                        <td style="font-weight: bold;">{{items.tool}}</td>
-                        <td style="text-align: center;">{{items.dia1}}</td>
-                        <td style="text-align: center;">{{items.dia2}}</td>
-                        <td style="text-align: center;">{{items.dia3}}</td>
-                        <td style="text-align: center;">{{items.dia4}}</td>
-                        <td style="text-align: center;">{{items.dia5}}</td>
-                        <td style="text-align: center;">{{items.dia6}}</td>
-                        <td style="text-align: center;">{{items.dia7}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <h1 style="color: #61677A; font-size: 2em;"><strong>Registros aprobados en el portal TLS / Horas & Week</strong></h1>
-        <hr class="divider">
-        <div class="col-md-12">
-            <div class="col-md-5">
-                <table id="tbl_ReporteHorasStandby" datatable class="styled-table" *ngIf="_reporteGralStandBy.length >0" style="width: 95%;">
+            <div class="table-container">
+                <table id="tbl_ReporteHoras" datatable class="styled-table" *ngIf="_reporteGral.length >0" style="width: 95%;">
                     <thead class="thead-blue">
                         <tr>
-                            <th scope="col" class="text-center align-middle" style="font-weight: bold;">StandBy</th>
-                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}}<br/><div style="text-align: center;">{{getDia(item.fecha)}}</div></th>
+                            <th scope="col" class="text-center align-middle" style="font-weight: bold;">TOOL</th>
+                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}} <br/><div style="text-align: center;">{{getDia(item.fecha)}}</div>  </th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let items of repGralDiasStandBy" >
+                        <tr *ngFor="let items of repGralDias" >
                             <td style="font-weight: bold;">{{items.tool}}</td>
                             <td style="text-align: center;">{{items.dia1}}</td>
                             <td style="text-align: center;">{{items.dia2}}</td>
@@ -133,27 +109,57 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Registros aprobados en el portal TLS / Horas & Week</strong></h1>
+        <hr class="divider">
+        <div class="col-md-12">
             <div class="col-md-5">
-                <table id="tbl_ReporteHorasStandby" datatable class="styled-table" *ngIf="_reporteGralOver.length >0" style="width: 95%;">
-                    <thead class="thead-blue">
-                        <tr>
-                            <th scope="col" class="text-center align-middle" style="font-weight: bold;">OverTime</th>
-                            <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}}<div style="text-align: center;">{{getDia(item.fecha)}}</div></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let items of repGralDiasOver" >
-                            <td style="font-weight: bold;">{{items.tool}}</td>
-                            <td style="text-align: center;">{{items.dia1}}</td>
-                            <td style="text-align: center;">{{items.dia2}}</td>
-                            <td style="text-align: center;">{{items.dia3}}</td>
-                            <td style="text-align: center;">{{items.dia4}}</td>
-                            <td style="text-align: center;">{{items.dia5}}</td>
-                            <td style="text-align: center;">{{items.dia6}}</td>
-                            <td style="text-align: center;">{{items.dia7}}</td>
-                        </tr>
-                    </tbody>
-                </table>                
+                <div class="table-container">
+                    <table id="tbl_ReporteHorasStandby" datatable class="styled-table" *ngIf="_reporteGralStandBy.length >0" style="width: 95%;">
+                        <thead class="thead-blue">
+                            <tr>
+                                <th scope="col" class="text-center align-middle" style="font-weight: bold;">StandBy</th>
+                                <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}}<br/><div style="text-align: center;">{{getDia(item.fecha)}}</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let items of repGralDiasStandBy" >
+                                <td style="font-weight: bold;">{{items.tool}}</td>
+                                <td style="text-align: center;">{{items.dia1}}</td>
+                                <td style="text-align: center;">{{items.dia2}}</td>
+                                <td style="text-align: center;">{{items.dia3}}</td>
+                                <td style="text-align: center;">{{items.dia4}}</td>
+                                <td style="text-align: center;">{{items.dia5}}</td>
+                                <td style="text-align: center;">{{items.dia6}}</td>
+                                <td style="text-align: center;">{{items.dia7}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="table-container">
+                    <table id="tbl_ReporteHorasStandby" datatable class="styled-table" *ngIf="_reporteGralOver.length >0" style="width: 95%;">
+                        <thead class="thead-blue">
+                            <tr>
+                                <th scope="col" class="text-center align-middle" style="font-weight: bold;">OverTime</th>
+                                <th *ngFor="let item of datadias" scope="col" class="text-center align-middle" style="font-weight: bold;text-align: center;">{{item.fecha}}<div style="text-align: center;">{{getDia(item.fecha)}}</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let items of repGralDiasOver" >
+                                <td style="font-weight: bold;">{{items.tool}}</td>
+                                <td style="text-align: center;">{{items.dia1}}</td>
+                                <td style="text-align: center;">{{items.dia2}}</td>
+                                <td style="text-align: center;">{{items.dia3}}</td>
+                                <td style="text-align: center;">{{items.dia4}}</td>
+                                <td style="text-align: center;">{{items.dia5}}</td>
+                                <td style="text-align: center;">{{items.dia6}}</td>
+                                <td style="text-align: center;">{{items.dia7}}</td>
+                            </tr>
+                        </tbody>
+                    </table>                
+                </div>
             </div>
             
             
