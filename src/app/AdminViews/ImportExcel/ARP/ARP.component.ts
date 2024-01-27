@@ -720,14 +720,14 @@ export class ARPComponent {
                           this.activarBarra = false;
                           });
 
-                          
+                          /*
                           this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString()).subscribe( data => { 
                             console.log(data)
                             //this.mSummary = data;
               
                             this.showImgARP=true;
                             this.activarBarra = false;
-                            });
+                            });*/
 
                          //-----------------------------------------------------------
                     }else{
