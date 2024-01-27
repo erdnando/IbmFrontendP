@@ -7,7 +7,7 @@ import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { map } from 'rxjs';
 import { MListHorusReport } from 'src/app/Models/MListHorusReport';
 import { Guid } from 'guid-typescript';
-import { Aprobacion } from 'src/app/enum/aprobacion.enum';
+import { Aprobacion2 } from 'src/app/enum/aprobacion.enum';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -30,7 +30,7 @@ export class HistoryComponent {
 
   MUser: MUserEntity;
   mListHorusReport = new MatTableDataSource<any>();
-  Aprobacion = Aprobacion;
+  Aprobacion = Aprobacion2;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -59,8 +59,10 @@ export class HistoryComponent {
 
   getColor(estado: string): string {
     switch (estado) {
-        case "Aprobado":
+        case "AprobadoN1":
             return '#219C90';
+            case "AprobadoN2":
+              return '#219C90';
         case "Rechazado":
             return '#D83F31';
         case "Pendiente":
@@ -72,8 +74,10 @@ export class HistoryComponent {
 
   cargarIcono(estado: string): string{
     switch (estado) {
-      case "Aprobado":
+      case "AprobadoN1":
           return 'check_circle';
+          case "AprobadoN2":
+            return 'check_circle';
       case "Rechazado":
           return 'cancel';
       case "Pendiente":

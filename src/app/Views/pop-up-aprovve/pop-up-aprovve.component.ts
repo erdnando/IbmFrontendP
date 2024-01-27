@@ -52,8 +52,8 @@ export class PopUpAprovveComponent {
     this.mApproverCreate = {} as MApproverTimeCreate;
     this.Aproved();
     this.MAprobadorUser =[];
-    this.Aproved();
-    this.MAprobadorUser =[];
+   // this.Aproved();
+    //this.MAprobadorUser =[];
   }
 
   crearAprobacion(){
@@ -147,5 +147,6 @@ export class PopUpAprovveComponent {
     this.mApprover = this.data.object;
     this.idUser = this.data.idUser;
     console.log(this.idUser, "idUserapp")
+    console.log(this.data)
   }
 }
