@@ -51,3 +51,19 @@ h6{
 .body{
     padding: 20px;
 }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.btn-cerrar{
+    background-color: rgb(215, 209, 209) !important; 
+    color: #000 !important;
+    position: absolute;
+    margin-left: 14pc;   
+    margin-bottom: 3pc;
+    width: 2pc;
+    height: 2pc;
+}

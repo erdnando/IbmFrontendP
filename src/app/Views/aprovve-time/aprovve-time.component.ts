@@ -43,7 +43,7 @@ export class AprovveTimeComponent {
   Aprobacion = Aprobacion2;
 
   filtrarDatos(boton: string) {
- 
+
      if (boton == 'pendientes') {
      this.botonfiltrado = 0; 
     }else if (boton == 'aprobadasN1') {
@@ -53,6 +53,8 @@ export class AprovveTimeComponent {
     }else if (boton == 'rechazadas') {
       this.botonfiltrado = 3;
     } 
+console.log('botonfiltrado');
+    console.log(this.botonfiltrado);
 
     return this.mApproverTime.filter((dato) => dato.state === this.botonfiltrado);
   }
@@ -96,7 +98,7 @@ export class AprovveTimeComponent {
             return '#219C90';
         case "AprobadoN2":
               return '#219C90';
-        case "Rechazado":
+        case "rechazado":
             return '#D83F31';
         case "Pendiente":
             return '#E9B824';
@@ -121,19 +123,48 @@ export class AprovveTimeComponent {
   }
 
   onTabChanged(event: MatTabChangeEvent) {
+    console.log('--->'+event.index);
+
+
+    if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1'){
+          if (event.index === 0) { 
+            this.botonPresionado = 'pendientes';
+            }
+            if (event.index === 1) { 
+              this.botonPresionado = 'aprobadasN1';
+          }
+            if (event.index === 2) { 
+              this.botonPresionado = 'rechazadas';
+          }
+         
+
+    }else if (this.MUser.rolEntity.nameRole == 'Usuario estandar'  || this.MUser.rolEntity.nameRole == 'Administrador' || this.MUser.rolEntity.nameRole == 'Super Administrador'){
+      if (event.index === 0) { 
+        this.botonPresionado = 'pendientes';
+        }
+        if (event.index === 1) { 
+          this.botonPresionado = 'aprobadasN1';
+      }
+        if (event.index === 2) { 
+          this.botonPresionado = 'rechazadas';
+      }
+      if (event.index === 3) { 
+        this.botonPresionado = 'rechazadas';
+      
+      }
+    }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' ){
+      if (event.index === 0) { 
+        this.botonPresionado = 'pendientes';
+        }
+        if (event.index === 1) { 
+          this.botonPresionado = 'aprobadasN2';
+      }
+        if (event.index === 2) { 
+          this.botonPresionado = 'rechazadas';
+      }
+     
+    }
     
-    if (event.index === 0) { 
-      this.botonPresionado = 'pendientes';
-  }
-  if (event.index === 1) { 
-    this.botonPresionado = 'aprobadasN1';
-}
-  if (event.index === 2) { 
-    this.botonPresionado = 'aprobadasN2';
-}
-if (event.index === 3) { 
-  this.botonPresionado = 'rechazadas';
-}
    
 }
 

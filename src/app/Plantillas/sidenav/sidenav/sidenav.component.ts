@@ -83,7 +83,7 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.paisSeleccionado = this.MUser.countryEntity.nameCountry;
-    console.log(this.MUser.rolEntity.nameRole)
+    console.log('Nombre Rol : ' + this.MUser.rolEntity.nameRole)
     if (this.MUser.rolEntity.nameRole == 'Super Administrador') {
       console.log(this.MUser.rolEntity.nameRole)
       this.EnableButton = false;

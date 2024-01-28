@@ -294,20 +294,13 @@ export class ParametersComponent implements OnInit {
     this.apiFestivosCreate
       .PostCreateFestivo(this.EntityFestivos)
       .subscribe((data) => {
+        console.log('Datos respuesta ' + JSON.stringify(data));
         if (data.data) {
           Swal.fire({
             icon: 'success',
             title: 'Creacion completada.',
             confirmButtonColor: '#0A6EBD',
           });
-          this.suscriptionFestivosdb = this.serviceList
-            .loadFestivos(this.pais.value as unknown as string)
-            .subscribe((festivo) => {
-              festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
-                - new Date(b.diaFestivo).getTime());
-              this.MFestivosList = festivo;
-            });
-          this.agregarFestivos = false;
         } else {
           Swal.fire({
             icon: 'error',
@@ -316,8 +309,16 @@ export class ParametersComponent implements OnInit {
             confirmButtonColor: '#0A6EBD',
           });
         }
+        this.suscriptionFestivosdb = this.serviceList
+            .loadFestivos(this.pais.value as unknown as string)
+            .subscribe((festivo) => {
+              festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
+                - new Date(b.diaFestivo).getTime());
+              this.MFestivosList = festivo;
+            });
+          this.agregarFestivos = false;
       });
-
+      console.log('Termine');
     this.storageFestivos.limpiarDiasFestivos();
     this.festivos = [];
     this.EntityFestivos = [];
@@ -569,7 +570,7 @@ resetPicker(){
       }
 
       this.MParameter.countryEntityId = this.pais.value as unknown as Guid;
-      this.MParameter.targetTimeDay = Number(this.limitDay.value);
+      this.MParameter.targetTimeDay = Number(this.formatComma(this.limitDay.value!));
       this.MParameter.targetHourWeek = Number(this.formatComma(this.limitWeek.value!));
       this.MParameter.targetHourMonth = Number(this.formatComma(this.limitMonth.value!));
       this.MParameter.targetHourYear = Number(this.formatComma(this.limitYear.value!));
@@ -937,6 +938,10 @@ resetPicker(){
           this.MListCountry = lista;
           this.Approving = true;
 
+        }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1') {
+          this.MListCountry = lista;
+          this.Approving = true;
+
         }else{
           this.Approving = false
         }
@@ -1229,7 +1234,15 @@ obtenerFecha(diain:string){
   return dia
 
 }
-  
+
+onKeyPressOnlyNumbers(event: KeyboardEvent): void {
+  const inputValue = (event.target as HTMLInputElement).value;
+  const isDotOrComma = inputValue.includes('.') || inputValue.includes(',');
+
+  if (!/[\d.,]/.test(event.key) || (isDotOrComma && (event.key === '.' || event.key === ','))) {
+    event.preventDefault();
+  }
+}
 
 }
 

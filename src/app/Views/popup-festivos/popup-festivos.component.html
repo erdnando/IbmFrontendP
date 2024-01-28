@@ -1,8 +1,14 @@
 <div class="body">
 
-    <mat-toolbar  class="">
-        <h1>Festivos</h1>
-      </mat-toolbar>
+  <div class="container">
+    <mat-toolbar  class="title-form">
+      <h1>Festivos</h1>
+    </mat-toolbar>
+    <button class="btn-cerrar" mat-mini-fab (click)="onClose()" aria-label="Cerrar">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+    
     
       <mat-form-field appearance="fill">
         <mat-label>Elige el festivo</mat-label>
@@ -10,10 +16,7 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-    
-        <div style="text-align: center;">
-            <button mat-raised-button   color="primary" class=""  (click)="onClose()" > ACeptar</button>
-        </div>
+
         
     
     </div>

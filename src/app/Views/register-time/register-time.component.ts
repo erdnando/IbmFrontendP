@@ -36,7 +36,7 @@ interface SideNavTogg1e {
 })
 export class RegisterTimeComponent {
   MUser: MUserEntity;
-  MHours: MCreatePortalDB;
+  MHours: MCreateHorusReport;
   MHoursResponse: MPortalDBResponse;
   MHorarioR: MHorarioRegistrado;
   MClient: MClientEntity[];
@@ -196,12 +196,7 @@ export class RegisterTimeComponent {
             this.MHours.acitivity = this.actividad.value as unknown as number;
             this.MHours.countHours = this.cantidadHoras.toString() as unknown as string;
             this.MHours.approverId = this.aprobador.value?.toString() as unknown as string;
-            this.MHours.idHorusReport = null as unknown as Guid;
-            this.MHours.creationDate = null as unknown as Date;
             this.MHours.numberReport = 0;
-            this.MHours.state = 0;
-            this.MHours.dateApprovalSystem = null as unknown as Date;
-            this.MHours.countryId = null as unknown as Guid;
 
             console.log(this.MHours);
 
@@ -240,6 +235,15 @@ export class RegisterTimeComponent {
                     confirmButtonColor: '#0A6EBD',
                   });
                 }else {
+                       this.fecha.reset();
+                     this.fecha.reset();
+                     this.horaInicio.reset();
+                     this.horaFin.reset();
+                     this.descripcion.reset();
+                     this.actividad.reset();
+                     this.aprobador.reset();
+                     this.cantidadHoras=0;
+                     this.reporte='';
                   Swal.fire({
                     icon: 'success',
                     title: 'Registro de horas se genero correctamente',

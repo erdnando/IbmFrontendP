@@ -172,7 +172,8 @@
     border: none;
     margin-top:-6px;
     display: inline-block;
-    position: absolute;
+    position: relative;
+    margin-top: 0.2pc;
 }
 
 .icon-grow-shadow {

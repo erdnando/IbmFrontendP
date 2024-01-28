@@ -260,11 +260,16 @@ export class ObtenerlistaService {
   }
 
   loadApproverTime(idUser: any){
+
+    console.log('obteniedno aprobaciones...'+ idUser);
     this.consultApproverTime
     .GetApproverTime(idUser)
     .pipe(map((data: MiObjeto) => data))
     .subscribe((data) => {
       let lista = data['data'];
+
+      console.log('datos obtenidos;;;;');
+      console.log(lista);
       this._refreshAppTime$.next(lista) ;
     });
   }

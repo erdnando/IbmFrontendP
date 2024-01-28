@@ -61,12 +61,20 @@ export class PopUpAprovveComponent {
     console.log(this.userForm.value.aprobacion);
     this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole;
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
-    this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
     this.mApproverCreate.description = this.userForm.value.descripcion!;
+
+
+    this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
+   /* if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
+        this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
+    }else{
+      this.mApproverCreate.state =0;
+    }*/
+    
 
     //aprovador 2 -camilo
     if(this.userForm.value.aprobacion == '1'){
-      this.mApproverCreate.userId = this.aprobador.value as unknown as Guid;
+      this.mApproverCreate.userId = this.mApprover.userEntityId;;//this.aprobador.value as unknown as Guid;
        //aprovador 1 -harold
       this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
       //aprovador 2 -camilo

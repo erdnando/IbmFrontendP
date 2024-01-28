@@ -62,22 +62,34 @@ Login(){
           map((data: any) => {
           console.log(data);
             if (data && data.data) {
-              const datosMapeados = {
+              if(data.data.token=="NA"){
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Error en el inicio de sesión, correo o contraseña incorrectos.',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                return null;
+              }else{
+                const datosMapeados = {
       
-                idUser: data.data.idUser,
-                email: data.data.email,
-                nameUser: data.data.nameUser,
-                surnameUser: data.data.surnameUser,
-                employeeCode: data.data.employeeCode,
-                roleEntityId: data.data.roleEntityId,
-                countryEntityId: data.data.countryEntityId,
-                countryEntity: data.data.countryEntity,
-                rolEntity: data.data.roleEntity,
-                token:data.data.token,
-                code:data.data.password
-              };
-              this.storageService.guardarDatosMapeados(datosMapeados)
-              return datosMapeados;
+                  idUser: data.data.idUser,
+                  email: data.data.email,
+                  nameUser: data.data.nameUser,
+                  surnameUser: data.data.surnameUser,
+                  employeeCode: data.data.employeeCode,
+                  roleEntityId: data.data.roleEntityId,
+                  countryEntityId: data.data.countryEntityId,
+                  countryEntity: data.data.countryEntity,
+                  rolEntity: data.data.roleEntity,
+                  token:data.data.token,
+                  code:data.data.password
+                };
+                this.storageService.guardarDatosMapeados(datosMapeados)
+                return datosMapeados;
+
+              }
+              
             } else {
       
               return null;

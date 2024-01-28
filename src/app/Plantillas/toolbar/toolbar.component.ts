@@ -35,11 +35,12 @@ export class ToolbarComponent {
   async cergarMenuList (){
 
     this.MUser = this.storageService.obtenerDatosMapeados();
+    console.log('Acaaaaa');
     (await this.loadToolbarService.PostLoadToolbar(this.MUser.roleEntityId)).pipe(
       map((data: MiObjetoApp) => data)
       ).subscribe((data) =>{
         let listap = data["data"];
-        console.log(listap)
+        console.log('Lista ' + listap)
         this.Mmen = listap;
         console.log(this.Mmen);
       });

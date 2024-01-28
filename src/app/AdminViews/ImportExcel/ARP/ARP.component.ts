@@ -710,24 +710,38 @@ export class ARPComponent {
 
                     if(willDelete.value){
 
-                         //acepta carga;---------------------------------------------
-                         //notificaciones en proceso
-                         this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
-                          console.log(data)
-                          //this.mSummary = data;
-            
-                          this.showImgARP=true;
-                          this.activarBarra = false;
-                          });
+                      //Si las tres variables de carga OK vienen en 0 (Cero), se manda directamente a Notificaciones
 
-                          /*
-                          this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString()).subscribe( data => { 
+                      if (this.mSummary.data.eN_PROCESO_ARP=="0" && this.mSummary.data.​​eN_PROCESO_STE=="0" && this.mSummary.data.​​eN_PROCESO_TSE =="0" ) {
+                          this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
                             console.log(data)
                             //this.mSummary = data;
               
                             this.showImgARP=true;
                             this.activarBarra = false;
-                            });*/
+                            });
+                         } else {
+                          this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString()).subscribe( data => { 
+                            console.log(data)
+                            //this.mSummary = data;
+
+                            //acepta carga;---------------------------------------------
+                            //notificaciones en proceso
+                            this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
+                              console.log(data)
+                              //this.mSummary = data;
+                
+                              this.showImgARP=true;
+                              this.activarBarra = false;
+                              });
+              
+                            this.showImgARP=true;
+                            this.activarBarra = false;
+                            });
+                         }
+
+                          
+                          
 
                          //-----------------------------------------------------------
                     }else{

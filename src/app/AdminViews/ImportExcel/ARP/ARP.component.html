@@ -68,20 +68,18 @@
     <mat-tab>
         <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon">upload_file</mat-icon>
-            Subir Plantilla GMT
+            Subir Plantilla Horarios
         </ng-template>
         <br>
         <div class="body-excel">
             <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
-            <div>
-                <div class="centrado">
-                    <label class="mi-etiqueta">
-                        Cargar plantilla GMT 
-                        <br>
-                        <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
-                    </label>
-                </div>
-            </div>
+            <div class="centrado">
+            <label class="mi-etiqueta">
+                Cargar plantilla Horarios 
+                <br>
+                <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+            </label>
+        </div>
 
         <button class="boton" *ngIf="botonHorario" (click)="readExcelHorario(fileInput4)">
             Subir Archivo
