@@ -40,10 +40,10 @@ export class PopUpCreateParameterComponent {
     console.log(this.typeHour)
 
     
-    this.MParameter.targetTimeDay = Number(this.limitDay.value);
-    this.MParameter.targetHourWeek = Number(this. limitWeek.value);
-    this.MParameter.targetHourMonth = Number(this.limitMonth.value);
-    this.MParameter.targetHourYear= Number(this.limitYear.value)
+    this.MParameter.targetTimeDay = Number(this.formatComma(this.limitDay.value!));
+    this.MParameter.targetHourWeek = Number(this.formatComma(this. limitWeek.value!));
+    this.MParameter.targetHourMonth = Number(this.formatComma(this.limitMonth.value!));
+    this.MParameter.targetHourYear= Number(this.formatComma(this.limitYear.value!))
     this.MParameter.typeLimits = 0;
     this.MParameter.typeHours = this.typeHour;
     this.MParameter.countryEntityId = this.idCountry as unknown as Guid;
@@ -53,7 +53,18 @@ export class PopUpCreateParameterComponent {
     console.log(this.MParameter.typeHours);
     console.log(this.MParameter.targetTimeDay);
 
-
+    if( this.MParameter.targetTimeDay > 24 ||
+        this.MParameter.targetHourWeek > 168 ||
+        this.MParameter.targetHourMonth > 744 ||
+        this.MParameter.targetHourYear > 8928){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: '¡Uno o más valores supera el límite máximo permitido, favor validar!',
+        confirmButtonColor: '#0A6EBD',
+      });
+      return;
+    }
     
     this.apiCreateParameter.PostCreateParameter(this.MParameter).subscribe(data=> {
       console.log(data);
@@ -77,6 +88,16 @@ export class PopUpCreateParameterComponent {
 
   }
 
+  formatComma(n: string) {
+    console.log(n);
+    if(!isNaN(Number(n))) return Number(n);
+
+    'use strict';
+    n = n.replace(/\./g, '').replace(',', '.');
+    console.log(n);
+    return Number(n);
+}
+
   onClose(): void {
     this.dialogRef.close();
   }
@@ -92,6 +113,15 @@ export class PopUpCreateParameterComponent {
 
     this.idCountry = this.data.idCountry;
     
+}
+
+onKeyPressOnlyNumbers(event: KeyboardEvent): void {
+  const inputValue = (event.target as HTMLInputElement).value;
+  const isDotOrComma = inputValue.includes('.') || inputValue.includes(',');
+
+  if (!/[\d.,]/.test(event.key) || (isDotOrComma && (event.key === '.' || event.key === ','))) {
+    event.preventDefault();
+  }
 }
 
 }

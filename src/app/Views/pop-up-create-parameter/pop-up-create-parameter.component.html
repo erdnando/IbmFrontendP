@@ -7,19 +7,19 @@
         <div class="example-container">
             <mat-form-field class="field-width" appearance="outline">
                 <mat-label> Limites legales diarios: </mat-label>
-                <input matInput type="number" placeholder="45" [formControl]="limitDay">
+                <input matInput type="text" placeholder="45" [formControl]="limitDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
             </mat-form-field>
             <mat-form-field class="field-width" appearance="outline">
                 <mat-label> Limites legales semanales: </mat-label>
-                <input matInput type="number" placeholder="45" [formControl]="limitWeek">
+                <input matInput type="text" placeholder="45" [formControl]="limitWeek" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="6">
             </mat-form-field>
             <mat-form-field class="field-width" appearance="outline">
                 <mat-label> Limites legales mensuales: </mat-label>
-                <input matInput type="number" placeholder="45" [formControl]="limitMonth">
+                <input matInput type="text" placeholder="45" [formControl]="limitMonth" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="6">
             </mat-form-field>
             <mat-form-field class="field-width" appearance="outline">
                 <mat-label> Limites legales anuales: </mat-label>
-                <input matInput type="number" placeholder="45" [formControl]="limitYear">
+                <input matInput type="text" placeholder="45" [formControl]="limitYear" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="7">
             </mat-form-field>
         </div>
     
