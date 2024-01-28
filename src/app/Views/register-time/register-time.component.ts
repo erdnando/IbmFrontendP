@@ -235,6 +235,15 @@ export class RegisterTimeComponent {
                     confirmButtonColor: '#0A6EBD',
                   });
                 }else {
+                       this.fecha.reset();
+                     this.fecha.reset();
+                     this.horaInicio.reset();
+                     this.horaFin.reset();
+                     this.descripcion.reset();
+                     this.actividad.reset();
+                     this.aprobador.reset();
+                     this.cantidadHoras=0;
+                     this.reporte='';
                   Swal.fire({
                     icon: 'success',
                     title: 'Registro de horas se genero correctamente',
