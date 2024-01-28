@@ -659,7 +659,7 @@ export class ARPComponent {
               this.mSummary = data;
 
               this.showImgARP=true;
-              this.activarBarra = false;
+              //this.activarBarra = false;
               this.fileInput3.nativeElement.value = null;
 
                   Swal.fire({
@@ -736,7 +736,7 @@ export class ARPComponent {
                               });
               
                             this.showImgARP=true;
-                            this.activarBarra = false;
+                            //this.activarBarra = false;
                             });
                          }
 

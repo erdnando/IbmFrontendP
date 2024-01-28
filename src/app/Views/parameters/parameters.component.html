@@ -70,31 +70,21 @@
         </table> -->
 
         <!-- Seccion festividades-->
-        <div *ngIf="botonPresionado === 'festividades'">
+        <div *ngIf="botonPresionado === 'festividades'" style="margin-top: 10px; padding: 10px 5px;">
 
             <!-- Campos Formulario-->
-            <table>
-                <tr>
-                    <td>
-                        <div class="field-form-pp">
-                            <mat-form-field style="width: 100%;" appearance="outline">
-                                <mat-label>Pais</mat-label>
-                                <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
-                                    <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
-                                        {{cliente.nameCountry}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="add-fest" *ngIf="this.pais.value !== ''">
-                            <button  mat-raised-button color="primary" class="" (click)="openDialog()">Agregar Festivos<mat-icon>library_add</mat-icon></button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-
+            <div class="filters">
+                <mat-form-field appearance="outline">
+                    <mat-label>Pais</mat-label>
+                    <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
+                        <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
+                            {{cliente.nameCountry}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button  mat-raised-button color="primary" class="" (click)="openDialog()">Agregar Festivos<mat-icon>library_add</mat-icon></button>
+            </div>
+            <br>
             <em class="filter-text"><strong>Festivos Agregados:</strong></em>
              <hr class="filter-divider">
 
@@ -141,43 +131,35 @@
 
             <hr class="filter-divider">
             <!-- Botones  parte inferior festividades-->
-            <table class="example-full-width" cellspacing="0">
-                <tr>
-                    <td *ngIf="habilitarExcel">
-                        <button  mat-raised-button color="primary" class="" (click)="exportToExcel()">
-                            Descargar Plantilla(CSV)
-                            <mat-icon>
-                                download
-                            </mat-icon> 
-                        </button>
-                    </td>
-                    <td *ngIf="habilitarExcel">
-                        <button  mat-raised-button color="primary" class="" (click)="cargarArchivo()">
-                            Subir Plantilla
-                            <mat-icon>
-                                upload
-                            </mat-icon> 
-                        </button>
-                        <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivo($event)" />
-                    </td>
-                    <td *ngIf="agregarFestivos">
-                        <button  mat-raised-button color="primary" class="" (click)="falseAgregarFestivos()">
-                            Guardar Cambios
-                            <mat-icon>
-                                save
-                            </mat-icon> 
-                        </button>
-                    </td>
-                </tr>
-            </table>
-
+            <div class="buttons">
+                <button mat-raised-button color="primary" class="" (click)="exportToExcel()" *ngIf="habilitarExcel">
+                    Descargar Plantilla(CSV)
+                    <mat-icon>
+                        download
+                    </mat-icon> 
+                </button>
+                <button  mat-raised-button color="primary" class="" (click)="cargarArchivo()" *ngIf="habilitarExcel">
+                    Subir Plantilla
+                    <mat-icon>
+                        upload
+                    </mat-icon> 
+                </button>
+                <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivo($event)" />
+                <button mat-raised-button color="primary" class="" (click)="falseAgregarFestivos()" *ngIf="agregarFestivos">
+                    Guardar Cambios
+                    <mat-icon>
+                        save
+                    </mat-icon> 
+                </button>
+            </div>
+            
         </div>
 
         <!-- Seccion overtime -->
         <div *ngIf="botonPresionado === 'overtime'">
 
-            <div class="field-form-p">
-                <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
+            <div class="filters">
+                <mat-form-field style="text-align: left; margin-top: 10px; padding: 10px;"
                     appearance="outline">
                     <mat-label>Pais</mat-label>
                     <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
@@ -187,57 +169,48 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-
-            <div class="field-form">
-                <table class="example-full-width" cellspacing="0">
-                    <ng-container *ngIf="ListparametersOver.length; else noData">
-                        <tr *ngFor="let item of ListparametersOver">
-                            <td>
-                                <mat-form-field style="text-align: left; width: 95%; height: 70px;"
-                                    appearance="outline">
-                                    <mat-label> Limites legales diarios: </mat-label>
-                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitDay" [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)">
-                                
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field style="text-align: center; width: 95%; height: 70px;"
-                                    appearance="outline">
-                                    <mat-label> Limites legales semanales: </mat-label>
-                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="."  [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek" name="targetHourWeek" (keypress)="onKeyPressOnlyNumbers($event)">
-                                </mat-form-field>
-
-                            </td>
-                            <td>
-                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
-                                    appearance="outline">
-                                    <mat-label> Limites legales mensuales: </mat-label>
-                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
-                                        name="targetHourMonth"
-                                        (keypress)="onKeyPressOnlyNumbers($event)">
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
-                                    appearance="outline">
-                                    <mat-label> Limites legales anuales: </mat-label>
-                                    <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
-                                        name="targetHourYear"
-                                        (keypress)="onKeyPressOnlyNumbers($event)">
-                                </mat-form-field>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <div style="text-align: right;">
-                                    <button mat-raised-button color="primary" class=""
-                                        (click)="updateParameters()">Actualizar<mat-icon>sync</mat-icon></button>
-                                </div>
-                            </td>
-                        </tr>
-
-                    </ng-container>
-                </table>
+            <br>
+            <div class="field-form limites">
+                <ng-container *ngIf="ListparametersOver.length; else noData">
+                    <ng-container *ngFor="let item of ListparametersOver">
+                        <div>
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label> Limites legales diarios: </mat-label>
+                                <input matInput type="number" placeholder="40" [formControl]="limitDay"
+                                    [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)">
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label> Limites legales semanales: </mat-label>
+                                <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="."  [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
+                                    name="targetHourWeek" (keypress)="onKeyPressOnlyNumbers($event)">
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label> Limites legales mensuales: </mat-label>
+                                <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
+                                    name="targetHourMonth" (keypress)="onKeyPressOnlyNumbers($event)">
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <mat-form-field
+                                appearance="outline">
+                                <mat-label> Limites legales anuales: </mat-label>
+                                <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
+                                    name="targetHourYear" (keypress)="onKeyPressOnlyNumbers($event)">
+                            </mat-form-field>
+                        </div>
+                    </ng-container><br>
+                    <div style="text-align: right;">
+                        <button mat-raised-button color="primary" class=""
+                            (click)="updateParameters()">Actualizar<mat-icon>sync</mat-icon></button>
+                    </div>
+                </ng-container>
                 <table>
                     <ng-template #noData>
                         <tr>
@@ -258,8 +231,8 @@
         <!-- Seccion standby -->
         <div *ngIf="botonPresionado === 'standby'">
 
-            <div class="field-form-p">
-                <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
+            <div class="filters">
+                <mat-form-field style="text-align: left; margin-top: 10px; padding: 10px;"
                     appearance="outline">
                     <mat-label>Pais</mat-label>
                     <mat-select [formControl]="pais" (selectionChange)="select(pais)" [(ngModel)]="this.MUser.countryEntityId" required>
@@ -270,57 +243,49 @@
                 </mat-form-field>
             </div>
 
-            <div class="field-form">
-                <table class="example-full-width" cellspacing="0">
+            <div class="field-form limites">
                     <ng-container *ngIf="ListparametersStand.length; else noData">
-                        <tr *ngFor="let item of ListparametersStand">
-                            <td>
-                                <mat-form-field style="text-align: left; width: 95%; height: 70px;"
+                        <ng-container *ngFor="let item of ListparametersStand">
+                            <div>
+                                <mat-form-field style="text-align: left;"
                                     appearance="outline">
                                     <mat-label> Limites legales diarios: </mat-label>
                                     <input matInput type="text" as-number decimalMarker="," mask="separator.2" thousandSeparator="." [formControl]="limitDay" [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)">
                                 </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field style="text-align: center; width: 95%; height: 70px;"
+                            </div>
+                            <div>
+                                <mat-form-field style="text-align: center;"
                                     appearance="outline">
                                     <mat-label> Limites legales semanales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
                                         name="targetHourWeek"
                                         (keypress)="onKeyPressOnlyNumbers($event)">
                                 </mat-form-field>
-
-                            </td>
-                            <td>
-                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
+                            </div>
+                            <div>
+                                <mat-form-field style="text-align: right;"
                                     appearance="outline">
                                     <mat-label> Limites legales mensuales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
                                         name="targetHourMonth"
                                         (keypress)="onKeyPressOnlyNumbers($event)">
                                 </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field style="text-align: right; width: 95%; height: 70px;"
+                            </div>
+                            <div>
+                                <mat-form-field style="text-align: right;"
                                     appearance="outline">
                                     <mat-label> Limites legales anuales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
                                         name="targetHourYear"
                                         (keypress)="onKeyPressOnlyNumbers($event)">
                                 </mat-form-field>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <div style="text-align: right;">
-                                    <button mat-raised-button color="primary" class=""
-                                        (click)="updateParameters()">Actualizar<mat-icon>sync</mat-icon></button>
-                                </div>
-                            </td>
-                        </tr>
-
+                            </div>
+                        </ng-container>
+                        <div style="text-align: right;">
+                            <button mat-raised-button color="primary" class=""
+                                (click)="updateParameters()">Actualizar<mat-icon>sync</mat-icon></button>
+                        </div>
                     </ng-container>
-                </table>
                 <table>
                     <ng-template #noData>
                         <tr>
@@ -341,8 +306,8 @@
         <!-- Seccion horarios -->
         <div *ngIf="botonPresionado === 'horarios'">
 
-            <div class="field-form-p">
-                <mat-form-field style="text-align: left; width: 37%; height: 70px; margin-top: 10px; padding: 10px;"
+            <div class="filters">
+                <mat-form-field style="text-align: left; margin-top: 10px; padding: 10px;"
                     appearance="outline">
                     <mat-select [formControl]="pais" (selectionChange)="select(pais)"  [(ngModel)]="this.MUser.countryEntityId" required>
                         <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
@@ -428,15 +393,15 @@
 
                 </fieldset>
 
-                <table class="example-full-width">
+                
 
-                    <div class="field-form-h">
-                        <mat-form-field *ngIf="habilitarExcel" style="text-align: right; width: 95%; height: 70px;" appearance="outline">
+                    <div class="form">
+                        <mat-form-field *ngIf="habilitarExcel" style="text-align: right;" appearance="outline">
                             <mat-label> Codigo empleado: </mat-label>
                             <input  matInput  (blur)="applyFilter($event)" placeholder="Ex. ium" [formControl]="codeEmployed">
                         </mat-form-field>
 
-                        <mat-form-field style="text-align: right; width: 95%; height: 70px; " appearance="outline">
+                        <mat-form-field style="text-align: right;" appearance="outline">
                             <mat-label> Dia de la Semana: </mat-label>
                             <input #calendario [disabled]="!habilitarExcel" matInput  [matDatepicker]="picker"   (dateChange)="onDateChange($event)"
                                 [formControl]="date">
@@ -444,8 +409,8 @@
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
 
-                        <mat-form-field style="text-align: right; width: 95%; height: 70px;" appearance="outline">
-                            <mat-label> Numero de la semana del año:: </mat-label>
+                        <mat-form-field style="text-align: right;" appearance="outline">
+                            <mat-label> Numero de la semana del año: </mat-label>
                             <input matInput [ngModel]="semanaAno" readonly>
                         </mat-form-field>
 
@@ -454,21 +419,18 @@
                             compañia y con las normativas legales vigentes antes de su aprobacion.</mat-checkbox>
                     </div>
 
-                </table>
+                
 
             </div>
 
-            <table class="example-full-width" cellspacing="0">
-                <tr>
-                    <td >
-                        <button mat-raised-button color="primary" class="" (click)="exportToExcelHours()">
-                            Descargar Plantilla(CSV)
-                            <mat-icon>
-                                download
-                            </mat-icon> 
-                        </button>
-                    </td>
-                  <!---  <td *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha">
+            <div class="buttons">
+                <button mat-raised-button color="primary" class="" (click)="exportToExcelHours()">
+                    Descargar Plantilla(CSV)
+                    <mat-icon>
+                        download
+                    </mat-icon> 
+                </button>
+                <!---  <td *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha">
                         <button class="button-options-excel" (click)="cargarArchivoHorarios()">
                             Subir Plantilla(CSV)
                             <mat-icon>
@@ -477,14 +439,18 @@
                         </button>
                         <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorarios($event)" />
                     </td> -->
-                    <td *ngIf="mHorarioList.length">
-                        <button   mat-raised-button color="primary" class="" (click)="crearHorario()">
-                            Guardar Cambios
-                            <mat-icon>
-                                save
-                            </mat-icon> 
-                        </button>
+                <button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length">
+                    Guardar Cambios
+                    <mat-icon>
+                        save
+                    </mat-icon> 
+                </button>
+            </div>
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td >
                     </td>
+                  
                 </tr>
             </table>
 

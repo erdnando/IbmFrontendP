@@ -73,7 +73,9 @@ export class PopUpAprovveComponent {
     
 
     //aprovador 2 -camilo
-    if(this.userForm.value.aprobacion == '1'){
+
+    //si se eligio aprobado
+    if(this.userForm.value.aprobacion == '0'){
       this.mApproverCreate.userId = this.mApprover.userEntityId;;//this.aprobador.value as unknown as Guid;
        //aprovador 1 -harold
       this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
@@ -91,6 +93,8 @@ export class PopUpAprovveComponent {
 
 
     }else{
+      //rechazado
+
       this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
       this.mApproverCreate.aprobador2UserEntityId=  '00000000-0000-0000-0000-000000000000' as unknown as Guid;
        //aprovador 1 -harold
@@ -107,7 +111,7 @@ export class PopUpAprovveComponent {
       console.log(data);
       if (data.data) {
 
-        if(this.userForm.value.aprobacion == '1'){
+        if(this.userForm.value.aprobacion == '0'){
           Swal.fire({
             icon: 'success',
             title: 'Aprobacion creada',
