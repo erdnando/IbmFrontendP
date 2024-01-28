@@ -5,7 +5,7 @@ import { map } from 'rxjs';
 import { MListHorusReport } from 'src/app/Models/MListHorusReport';
 import { MPopUpHistory } from 'src/app/Models/MPopUpHistory';
 import { PopUpHistoryService } from 'src/app/Views/history/services/popUpHistory/pop-up-history.service';
-import { Aprobacion } from 'src/app/enum/aprobacion.enum';
+import { Aprobacion2 } from 'src/app/enum/aprobacion.enum';
 
 interface MiObjetoApp {
   [key: string]: any;
@@ -31,7 +31,7 @@ export class PopupHistoryComponent {
   MListHorusResport: MPopUpHistory;
   tipoHoras: string = "";
   procedencia : string = "";
-  Aprobacion = Aprobacion;
+  Aprobacion = Aprobacion2;
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopupHistoryComponent>, private datesModal: PopUpHistoryService) {
@@ -40,21 +40,25 @@ export class PopupHistoryComponent {
 
   getColor(estado: string): string {
     switch (estado) {
-        case "Aprobado":
+      case "AprobadoN1":
           return '#219C90';
-          case "Rechazado":
-              return '#D83F31';
-          case "Pendiente":
-              return '#E9B824';
-        default:
-            return '';
-    }
+          case "AprobadoN2":
+            return '#219C90';
+      case "Rechazado":
+          return '#D83F31';
+      case "Pendiente":
+          return '#E9B824';
+      default:
+          return '';
+  }
 }
 
 cargarIcono(estado: string): string{
   switch (estado) {
-    case "Aprobado":
+    case "AprobadoN1":
         return 'check_circle';
+        case "AprobadoN2":
+          return 'check_circle';
     case "Rechazado":
         return 'cancel';
     case "Pendiente":

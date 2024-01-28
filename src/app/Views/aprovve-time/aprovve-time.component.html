@@ -31,7 +31,7 @@
             </ng-template>
         </mat-tab>
 
-        <mat-tab  *ngIf="MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || MUser.rolEntity.nameRole == 'Super Administrador'">
+        <mat-tab  *ngIf="MUser.rolEntity.nameRole == 'Usuario estandar' || MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || MUser.rolEntity.nameRole == 'Super Administrador'">
             <ng-template mat-tab-label (click)="botonPresionado = 'aprobadasN2'">
                 <mat-icon class="example-tab-icon">done</mat-icon>
                 Aprobadas N2
@@ -77,7 +77,7 @@
                 </ng-container>
     
                 <!-- Estado  -->
-                <ng-container *ngIf="botonPresionado == 'pendientes'" matColumnDef="estado">
+                <ng-container *ngIf="botonPresionado == 'pendientes'"  matColumnDef="estado">
                     <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
                     <mat-cell *matCellDef="let element">
                         <button mat-button color="primary"  class="" (click)="openDialog(element)">Detalles<mat-icon>search</mat-icon>
@@ -86,7 +86,7 @@
                 </ng-container>
     
                 <!-- Estado  -->
-                <ng-container *ngIf="botonPresionado == 'aprobadasN1'  || botonPresionado == 'rechazadas'"
+                <ng-container *ngIf="botonPresionado == 'aprobadasN1'  || botonPresionado == 'aprobadasN2'  ||botonPresionado == 'rechazadas'"
                     matColumnDef="estado">
                     <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
                     <mat-cell *matCellDef="let element">

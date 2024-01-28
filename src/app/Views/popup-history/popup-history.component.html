@@ -9,20 +9,24 @@
         <br>
         <strong>Reporte de horas:</strong> {{MListHorusResport.horas}}
         <br>
-        <strong>Cliente:</strong> {{MListHorusResport.clientEntity.nameClient}}
+        <strong>Cliente:</strong> {{MListHorusResport.clientEntity!.nameClient}}
         <br>
         <br>
     </article>
 
     <div>
-        <mat-table [dataSource]="[MListHorus[MListHorus.length -1]]">
+        <mat-table [dataSource]="[MListHorus[MListHorus.length-1]]">
 
             <ng-container matColumnDef="aprobador1">
                 <mat-header-cell *matHeaderCellDef> Aprobador 1 </mat-header-cell>
                 <mat-cell *matCellDef="let element">{{element.aprobaador1}}</mat-cell>
             </ng-container>
 
-       <!--     <ng-container matColumnDef="aprobador2">
+            <ng-container matColumnDef="aprobador2">
+                <mat-header-cell *matHeaderCellDef> Aprobador 2 </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.aprobaador2}}</mat-cell>
+            </ng-container>
+           <!-- <ng-container matColumnDef="aprobador2">
                 <mat-header-cell *matHeaderCellDef> Aprobador 2 </mat-header-cell>
                 <mat-cell *matCellDef="let element">-------</mat-cell>
                 <mat-cell *matCellDef="let element" >
@@ -50,8 +54,8 @@
                 </mat-cell>-->
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="columnasAMostrar1"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: columnasAMostrar1;"></mat-row>
+            <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
 
         </mat-table>
     </div>
@@ -83,8 +87,8 @@
                 </mat-cell>
             </ng-container>
     
-            <mat-header-row *matHeaderRowDef="columnasAMostrar2"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: columnasAMostrar2;"></mat-row>
+            <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
     
         </mat-table>
     </div>

@@ -29,7 +29,7 @@
             </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="field-width" appearance="outline" *ngIf="userForm.value.aprobacion == '2' && MUser.rolEntity.nameRole != 'Usuario Aprobador N2'">
+      <mat-form-field class="field-width" appearance="outline" *ngIf="userForm.value.aprobacion == '0' && MUser.rolEntity.nameRole == 'Usuario Aprobador N1'">
         <mat-label>Aprobador</mat-label>
         <mat-select [formControl]="aprobador" required>
             <mat-option *ngFor="let aprobador of MAprobadorUser" [value]="aprobador.userEntityId">

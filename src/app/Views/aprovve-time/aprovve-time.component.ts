@@ -39,15 +39,18 @@ export class AprovveTimeComponent {
   Approving: boolean = false;
   listadoUsuarios: any[] = [];
   mApproverTime: MApproverTime[] = [];
-  botonfiltrado: number = 0;
+  botonfiltrado: number = 1;
   Aprobacion = Aprobacion2;
 
   filtrarDatos(boton: string) {
 
      if (boton == 'pendientes') {
-     this.botonfiltrado = 0; 
+
+      this.botonfiltrado = 0; 
+      
+     
     }else if (boton == 'aprobadasN1') {
-      this.botonfiltrado = 1; 
+      this.botonfiltrado = 2; 
     }else if (boton == 'aprobadasN2') {
       this.botonfiltrado = 2; 
     }else if (boton == 'rechazadas') {
