@@ -7,6 +7,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { MRol } from 'src/app/Models/MRol';
+import { MCountryEntity } from 'src/app/Models/MCountryEntiry';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -36,7 +37,7 @@ export class UsersExceptionsComponent {
   filterValue: string = "";
   Approving: boolean = false;
   MUser: MUserEntity;
-  selectedCountry: string;
+  //selectedCountry: string;
   MRoles: MRol[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -66,8 +67,9 @@ export class UsersExceptionsComponent {
     private serviceLists: ObtenerlistaService,
   ) {
     this.MRoles = [];
+    this.MListCountry = [];
     this.MUser = this.storageService.obtenerDatosMapeados();
-    this.selectedCountry = this.rutaActual.globalVar;
+    //this.selectedCountry = this.rutaActual.globalVar;
   }
 
 
@@ -89,7 +91,8 @@ export class UsersExceptionsComponent {
     if (
       this.MUser.rolEntity.nameRole == 'Administrador' ||
       this.MUser.rolEntity.nameRole == 'Super Administrador' ||
-      this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' 
+      this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' ||
+      this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' 
     ) {
       this.Approving = true;
     }
@@ -127,6 +130,10 @@ export class UsersExceptionsComponent {
       this.MRoles = lista;
     });
 
+    this.serviceLists.refreshCountries$.subscribe((lista) => {
+      this.MListCountry = lista;
+    });
+
     this._RecibirPaisSeleccionado();
     this._refreshListUsers();
 
@@ -134,9 +141,18 @@ export class UsersExceptionsComponent {
     this.refresh.listaUsers();
 
     this.refresh.refreshListUsersRol$.subscribe((roles) => {
-      let ListaFilt = roles.filter((x: any) => x.countryEntity.nameCountry == this.selectedCountry);
-      console.log(ListaFilt)
-      this.MUsers.data = ListaFilt;
+      console.log(roles)
+      this.MUsers.data = roles;
+    });
+
+    this.refresh.refreshListUsersCounty$.subscribe((countries) => {
+      console.log(countries)
+      this.MUsers.data = countries;
+    });
+
+    this.refresh.refreshListUsersExceptionsCounty$.subscribe((countries) => {
+      console.log(countries)
+      this.datesTable.data = countries;
     });
 
     this.refresh.loadRoles().subscribe((roles) => {
@@ -152,6 +168,18 @@ export class UsersExceptionsComponent {
       this.MListRol = OptionSelect;
     });
 
+    this.refresh.loadCountries().subscribe((countries) => {
+      this.MListCountry = countries;
+
+      const OptionSelectNew = countries;
+      OptionSelectNew.push({
+        idCounty: 'todoscoun-c9ac-4e43-a40a-000000000000',
+        nameCountry: 'Todos'
+      });
+
+      this.MListCountry = OptionSelectNew;
+    });
+
     this.validateRole();
 
   }
@@ -159,6 +187,7 @@ export class UsersExceptionsComponent {
   //----------------------------------------
   MUsers = new MatTableDataSource<any>();
   MListRol: MRol[] = [];
+  MListCountry: MCountryEntity[] = [];
   userForm = new FormGroup({
     rol: new FormControl(''),
   });
@@ -195,6 +224,25 @@ export class UsersExceptionsComponent {
  
   }
 
+  _selectCountryUser(value: string) {
+    console.log('value: ', value);
+    if(value != 'todoscoun-c9ac-4e43-a40a-000000000000'){
+      this.refresh.consulUserCountry(value);
+    }else{
+      this.ngOnInit();
+    }
+ 
+  }
+
+  _selectCountryUsersExceptions(value: string) {
+    console.log('value: ', value);
+    if(value != 'todoscoun-c9ac-4e43-a40a-000000000000'){
+      this.refresh.consulUsersExceptionsCountry(value);
+    }else{
+      this.ngOnInit();
+    }
+ 
+  }
 
   _applyFilter(event: any) {   
     this.filterValue = (event.target as HTMLInputElement).value;
@@ -204,21 +252,19 @@ export class UsersExceptionsComponent {
   _refreshListUsers(){
     this.refresh.refreshListUser$.subscribe((listap) => {
       console.log(listap)
-      console.log(this.selectedCountry)
-
-      let ListaFilt = listap.filter((x: any) => x.countryEntity.nameCountry == this.selectedCountry);
-      console.log(ListaFilt)
-      this.MUsers.data = ListaFilt;
+      this.MUsers.data = listap;
     });
   }
 
   _RecibirPaisSeleccionado() {
+    /*
     this.rutaActual.datosPais.subscribe((listap) => {
       console.log(listap)
       this.selectedCountry = listap;
       console.log(this.selectedCountry)
       this.refresh.listaUsers();
     });
+    */
   }
 
   /*_editar(user: MUserEntity) {

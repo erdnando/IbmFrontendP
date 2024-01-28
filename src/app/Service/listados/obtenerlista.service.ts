@@ -19,6 +19,8 @@ import { ConsultaHorarioUserService } from 'src/app/Views/parameters/services/co
 import { MCreateHorario } from 'src/app/Models/MHorario';
 import { ApproverTimeService } from 'src/app/Views/aprovve-time/services/approverTime/approver-time.service';
 import { ListExceptionService } from 'src/app/AdminViews/usersExceptions/service/listExceptionService/list-exception.service';
+import { UserConsultCountryService } from 'src/app/Views/user/services/userConsultCountry/user-consult-country.service';
+import { UserExceptionsConsultCountryService } from 'src/app/Views/user/services/userConsultCountry/user-exceptions-consult-country.service';
 
 
 interface MiObjeto {
@@ -49,6 +51,8 @@ export class ObtenerlistaService {
   private _refreshRoles$ = new Subject<any>();
   private _refreshUserException$ = new Subject<any>();
   private _refreshListUsersRol$ = new Subject<any>();
+  private _refreshListUsersCountry$ = new Subject<any>(); 
+  private _refreshListUsersExceptionsCountry$ = new Subject<any>(); 
   private _refreshListUser$ = new Subject<any>();
   private _refreshAppTime$ = new Subject<any>();
 
@@ -59,7 +63,9 @@ export class ObtenerlistaService {
     private apiListApprovers: ApproverListService, 
     private apiListFestivos: FestivosListService, 
     private apiListMenus: MenusListService, 
-    private userConsultRol: UserConsultRolService, 
+    private userConsultRol: UserConsultRolService,
+    private userConsultCountry: UserConsultCountryService, 
+    private userExceptionsConsultCountry: UserExceptionsConsultCountryService, 
     private apilistUsers: ListUsersService,
     private apiConsultHotario: ConsultaHorarioUserService,
     private consultApproverTime: ApproverTimeService,
@@ -87,7 +93,7 @@ export class ObtenerlistaService {
 }
 
 
-  loadCountries(): Observable<MCountryEntity[]> {
+  loadCountries(): Observable<any[]> {
     return this.apiListCountry.GetCountry().pipe(
       map((data: MiObjeto) => {
         let lista = data["data"];
@@ -224,6 +230,32 @@ export class ObtenerlistaService {
 
   get refreshListUsersRol$(){
     return this._refreshListUsersRol$.asObservable();
+  }
+
+  get refreshListUsersCounty$(){
+    return this._refreshListUsersCountry$.asObservable();
+  }
+
+  get refreshListUsersExceptionsCounty$(){
+    return this._refreshListUsersExceptionsCountry$.asObservable();
+  }
+
+  public consulUserCountry(id: string){
+    this.userConsultCountry.GetUserConsultCountry(id).pipe(
+      map((data: MiObjeto) => data)).subscribe((data) => {
+        let listap = data["data"];
+        this._refreshListUsersCountry$.next(listap)
+        console.log(listap+"este es el listado de usuarios por pais");
+      });
+  }
+
+  public consulUsersExceptionsCountry(id: string){
+    this.userExceptionsConsultCountry.GetUsersExceptionConsultCountry(id).pipe(
+      map((data: MiObjeto) => data)).subscribe((data) => {
+        let listap = data["data"];
+        this._refreshListUsersExceptionsCountry$.next(listap)
+        console.log(listap+"este es el listado de usuarios con excepcion por pais");
+      });
   }
 
   public consulUserRol(id: string){

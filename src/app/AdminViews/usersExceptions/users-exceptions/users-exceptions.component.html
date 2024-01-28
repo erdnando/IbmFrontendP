@@ -23,6 +23,14 @@
                
                 <div class="filters" *ngIf="Approving">
                     <mat-form-field class="field-width" appearance="outline">
+                        <mat-label>Pais: </mat-label>
+                        <mat-select formControlName="pais" (selectionChange)="_selectCountryUsersExceptions($event.value)">
+                            <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
+                                {{cliente.nameCountry}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="field-width" appearance="outline">
                         <mat-label>Filtar por Nombre o codigo empleado: </mat-label>
                         <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar por Ex. ium" #input>
                     </mat-form-field>
@@ -95,6 +103,14 @@
                 <hr class="filter-divider">
 
                 <div class="filters" *ngIf="Approving">
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label>Pais: </mat-label>
+                        <mat-select formControlName="pais" (selectionChange)="_selectCountryUser($event.value)">
+                            <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
+                                {{cliente.nameCountry}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                     <mat-form-field class="field-width" appearance="outline">
                         <mat-label> Rol: </mat-label>
                         <mat-select formControlName="rol" (selectionChange)="_select($event.value)">
