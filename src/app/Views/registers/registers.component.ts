@@ -104,9 +104,19 @@ export class RegistersComponent {
     .GetRegistersHoursReport()
     .pipe(map((data: MiObjetoApp) => data))
     .subscribe((data) => {
+      console.log(this.rutaActual.MUser, this.rutaActual.NewUser);
       let listap = data['data'];
-      let ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
       this.mListHorusReportList = listap;
+      let ListaFilt = listap;
+      if (this.MUser.rolEntity.nameRole != 'Super Administrador') {
+        ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
+      }
+
+      if (this.MUser.rolEntity.nameRole != 'Administrador' && this.MUser.rolEntity.nameRole != 'Super Administrador') {
+        ListaFilt = ListaFilt.filter((x: any) => {x.userEntityId == this.MUser.idUser});
+      }
+
+
       this.mListHorusReport.data = ListaFilt;
      // this.ngOnInit(); //no debe ir
     });
