@@ -12,6 +12,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.service';
 
 interface MiObjetoApp{
   [key: string]: any;
@@ -28,6 +29,7 @@ export class HistoryComponent {
 
   columnasAMostrar = ['fechaEnvio','creationDate', 'cliente', 'reporte', 'aprobador', 'horas','estado'];
 
+  selectedCountry: string = '';
   MUser: MUserEntity;
   mListHorusReport = new MatTableDataSource<any>();
   Aprobacion = Aprobacion2;
@@ -37,11 +39,15 @@ export class HistoryComponent {
 
   filterValue: string = '';
 
+  ngOnInit() {
+    this.selectedCountry = this.rutaActual.globalVar;
+  }
+
   ngAfterViewInit() {
     this.mListHorusReport.paginator = this.paginator;
   }
 
-  constructor(private storageService: StorageService,public dialog: MatDialog,private apiHistory:ApiHistory ) {
+  constructor(private storageService: StorageService,public dialog: MatDialog,private apiHistory:ApiHistory, private rutaActual: RutaActualService) {
 
     this.MUser = this.storageService.obtenerDatosMapeados();
     this.cergarlist();
@@ -93,10 +99,18 @@ export class HistoryComponent {
     map((data: MiObjetoApp) => data)
     ).subscribe((data) =>{
       let listap = data["data"];
-      console.log(listap+" listap")
       this.mListHorusReport.data = listap;
-      console.log(this.mListHorusReport);
+      let ListaFilt = listap;
 
+      if (this.MUser.rolEntity.nameRole != 'Super Administrador') {
+        ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
+      }
+
+      if (this.MUser.rolEntity.nameRole != 'Administrador' && this.MUser.rolEntity.nameRole != 'Super Administrador') {
+        ListaFilt = ListaFilt.filter((x: any) => {x.userEntityId == this.MUser.idUser});
+      }
+
+      this.mListHorusReport.data = ListaFilt;
     });
 
   }

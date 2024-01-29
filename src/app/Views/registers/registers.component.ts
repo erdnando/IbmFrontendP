@@ -104,7 +104,6 @@ export class RegistersComponent {
     .GetRegistersHoursReport()
     .pipe(map((data: MiObjetoApp) => data))
     .subscribe((data) => {
-      console.log(this.rutaActual.MUser, this.rutaActual.NewUser);
       let listap = data['data'];
       this.mListHorusReportList = listap;
       let ListaFilt = listap;
