@@ -578,6 +578,19 @@ resetPicker(){
       this.MParameter.empleadoUserEntityId =this.MUser.idUser;
       console.log(this.MUser.idUser);
 
+      if( this.MParameter.targetTimeDay > 24 ||
+          this.MParameter.targetHourWeek > 168 ||
+          this.MParameter.targetHourMonth > 744 ||
+          this.MParameter.targetHourYear > 8928){
+        Swal.fire({
+          icon: 'warning',
+          title: 'Oops...',
+          text: '¡Uno o más valores supera el límite máximo permitido, favor validar!',
+          confirmButtonColor: '#0A6EBD',
+        });
+        return;
+      }
+
       this.apiParameters
         .PostUpdateParameter(this.MParameter)
         .subscribe((data) => {
@@ -1240,6 +1253,14 @@ onKeyPressOnlyNumbers(event: KeyboardEvent): void {
   const isDotOrComma = inputValue.includes('.') || inputValue.includes(',');
 
   if (!/[\d.,]/.test(event.key) || (isDotOrComma && (event.key === '.' || event.key === ','))) {
+    event.preventDefault();
+  }
+}
+
+onKeyPressOnlyLettersNumbers(event: KeyboardEvent): void {
+  const inputValue = (event.target as HTMLInputElement).value;
+
+  if (!/^[a-zA-Z0-9]+$/.test(event.key)) {
     event.preventDefault();
   }
 }

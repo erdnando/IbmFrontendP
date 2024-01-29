@@ -177,8 +177,8 @@
                             <mat-form-field
                                 appearance="outline">
                                 <mat-label> Limites legales diarios: </mat-label>
-                                <input matInput type="number" placeholder="40" [formControl]="limitDay"
-                                    [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)">
+                                <input matInput type="text" placeholder="40" [formControl]="limitDay"
+                                    [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
                             </mat-form-field>
                         </div>
                         <div>
@@ -186,7 +186,8 @@
                                 appearance="outline">
                                 <mat-label> Limites legales semanales: </mat-label>
                                 <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="."  [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
-                                    name="targetHourWeek" (keypress)="onKeyPressOnlyNumbers($event)">
+                                    name="targetHourWeek" (keypress)="onKeyPressOnlyNumbers($event)"
+                                    maxlength="6">
                             </mat-form-field>
                         </div>
                         <div>
@@ -194,7 +195,8 @@
                                 appearance="outline">
                                 <mat-label> Limites legales mensuales: </mat-label>
                                 <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
-                                    name="targetHourMonth" (keypress)="onKeyPressOnlyNumbers($event)">
+                                    name="targetHourMonth" (keypress)="onKeyPressOnlyNumbers($event)"
+                                    maxlength="6">
                             </mat-form-field>
                         </div>
                         <div>
@@ -202,7 +204,8 @@
                                 appearance="outline">
                                 <mat-label> Limites legales anuales: </mat-label>
                                 <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
-                                    name="targetHourYear" (keypress)="onKeyPressOnlyNumbers($event)">
+                                    name="targetHourYear" (keypress)="onKeyPressOnlyNumbers($event)"
+                                    maxlength="7">
                             </mat-form-field>
                         </div>
                     </ng-container><br>
@@ -250,7 +253,7 @@
                                 <mat-form-field style="text-align: left;"
                                     appearance="outline">
                                     <mat-label> Limites legales diarios: </mat-label>
-                                    <input matInput type="text" as-number decimalMarker="," mask="separator.2" thousandSeparator="." [formControl]="limitDay" [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)">
+                                    <input matInput type="text" as-number decimalMarker="," mask="separator.2" thousandSeparator="." [formControl]="limitDay" [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
                                 </mat-form-field>
                             </div>
                             <div>
@@ -259,7 +262,8 @@
                                     <mat-label> Limites legales semanales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
                                         name="targetHourWeek"
-                                        (keypress)="onKeyPressOnlyNumbers($event)">
+                                        (keypress)="onKeyPressOnlyNumbers($event)"
+                                        maxlength="6">
                                 </mat-form-field>
                             </div>
                             <div>
@@ -268,7 +272,8 @@
                                     <mat-label> Limites legales mensuales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
                                         name="targetHourMonth"
-                                        (keypress)="onKeyPressOnlyNumbers($event)">
+                                        (keypress)="onKeyPressOnlyNumbers($event)"
+                                        maxlength="6">
                                 </mat-form-field>
                             </div>
                             <div>
@@ -277,7 +282,8 @@
                                     <mat-label> Limites legales anuales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
                                         name="targetHourYear"
-                                        (keypress)="onKeyPressOnlyNumbers($event)">
+                                        (keypress)="onKeyPressOnlyNumbers($event)"
+                                        maxlength="7">
                                 </mat-form-field>
                             </div>
                         </ng-container>
@@ -398,7 +404,7 @@
                     <div class="form">
                         <mat-form-field *ngIf="habilitarExcel" style="text-align: right;" appearance="outline">
                             <mat-label> Codigo empleado: </mat-label>
-                            <input  matInput  (blur)="applyFilter($event)" placeholder="Ex. ium" [formControl]="codeEmployed">
+                            <input  matInput  (blur)="applyFilter($event)" placeholder="Ex. ium" [formControl]="codeEmployed" (keypress)="onKeyPressOnlyLettersNumbers($event)" maxlength="25">
                         </mat-form-field>
 
                         <mat-form-field style="text-align: right;" appearance="outline">
