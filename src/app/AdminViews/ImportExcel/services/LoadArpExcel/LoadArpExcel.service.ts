@@ -108,7 +108,7 @@ export class LoadArpExcelService {
     return this.http.post<MResponseNotificaciones>(direccion,requestData);
   }
 
-  ValidaLimitesExcepcionesOverlapping(idCarga:string): Observable<MResponseOverlapingPortalDB> {
+  ValidaLimitesExcepcionesOverlapping(idCarga:string): Observable<MSummary> {
     let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping";
    
     const requestData= {
@@ -117,7 +117,7 @@ export class LoadArpExcelService {
     };
 
     console.log(direccion);
-    return this.http.post<MResponseOverlapingPortalDB>(direccion,requestData);
+    return this.http.post<MSummary>(direccion,requestData);
   }
 
   
