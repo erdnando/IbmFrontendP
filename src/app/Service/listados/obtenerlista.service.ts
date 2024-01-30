@@ -21,6 +21,8 @@ import { ApproverTimeService } from 'src/app/Views/aprovve-time/services/approve
 import { ListExceptionService } from 'src/app/AdminViews/usersExceptions/service/listExceptionService/list-exception.service';
 import { UserConsultCountryService } from 'src/app/Views/user/services/userConsultCountry/user-consult-country.service';
 import { UserExceptionsConsultCountryService } from 'src/app/Views/user/services/userConsultCountry/user-exceptions-consult-country.service';
+import { RolesMenuService } from 'src/app/AdminViews/AdminRoles/services/rolesMenu/roles-menu.service';
+import { Guid } from 'guid-typescript';
 
 
 interface MiObjeto {
@@ -62,7 +64,8 @@ export class ObtenerlistaService {
     private apiListClients: ClientService, 
     private apiListApprovers: ApproverListService, 
     private apiListFestivos: FestivosListService, 
-    private apiListMenus: MenusListService, 
+    private apiListMenus: MenusListService,
+    private apiRolMenu: RolesMenuService, 
     private userConsultRol: UserConsultRolService,
     private userConsultCountry: UserConsultCountryService, 
     private userExceptionsConsultCountry: UserExceptionsConsultCountryService, 
@@ -223,6 +226,14 @@ export class ObtenerlistaService {
         this.MMenu = lista;
         console.log(this.MMenu);
         return this.MMenu;
+      })
+    );
+  }
+
+  loadMenusByRol(idRol: Guid): Observable<any[]> {
+    return this.apiRolMenu.ListByIdRol(idRol).pipe(
+      map((data: MiObjeto) => {
+        return data["data"];
       })
     );
   }

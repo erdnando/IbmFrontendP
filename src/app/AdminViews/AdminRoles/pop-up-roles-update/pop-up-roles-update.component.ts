@@ -45,12 +45,8 @@ export class PopUpRolesUpdateComponent {
     this.MRol.idRole = this.idRol as unknown as Guid;
     this.MRol.nameRole = this.userForm.value.nombre as unknown as string;
     this.MRol.menuEntity = this.listaMenus;
-  
-    console.log(this.MRol.idRole);
-    console.log(this.MRol.nameRole);
     
     this.apiUpdateRol.PostUpdateRol(this.MRol).subscribe(data=> {
-      console.log(data);
       if (data.data) {
         Swal.fire({
           icon: 'success',
@@ -75,27 +71,18 @@ export class PopUpRolesUpdateComponent {
   }
 
   changed(idmenu: Guid,$event: MatSlideToggleChange){
-    console.log(idmenu);
-    console.log($event.checked);
     this.MMenuf = {} as MMenu;
     this.MMenuf.idMenu = idmenu;
     var n = this.listaMenus.includes(this.MMenuf);
-    console.log(n);
     if(!n && !$event.checked)
     {
-      var indexofmenu = this.listaMenus.indexOf(this.MMenuf);
-      this.listaMenus.splice(indexofmenu);
-      console.log("Eliminado")
-      console.log(this.listaMenus);
+      var indexofmenu = this.listaMenus.findIndex(x => x.idMenu == idmenu);
+      this.listaMenus.splice(indexofmenu, 1);
     }
     else if(!n && $event.checked)
     {
       this.listaMenus.push(this.MMenuf)
-      console.log("Añadido")
-      console.log(this.listaMenus);
     }
-
-
   }
 
 
@@ -104,10 +91,44 @@ export class PopUpRolesUpdateComponent {
     this.idRol = this.data.idRol;
     this.nameRol = this.data.nameRol;
     this.refresh.loadMenus().subscribe((menus) => {
+      if(menus === null || menus === undefined){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error, no se pudo obtener informacion de los menus.',
+          confirmButtonColor: '#0A6EBD',
+        });
+      }
       this.MMenu = menus;
-    console.log(this.MMenu);
+      this.cargarMenuRolSeleccionado();
     });
   }
-  
+
+  cargarMenuRolSeleccionado(){
+    const idRolParam = Guid.parse(this.idRol);
+
+    this.refresh.loadMenusByRol(idRolParam).subscribe((menus) => {
+
+      if(menus === null || menus === undefined){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error, no se pudo obtener informacion de los menus del rol.',
+          confirmButtonColor: '#0A6EBD',
+        });
+      }
+
+      this.MMenu.map((e)=>{
+        let menu = menus.find(m=>m.menuEntityId === e.idMenu);
+        if(menu){
+          e.seleccionado = true;
+          this.MMenuf = {} as MMenu;
+          this.MMenuf.idMenu = e.idMenu;
+          this.listaMenus.push(this.MMenuf)
+        }
+      });
+
+    });
+  }
 
 }

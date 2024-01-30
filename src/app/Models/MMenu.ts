@@ -6,5 +6,5 @@ export interface MMenu{
     nameMenu: string;
     path:string;
     icon:string;
-
+    seleccionado?: boolean;
 }
