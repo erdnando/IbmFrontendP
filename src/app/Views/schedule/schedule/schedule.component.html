@@ -164,7 +164,7 @@
                     <input matInput [ngModel]="semanaAno" readonly>
                 </mat-form-field>
 
-                <mat-checkbox color="primary" labelPosition="after">Se ha realizado una revision exhaustiva de
+                <mat-checkbox color="primary" labelPosition="after" [formControl]="confirmedControl">Se ha realizado una revision exhaustiva de
                     las horas registradas, y se ha confirmado que cumple con los estandares establecidos por la
                     compañia y con las normativas legales vigentes antes de su aprobacion.</mat-checkbox>
             </div>
@@ -189,7 +189,7 @@
                 </button>
                 <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorarios($event)" />
             </td> -->
-        <button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length">
+        <button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length && confirmedControl.value">
             Guardar Cambios
             <mat-icon>
                 save

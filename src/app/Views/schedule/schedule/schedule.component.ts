@@ -118,6 +118,8 @@ export class ScheduleComponent {
   datosTable:any [] = [];
   week1:any[] = [];
   diasdelHorarios: any[] =[];
+
+  confirmedControl = new FormControl(false);
   
   constructor(
     public dialog: MatDialog, 
