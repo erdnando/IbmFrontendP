@@ -1,0 +1,27 @@
+<div class="body">
+
+    <mat-toolbar  class="">
+        <h1>Aprobador</h1>
+      </mat-toolbar>
+    
+        <div class="example-container" [formGroup]="userForm" >
+
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Descripcion: </mat-label>
+                <input matInput placeholder="" [(ngModel)]="this.descripciones" name="descripciones" formControlName="descripcion">
+            </mat-form-field>            
+    
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Nivel: </mat-label>
+                <input matInput type="number" [(ngModel)]="this.nivel" name="nivel" placeholder="" formControlName="nivel">
+            </mat-form-field>   
+                     
+        </div>
+    
+        <div style="text-align: center;">
+            <button mat-raised-button color="primary" (click)="onSubmit()" class=""> Actualizar </button>
+        </div>
+        
+    
+    </div>
+    

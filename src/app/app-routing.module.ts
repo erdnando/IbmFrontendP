@@ -41,6 +41,9 @@ import { PopUpAddExceptionComponent } from './AdminViews/usersExceptions/pop-up-
 import { PopUpUpdateExceptionComponent } from './AdminViews/usersExceptions/pop-up-update-exception/pop-up-update-exception.component';
 import { GaugeComponent } from './Views/gauge/gauge.component'
 import { SamlCallbackComponent } from './Views/saml-callback/saml-callback.component';
+import { ScheduleComponent } from './Views/schedule/schedule/schedule.component';
+import { PopUpScheduleUpdateComponent } from './Views/schedule/pop-up-schedule-update/pop-up-schedule-update.component';
+import { PopUpScheduleCreateComponent } from './Views/schedule/pop-up-schedule-create/pop-up-schedule-create.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -54,6 +57,7 @@ const routes: Routes = [
   { path: 'aproveetime', component: AprovveTimeComponent },
   { path: 'parameters', component: ParametersComponent },
   { path: 'registers', component: RegistersComponent },
+  { path: 'schedules', component: ScheduleComponent },
   { path: 'admin/users', component: UsersComponent },
   { path: 'admin/clients', component: ClientsComponent },
   { path: 'admin/approvers', component: ApproverComponent },
@@ -82,6 +86,9 @@ export const routingComponents = [
   AprovveTimeComponent,
   ParametersComponent,
   RegistersComponent,
+  ScheduleComponent,
+  PopUpScheduleUpdateComponent,
+  PopUpScheduleCreateComponent,
   ProfilesComponent,
   PopupHistoryComponent,
   PopUpAprovveComponent,
