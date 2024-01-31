@@ -75,9 +75,9 @@
             <a title="Usuario"  class="sidenav-nav-linkx"   >
               <mat-icon class="sidenav-linkx-icon">assignment_ind</mat-icon>
               <div>
-              <span class="sidenav-linkx-text " @fadeInOut *ngIf="collapsed">{{MUser.nameUser +' '+ MUser.surnameUser}}</span>
+              <span class="sidenav-linkx-text " @fadeInOut *ngIf="collapsed">{{MUser?.nameUser +' '+ MUser?.surnameUser}}</span>
               <br/>
-              <span class="sidenav-linkx-text" style="font-size:smaller;" @fadeInOut *ngIf="collapsed">{{'('+MUser.rolEntity.nameRole+')' }}</span>
+              <span class="sidenav-linkx-text" style="font-size:smaller;" @fadeInOut *ngIf="collapsed">{{'('+MUser?.rolEntity?.nameRole+')' }}</span>
               
             </div>
             </a>

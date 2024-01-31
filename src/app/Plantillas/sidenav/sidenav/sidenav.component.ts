@@ -59,6 +59,10 @@ export class SidenavComponent implements OnInit {
   EnableButton: boolean = true;
   idPaisSeleccionado: string = '';
 
+  ListCountry: MCountryEntity[] = [];
+  MUser: MUserEntity | null = null;
+  Mmen: MRolMenu[] = [];
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
@@ -79,39 +83,41 @@ export class SidenavComponent implements OnInit {
     this.Close = false;
   }
 
-  paisSeleccionado: string = '';
+  paisSeleccionado: string | null | undefined = '';
 
   ngOnInit(): void {
-    this.paisSeleccionado = this.MUser.countryEntity.nameCountry;
-    console.log('Nombre Rol : ' + this.MUser.rolEntity.nameRole)
-    if (this.MUser.rolEntity.nameRole == 'Super Administrador') {
-      console.log(this.MUser.rolEntity.nameRole)
-      this.EnableButton = false;
-      this.listCountryService.loadCountries().subscribe((paises) => {
-        this.ListCountry = paises;
-      });
+    this.MUser = this.storageService.obtenerDatosMapeados();
+    if (this.MUser) {
+      this.paisSeleccionado = this.MUser?.countryEntity?.nameCountry;
+      console.log('Nombre Rol : ' + this.MUser!.rolEntity?.nameRole)
+      if (this.MUser!.rolEntity?.nameRole == 'Super Administrador') {
+        console.log(this.MUser!.rolEntity.nameRole)
+        this.EnableButton = false;
+        this.listCountryService.loadCountries().subscribe((paises) => {
+          this.ListCountry = paises;
+        });
+      }
+  
+      this.enviarPaisSeleccionado();
+      this.screenWidth = window.innerWidth;
+  
+      this.idPaisSeleccionado = this.MUser!.countryEntity.idCounty.toString();
+      this.paisSeleccionado = this.MUser!.countryEntity.nameCountry;
+      this.Role = this.MUser!.rolEntity.idRole;
+      this.cergarMenuList();
     }
-
-    this.enviarPaisSeleccionado();
-    this.screenWidth = window.innerWidth;
   }
 
-  constructor(private storageService: StorageService,private router: Router,private loadToolbarService: LoadToolbarService,private listCountryService: ObtenerlistaService,private rutaActual: RutaActualService) {
-    this.MUser = this.storageService.obtenerDatosMapeados();
-    this.ngOnInit();
-    this.idPaisSeleccionado = this.MUser.countryEntity.idCounty.toString();
-    this.paisSeleccionado = this.MUser.countryEntity.nameCountry;
-    this.Role = this.MUser.rolEntity.idRole;
-    this.Mmen = [] as MRolMenu[];
-    this.cergarMenuList();
-    }
-
-  ListCountry: MCountryEntity[] = [];
-  MUser: MUserEntity;
-  Mmen: MRolMenu[];
+  constructor(
+    private storageService: StorageService,
+    private router: Router,
+    private loadToolbarService: LoadToolbarService,
+    private listCountryService: ObtenerlistaService,
+    private rutaActual: RutaActualService) {}
 
   enviarPaisSeleccionado() {
-    this.rutaActual.setglobalVar(this.paisSeleccionado,this.idPaisSeleccionado);
+    let value = this.paisSeleccionado || '';
+    this.rutaActual.setglobalVar(value, this.idPaisSeleccionado);
   }
 
   seleccionarPais(pais: string, idPais: any) {
