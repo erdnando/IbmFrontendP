@@ -57,6 +57,7 @@ export class RegisterTimeComponent {
   inicio: string | null;
   fin: string | null;
   pipe = new DatePipe('en-US');
+  activarBarra = false;
 
   constructor(
     private storageService: StorageService,
@@ -156,6 +157,7 @@ export class RegisterTimeComponent {
   }
 
   async enviar() {
+    this.activarBarra = true;
     let todayWithPipe = null;
     //2023-12-14T00:00:00.0000000
     //todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy/MM/dd');
@@ -300,6 +302,7 @@ export class RegisterTimeComponent {
          //------------------------
         }//end else
 
+        this.activarBarra = false;
       }
     );
 
