@@ -7,12 +7,15 @@
                 <em>Realíza el registro de horas personales de trabajo. Haz clic en la opción de tu interes para obtener mas detalles</em>
                 
             </div>
-            <hr class="divider">
+            <hr class="divider"> 
+            <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>  
         </div>
+        
         <br/>
 
         <form>
-            <div class="container" style="padding-top: 20px; display: flex; justify-content: space-between;">
+            
+            <div class="container" style="padding-top: 20px; display: flex; justify-content: space-between;">                
                 <!-- Sección 1 -->
                 <fieldset style="margin-right: 10px;">
                     <legend class="mi-estilo">Datos Personales</legend>
@@ -91,7 +94,7 @@
                 </fieldset>
             </div>
             <div style="text-align: right; padding-top: 30px;">
-                <button mat-raised-button color="primary" class="" (click)="enviar()">Enviar<mat-icon>send</mat-icon></button>
+                <button mat-raised-button color="primary" class="" disabled="{{activarBarra}}" (click)="enviar()">Enviar<mat-icon>send</mat-icon></button>
             </div>
 
         </form>

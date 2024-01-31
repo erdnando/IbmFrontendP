@@ -59,6 +59,7 @@ export class ARPComponent {
   MListCountry: MCountryEntity[];
   MListGMT: MGmt[];
   mSummary: MSummary;
+  mSummaryFinal: MSummary;
   mResponseLoadGuid:MResponseLoadGuid;
 
 
@@ -67,6 +68,7 @@ export class ARPComponent {
     this.MListCountry = [];
     this.MListGMT = [];
     this.mSummary = {} as MSummary;
+    this.mSummaryFinal = {} as MSummary;
     this.mResponseLoadGuid = {} as MResponseLoadGuid;
   }
   ngOnInit() {
@@ -723,10 +725,32 @@ export class ARPComponent {
                          } else {
                           this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString()).subscribe( data => { 
                             console.log(data)
-                            //this.mSummary = data;
+                            this.mSummaryFinal=data;
+                            
+                            Swal.fire({
+                              icon: 'success',
+                              title: this.mSummaryFinal.data.mensaje,
+                              allowOutsideClick:false,
+                              html: `
+                              <span>Resumen de la ejecucion:</span>
+                              <span>` +this.mSummaryFinal.data.idCarga+`</span>
+                              <hr/>
+                              <br>
+                              <ol style='font-size: small;'>
+          
+                                <li>​​Carga ARP <b>(` +this.mSummaryFinal.data.arP_CARGA+`)</b></li>
+                                <li>Carga STE <b>(` +this.mSummaryFinal.data.stE_CARGA+`)</b></li>
+                                <li>Carga TSE <b>(` +this.mSummaryFinal.data.tsE_CARGA+`)</b></li>
+                                <br/>
+                                <br/>
+                              </ol> 
+                                  `,
+                              confirmButtonColor: '#0A6EBD',
+                              showConfirmButton: true,
+                              confirmButtonText:'Aceptar' , 
+                            });
 
-                            //acepta carga;---------------------------------------------
-                            //notificaciones en proceso
+
                             this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
                               console.log(data)
                               //this.mSummary = data;
@@ -749,6 +773,8 @@ export class ARPComponent {
                       //-----------------------------------------------------------
                       //sigue activa la carga anterior
                       //-----------------------------------------------------------
+                      this.activarBarra = false;
+                      this.fileInput3.nativeElement.value = null;
                     }
             
                   console.log(willDelete)
