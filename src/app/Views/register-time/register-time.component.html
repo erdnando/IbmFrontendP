@@ -39,7 +39,7 @@
                     
                                 <mat-form-field class="example-full-width" appearance="outline">
                                     <mat-label>Fecha</mat-label>
-                                    <input matInput [matDatepicker]="picker" [formControl]="fecha" format="yyyy/MM/dd"required>
+                                    <input matInput [matDatepicker]="picker" [formControl]="fecha" [max]="todayDate" format="yyyy/MM/dd"required>
                                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -94,7 +94,7 @@
                 </fieldset>
             </div>
             <div style="text-align: right; padding-top: 30px;">
-                <button mat-raised-button color="primary" class="" disabled="{{activarBarra}}" (click)="enviar()">Enviar<mat-icon>send</mat-icon></button>
+                <button mat-raised-button color="primary" class="" [disabled]="activarBarra || (fecha.invalid || horaInicio.invalid || horaFin.invalid || actividad.invalid || aprobador.invalid)" (click)="enviar()">Enviar<mat-icon>send</mat-icon></button>
             </div>
 
         </form>

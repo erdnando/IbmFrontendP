@@ -58,6 +58,7 @@ export class RegisterTimeComponent {
   fin: string | null;
   pipe = new DatePipe('en-US');
   activarBarra = false;
+  todayDate!: Date;
 
   constructor(
     private storageService: StorageService,
@@ -326,7 +327,7 @@ export class RegisterTimeComponent {
       });
 
 
-
+      this.todayDate = new Date();
       
   }
 
