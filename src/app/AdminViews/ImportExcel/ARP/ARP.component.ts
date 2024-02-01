@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { MCountryEntity } from "src/app/Models/MCountryEntiry";
 import { ListCountryService } from "../../AdminCountries/services/list-country/list-country.service";
 import { map } from "rxjs";
-import { MResponseLoadGuid, MSummary } from "src/app/Models/MSummary";
+import { MResponseLoadGuid, MSummary, MSummaryFinal } from "src/app/Models/MSummary";
 import { Guid } from "guid-typescript";
 import { MGmt } from 'src/app/Models/MGmt';
 
@@ -59,7 +59,7 @@ export class ARPComponent {
   MListCountry: MCountryEntity[];
   MListGMT: MGmt[];
   mSummary: MSummary;
-  mSummaryFinal: MSummary;
+  mSummaryFinal: MSummaryFinal;
   mResponseLoadGuid:MResponseLoadGuid;
 
 
@@ -68,7 +68,7 @@ export class ARPComponent {
     this.MListCountry = [];
     this.MListGMT = [];
     this.mSummary = {} as MSummary;
-    this.mSummaryFinal = {} as MSummary;
+    this.mSummaryFinal = {} as MSummaryFinal;
     this.mResponseLoadGuid = {} as MResponseLoadGuid;
   }
   ngOnInit() {
@@ -733,14 +733,15 @@ export class ARPComponent {
                               allowOutsideClick:false,
                               html: `
                               <span>Resumen de la ejecucion:</span>
-                              <span>` +this.mSummaryFinal.data.idCarga+`</span>
+                              <span>` +idCarga.toString()+`</span>
                               <hr/>
                               <br>
                               <ol style='font-size: small;'>
-          
-                                <li>​​Carga ARP <b>(` +this.mSummaryFinal.data.arP_CARGA+`)</b></li>
-                                <li>Carga STE <b>(` +this.mSummaryFinal.data.stE_CARGA+`)</b></li>
-                                <li>Carga TSE <b>(` +this.mSummaryFinal.data.tsE_CARGA+`)</b></li>
+                                <li>Registros Insertados en PortalDB <b>(` +this.mSummaryFinal.data.registroS_PORTALDB+`)</b></li>
+                                <br/>
+                                <li>No aplica por overlaping ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
+                                <li>No aplica por overlaping STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
+                                <li>No aplica por overlaping TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
                                 <br/>
                                 <br/>
                               </ol> 
@@ -756,11 +757,11 @@ export class ARPComponent {
                               //this.mSummary = data;
                 
                               this.showImgARP=true;
-                              this.activarBarra = false;
+                              
                               });
               
                             this.showImgARP=true;
-                            //this.activarBarra = false;
+                            this.activarBarra = false;
                             });
                          }
 
