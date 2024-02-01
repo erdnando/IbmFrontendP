@@ -29,12 +29,27 @@ export interface MetricasCarga{
     idCarga: Guid;
 }
 
+export interface MetricasCargaFinal{
+  ​​mensaje:string;
+  registroS_PORTALDB: string;
+  nO_APLICA_X_OVERLAPING_ARP: string;
+  nO_APLICA_X_OVERLAPING_STE: string;
+  nO_APLICA_X_OVERLAPING_TSE: string;
+}
+
 
 export interface MSummary {
     statusCode: number
     succes: boolean
     message: any
     data: MetricasCarga
+  }
+
+  export interface MSummaryFinal {
+    statusCode: number
+    succes: boolean
+    message: any
+    data: MetricasCargaFinal
   }
 
   export interface MResponseLoadGuid {
