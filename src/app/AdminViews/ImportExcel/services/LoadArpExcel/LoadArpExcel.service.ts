@@ -62,6 +62,14 @@ export class LoadArpExcelService {
     return this.http.post<boolean>(direccion, requestData);
   }
 
+  
+  GetCarga(): Observable<MResponseLoadGuid> {
+    let direccion = this.URLLocal + "Load/GeneraCarga";
+    console.log(direccion);
+    
+    return this.http.get<MResponseLoadGuid>(direccion);
+  }
+
   UploadARP(data: object,datpais:string,idCarga:string): Observable<MResponseLoadGuid> {
     let direccion = this.URLLocal + "Load/UploadARP";
     console.log(direccion);

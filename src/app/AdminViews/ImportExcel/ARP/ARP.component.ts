@@ -527,19 +527,37 @@ export class ARPComponent {
                 });
                 
               }else{
+
                  console.log('inicia carga');
                  console.log(this.pais.value);
                  console.log('--------------');
                 var valpais = this.pais.value?.toString();
                 //var idCarga = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
-                this.loadArpExcelService.UploadARP(this.ExcelData,valpais!,idCarga!).subscribe( data => { 
-                console.log(data);
-                this.mResponseLoadGuid=data;
-                idCarga = data.data;
 
-                this.showImgARP=true;
-                fileReader1.readAsBinaryString(file2);
-                });    
+
+                //Get idCarga
+                this.loadArpExcelService.GetCarga().subscribe( data => { 
+                    console.log(data);
+                    this.mResponseLoadGuid=data;
+                    idCarga = data.data;
+                    console.log("idCarga:::::");
+                    console.log(idCarga);
+                      //carga ARP
+                      this.loadArpExcelService.UploadARP(this.ExcelData,valpais!,idCarga!).subscribe( data => { 
+                      console.log(data);
+                      this.mResponseLoadGuid=data;
+                      idCarga = data.data;
+      
+                      this.showImgARP=true;
+                      fileReader1.readAsBinaryString(file2);
+                      });  
+
+  
+                 
+                  });  
+
+
+                  
               }
 
             }else{
