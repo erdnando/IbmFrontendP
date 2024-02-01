@@ -79,6 +79,14 @@
                 <div class="filters" *ngIf="Approving">
                     <span [formGroup]="userForm">
                         <mat-form-field class="field-width" appearance="outline">
+                            <mat-label>Pais: </mat-label>
+                            <mat-select formControlName="pais" (selectionChange)="_selectCountryUser($event.value)">
+                                <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
+                                    {{cliente.nameCountry}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="field-width" appearance="outline">
                             <mat-label> Rol: </mat-label>
                             <mat-select formControlName="rol" (selectionChange)="select($event.value)">
                                 <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">

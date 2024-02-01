@@ -23,6 +23,7 @@ import { MUserEntity } from 'src/app/Models/MUserEntity';
 
 import { PopUpAddExceptionComponent } from '../../usersExceptions/pop-up-add-exception/pop-up-add-exception.component';
 import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.service';
+import { MCountryEntity } from 'src/app/Models/MCountryEntiry';
 
 interface MiObjeto {
   [key: string]: any;
@@ -56,6 +57,7 @@ export class RolesComponent {
   MUser: MUserEntity;
   Approving: boolean = false;
   selectedCountry: string;
+  MListCountry: MCountryEntity[] = [];
 
 
   constructor(
@@ -71,6 +73,7 @@ export class RolesComponent {
     // this.MMenus = [];
     this.MUser = this.storageService.obtenerDatosMapeados();
     this.selectedCountry = this.rutaActual.globalVar;
+    this.MListCountry = [];
   }
 
   openDialog(id: string, name: string) {
@@ -121,6 +124,16 @@ export class RolesComponent {
       this.MRoles = lista;
     });
 
+    this.serviceLists.refreshCountries$.subscribe((lista) => {
+      this.MListCountry = lista;
+    });
+
+
+    this.refresh.refreshListUsersCounty$.subscribe((countries) => {
+      console.log(countries)
+      this.MUsers.data = countries;
+    });
+
     this.RecibirPaisSeleccionado();
     this.refreshListUsers();
 
@@ -161,6 +174,18 @@ export class RolesComponent {
 
     this.validateRole();
 
+
+    this.refresh.loadCountries().subscribe((countries) => {
+      this.MListCountry = countries;
+
+      const OptionSelectNew = countries;
+      OptionSelectNew.push({
+        idCounty: 'todoscoun-c9ac-4e43-a40a-000000000000',
+        nameCountry: 'Todos'
+      });
+
+      this.MListCountry = OptionSelectNew;
+    });
     
   }
 
@@ -203,6 +228,7 @@ export class RolesComponent {
 
   userForm = new FormGroup({
     rol: new FormControl(''),
+    pais: new FormControl(''),
   });
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -253,4 +279,16 @@ export class RolesComponent {
       },
     });
   }
+
+  _selectCountryUser(value: string) {
+    console.log('value: ', value);
+    if(value != 'todoscoun-c9ac-4e43-a40a-000000000000'){
+      this.refresh.consulUserCountry(value);
+    }else{
+      this.ngOnInit();
+    }
+ 
+  }
+
+
 }

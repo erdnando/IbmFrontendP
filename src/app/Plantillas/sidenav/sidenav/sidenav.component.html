@@ -124,14 +124,18 @@
         <button style="color: #45474B" *ngIf="EnableButton==true" class="CountryButton" mat-button>
           <mat-icon style="color: #0A6EBD">public</mat-icon> <span style="color: #45474B">{{paisSeleccionado}}</span>
         </button>
+        <!--
         <button style="color: #45474B" *ngIf="EnableButton==false" class="CountryButton" mat-button [matMenuTriggerFor]="menu">
           <mat-icon style="color: #0A6EBD" class="CountryIcon">public</mat-icon> <span style="color: #45474B">{{ paisSeleccionado || 'Pais' }}</span>
         </button>
+        
         <mat-menu #menu="matMenu" style="color: #45474B">
           <button style="color: #45474B" mat-menu-item *ngFor="let pais of ListCountry" (click)="seleccionarPais(pais.nameCountry, pais.idCounty)">
             {{ pais.nameCountry }}
           </button>
         </mat-menu>
+        -->
+
       </div>
     </mat-toolbar>
   <!--  <hr class="divider" style="margin-top: 0px;">-->
