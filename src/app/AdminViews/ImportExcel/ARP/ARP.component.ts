@@ -44,6 +44,7 @@ export class ARPComponent {
   showImgARP: boolean = false;
   showImgTSE: boolean = false;
   showImgSTE: boolean = false;
+  porcentajeCarga:number;
   activarBarra = false;
   botonARP = false;
   botonTSE= false;
@@ -70,6 +71,7 @@ export class ARPComponent {
     this.mSummary = {} as MSummary;
     this.mSummaryFinal = {} as MSummaryFinal;
     this.mResponseLoadGuid = {} as MResponseLoadGuid;
+    this.porcentajeCarga=0;
   }
   ngOnInit() {
     this.validateRole();
@@ -680,7 +682,11 @@ export class ARPComponent {
 
               this.showImgARP=true;
               //this.activarBarra = false;
+              var soloNotificaciones=false;
               this.fileInput3.nativeElement.value = null;
+              if (this.mSummary.data.eN_PROCESO_ARP=="0" && this.mSummary.data.eN_PROCESO_STE=="0" && this.mSummary.data.eN_PROCESO_TSE =="0" ){
+                soloNotificaciones=true;
+              }
 
                   Swal.fire({
                     icon: 'success',
@@ -693,22 +699,22 @@ export class ARPComponent {
                     <br>
                     <ol style='font-size: small;'>
 
-                      <li>​​Carga ARP <b>(` +this.mSummary.data.arP_CARGA+`)</b></li>
+                      <li>Carga ARP <b>(` +this.mSummary.data.arP_CARGA+`)</b></li>
                       <li>Carga STE <b>(` +this.mSummary.data.stE_CARGA+`)</b></li>
                       <li>Carga TSE <b>(` +this.mSummary.data.tsE_CARGA+`)</b></li>
                       <br/>
                       <br/>
                       <li>Overtime ARP <b>(` +this.mSummary.data.eN_PROCESO_ARP+`)</b></li>
-                      <li>Overtime STE <b>(` +this.mSummary.data.​​eN_PROCESO_STE+`)</b></li>
-                      <li>Overtime TSE <b>(` +this.mSummary.data.​​eN_PROCESO_TSE+`)</b></li>
+                      <li>Overtime STE <b>(` +this.mSummary.data.eN_PROCESO_STE+`)</b></li>
+                      <li>Overtime TSE <b>(` +this.mSummary.data.eN_PROCESO_TSE+`)</b></li>
                       <br/>
-                      <li>​​ARP omitidos por Extracted, etc <b>(` +this.mSummary.data.arP_OMITIDOS+`)</b></li>
-                      <li>STE omitidos por Extracted, etc <b>(` +this.mSummary.data.stE_OMITIDOS+`)</b></li>
-                      <li>TSE omitidos por Extracted, etc <b>(` +this.mSummary.data.tsE_OMITIDOS+`)</b></li>
+                      <li>ARP omitidos por Duplicidad <b>(` +this.mSummary.data.arpOmitidosXDuplicidad+`)</b></li>
+                      <li>STE omitidos por Duplicidad <b>(` +this.mSummary.data.steOmitidosXDuplicidad+`)</b></li>
+                      <li>TSE omitidos por Duplicidad <b>(` +this.mSummary.data.tseOmitidosXDuplicidad+`)</b></li>
                       <br/>
-                      <li>No aplica por horario ARP <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_ARP+`)</b></li>
-                      <li>​No aplica por horario STE <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_STE+`)</b></li>
-                      <li>​No aplica por horario TSE <b>(` +this.mSummary.data.​​nO_APLICA_X_HORARIO_TSE+`)</b></li>
+                      <li>No aplica por horario ARP <b>(` +this.mSummary.data.nO_APLICA_X_HORARIO_ARP+`)</b></li>
+                      <li>No aplica por horario STE <b>(` +this.mSummary.data.nO_APLICA_X_HORARIO_STE+`)</b></li>
+                      <li>No aplica por horario TSE <b>(` +this.mSummary.data.nO_APLICA_X_HORARIO_TSE+`)</b></li>
                       <br/>
                       <li>No aplica por overlaping ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
                       <li>No aplica por overlaping STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
@@ -717,14 +723,18 @@ export class ARPComponent {
                       <li>No aplica por politica overtime ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_ARP+`)</b></li>
                       <li>No aplica por politica overtime STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_STE+`)</b></li>
                       <li>No aplica por politica overtime TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_TSE+`)</b></li>
-
-
+                      
+                      <br/>
+                      <li>Reportes con datos inválidos ARP <b>(` +this.mSummary.data.arpxDatosNovalidos+`)</b></li>
+                      <li>Reportes con datos inválidos STE <b>(` +this.mSummary.data.stexDatosNovalidos+`)</b></li>
+                      <li>Reportes con datos inválidos TSE <b>(` +this.mSummary.data.tsexDatosNovalidos+`)</b></li>
+                      * Reportes sin hora inicio, fin o de otros paises no contemplados.                                                     
                     </ol> 
                         `,
                     confirmButtonColor: '#0A6EBD',
                     showConfirmButton: true,
                     showCancelButton: true,
-                    confirmButtonText:'Continuar proceso' , 
+                    confirmButtonText: soloNotificaciones ? 'Notificar hallazgos' :'Continuar proceso' , 
                     cancelButtonText:'Cancelar carga' 
                   }).then((willDelete) => {
 
@@ -732,7 +742,7 @@ export class ARPComponent {
 
                       //Si las tres variables de carga OK vienen en 0 (Cero), se manda directamente a Notificaciones
 
-                      if (this.mSummary.data.eN_PROCESO_ARP=="0" && this.mSummary.data.​​eN_PROCESO_STE=="0" && this.mSummary.data.​​eN_PROCESO_TSE =="0" ) {
+                      if (soloNotificaciones ) {
                           this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
                             console.log(data)
                             //this.mSummary = data;
@@ -766,7 +776,7 @@ export class ARPComponent {
                                   `,
                               confirmButtonColor: '#0A6EBD',
                               showConfirmButton: true,
-                              confirmButtonText:'Aceptar' , 
+                              confirmButtonText:'Generar notificaciones' , 
                             });
 
 

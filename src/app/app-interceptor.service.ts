@@ -20,6 +20,9 @@ export class AppInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     var datosmap = this.storageService.obtenerDatosMapeados()
     const token = datosmap == null ?"":datosmap.token;
+
+
+    console.log("calling api");
     const authRequest = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
