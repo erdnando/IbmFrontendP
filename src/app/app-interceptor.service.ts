@@ -37,7 +37,7 @@ export class AppInterceptorService implements HttpInterceptor {
           var tiempoRestante =expiry - (Math.floor((new Date).getTime() / 1000));
           console.log("tiempo de expiracion:::"+tiempoRestante);
 
-          if(tiempoRestante<3500){
+          if(tiempoRestante<360){
             //--------------------------
             Swal.fire({
               icon: 'warning',
@@ -127,52 +127,7 @@ export class AppInterceptorService implements HttpInterceptor {
           });
           this.storageService.eliminarDatosGuardados();
           this.router.navigate(['login']);
-          // console.log("Regenerando TOKEN Inicio")
-          // // Access token is expired, try refreshing
-          // this.Userlogin.userName = datosmap.email;
-          // this.Userlogin.password = datosmap.code;
-
-          // this.apiLogin.GetLogin(this.Userlogin).pipe(
-          //   map((data: any) => {
-          //   console.log(data);
-          //     if (data && data.data) {
-          //       const datosMapeados = {
-          //         idUser: data.data.idUser,
-          //         email: data.data.email,
-          //         nameUser: data.data.nameUser,
-          //         surnameUser: data.data.surnameUser,
-          //         employeeCode: data.data.employeeCode,
-          //         roleEntityId: data.data.roleEntityId,
-          //         countryEntityId: data.data.countryEntityId,
-          //         countryEntity: data.data.countryEntity,
-          //         rolEntity: data.data.roleEntity,
-          //         token:data.data.token,
-          //         code:data.data.password
-          //       };
-          //       this.storageService.guardarDatosMapeados(datosMapeados)
-          //       //return datosMapeados;
-          //       const authRequest = req.clone({
-          //         setHeaders: {
-          //           Authorization: `Bearer ${token}`
-          //         }
-          //       });
-
-          //       console.log("TOKEN Actualizado: " + data.data.token)
-          //       return next.handle(authRequest);
-
-          //     } else {
-        
-          //       return null;
-          //     }
-          //   })
-          // ).subscribe(dataMapeada => {
-          //   if (dataMapeada) {
-          //   } else {
-          //   }
-          // });
-
-
-
+          
         }
         return throwError(error);
       })
