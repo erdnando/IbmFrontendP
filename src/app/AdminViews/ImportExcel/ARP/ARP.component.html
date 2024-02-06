@@ -19,8 +19,14 @@
         <br>
 
     <div class="body-excel" style="width: 95%;">
-
-        <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+        <!--
+<mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+        -->
+        
+        <mat-progress-bar mode="determinate" [value]="porcentajeCarga" *ngIf="activarBarra"></mat-progress-bar>
+        <div *ngIf="activarBarra">
+            <p>{{ porcentajeCarga }}% completado</p>
+          </div>
         <br/>
         <div>
             <div class="field-form-pp">

@@ -7,7 +7,7 @@ import { MUserEntity } from 'src/app/Models/MUserEntity';
 import Swal from "sweetalert2";
 import { MCountryEntity } from "src/app/Models/MCountryEntiry";
 import { ListCountryService } from "../../AdminCountries/services/list-country/list-country.service";
-import { map } from "rxjs";
+import { Subscription, interval, map } from "rxjs";
 import { MResponseLoadGuid, MSummary, MSummaryFinal } from "src/app/Models/MSummary";
 import { Guid } from "guid-typescript";
 import { MGmt } from 'src/app/Models/MGmt';
@@ -62,7 +62,7 @@ export class ARPComponent {
   mSummary: MSummary;
   mSummaryFinal: MSummaryFinal;
   mResponseLoadGuid:MResponseLoadGuid;
-
+  intervalSubscriptionFiles: Subscription | undefined;
 
   constructor(private storageService: StorageService, private loadArpExcelService: LoadArpExcelService,private apiListCountry: ListCountryService,) {
     this.MUser = this.storageService.obtenerDatosMapeados();
@@ -74,6 +74,7 @@ export class ARPComponent {
     this.porcentajeCarga=0;
   }
   ngOnInit() {
+    console.log('Datos ' , this.botonARP , this.botonTSE , this.botonSTE);
     this.validateRole();
     this.consultcountries();
     this.cargaGMT();
@@ -168,6 +169,7 @@ export class ARPComponent {
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
       this.barraProgreso(true);
+      console.log('Incia proceso');
       this.readfilefinal(file1.files,file2.files,file3.files);
       this.barraProgreso(false)
     } else {
@@ -199,7 +201,8 @@ export class ARPComponent {
   barraProgreso(estatus:boolean){
     this.activarBarra = estatus;
    // setTimeout(() => {
-      this.activarBarra = !estatus;
+    console.log('Barra ' + estatus);
+      //this.activarBarra = !estatus;
       this.botonARP = !estatus;
       this.botonSTE = !estatus;
       this.botonTSE = !estatus;
@@ -542,18 +545,58 @@ export class ARPComponent {
                     console.log(data);
                     this.mResponseLoadGuid=data;
                     idCarga = data.data;
-                    console.log("idCarga:::::");
+                    console.log("idCarga:::::ARP");
                     console.log(idCarga);
+
+
+                    
+                  this.activarBarra = true;
+                    this.intervalSubscriptionFiles = interval(5000).subscribe(() => {
+                      this.barraProgreso(true);
+                      this.loadArpExcelService.GetCargaAvance(idCarga).subscribe((data) => {
+                        console.log(data);
+                        if(data){
+                          if(data.statusCode == 201 || data.statusCode == 200){
+                            this.porcentajeCarga = data.data.total;
+                            if(this.porcentajeCarga >= 100){
+                              this.unsubscribeIntervalSubscriptionFiles();
+                              this.porcentajeCarga = 0;
+                            }
+                          }else{
+                            Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: 'Error en el servidor, favor validar!',
+                              confirmButtonColor: '#0A6EBD',
+                            });
+                          }
+                        }else{
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error al intentar consultar el progreso de su carga!',
+                            confirmButtonColor: '#0A6EBD',
+                          });
+                        }
+                      });
+                      
+                    });
+
+                    this.activarBarra = false;
+
+
                       //carga ARP
                       this.loadArpExcelService.UploadARP(this.ExcelData,valpais!,idCarga!).subscribe( data => { 
                       console.log(data);
                       this.mResponseLoadGuid=data;
                       idCarga = data.data;
       
+                      console.log("idCarga:::::ARP");
+                      console.log(idCarga);
+
                       this.showImgARP=true;
                       fileReader1.readAsBinaryString(file2);
                       });  
-
   
                  
                   });  
@@ -614,15 +657,18 @@ export class ARPComponent {
             }else{
               // console.log(this.ExcelData);
               var valpais = this.pais.value?.toString();
+
               this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!,idCarga!).subscribe( data => { 
               console.log(data);
               this.mResponseLoadGuid=data;
                 idCarga = data.data;
-
+                console.log("idCarga:::::TSE");
+                console.log(idCarga);
                 
               this.showImgARP=true;
               fileReader2.readAsBinaryString(file3);
-              });    
+              });
+              
             }
 
           }else{
@@ -676,9 +722,13 @@ export class ARPComponent {
             }else{
               // console.log(this.ExcelData);
               var valpais = this.pais.value?.toString();
+
               this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!,idCarga!).subscribe( data => { 
               console.log(data)
               this.mSummary = data;
+
+              console.log("idCarga:::::STE");
+              console.log(idCarga);
 
               this.showImgARP=true;
               //this.activarBarra = false;
@@ -809,7 +859,8 @@ export class ARPComponent {
                   console.log(willDelete)
                 });
               
-              });    
+              });
+           
             }
 
           }else{
@@ -872,6 +923,12 @@ export class ARPComponent {
 
   select(selPais: any) {
     console.log(selPais.value);
+  }
+
+  unsubscribeIntervalSubscriptionFiles(): void {
+    if (this.intervalSubscriptionFiles) {
+      this.intervalSubscriptionFiles.unsubscribe();
+    }
   }
 
   consultcountries() {
