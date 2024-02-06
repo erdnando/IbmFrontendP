@@ -56,8 +56,8 @@ export class AprovveTimeComponent {
     }else if (boton == 'rechazadas') {
       this.botonfiltrado = 3;
     } 
-console.log('botonfiltrado');
-    console.log(this.botonfiltrado);
+//console.log('botonfiltrado');
+  //  console.log(this.botonfiltrado);
 
     return this.mApproverTime.filter((dato) => dato.state === this.botonfiltrado);
   }

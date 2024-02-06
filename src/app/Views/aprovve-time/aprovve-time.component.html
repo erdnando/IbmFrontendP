@@ -51,7 +51,7 @@
             <mat-table [dataSource]="filtrarDatos(botonPresionado)" class="table" style="min-width: 800px;">
                 <!-- Fecha envio -->
                 <ng-container matColumnDef="fechaEnvio">
-                    <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
                     <mat-cell *matCellDef="let element">
                          {{element.horusReportEntity.startDate | date:'yyyy-MM-dd'}} 
                     </mat-cell>
