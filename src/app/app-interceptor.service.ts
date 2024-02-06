@@ -27,9 +27,6 @@ export class AppInterceptorService implements HttpInterceptor {
     console.log(req.url);
     if(!req.url.endsWith("Login")){ 
 
-
-
-   
         console.log("calling api");
         
         if(token!= ""){
@@ -37,7 +34,7 @@ export class AppInterceptorService implements HttpInterceptor {
           var tiempoRestante =expiry - (Math.floor((new Date).getTime() / 1000));
           console.log("tiempo de expiracion:::"+tiempoRestante);
 
-          if(tiempoRestante<360){
+          if(tiempoRestante<180){
             //--------------------------
             Swal.fire({
               icon: 'warning',

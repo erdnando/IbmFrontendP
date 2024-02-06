@@ -96,10 +96,10 @@ export class DashboardComponent implements AfterViewInit {
         redrawOnParentResize: true,
       },
       title:{
-        text:"StandBy"
+        text:"Stand By"
       },
       xaxis:{
-        categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+        categories:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
       }
     };
 
@@ -119,10 +119,10 @@ export class DashboardComponent implements AfterViewInit {
         redrawOnParentResize: true,
       },
       title:{
-        text:"Over Timer"
+        text:"Over Time"
       },
       xaxis:{
-        categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+        categories:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
       }
     };
 
@@ -423,10 +423,10 @@ export class DashboardComponent implements AfterViewInit {
                 redrawOnParentResize: true,
               },
               title:{
-                text:"StandBy"
+                text:"Stand By"
               },
               xaxis:{
-                categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+                categories:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
               }
             }
             //----------------------------------------------------------------------------------------        
@@ -530,10 +530,10 @@ export class DashboardComponent implements AfterViewInit {
                 redrawOnParentResize: true,
               },
               title:{
-                text:"Over Timer"
+                text:"Over Time"
               },
               xaxis:{
-                categories:["Jan","Feb","Mar","Abr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+                categories:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"]
               }
             }
             //gauge seriesOverTime
