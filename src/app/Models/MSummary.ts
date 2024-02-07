@@ -36,6 +36,10 @@ export interface MetricasCargaFinal{
   nO_APLICA_X_OVERLAPING_ARP: string;
   nO_APLICA_X_OVERLAPING_STE: string;
   nO_APLICA_X_OVERLAPING_TSE: string;
+
+  nO_APLICA_X_LIMITE_HORAS_ARP:string;
+  nO_APLICA_X_LIMITE_HORAS_STE:string;
+  nO_APLICA_X_LIMITE_HORAS_TSE:string;
 }
 
 

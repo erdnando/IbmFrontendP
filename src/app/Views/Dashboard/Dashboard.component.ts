@@ -384,12 +384,12 @@ export class DashboardComponent implements AfterViewInit {
 
             dataGraf.data.reportesGral[0].monthTls.forEach((dat: MonthTls)  => {
               totalHorasRespServicioStanBy = totalHorasRespServicioStanBy + dat.totalHoras;
-              arrMonthsStandBy.push(dat.totalHoras);
+              arrMonthsStandBy.push( parseFloat(dat.totalHoras.toFixed(2)));
   
             });
             dataGraf.data.reportesGral[1].monthTls.forEach((dat: MonthTls)  => {
               totalHorasRespServicioOverTime = totalHorasRespServicioOverTime + dat.totalHoras; 
-              arrMonthsOverTime.push(dat.totalHoras); 
+              arrMonthsOverTime.push( parseFloat(dat.totalHoras.toFixed(2)) ); 
             });
 
             //testing data
@@ -399,8 +399,12 @@ export class DashboardComponent implements AfterViewInit {
             //arrMonthsOverTime=[8,8,16,40,40,40,40,16,16,16,8,8]; //arrMonthsOverTime
             
             //from API
-            this.seriesStandBy= ((totalHorasRespServicioStanBy/totHorasanuales)*100);
-            this.seriesOverTime= ((totalHorasRespServicioOverTime/totHorasanuales)*100);
+            var standbyM=((totalHorasRespServicioStanBy/totHorasanuales)*100);
+            var overtimeM=((totalHorasRespServicioOverTime/totHorasanuales)*100);
+
+            this.seriesStandBy= parseFloat(standbyM.toFixed(2));// parseInt(standbyM.toFixed(2));
+            this.seriesOverTime=  parseFloat(standbyM.toFixed(2));//parseInt(standbyM.toFixed(2));
+
             arrMonthsStandBy= arrMonthsStandBy
             arrMonthsOverTime=arrMonthsOverTime
             //------------------------------------------------------------------------------------

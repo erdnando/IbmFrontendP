@@ -751,7 +751,7 @@ export class ARPComponent {
                     title: this.mSummary.data.mensaje,
                     allowOutsideClick:false,
                     html: `
-                    <span>Resumen de la ejecucion:</span>
+                    <span>Resumen de la ejecución:</span>
                     <span>` +this.mSummary.data.idCarga+`</span>
                     <hr/>
                     <br>
@@ -818,7 +818,7 @@ export class ARPComponent {
                               title: this.mSummaryFinal.data.mensaje,
                               allowOutsideClick:false,
                               html: `
-                              <span>Resumen de la ejecucion:</span>
+                              <span>Resumen de la ejecución:</span>
                               <span>` +idCarga.toString()+`</span>
                               <hr/>
                               <br>
@@ -828,6 +828,10 @@ export class ARPComponent {
                                 <li>No aplica por overlaping ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
                                 <li>No aplica por overlaping STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
                                 <li>No aplica por overlaping TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
+                                <li>No aplica por límites de hora ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_ARP+`)</b></li>
+                                <li>No aplica por límites de hora STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_STE+`)</b></li>
+                                <li>No aplica por límites de hora TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_TSE+`)</b></li>
+                                
                                 <br/>
                                 <br/>
                               </ol> 
