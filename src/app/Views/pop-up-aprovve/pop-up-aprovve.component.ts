@@ -101,6 +101,12 @@ export class PopUpAprovveComponent {
       this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
       //trabajador -felipe
       this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
+
+      //validate if it is Aprobador N2
+      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
+        //this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+        this.mApproverCreate.aprobador2UserEntityId=   this.mApprover.userEntityId as unknown as Guid;
+      }
     }
    
 
