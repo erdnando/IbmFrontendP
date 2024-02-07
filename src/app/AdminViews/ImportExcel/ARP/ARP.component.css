@@ -84,3 +84,19 @@ xl: begin: 1920px, end: 4999.99px
 }
 
 
+
+.mat-mdc-progress-bar{
+  height: 10px !important;
+}
+
+::ng-deep .mdc-linear-progress__buffer {
+  height: 10px !important; /* Altura deseada del buffer */
+}
+
+::ng-deep .mat-mdc-progress-bar .mdc-linear-progress__bar {
+  --mdc-linear-progress-active-indicator-height: 10px !important; /* Cambia el tamaño del indicador activo */
+}
+
+.texto-barra-carga {
+  text-align: center;
+}

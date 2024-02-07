@@ -45,6 +45,7 @@ export class ARPComponent {
   showImgTSE: boolean = false;
   showImgSTE: boolean = false;
   porcentajeCarga:number;
+  mensajeProgressBar:string = "";
   activarBarra = false;
   botonARP = false;
   botonTSE= false;
@@ -493,10 +494,14 @@ export class ARPComponent {
  
   readfilefinal(fileInput: any,fileInput2: any,fileInput3: any){
 
+    this.activarBarra = true;
+
     let file = fileInput[0]; // Accede al primer archivo seleccionado
     let file2 =  fileInput2[0];
     let file3 =  fileInput3[0];
     let idCarga='00000000-0000-0000-0000-000000000000';
+
+    this.porcentajeCarga = 0;
 
     if (file && file2 && file3) 
     {
@@ -509,6 +514,9 @@ export class ARPComponent {
       
 
       fileReader.onload = (e) => {
+          
+        
+
           var workBook = XLSX.read(fileReader.result, { type: 'binary' });
           var sheetNames = workBook.SheetNames;
           this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
@@ -556,11 +564,11 @@ export class ARPComponent {
                       this.loadArpExcelService.GetCargaAvance(idCarga).subscribe((data) => {
                         console.log(data);
                         if(data){
-                          if(data.statusCode == 201 || data.statusCode == 200){
+                          if(data.succes == true){
                             this.porcentajeCarga = data.data.total;
+                            this.mensajeProgressBar = data.data.mensaje;
                             if(this.porcentajeCarga >= 100){
                               this.unsubscribeIntervalSubscriptionFiles();
-                              this.porcentajeCarga = 0;
                             }
                           }else{
                             Swal.fire({
