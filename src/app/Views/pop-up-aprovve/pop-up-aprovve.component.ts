@@ -151,6 +151,7 @@ export class PopUpAprovveComponent {
           this.MAprobadorUser = listap.result;
           console.log(this.MAprobadorUser);
         });
+      
 
     }
 

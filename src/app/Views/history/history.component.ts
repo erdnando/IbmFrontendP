@@ -99,16 +99,19 @@ export class HistoryComponent {
     map((data: MiObjetoApp) => data)
     ).subscribe((data) =>{
       let listap = data["data"];
+
+      console.log(listap);
       this.mListHorusReport.data = listap;
       let ListaFilt = listap;
 
+      /*
       if (this.MUser.rolEntity.nameRole != 'Super Administrador') {
         ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
       }
 
       if (this.MUser.rolEntity.nameRole != 'Administrador' && this.MUser.rolEntity.nameRole != 'Super Administrador') {
         ListaFilt = ListaFilt.filter((x: any) => {x.userEntityId == this.MUser.idUser});
-      }
+      }*/
 
       this.mListHorusReport.data = ListaFilt;
     });
