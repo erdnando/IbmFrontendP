@@ -80,7 +80,7 @@
                             <mat-label>Aprobador</mat-label>
                             <mat-select [formControl]="aprobador" required>
                                 <mat-option *ngFor="let aprobador of MAprobadorUser" [value]="aprobador.userEntityId">
-                                    {{aprobador.userEntity.nameUser}}
+                                    {{aprobador.userEntity.nameUser + ' ' + aprobador.userEntity.surnameUser}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
