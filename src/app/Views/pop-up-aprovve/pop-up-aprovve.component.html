@@ -6,16 +6,16 @@
       <br>
       <b>Id Usuario:</b> {{mApprover.horusReportEntity.userEntity.employeeCode}}
       <br>
-      <b>Fecha:</b> {{mApprover.horusReportEntity.startDate}}
+      <b>Fecha:</b> {{mApprover.horusReportEntity.strStartDate.substring(0,10) }}
       <br>
-      <b>Fecha Creación:</b> {{mApprover.horusReportEntity.creationDate}}
+      <b>Fecha Creación:</b> {{mApprover.horusReportEntity.strCreationDate}}
       <br>
-      <b> N° Reporte: </b> {{mApprover.horusReportEntity.numberReport}}
+      <b> N° Reporte: </b> {{mApprover.horusReportEntity.strReport}}
       <br>
       <b> Reporte de horas: </b> {{mApprover.horusReportEntity.countHours}}
       <br>
      <!-- <b> Cliente: </b> {{mApprover.horusReportEntity.clientEntityId}}-->
-     <b> Cliente: </b> {{mApprover.horusReportEntity.userEntity.idUser}}
+      <!-- <b> Cliente: </b> {{mApprover.horusReportEntity.userEntity.idUser}}-->
 
   </article>
 

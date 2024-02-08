@@ -86,14 +86,20 @@ cargarIcono(estado: string): string{
       this.MListHorusResport = listap[0];
       console.log("MListHorusResport::::")
       console.log(this.MListHorusResport);
+
+
+
+      if(this.MListHorusResport.actividad == 1){
+        this.tipoHoras = "Overtime";
+      }else{
+        this.tipoHoras = "Standby"
+      }
+
+
     });
 
 
-    if(this.MListHorusResport.actividad == 1){
-      this.tipoHoras = "Overtime";
-    }else{
-      this.tipoHoras = "Standby"
-    }
+   
     
   }
 

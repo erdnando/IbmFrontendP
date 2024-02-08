@@ -30,13 +30,13 @@
             <!-- Fecha envio -->
             <ng-container matColumnDef="fechaEnvio">
                 <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.startDate | date:'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
     
             <!-- Fecha creacion -->
             <ng-container matColumnDef="creationDate">
                 <mat-header-cell *matHeaderCellDef> Fecha creacion </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.creationDate | date:'yyyy-MM-dd'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.creationDate | date:'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
     
             <!-- N° Cliente  -->

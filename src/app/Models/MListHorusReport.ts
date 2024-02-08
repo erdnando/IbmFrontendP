@@ -7,6 +7,7 @@ import { MCountryEntity } from "./MCountryEntiry";
 export interface MListHorusReport{
 
   numberReport: any;
+  strReport: string;
   idHorusReport: Guid;
   userEntityId : Guid;
   userEntity : MUserEntity;
@@ -15,10 +16,12 @@ export interface MListHorusReport{
   clientEntity: MClientEntity
   description : string;
   creationDate :Date;
+  strCreationDate :string;
   acitivity: number;
   countHours: string;
   approverId: string;
   startTime: string;
+  strStartDate : string;
   countryEntity: MCountryEntity;
 
 }

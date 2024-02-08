@@ -3,13 +3,13 @@
     <article>
         <strong>Actividad:</strong> {{this.tipoHoras}}
         <br>
-        <strong>Fecha de envio:</strong> {{MListHorusResport.fechaenvio | date:'yyyy-MM-dd'}}
+        <strong>Fecha de envio:</strong> {{MListHorusResport.fechaenvio | date:'dd/MM/yyyy'}}
         <br>
-        <strong>N° Reporte:</strong> {{MListHorusResport.numeroreporte}}
+        <strong>N° Reporte:</strong> {{MListHorusResport.strNumeroreporte}}
         <br>
         <strong>Reporte de horas:</strong> {{MListHorusResport.horas}}
         <br>
-        <strong>Cliente:</strong> {{MListHorusResport.clientEntity!.nameClient}}
+        <strong>Cliente:</strong> {{MListHorusResport.clientEntity!.idClient}}
         <br>
         <br>
     </article>
