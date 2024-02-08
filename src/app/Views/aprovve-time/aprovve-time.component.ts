@@ -52,7 +52,7 @@ export class AprovveTimeComponent {
       
      
     }else if (boton == 'aprobadasN1') {
-      this.botonfiltrado = 2; 
+      this.botonfiltrado = 1; 
     }else if (boton == 'aprobadasN2') {
       this.botonfiltrado = 2; 
     }else if (boton == 'rechazadas') {
