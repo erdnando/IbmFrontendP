@@ -75,6 +75,20 @@
                     <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
                     <mat-cell *matCellDef="let element"> {{element.horusReportEntity.countHours}} </mat-cell>
                 </ng-container>
+
+                <ng-container matColumnDef="horaInicio">
+                    <mat-header-cell *matHeaderCellDef> Hora Inicio </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                         {{element.horusReportEntity.startTime}} 
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="horaFinal">
+                    <mat-header-cell *matHeaderCellDef> Hora Final </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                         {{element.horusReportEntity.endTime}} 
+                    </mat-cell>
+                </ng-container>
     
                 <!-- Estado  -->
                 <ng-container *ngIf="botonPresionado == 'pendientes'"  matColumnDef="estado">
