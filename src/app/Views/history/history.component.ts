@@ -27,7 +27,7 @@ interface MiObjetoApp{
 
 export class HistoryComponent {
 
-  columnasAMostrar = ['fechaEnvio','creationDate', 'cliente', 'reporte', 'aprobador', 'horas','estado'];
+  columnasAMostrar = ['fechaEnvio','creationDate', 'cliente', 'reporte', 'horas','aprobador','aprobador2', 'estado'];
 
   selectedCountry: string = '';
   MUser: MUserEntity;
@@ -50,7 +50,8 @@ export class HistoryComponent {
   constructor(private storageService: StorageService,public dialog: MatDialog,private apiHistory:ApiHistory, private rutaActual: RutaActualService) {
 
     this.MUser = this.storageService.obtenerDatosMapeados();
-    this.cergarlist();
+    console.log("getting history items 1..");
+    this.cargarlist();
     
   }
 
@@ -93,11 +94,13 @@ export class HistoryComponent {
   }
   }
 
-  async cergarlist (){
-
+  async cargarlist (){
+   
   (await this.apiHistory.PostListReport(this.MUser.idUser)).pipe(
     map((data: MiObjetoApp) => data)
     ).subscribe((data) =>{
+
+      console.log("getting history items..");
       let listap = data["data"];
 
       console.log(listap);
@@ -126,12 +129,13 @@ export class HistoryComponent {
       console.log(data);
 
       const approverId = data.approverId.toLowerCase().includes(filter);
+      const approverId2 = data.approverId2.toLowerCase().includes(filter);
       const nameClient = data.clientEntity.nameClient.toLowerCase().includes(filter);
-      const numberReport = data.numberReport.toString().toLowerCase().includes(filter);
+      const numberReport = data.strReport.toString().toLowerCase().includes(filter);
       const creationDate = data.creationDate.toString().toLowerCase().includes(filter);
       
       
-      return approverId || nameClient || numberReport || creationDate;
+      return approverId || nameClient || numberReport || creationDate || approverId2;
     };
     this.mListHorusReport.filter = this.filterValue.trim().toLowerCase();
 

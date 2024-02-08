@@ -1,4 +1,4 @@
-<div style="height: 500px; padding: 40px;">
+<div style="height: 550px; padding: 40px;">
 
     <article>
         <strong>Actividad:</strong> {{this.tipoHoras}}
@@ -60,7 +60,7 @@
         </mat-table>
     </div>
 
-    <div   *ngIf="MListHorusResport.estadoAprobadorNIvel2 > 0">
+    <!--<div   *ngIf="MListHorusResport.estadoAprobadorNIvel2 > 10">
         <mat-table [dataSource]="[MListHorus[MListHorus.length -1]]" >
     
             <ng-container matColumnDef="aprobador2">
@@ -70,7 +70,7 @@
                 </mat-cell>
             </ng-container> 
     
-            <!-- Estado  -->
+            
             <ng-container matColumnDef="estado">
                 <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
                 <mat-cell *matCellDef="let element" >
@@ -91,7 +91,7 @@
             <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
     
         </mat-table>
-    </div>
+    </div>-->
 
     <p>
         <b>Observaciones</b>

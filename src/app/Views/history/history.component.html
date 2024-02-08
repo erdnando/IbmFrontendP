@@ -48,20 +48,28 @@
             <!-- N° Reporte  -->
             <ng-container matColumnDef="reporte">
                 <mat-header-cell *matHeaderCellDef> N° Reporte </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.numberReport}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.strReport}} </mat-cell>
             </ng-container>
-    
-            <!-- Aprobador  -->
-            <ng-container matColumnDef="aprobador">
-                <mat-header-cell *matHeaderCellDef> Aprobador </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.approverId}} </mat-cell>
-            </ng-container>
-    
-            <!-- Reporte Horas  -->
-            <ng-container matColumnDef="horas">
+
+             <!-- Reporte Horas  -->
+             <ng-container matColumnDef="horas">
                 <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.countHours}} </mat-cell>
             </ng-container>
+    
+            <!-- Aprobador N1 -->
+            <ng-container matColumnDef="aprobador">
+                <mat-header-cell *matHeaderCellDef> Aprobador 1 </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.approverId}} </mat-cell>
+            </ng-container>
+
+             <!-- Aprobador N2  -->
+             <ng-container matColumnDef="aprobador2">
+                <mat-header-cell *matHeaderCellDef> Aprobador 2 </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.approverId2}} </mat-cell>
+            </ng-container>
+    
+           
     
             <!-- Estado  -->
             <ng-container matColumnDef="estado">
@@ -69,9 +77,9 @@
                 <mat-cell *matCellDef="let element" style="text-align: center;">
                     <button mat-button class="button-stade"
                         [ngStyle]="{'background-color': 'white'}"
-                        (click)="openDialog(element.idHorusReport)" [title]="Aprobacion[element.startTime]">
-                        <mat-icon [ngStyle]="{'color': getColor(Aprobacion[element.startTime])}">
-                            {{cargarIcono(Aprobacion[element.startTime])}}
+                        (click)="openDialog(element.idHorusReport)" [title]="Aprobacion[element.estado]">
+                        <mat-icon [ngStyle]="{'color': getColor(Aprobacion[element.estado])}">
+                            {{cargarIcono(Aprobacion[element.estado])}}
                         </mat-icon>
                     </button>
                 </mat-cell>
