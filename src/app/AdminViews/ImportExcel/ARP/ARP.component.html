@@ -20,11 +20,9 @@
 
     <div class="body-excel" style="width: 95%;">
         
-
-        
+        <div style="width: 100%;">
         <mat-progress-bar mode="determinate" [value]="porcentajeCarga" *ngIf="activarBarra"></mat-progress-bar>
-        <div *ngIf="activarBarra">
-            <p class="texto-barra-carga">{{ porcentajeCarga }}% completado ({{ porcentajeCarga == 0 ? "Cargando..." : mensajeProgressBar}})</p>
+        <p *ngIf="activarBarra" class="texto-barra-carga">{{ porcentajeCarga }}% completado ({{ porcentajeCarga == 0 ? "Cargando..." : mensajeProgressBar}})</p>
         </div>
         <br/>
         <div>

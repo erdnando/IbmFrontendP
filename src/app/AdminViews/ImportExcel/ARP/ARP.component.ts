@@ -44,7 +44,7 @@ export class ARPComponent {
   showImgARP: boolean = false;
   showImgTSE: boolean = false;
   showImgSTE: boolean = false;
-  porcentajeCarga:number;
+  porcentajeCarga:number = 0;
   mensajeProgressBar:string = "";
   activarBarra = false;
   botonARP = false;
@@ -166,18 +166,17 @@ export class ARPComponent {
   }
 
   readExcel(file1: any, file2: any, file3: any) {
-
+    
+    this.barraProgreso(true);
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
-      this.barraProgreso(true);
-      console.log('Incia proceso');
+      
       this.readfilefinal(file1.files,file2.files,file3.files);
-      this.barraProgreso(false)
+      
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
-      this.barraProgreso(false)
+      
     }
-    
   }
   
   validarArchivo(event: any) {
@@ -202,7 +201,6 @@ export class ARPComponent {
   barraProgreso(estatus:boolean){
     this.activarBarra = estatus;
    // setTimeout(() => {
-    console.log('Barra ' + estatus);
       //this.activarBarra = !estatus;
       this.botonARP = !estatus;
       this.botonSTE = !estatus;
@@ -494,8 +492,7 @@ export class ARPComponent {
  
   readfilefinal(fileInput: any,fileInput2: any,fileInput3: any){
 
-    this.activarBarra = true;
-
+    
     let file = fileInput[0]; // Accede al primer archivo seleccionado
     let file2 =  fileInput2[0];
     let file3 =  fileInput3[0];
@@ -558,9 +555,9 @@ export class ARPComponent {
 
 
                     
-                  this.activarBarra = true;
+                  
                     this.intervalSubscriptionFiles = interval(5000).subscribe(() => {
-                      this.barraProgreso(true);
+                      //this.barraProgreso(true);
                       this.loadArpExcelService.GetCargaAvance(idCarga).subscribe((data) => {
                         console.log(data);
                         if(data){
@@ -590,7 +587,6 @@ export class ARPComponent {
                       
                     });
 
-                    this.activarBarra = false;
 
 
                       //carga ARP
