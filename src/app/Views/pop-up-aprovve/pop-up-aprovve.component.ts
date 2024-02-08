@@ -59,22 +59,16 @@ export class PopUpAprovveComponent {
   crearAprobacion(){
 
     console.log(this.userForm.value.aprobacion);
-    this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole;
+    this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole; //OK
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
     this.mApproverCreate.description = this.userForm.value.descripcion!;
-
-
-    this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
-   /* if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
-        this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
-    }else{
-      this.mApproverCreate.state =0;
-    }*/
+    this.mApproverCreate.idAssignmentReport=this.mApprover.idAssignmentReport;
     
 
-    //aprovador 2 -camilo
+    this.mApproverCreate.state = parseInt(this.userForm.value.aprobacion!);
+ 
 
-    //si se eligio aprobado
+    //APROBADA
     if(this.userForm.value.aprobacion == '0'){
       this.mApproverCreate.userId = this.mApprover.userEntityId;;//this.aprobador.value as unknown as Guid;
        //aprovador 1 -harold
@@ -86,16 +80,15 @@ export class PopUpAprovveComponent {
 
       //validate if it is Aprobador N2
       if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
-        this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
-        this.mApproverCreate.aprobador2UserEntityId=  '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+        //this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+        this.mApproverCreate.aprobador2UserEntityId=  this.mApprover.userEntityId;;
       }
 
 
 
     }else{
-      //rechazado
-
-      this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+      //RECHAZADA
+      this.mApproverCreate.userId = this.mApprover.userEntityId;;//'00000000-0000-0000-0000-000000000000' as unknown as Guid;
       this.mApproverCreate.aprobador2UserEntityId=  '00000000-0000-0000-0000-000000000000' as unknown as Guid;
        //aprovador 1 -harold
       this.mApproverCreate.aprobador1UserEntityId= this.mApprover.userEntityId;
