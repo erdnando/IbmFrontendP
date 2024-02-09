@@ -64,8 +64,10 @@
 
 
 
-
-        <button style="margin-left: 7px;" mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
+<div style="text-align: center;">
+    <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
+</div>
+        
 
     </div>
         

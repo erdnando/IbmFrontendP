@@ -142,6 +142,7 @@ export class PopUpAprovveComponent {
 
   Aproved()
     {
+/*
       this.apiUser.GetAprovved(2).pipe(
         map((data: MiObjeto) => data)
         ).subscribe((data) =>{
@@ -149,7 +150,32 @@ export class PopUpAprovveComponent {
           console.log(listap)
           this.MAprobadorUser = listap.result;
           console.log(this.MAprobadorUser);
-        });
+        });*/
+
+      
+      //if it is N1 call N2
+      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N1'){
+        this.apiUser.GetAprovved(2).pipe(
+          map((data: MiObjeto) => data)
+          ).subscribe((data) =>{
+            let listap = data["data"];
+            console.log(listap)
+            this.MAprobadorUser = listap.result;
+            console.log(this.MAprobadorUser);
+          });
+          //is it is standar call N1
+      }else if(this.MUser.rolEntity.nameRole=='Usuario estandar'){
+        this.apiUser.GetAprovved(1).pipe(
+          map((data: MiObjeto) => data)
+          ).subscribe((data) =>{
+            let listap = data["data"];
+            console.log(listap)
+            this.MAprobadorUser = listap.result;
+            console.log(this.MAprobadorUser);
+          });
+      }
+      
+      
       
 
     }
@@ -160,5 +186,5 @@ export class PopUpAprovveComponent {
     this.idUser = this.data.idUser;
     console.log(this.idUser, "idUserapp")
     console.log(this.data)
-  }
+}
 }
