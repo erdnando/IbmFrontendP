@@ -58,6 +58,19 @@
     color: #333; 
     padding: 10px;
 }
+
+.viewmodule {
+    
+  margin-left: 92px!important;
+  margin-right: 10px;
+  margin-top: 11px;
+  border-radius: 8px;
+
+  border: 0px solid;
+padding: 10px;
+box-shadow: -2px 0px 22px -13px black;
+}
+
 /* 
 .title-form{
   width: 60%;

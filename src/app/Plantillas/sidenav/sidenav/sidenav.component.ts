@@ -32,7 +32,7 @@ interface MiObjetoApp {
       ]),
       transition(':leave', [
         style({ opacity: 1 }),
-        animate('350ms', style({ opacity: 0 })),
+        animate('150ms', style({ opacity: 0 })),
       ]),
     ]),
     trigger('rotate', [
@@ -132,6 +132,11 @@ export class SidenavComponent implements OnInit {
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
+    this.onToggleSideNav.emit({collapsed: this.collapsed,screenWidth: this.screenWidth,});
+  }
+
+  toggleopen(): void {
+    this.collapsed =true;
     this.onToggleSideNav.emit({collapsed: this.collapsed,screenWidth: this.screenWidth,});
   }
 

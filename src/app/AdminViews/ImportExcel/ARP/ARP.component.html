@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body viewmodule ">
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Carga de Archivos</strong></h1>
         <div class="div-em">
@@ -65,7 +65,7 @@
 
 
 
-        <button [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" class="boton" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos</button>
+        <button style="margin-left: 7px;" mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
 
     </div>
         
