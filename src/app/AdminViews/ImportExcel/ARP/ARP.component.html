@@ -19,7 +19,7 @@
         <br>
 
     <div class="body-excel" style="width: 95%;">
-        
+        <div class="overlay" *ngIf="activarBarra"></div>
         <div style="width: 100%;">
         <mat-progress-bar mode="determinate" [value]="porcentajeCarga" *ngIf="activarBarra"></mat-progress-bar>
         <p *ngIf="activarBarra" class="texto-barra-carga">{{ porcentajeCarga }}% completado ({{ porcentajeCarga == 0 ? "Cargando..." : mensajeProgressBar}})</p>
@@ -78,12 +78,12 @@
         </ng-template>
         <br>
         <div class="body-excel">
-            <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+            <mat-progress-bar mode="indeterminate" *ngIf="activarBarraHorarios"></mat-progress-bar>
             <div class="centrado">
             <label class="mi-etiqueta">
                 Cargar plantilla Horarios 
                 <br>
-                <input type="file" [disabled]="activarBarra" (change)="activarARP('Horario',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+                <input type="file" [disabled]="activarBarraHorarios" (change)="activarARP('Horario',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
             </label>
         </div>
 
@@ -101,13 +101,13 @@
         </ng-template>
         <br>
         <div class="body-excel">
-            <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+            <mat-progress-bar mode="indeterminate" *ngIf="activarBarraWorkday"></mat-progress-bar>
             <div>
                 <div class="centrado">
                     <label class="mi-etiqueta">
                         Cargar plantilla de Workday Gerentes 
                         <br>
-                        <input type="file" [disabled]="activarBarra" (change)="activarARP('WorkdayG',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInputWorkdayG>
+                        <input type="file" [disabled]="activarBarraWorkday" (change)="activarARP('WorkdayG',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInputWorkdayG>
                     </label>
                 </div>
             </div>

@@ -47,6 +47,8 @@ export class ARPComponent {
   porcentajeCarga:number = 0;
   mensajeProgressBar:string = "";
   activarBarra = false;
+  activarBarraHorarios = false;
+  activarBarraWorkday = false;
   botonARP = false;
   botonTSE= false;
   botonSTE = false;
@@ -75,6 +77,18 @@ export class ARPComponent {
     this.porcentajeCarga=0;
   }
   ngOnInit() {
+   /* Swal.fire({
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      width: 0
+    });
+
+    setTimeout(() => {
+      Swal.close();
+  }, 2000); 
+    */
     console.log('Datos ' , this.botonARP , this.botonTSE , this.botonSTE);
     this.validateRole();
     this.consultcountries();
@@ -492,6 +506,13 @@ export class ARPComponent {
  
   readfilefinal(fileInput: any,fileInput2: any,fileInput3: any){
 
+    Swal.fire({
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      width: 0
+    });
     
     let file = fileInput[0]; // Accede al primer archivo seleccionado
     let file2 =  fileInput2[0];
@@ -566,6 +587,7 @@ export class ARPComponent {
                             this.mensajeProgressBar = data.data.mensaje;
                             if(this.porcentajeCarga >= 100){
                               this.unsubscribeIntervalSubscriptionFiles();
+                              Swal.close();
                             }
                           }else{
                             Swal.fire({
@@ -742,6 +764,8 @@ export class ARPComponent {
                 soloNotificaciones=true;
               }
 
+                  this.activarBarra = false;
+
                   Swal.fire({
                     icon: 'success',
                     title: this.mSummary.data.mensaje,
@@ -893,10 +917,19 @@ export class ARPComponent {
           });
         }        
       }
-
     } else {
       console.error("No se ha seleccionado ningún archivo.");
+      
+      this.barraProgreso(false);
     }
+
+    this.botonARP = false;
+    this.botonTSE = false;
+    this.botonSTE = false;
+
+    this.fileInput1.nativeElement.value = null;
+    this.fileInput2.nativeElement.value = null;
+    this.fileInput3.nativeElement.value = null;
 
   }
   
