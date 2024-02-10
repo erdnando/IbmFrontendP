@@ -13,25 +13,25 @@
         <mat-tab>
             <ng-template mat-tab-label (click)="botonPresionado = 'pendientes'">
                 <mat-icon class="example-tab-icon">watch_later</mat-icon>
-                Pendientes
+                Pendientes por aprobar
             </ng-template>
         </mat-tab>
 
-        <mat-tab *ngIf="MUser.rolEntity.nameRole == 'Usuario Aprobador N1' || MUser.rolEntity.nameRole == 'Super Administrador'">
+        <mat-tab *ngIf="MUser.rolEntity.nameRole == 'Usuario estandarx' || MUser.rolEntity.nameRole == 'Usuario Aprobador N1x' || MUser.rolEntity.nameRole == 'Super Administradorx'">
             <ng-template  mat-tab-label (click)="botonPresionado = 'aprobadasN1'">
                 <mat-icon class="example-tab-icon">done</mat-icon>
                 Aprobadas N1
             </ng-template>
         </mat-tab>
 
-        <mat-tab  *ngIf="MUser.rolEntity.nameRole == 'Usuario estandar' || MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || MUser.rolEntity.nameRole == 'Super Administrador'">
+        <mat-tab  *ngIf="MUser.rolEntity.nameRole == 'Usuario estandarx' || MUser.rolEntity.nameRole == 'Usuario Aprobador N2x' || MUser.rolEntity.nameRole == 'Super Administradorx'">
             <ng-template mat-tab-label (click)="botonPresionado = 'aprobadasN2'">
                 <mat-icon class="example-tab-icon">done</mat-icon>
                 Aprobadas N2
             </ng-template>
         </mat-tab>
 
-        <mat-tab>
+        <mat-tab  *ngIf="MUser.rolEntity.nameRole == 'Usuario estandarx'">
             <ng-template mat-tab-label (click)="botonPresionado = 'rechazadas'">
                 <mat-icon class="example-tab-icon">clear</mat-icon>
                 Rechazadas
@@ -46,10 +46,25 @@
                 <ng-container matColumnDef="fechaEnvio">
                     <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                         {{element.horusReportEntity.startDate | date:'dd/MM/yyyy'}} 
+                         {{element.horusReportEntity.strStartDate | date:'dd/MM/yyyy'}} 
+                    </mat-cell>
+                </ng-container>
+
+                 <!-- Reporte -->
+                 <ng-container matColumnDef="reporte">
+                    <mat-header-cell *matHeaderCellDef> Reporte </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                         {{element.horusReportEntity.strReport}} 
                     </mat-cell>
                 </ng-container>
     
+                 <!-- Identifiacion  -->
+                 <ng-container matColumnDef="identificacion">
+                    <mat-header-cell *matHeaderCellDef> No. empleado</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.employeeCode}} </mat-cell>
+                </ng-container>
+    
+
                 <!-- empleado  -->
                 <ng-container matColumnDef="empleado">
                     <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
@@ -57,12 +72,7 @@
                         "+element.horusReportEntity.userEntity.surnameUser}} </mat-cell>
                 </ng-container>
     
-                <!-- Identifiacion  -->
-                <ng-container matColumnDef="identificacion">
-                    <mat-header-cell *matHeaderCellDef> Identificacion</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.employeeCode}} </mat-cell>
-                </ng-container>
-    
+               
                 <!-- Reporte Horas  -->
                 <ng-container matColumnDef="horas">
                     <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>

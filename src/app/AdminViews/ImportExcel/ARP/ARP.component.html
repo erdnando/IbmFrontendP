@@ -19,7 +19,10 @@
         <br>
 
     <div class="body-excel" style="width: 95%;">
-        <div class="overlay" *ngIf="activarBarra"></div>
+        <div class="overlay" *ngIf="activarBarra" style="padding:40%;position: fixed;padding-top: 20%;">
+            <mat-spinner [diameter]="50"></mat-spinner>
+
+        </div>
         <div style="width: 100%;">
         <mat-progress-bar mode="determinate" [value]="porcentajeCarga" *ngIf="activarBarra"></mat-progress-bar>
         <p *ngIf="activarBarra" class="texto-barra-carga">{{ porcentajeCarga }}% completado ({{ porcentajeCarga == 0 ? "Cargando..." : mensajeProgressBar}})</p>

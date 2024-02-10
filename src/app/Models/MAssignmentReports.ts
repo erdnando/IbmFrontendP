@@ -8,4 +8,5 @@ export interface MAssignmentReports{
     state: number;
     userId: Guid;
     horusReportId: Guid;
+    description:string;
 }

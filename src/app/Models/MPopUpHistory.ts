@@ -1,6 +1,7 @@
 
 import { MClientEntity } from "./MClienteEntity";
 import { MCountryEntity } from "./MCountryEntiry";
+import { MUserEntity } from "./MUserEntity";
 
 export interface MPopUpHistory {
 
@@ -8,13 +9,13 @@ export interface MPopUpHistory {
     strNumeroreporte: string;
     horas: string;
     clientEntity: MClientEntity;
+    userEntity:MUserEntity;
     fechaenvio: Date;
     actividad: number;
     activity: number;
     aprobaador1: string;
     aprobaador2: string;
-    estadoAprobadorNIvel1: number;
-    estadoAprobadorNIvel2: number;
+    estadoReporte: number;
     observaciones: string;
     pais: MCountryEntity;
 
