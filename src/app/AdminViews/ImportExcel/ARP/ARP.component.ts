@@ -242,97 +242,15 @@ export class ARPComponent {
     switch (boton){
       case 'ARP':
         this.botonARP = true; 
-        // if (filemb<= 10) {
-        //   this.botonARP = false;
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oopss ',
-        //     text: 'Error: El archivo no contiene información, por favor verifica!',
-        //     confirmButtonColor: '#0A6EBD',
-        //   });
-        // } else {
-        //   switch (file.name) {
-        //     case "PORTAL_ARP.xlsx":
-        //       this.botonARP = true;                
-        //       break;
-        //     case "PORTAL_ARP.xls":
-        //       this.botonARP = true;                
-        //       break;
-        //     default:
-        //       this.botonARP = false;
-        //       Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oopss ',
-        //         text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_ARP"!',
-        //         confirmButtonColor: '#0A6EBD',
-        //       });
-        //       break;
-        //   }
-        // }
-        
         
         return 
       case 'TSE':
         this.botonTSE = true;
-        // if (filemb<= 10) {
-        //   this.botonTSE = false;
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oopss ',
-        //     text: 'Error: El archivo no contiene información, por favor verifica!',
-        //     confirmButtonColor: '#0A6EBD',
-        //   });
-        // } else {
-        //   switch (file.name) {
-        //     case "PORTAL_TSE.xlsx":
-        //       this.botonTSE = true;                
-        //       break;
-        //     case "PORTAL_TSE.xls":
-        //       this.botonTSE = true;                
-        //       break;
-        //     default:
-        //       this.botonTSE = false;
-        //       Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oopss ',
-        //         text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_TSE"!',
-        //         confirmButtonColor: '#0A6EBD',
-        //       });
-        //       break;
-        //   }
-          
-        // }
+        
         return
       case 'STE':
         this.botonSTE = true;                
-        // if (filemb<= 3) {
-        //   this.botonSTE = false;
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oopss ',
-        //     text: 'Error: El archivo no contiene información, por favor verifica!',
-        //     confirmButtonColor: '#0A6EBD',
-        //   });
-        // } else {
-        //   switch (file.name) {
-        //     case "PORTAL_STE.xlsx":
-              
-        //       break;
-        //     case "PORTAL_STE.xls":
-        //       this.botonSTE = true;                
-        //       break;
-        //     default:
-        //       this.botonSTE = false;
-        //       Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oopss ',
-        //         text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_STE"!',
-        //         confirmButtonColor: '#0A6EBD',
-        //       });
-        //       break;
-        //   }
-          
-        // }
+       
         return
       case 'Horario':
         this.botonHorario = true;
@@ -880,6 +798,7 @@ export class ARPComponent {
 
                          //-----------------------------------------------------------
                     }else{
+                      console.log('something strange')
                       //no acepta carga;
                       //-----------------------------------------------------------
                       //sigue activa la carga anterior

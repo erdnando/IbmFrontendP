@@ -24,6 +24,7 @@ interface MiObjeto {
   styleUrls: ['./pop-up-aprovve.component.css']
 })
 export class PopUpAprovveComponent {
+ 
 
   mApprover: MApproverTime;
   mApproverCreate: MApproverTimeCreate;
@@ -52,8 +53,6 @@ export class PopUpAprovveComponent {
     this.mApproverCreate = {} as MApproverTimeCreate;
     this.Aproved();
     this.MAprobadorUser =[];
-   // this.Aproved();
-    //this.MAprobadorUser =[];
   }
 
   crearAprobacion(){
@@ -126,7 +125,9 @@ export class PopUpAprovveComponent {
         }
         
         this.dialogRef.close();  
-        this.obtnerLista.loadApproverTime(this.idUser)
+        this.obtnerLista.loadApproverTime(this.idUser);
+
+        
       } else {
         Swal.fire({
           icon: 'error',
@@ -135,10 +136,13 @@ export class PopUpAprovveComponent {
           confirmButtonColor: '#0A6EBD',
         });
       }
+     
     }) ;
     
 
   }
+
+  
 
   Aproved()
     {

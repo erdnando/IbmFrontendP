@@ -91,7 +91,7 @@
           <li class="sidenav-nav-item" *ngFor="let data of Mmen" (click)="closeSidenav()">
             <a title="{{data.menuEntity.nameMenu}}" href="" class="sidenav-nav-link" [routerLink]="['/' + data.menuEntity.path]" routerLinkActive="active"  
               [routerLinkActiveOptions]="{exact: true}">
-              <mat-icon class="sidenav-link-icon"  (mouseover)="toggleopen()">{{data.menuEntity.icon}}</mat-icon> 
+              <mat-icon matBadge="{{data.menuEntity.path.endsWith('aproveetime') && counterNotif>0 ? counterNotif:null}}" matBadgeColor="warn" class="sidenav-link-icon"  (mouseover)="toggleopen()">{{data.menuEntity.icon}}</mat-icon> 
               <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.menuEntity.nameMenu}}</span>
             </a>
           </li>
@@ -100,7 +100,7 @@
             <a title="CERRAR SESIÓN" href="" class="sidenav-nav-link" (click)="cerrarSesion()" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}">
               <mat-icon class="sidenav-link-icon">power_settings_new</mat-icon>
-              <span class="sidenav-link-text " @fadeInOut *ngIf="collapsed">CERRAR SESIÓN</span>
+              <span class="sidenav-link-text " @fadeInOut *ngIf="collapsed">CERRAR SESIÓN ::</span>
             </a>
           </li>
         </ol>

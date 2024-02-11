@@ -69,13 +69,6 @@ export class RutaActualService {
         
         setTimeout(() => {
           this.getAndAddTokenToStorage(this.objJson);
-         /* this.rutaActual =  '/dashboard';
-          //this.router.url;
-          console.log(' this.rutaActual: ',  this.rutaActual);
-          this._rutaActuales$.next(this.rutaActual);
-          console.log(this.rutaActual);
-          //refresh
-          this.router.navigate(['dashboard']);*/
          }, 500);
         
 

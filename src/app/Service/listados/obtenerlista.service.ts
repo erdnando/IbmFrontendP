@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ListCountryService } from '../../AdminViews/AdminCountries/services/list-country/list-country.service';
 import { MCountryEntity } from 'src/app/Models/MCountryEntiry';
 import { BehaviorSubject, Observable, Subject, catchError, map, throwError } from 'rxjs';
@@ -34,7 +34,9 @@ interface MiObjeto {
   providedIn: 'root'
 })
 export class ObtenerlistaService {
-
+  ee: EventEmitter<number> = new EventEmitter<number>();
+  counterAprobaciones = 0;
+  
   private countryListSubject = new Subject<MCountryEntity[]>();
   countryList$ = this.countryListSubject.asObservable();
 
@@ -313,6 +315,13 @@ export class ObtenerlistaService {
 
       console.log('datos obtenidos;;;;');
       console.log(lista);
+
+      //emite evento del contador de notificaciones
+      //==================================================
+      console.log('emitiendo evento desde obtenerLista.service;;;;');
+      this.counterAprobaciones=lista.length;
+      this.ee.emit(this.counterAprobaciones);
+      //=============================================
       this._refreshAppTime$.next(lista) ;
     });
   }
