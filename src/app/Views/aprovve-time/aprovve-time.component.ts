@@ -35,7 +35,7 @@ export class AprovveTimeComponent {
     'empleado',
     'horas',
     'horaInicio',
-    'horaInicio',
+    'horaFinal',
     'estado',
   ];
 
