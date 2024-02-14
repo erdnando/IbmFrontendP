@@ -32,6 +32,7 @@ export class PopUpAprovveComponent {
   aprobador = new FormControl('');
   idUser: any;
   MUser: MUserEntity;
+  btnOKState: boolean=false;
 
   userForm = new FormGroup({
     aprobacion: new FormControl('', [Validators.required]),
@@ -56,7 +57,7 @@ export class PopUpAprovveComponent {
   }
 
   crearAprobacion(){
-
+    this.btnOKState = true;
     console.log(this.userForm.value.aprobacion);
     this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole; //OK
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
@@ -107,8 +108,9 @@ export class PopUpAprovveComponent {
 
     this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe(data=> {
       console.log(data);
+      this.btnOKState = false;
       if (data.data) {
-
+        
         if(this.userForm.value.aprobacion == '0'){
           Swal.fire({
             icon: 'success',

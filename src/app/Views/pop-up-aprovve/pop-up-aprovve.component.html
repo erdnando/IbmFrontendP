@@ -50,8 +50,9 @@
   </div>
   </div>
 
-    <div style="text-align: center; margin-top: 40px;">
-      <button mat-button (click)="crearAprobacion()"  class="button-close"> Guardar </button>
+    <div style="text-align: center; margin-top: 60px;">
+      <button mat-raised-button color="primary" [disabled]="btnOKState" (click)="crearAprobacion()"  class=""> 
+        Aceptar<mat-spinner style="position:absolute;margin-left:15px; margin-top: -60px;text-align: center; " [diameter]="25" *ngIf="btnOKState"></mat-spinner> </button>
   </div>
 
 
