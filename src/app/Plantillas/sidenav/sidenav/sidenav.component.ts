@@ -193,6 +193,9 @@ export class SidenavComponent implements OnInit {
   }
 
   cerrarSesion() {
+    
+    this.logEndSession(this.MUser!.idUser);
+
     this.storageService.eliminarDatosGuardados();
     this.router.navigate(['login']);
   }
@@ -203,7 +206,7 @@ export class SidenavComponent implements OnInit {
 
   cargaNotificaciones(idUser: any){
 
-    console.log('obteniedno aprobaciones...'+ idUser);
+    console.log('obteniendo aprobaciones...'+ idUser);
     this.consultApproverTime
     .GetApproverTime(idUser)
     .pipe(map((data: MiObjNotif) => data))
@@ -213,22 +216,27 @@ export class SidenavComponent implements OnInit {
       console.log('datos obtenidos;;;;');
       console.log(lista);
 
-      //emite evento del contador de notificaciones
-      //==================================================
       
       this.counterNotif=lista.length;
       console.log('emitiendo evento en la carga inicial dela aplicacion:::'+this.counterNotif);
       
-      //this.ee.emit(this.counterNotif);
-      
-      //=============================================
-      //this._refreshAppTime$.next(lista) ;
     });
   }
 
-  /*get refreshAppTime$(){
-    return this._refreshAppTime$.asObservable();
-  }*/
+  logEndSession(idUser: any){
+
+    console.log('registrando log out...'+ idUser);
+    this.consultApproverTime
+    .Log(idUser)
+    .pipe(map((data: any) => data))
+    .subscribe((data:any) => {
+      
+      console.log(data);
+      console.log('log out logged');
+     
+    });
+  }
+
 
  
 }

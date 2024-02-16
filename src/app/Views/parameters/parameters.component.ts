@@ -287,6 +287,7 @@ export class ParametersComponent implements OnInit {
       this.MFestivos.ano = festivo[1];
       this.MFestivos.countryId = this.pais.value as unknown as string;
       this.MFestivos.descripcion = 'Dia Fesitvo';
+      this.MFestivos.idUserEntiyId = this.MUser!.idUser;
 
       this.EntityFestivos.push(this.MFestivos);
     }

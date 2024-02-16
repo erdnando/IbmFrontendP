@@ -9,5 +9,6 @@ export interface MFestivos {
     countryId: string;
     country: MCountryEntity;
     ano: string;
+    idUserEntiyId: string;
 
 }
