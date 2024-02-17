@@ -35,7 +35,8 @@ export class PopupFestivosComponent {
 let monthStr = month < 10 ? '0' + month.toString() : month.toString();
     
 
-    this.dates.push(year+"-"+monthStr+"-"+dayStr);
+   // this.dates.push(year+"-"+monthStr+"-"+dayStr);
+    this.dates.push(dayStr+"/"+monthStr+"/"+year);
     this.dates.push(year)
     let retorno = this.guardar.guardarDiasFestivos(this.dates)
     if (retorno){

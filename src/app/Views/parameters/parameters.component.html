@@ -78,9 +78,10 @@
                         <div class="fest" *ngIf="MFestivosList.length; else noData">
                             <ul id="date-list" class="list-fest" style="display: flex; justify-content:start ; align-items: center; flex-direction: column;">
                                 <li style="margin-top: 0px;margin-bottom: 5px; width: 90%;" *ngFor="let festivo of MFestivosList">
-                                    {{festivo.diaFestivo | date:'yyyy-MM-dd'}}
+                                    {{festivo.sDiaFestivo}}
                                     <button class="delete-icon icon-grow-shadow"  (click)="eliminarFestivoDB(festivo)">
                                         <mat-icon>remove_circle</mat-icon>
+                                        <mat-spinner style="position:absolute;margin-left:15px; margin-top: -60px;text-align: center; " [diameter]="25" *ngIf="bDeliting"></mat-spinner>
                                     </button>
                                 </li>
                             </ul>

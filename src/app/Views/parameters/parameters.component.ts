@@ -91,6 +91,7 @@ export class ParametersComponent implements OnInit {
   habilitarExcel: boolean = false;
   fesitvosExcel: any[] = [];
   event:string[]=[];
+  bDeliting:boolean;
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -162,6 +163,7 @@ export class ParametersComponent implements OnInit {
 
     this.ListparametersStand = [];
     this.ListparametersOver = [];
+    this.bDeliting=false;
   }
 
   ngOnInit(): void {
@@ -230,14 +232,14 @@ export class ParametersComponent implements OnInit {
   }
 
   eliminarFestivoDB(festivo: any) {
-
-   // this.storageFestivos.eliminarFestivo(festivo);
-
+    this.bDeliting=true;
+    festivo.idUserEntiyId=this.MUser!.idUser;//requiered by logging process
+ 
     this.apiFestivosDelete
     .PostDeleteFestivo(festivo)
     .subscribe((data) => {
       if (data.data) {
-
+         this.bDeliting=false;
         Swal.fire({
           icon: 'success',
           title: 'Acción completada.',
@@ -253,6 +255,7 @@ export class ParametersComponent implements OnInit {
           });
         this.agregarFestivos = false;
       } else {
+        this.bDeliting=false;
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -283,12 +286,13 @@ export class ParametersComponent implements OnInit {
   falseAgregarFestivos() {
     for (let festivo of this.storageFestivos.obtenerDiasFestivosAnos()) {
       this.MFestivos = {} as MFestivos;
-      this.MFestivos.diaFestivo = festivo[0];
+      //this.MFestivos.diaFestivo = festivo[0];
       this.MFestivos.ano = festivo[1];
       this.MFestivos.countryId = this.pais.value as unknown as string;
       this.MFestivos.descripcion = 'Dia Fesitvo';
       this.MFestivos.idUserEntiyId = this.MUser!.idUser;
-
+      this.MFestivos.sDiaFestivo = festivo[0];
+     // this.MFestivos.idFestivo = '';
       this.EntityFestivos.push(this.MFestivos);
     }
 
@@ -373,8 +377,7 @@ export class ParametersComponent implements OnInit {
             this.suscriptionFestivosdb = this.serviceList
               .loadFestivos(this.pais.value as unknown as string)
               .subscribe((festivo) => {
-                festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
-                  - new Date(b.diaFestivo).getTime());
+                festivo.sort((a, b) => new Date(a.diaFestivo).getTime() - new Date(b.diaFestivo).getTime());
                 this.MFestivosList = festivo;
               });
           }
@@ -1067,36 +1070,7 @@ resetPicker(){
       };
       season.push(rowseason);
     });
-    // season = [
-    //   { 
-    //     dia: 'Lunes', 
-    //     horaInicio: '00:00', 
-    //     horaFin: '00:00',
-    //     fecha: 'dd/MM/YYYY', 
-    //     codigo_Empleado: '255', 
-    //     pais: pais.countryEntity.nameCountry
-    //   },
-    //   { 
-    //     dia: 'Martes', 
-    //     horaInicio: '00:00', 
-    //     horaFin: '00:00' 
-    //   },
-    //   { 
-    //     dia: 'Miércoles', 
-    //     horaInicio: '00:00', 
-    //     horaFin: '00:00' 
-    //   },
-    //   { 
-    //     dia: 'Jueves', 
-    //     horaInicio: '00:00', 
-    //     horaFin: '00:00' 
-    //   },
-    //   { 
-    //     dia: 'Viernes',
-    //     horaInicio: '00:00', 
-    //     horaFin: '00:00' 
-    //   },
-    // ];
+   
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(season);
 
