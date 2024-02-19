@@ -12,5 +12,5 @@ export interface MUserCreate{
     employeeCode: string;
     roleEntityId: Guid;
     countryEntityId: Guid;
-
+    idUserEntiyId:string;
 }

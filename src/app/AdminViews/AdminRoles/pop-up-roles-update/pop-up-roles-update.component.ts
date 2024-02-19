@@ -12,6 +12,7 @@ import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.servi
 import { ApiParameters } from 'src/app/Views/parameters/services/parameters/api.parameters';
 import { RolesUpdateService } from 'src/app/AdminViews/AdminRoles/services/rolesUpdate/roles-update.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 @Component({
   selector: 'app-pop-up-roles-update',
@@ -27,17 +28,19 @@ export class PopUpRolesUpdateComponent {
   MMenus: MMenu ;
   listaMenus: MMenu [] = [];
   MMenuf: MMenu;
-
+  MUser: any;
 
   userForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
   });
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpRolesUpdateComponent>, private apiUpdateRol: RolesUpdateService, private refresh: ObtenerlistaService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpRolesUpdateComponent>, 
+  private apiUpdateRol: RolesUpdateService, private refresh: ObtenerlistaService,private storageData: StorageService) {
     this.MRol = {} as MRol;
     this.MMenuf = {} as MMenu;
     this.MMenu = [];
     this.MMenus = {} as MMenu;
+    this.MUser = this.storageData.obtenerDatosMapeados();
   }
 
   onSubmit() {
@@ -45,6 +48,7 @@ export class PopUpRolesUpdateComponent {
     this.MRol.idRole = this.idRol as unknown as Guid;
     this.MRol.nameRole = this.userForm.value.nombre as unknown as string;
     this.MRol.menuEntity = this.listaMenus;
+    this.MRol.idUserEntiyId=this.MUser!.idUser;
     
     this.apiUpdateRol.PostUpdateRol(this.MRol).subscribe(data=> {
       if (data.data) {

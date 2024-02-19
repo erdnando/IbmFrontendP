@@ -105,7 +105,7 @@ export class HistoryComponent {
 
       console.log(listap);
       this.mListHorusReport.data = listap;
-      let ListaFilt = listap;
+     // let ListaFilt = listap;
 
       /*
       if (this.MUser.rolEntity.nameRole != 'Super Administrador') {
@@ -116,7 +116,7 @@ export class HistoryComponent {
         ListaFilt = ListaFilt.filter((x: any) => {x.userEntityId == this.MUser.idUser});
       }*/
 
-      this.mListHorusReport.data = ListaFilt;
+      //this.mListHorusReport.data = ListaFilt;
     });
 
   }

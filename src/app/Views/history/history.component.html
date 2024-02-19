@@ -3,7 +3,7 @@
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Historial de Horas</strong></h1>
         <div class="div-em">
-            <em>Encuentra información sobre el historial de horas .Haz clic en el estado de tu interes para obtener mas detalles</em>
+            <span>Encuentra información sobre el historial de horas .Haz clic en el estado de tu interes para obtener más detalles</span>
             
         </div>
         <hr class="divider">
@@ -36,8 +36,8 @@
             <!-- Fecha creacion -->
             <ng-container matColumnDef="fechaEnvio">
                 <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.strCreationDate.split(" ")[0]}} </mat-cell>
-            </ng-container> 
+                <mat-cell *matCellDef="let element"> {{element.strCreationDate.substring(0,10) }} </mat-cell>
+            </ng-container>
     
             <!-- N° Cliente  --> 
             <ng-container matColumnDef="employeeCode">

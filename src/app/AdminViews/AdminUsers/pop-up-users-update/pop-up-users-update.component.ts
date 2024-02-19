@@ -12,6 +12,7 @@ import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.servi
 import { ApiParameters } from 'src/app/Views/parameters/services/parameters/api.parameters';
 import { UsersUpdateService } from 'src/app/AdminViews/AdminRoles/services/usersUpdate/users-update.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 interface MiObjeto {
   [key: string]: any;
@@ -28,16 +29,19 @@ export class PopUpUsersUpdateComponent {
   MUser: MUserCreate;
   MUserEntity: MUserEntity;
   idUser: string = "";
-
+  MUserAuthenticated: any;
 
   userForm = new FormGroup({
     rol: new FormControl('', [Validators.required])
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpUsersUpdateComponent>, private apiUpdateUser: UsersUpdateService, private apiListCountry: ListCountryService, private serviceLists: ObtenerlistaService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpUsersUpdateComponent>, 
+  private apiUpdateUser: UsersUpdateService, private apiListCountry: ListCountryService, 
+  private serviceLists: ObtenerlistaService,private storageData: StorageService) {
     this.MListRol = [];
     this.MUser= {} as MUserCreate;
     this.MUserEntity = {} as MUserEntity;
+    this.MUserAuthenticated = this.storageData.obtenerDatosMapeados();
   }
 
 
@@ -51,7 +55,8 @@ export class PopUpUsersUpdateComponent {
         this.MUser.password = this.MUserEntity.password;
         this.MUser.countryEntityId = this.MUserEntity.countryEntityId;
         this.MUser.roleEntityId = this.userForm.value.rol as unknown as Guid;
-            
+        this.MUser.idUserEntiyId=this.MUserAuthenticated!.idUser;
+
         this.apiUpdateUser.PostUpdateUsers(this.MUser).subscribe(data=> {
           console.log(data);
           if (data.data) {

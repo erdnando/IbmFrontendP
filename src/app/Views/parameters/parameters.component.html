@@ -3,7 +3,7 @@
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Parámetros de paises</strong></h1>
         <div class="div-em">
-            <em>Realíza la configuración de los parámetros de horas. Haz clic en la opción de tu interes para obtener mas detalles</em>
+            <span>Realíza la configuración de los parámetros de horas. Haz clic en la opción de tu interes para obtener más detalles</span>
             
         </div>
         <hr class="divider">
@@ -35,39 +35,8 @@
                 </ng-template>
             </mat-tab>
 
-            <!-- <mat-tab>
-                <ng-template mat-tab-label >
-                    <mat-icon class="example-tab-icon">event_note</mat-icon>
-                    Horarios
-                </ng-template>
-            </mat-tab> -->
         </mat-tab-group>
 
-     <!--   <table class="example-full-width" cellspacing="0">
-            <tr>
-                <td>
-                    <button class="button-options" (click)="botonPresionado = 'festividades'">
-                        Festividades
-                    </button>
-
-                </td>
-                <td>
-                    <button class="button-options" (click)="botonPresionado = 'overtime'">
-                        Overtime
-                    </button>
-                </td>
-                <td>
-                    <button class="button-options" (click)="botonPresionado = 'standby'">
-                        Standby
-                    </button>
-                </td>
-                <td>
-                    <button class="button-options" (click)="botonPresionado = 'horarios'">
-                        Horarios
-                    </button>
-                </td>
-            </tr>
-        </table> -->
 
         <!-- Seccion festividades-->
         <div *ngIf="botonPresionado === 'festividades'" style="margin-top: 10px; padding: 10px 5px;">
@@ -109,9 +78,10 @@
                         <div class="fest" *ngIf="MFestivosList.length; else noData">
                             <ul id="date-list" class="list-fest" style="display: flex; justify-content:start ; align-items: center; flex-direction: column;">
                                 <li style="margin-top: 0px;margin-bottom: 5px; width: 90%;" *ngFor="let festivo of MFestivosList">
-                                    {{festivo.diaFestivo | date:'yyyy-MM-dd'}}
+                                    {{festivo.sDiaFestivo}}
                                     <button class="delete-icon icon-grow-shadow"  (click)="eliminarFestivoDB(festivo)">
                                         <mat-icon>remove_circle</mat-icon>
+                                        <mat-spinner style="position:absolute;margin-left:15px; margin-top: -60px;text-align: center; " [diameter]="25" *ngIf="bDeliting"></mat-spinner>
                                     </button>
                                 </li>
                             </ul>

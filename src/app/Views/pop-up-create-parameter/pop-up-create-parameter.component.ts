@@ -24,10 +24,16 @@ export class PopUpCreateParameterComponent {
   limitWeek = new FormControl('');
   limitMonth = new FormControl('');
   limitYear = new FormControl('');
+  MUser: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpCreateParameterComponent>, private apiCreateParameter: ApiParameters,private observableParameters: StorageService) 
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
+  public dialogRef: MatDialogRef<PopUpCreateParameterComponent>, 
+  private apiCreateParameter: ApiParameters,
+  private observableParameters: StorageService,
+ ) 
   {
     this.MParameter ={} as MParameters;
+    this.MUser = this.observableParameters.obtenerDatosMapeados();
   }
 
   guardarCambios(){
@@ -47,6 +53,7 @@ export class PopUpCreateParameterComponent {
     this.MParameter.typeLimits = 0;
     this.MParameter.typeHours = this.typeHour;
     this.MParameter.countryEntityId = this.idCountry as unknown as Guid;
+    this.MParameter.empleadoUserEntityId=this.MUser!.idUser;
 
     console.log(this.MParameter.idParametersEntity);
     console.log(this.MParameter.countryEntityId);

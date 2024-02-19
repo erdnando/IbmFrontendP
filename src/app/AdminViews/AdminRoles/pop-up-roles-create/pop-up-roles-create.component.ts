@@ -9,7 +9,7 @@ import { MRol } from 'src/app/Models/MRol';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { RolesCreateService } from 'src/app/AdminViews/AdminRoles/services/rolesCreate/roles-create.service';
 import Swal from 'sweetalert2';
-
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 @Component({
   selector: 'app-pop-up-roles-create',
@@ -29,25 +29,30 @@ export class PopUpRolesCreateComponent {
   menusList: number[] = [0];
   listaMenus: MMenu [];
   MMenuf: MMenu;
-
+  MUser: any;
 
   userForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     menu: new FormControl('', [Validators.required]),
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpRolesCreateComponent>, private apicreateRol: RolesCreateService, private serviceLists: ObtenerlistaService,private _formBuilder: FormBuilder, private refresh: ObtenerlistaService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpRolesCreateComponent>, 
+  private apicreateRol: RolesCreateService, private serviceLists: ObtenerlistaService,
+  private _formBuilder: FormBuilder, private refresh: ObtenerlistaService,
+  private storageData: StorageService) {
     this.MRol = {} as MRol;
     this.MMenu = [];
     this.listaMenus = [];
     this.MMenus = {} as MMenu;
     this.MMenuf = {} as MMenu;
+    this.MUser = this.storageData.obtenerDatosMapeados();
   }
 
   onSubmit() {
 
     this.MRol.nameRole = this.userForm.value.nombre as unknown as string;
     this.MRol.menuEntity = this.listaMenus;
+    this.MRol.idUserEntiyId=this.MUser!.idUser;
     console.log(this.MRol.nameRole);
 
     this.apicreateRol.PostCreateRol(this.MRol).subscribe(data=> {

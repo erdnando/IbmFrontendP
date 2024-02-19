@@ -85,8 +85,8 @@ mat-header-cell {
     margin-right: 10px;
     margin-top: 11px;
     border-radius: 8px;
-  
-    border: 0px solid;
+    border-color: skyblue!important;
+    border: 1px outset;
   padding: 10px;
   box-shadow: -2px 0px 22px -13px black;
   }

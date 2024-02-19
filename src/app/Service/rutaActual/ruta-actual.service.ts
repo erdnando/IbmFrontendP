@@ -38,7 +38,7 @@ export class RutaActualService {
         
 
         console.log("parametro obtenido:"+ xmlParam);
-        console.log('version 1.0.0.8');
+        console.log('version 1.0.0.9');
         if(xmlParam!=null){
           console.log("flujo sso");
           //TODO
@@ -46,7 +46,7 @@ export class RutaActualService {
           //si no, continuar...
 
 
-        //remove from query string uxm_erd
+        //removing from query string uxm_erd
        this.router.navigate([], {
         queryParams: {
           'uxm_erd': null,

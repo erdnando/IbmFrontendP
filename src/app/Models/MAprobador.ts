@@ -4,4 +4,5 @@ export interface MAprobador {
   idAprobador: Guid;
   descripcion: string;
   nivel: number;
+  idUserEntiyId:string;
 }
