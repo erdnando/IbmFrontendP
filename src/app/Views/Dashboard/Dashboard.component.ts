@@ -85,7 +85,7 @@ export class DashboardComponent implements AfterViewInit {
       series: [
         {
           name: "Mi serie",
-          data: [90,0,60,0,0,0,70,0,0,0,40,0]
+          data: [0,0,0,0,0,0,0,0,0,0,0,0]
         }
       ],
       chart:{
@@ -108,7 +108,7 @@ export class DashboardComponent implements AfterViewInit {
       series: [
         {
           name: "Mi serie",
-          data: [10,33,22,0,89,0,0,70,0,10,0,90]
+          data: [0,0,0,0,0,0,0,0,0,0,0,0]
         }
       ],
       chart:{
@@ -399,12 +399,14 @@ export class DashboardComponent implements AfterViewInit {
             //arrMonthsOverTime=[8,8,16,40,40,40,40,16,16,16,8,8]; //arrMonthsOverTime
             
             //from API
-            var standbyM=((totalHorasRespServicioStanBy/totHorasanuales)*100);
-            var overtimeM=((totalHorasRespServicioOverTime/totHorasanuales)*100);
+           // var standbyM=((totalHorasRespServicioStanBy/totHorasanuales)*100);
+            //var overtimeM=((totalHorasRespServicioOverTime/totHorasanuales)*100);
+            var standbyM=totalHorasRespServicioStanBy;
+            var overtimeM=totalHorasRespServicioOverTime;
 
             this.seriesStandBy= parseFloat(standbyM.toFixed(2));// parseInt(standbyM.toFixed(2));
-            this.seriesOverTime=  parseFloat(standbyM.toFixed(2));//parseInt(standbyM.toFixed(2));
-
+            this.seriesOverTime=  parseFloat(overtimeM.toFixed(2));//parseInt(standbyM.toFixed(2));
+          
             arrMonthsStandBy= arrMonthsStandBy
             arrMonthsOverTime=arrMonthsOverTime
             //------------------------------------------------------------------------------------
@@ -591,7 +593,9 @@ export class DashboardComponent implements AfterViewInit {
                     },
                     value: {
                       formatter: function(val) {
-                        return parseInt(val.toString(), 10).toString();
+                        console.log('val::::::');
+                        console.log(val);
+                        return parseInt(  (val).toString()).toString();
                       },
                       color: "#111",
                       fontSize: "26px",

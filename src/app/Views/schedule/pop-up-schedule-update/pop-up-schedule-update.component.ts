@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { ScheduleComponent } from '../schedule/schedule.component';
 import { ApproverUpdateService } from 'src/app/AdminViews/AdminApprover/services/approverUpdate/approver-update.service';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
-
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 @Component({
   selector: 'app-pop-up-schedule-update',
@@ -22,14 +22,18 @@ export class PopUpScheduleUpdateComponent {
   idAprobador: string = "";
   descripciones: string = "";
   nivel: number = 0;
+  MUser: any;
 
   userForm = new FormGroup({
     descripcion: new FormControl('', [Validators.required]),
     nivel: new FormControl('', [Validators.required])
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpScheduleUpdateComponent>, private apiupdateApprover: ApproverUpdateService, private refreshClients: ObtenerlistaService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpScheduleUpdateComponent>, 
+  private apiupdateApprover: ApproverUpdateService, private refreshClients: ObtenerlistaService,
+  private storageData: StorageService) {
     this.MApprover = {} as MAprobador;
+    this.MUser = this.storageData.obtenerDatosMapeados();
   }
 
   onSubmit() {
@@ -37,7 +41,7 @@ export class PopUpScheduleUpdateComponent {
     this.MApprover.idAprobador =  this.idAprobador as unknown as Guid;
     this.MApprover.descripcion = this.userForm.value.descripcion as unknown as string;
     this.MApprover.nivel = Number(this.userForm.value.nivel);
-    
+    this.MApprover.idUserEntiyId=this.MUser!.idUser;
     console.log(this.MApprover.descripcion);
     console.log(typeof this.MApprover.nivel);
     

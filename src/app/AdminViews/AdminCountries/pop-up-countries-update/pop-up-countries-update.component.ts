@@ -7,6 +7,7 @@ import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.servi
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { Guid } from 'guid-typescript';
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 @Component({
   selector: 'app-pop-up-countries-update',
@@ -18,21 +19,24 @@ export class PopUpCountriesUpdateComponent {
   MCountry: MCountryEntity;
   idCountry: string = "";
   nameCountry: string = "";
-
+  MUserAuthenticated: any;
 
   userForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpCountriesUpdateComponent>, private apiUpdateCountry: CountryUpdateService, private refresh: ObtenerlistaService ) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopUpCountriesUpdateComponent>, 
+  private apiUpdateCountry: CountryUpdateService, private refresh: ObtenerlistaService,
+  private storageData: StorageService ) {
     this.MCountry = {} as MCountryEntity
+    this.MUserAuthenticated = this.storageData.obtenerDatosMapeados();
   }
 
   onSubmit() {
     
     this.MCountry.idCounty = this.idCountry as unknown as Guid;
     this.MCountry.nameCountry = this.userForm.value.nombre as unknown as string;
-    
+    this.MCountry.idUserEntiyId=this.MUserAuthenticated!.idUser;
 
     console.log(this.MCountry.idCounty);
     console.log(this.MCountry.nameCountry);

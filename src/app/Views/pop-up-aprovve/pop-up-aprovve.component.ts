@@ -24,6 +24,7 @@ interface MiObjeto {
   styleUrls: ['./pop-up-aprovve.component.css']
 })
 export class PopUpAprovveComponent {
+ 
 
   mApprover: MApproverTime;
   mApproverCreate: MApproverTimeCreate;
@@ -31,6 +32,7 @@ export class PopUpAprovveComponent {
   aprobador = new FormControl('');
   idUser: any;
   MUser: MUserEntity;
+  btnOKState: boolean=false;
 
   userForm = new FormGroup({
     aprobacion: new FormControl('', [Validators.required]),
@@ -52,12 +54,10 @@ export class PopUpAprovveComponent {
     this.mApproverCreate = {} as MApproverTimeCreate;
     this.Aproved();
     this.MAprobadorUser =[];
-   // this.Aproved();
-    //this.MAprobadorUser =[];
   }
 
   crearAprobacion(){
-
+    this.btnOKState = true;
     console.log(this.userForm.value.aprobacion);
     this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole; //OK
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
@@ -108,8 +108,9 @@ export class PopUpAprovveComponent {
 
     this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe(data=> {
       console.log(data);
+      this.btnOKState = false;
       if (data.data) {
-
+        
         if(this.userForm.value.aprobacion == '0'){
           Swal.fire({
             icon: 'success',
@@ -126,7 +127,9 @@ export class PopUpAprovveComponent {
         }
         
         this.dialogRef.close();  
-        this.obtnerLista.loadApproverTime(this.idUser)
+        this.obtnerLista.loadApproverTime(this.idUser);
+
+        
       } else {
         Swal.fire({
           icon: 'error',
@@ -135,13 +138,17 @@ export class PopUpAprovveComponent {
           confirmButtonColor: '#0A6EBD',
         });
       }
+     
     }) ;
     
 
   }
 
+  
+
   Aproved()
     {
+/*
       this.apiUser.GetAprovved(2).pipe(
         map((data: MiObjeto) => data)
         ).subscribe((data) =>{
@@ -149,7 +156,32 @@ export class PopUpAprovveComponent {
           console.log(listap)
           this.MAprobadorUser = listap.result;
           console.log(this.MAprobadorUser);
-        });
+        });*/
+
+      
+      //if it is N1 call N2
+      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N1'){
+        this.apiUser.GetAprovved(2).pipe(
+          map((data: MiObjeto) => data)
+          ).subscribe((data) =>{
+            let listap = data["data"];
+            console.log(listap)
+            this.MAprobadorUser = listap.result;
+            console.log(this.MAprobadorUser);
+          });
+          //is it is standar call N1
+      }else if(this.MUser.rolEntity.nameRole=='Usuario estandar'){
+        this.apiUser.GetAprovved(1).pipe(
+          map((data: MiObjeto) => data)
+          ).subscribe((data) =>{
+            let listap = data["data"];
+            console.log(listap)
+            this.MAprobadorUser = listap.result;
+            console.log(this.MAprobadorUser);
+          });
+      }
+      
+      
       
 
     }
@@ -160,5 +192,5 @@ export class PopUpAprovveComponent {
     this.idUser = this.data.idUser;
     console.log(this.idUser, "idUserapp")
     console.log(this.data)
-  }
+}
 }

@@ -77,58 +77,61 @@ export class LoadArpExcelService {
     return this.http.get<MResponseLoadGuid>(direccion);
   }
 
-  UploadARP(data: object,datpais:string,idCarga:string): Observable<MResponseLoadGuid> {
+  UploadARP(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
     let direccion = this.URLLocal + "Load/UploadARP";
     console.log(direccion);
     const requestData= {
       data:data,
       paisSel: datpais,
-      idCarga: idCarga
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
     };
     return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
 
-  UploadTSE(data: object,datpais:string,idCarga:string): Observable<MResponseLoadGuid> {
+  UploadTSE(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
     let direccion = this.URLLocal + "Load/UploadTSE";
     console.log(direccion);
     const requestData= {
       data:data,
       paisSel: datpais,
-      idCarga: idCarga
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
     };
     return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
 
-  UploadSTE(data: object,datpais:string,idCarga:string): Observable<MSummary> {
+  UploadSTE(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MSummary> {
     let direccion = this.URLLocal + "Load/UploadSTE";
     const requestData= {
       data:data,
       paisSel: datpais,
-      idCarga: idCarga
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
     };
     console.log(direccion);
     return this.http.post<MSummary>(direccion, requestData);
   }
 
   
-  NotificacionesProceso(idCarga:string): Observable<MResponseNotificaciones> {
+  NotificacionesProceso(idCarga:string,idUserEntiyId:string): Observable<MResponseNotificaciones> {
     let direccion = this.URLLocal + "Load/Notificaciones";
    
     const requestData= {
-     
-      idCarga: idCarga
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
     };
 
     console.log(direccion);
     return this.http.post<MResponseNotificaciones>(direccion,requestData);
   }
 
-  ValidaLimitesExcepcionesOverlapping(idCarga:string): Observable<MSummaryFinal> {
+  ValidaLimitesExcepcionesOverlapping(idCarga:string,idUserEntiyId:string): Observable<MSummaryFinal> {
     let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping";
    
     const requestData= {
-     
-      idCarga: idCarga
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
     };
 
     console.log(direccion);

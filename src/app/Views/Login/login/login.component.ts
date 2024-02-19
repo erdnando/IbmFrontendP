@@ -85,7 +85,7 @@ Login(){
                   token:data.data.token,
                   code:data.data.password
                 };
-                this.storageService.guardarDatosMapeados(datosMapeados)
+                this.storageService.guardarDatosMapeados(datosMapeados);
                 return datosMapeados;
 
               }

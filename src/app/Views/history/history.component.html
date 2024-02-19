@@ -1,5 +1,5 @@
 
-<div class="body">
+<div class="body viewmodule">
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Historial de Horas</strong></h1>
         <div class="div-em">
@@ -28,21 +28,27 @@
         <mat-table [dataSource]="mListHorusReport" class="mat-elevation-z8" style="min-width: 1000px;">
     
             <!-- Fecha envio -->
-            <ng-container matColumnDef="fechaEnvio">
-                <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.startDate | date:'dd/MM/yyyy'}} </mat-cell>
+            <ng-container matColumnDef="fechaReporte">
+                <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.strStartDate | date:'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
     
             <!-- Fecha creacion -->
-            <ng-container matColumnDef="creationDate">
-                <mat-header-cell *matHeaderCellDef> Fecha creacion </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.creationDate | date:'dd/MM/yyyy'}} </mat-cell>
+            <ng-container matColumnDef="fechaEnvio">
+                <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.strCreationDate.substring(0,10) }} </mat-cell>
             </ng-container>
     
             <!-- N° Cliente  -->
-            <ng-container matColumnDef="cliente">
+            <ng-container matColumnDef="employeeCode">
                 <mat-header-cell *matHeaderCellDef> N° Cliente </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.clientEntity.nameClient}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.userEntity.employeeCode}} </mat-cell>
+            </ng-container>
+
+             <!-- Cliente  -->
+             <ng-container matColumnDef="cliente">
+                <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.userEntity.nameUser +' '+ element.userEntity.surnameUser}} </mat-cell>
             </ng-container>
     
             <!-- N° Reporte  -->
@@ -57,17 +63,7 @@
                 <mat-cell *matCellDef="let element"> {{element.countHours}} </mat-cell>
             </ng-container>
     
-            <!-- Aprobador N1 -->
-            <ng-container matColumnDef="aprobador">
-                <mat-header-cell *matHeaderCellDef> Aprobador 1 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.approverId}} </mat-cell>
-            </ng-container>
-
-             <!-- Aprobador N2  -->
-             <ng-container matColumnDef="aprobador2">
-                <mat-header-cell *matHeaderCellDef> Aprobador 2 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.approverId2}} </mat-cell>
-            </ng-container>
+           
     
            
     

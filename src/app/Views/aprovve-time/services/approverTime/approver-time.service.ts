@@ -27,4 +27,12 @@ export class ApproverTimeService {
     return this.http.get<MResponse>(direccion);
 
   }
+
+  Log(idUser: Guid):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"User/log?userEntityId="+idUser+"&operation=LogOut&parameters=0";
+    console.log(direccion);
+    return this.http.get<MResponse>(direccion);
+
+  }
 }

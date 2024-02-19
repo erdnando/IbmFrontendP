@@ -7,6 +7,7 @@ import { ListCountryService } from 'src/app/AdminViews/AdminCountries/services/l
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { ApiParameters } from 'src/app/Views/parameters/services/parameters/api.parameters';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 @Component({
   selector: 'app-pop-up-countries-create',
@@ -16,21 +17,23 @@ import Swal from 'sweetalert2';
 export class PopUpCountriesCreateComponent {
 
   MCountry: MCountryEntity;
-
+  MUserAuthenticated: any;
 
   userForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
   });
   
-  constructor(public dialogRef: MatDialogRef<PopUpCountriesCreateComponent>, private apiCreateCountry: CountryCreateService, private apiListCountry: ListCountryService, private refresh: ObtenerlistaService) {
+  constructor(public dialogRef: MatDialogRef<PopUpCountriesCreateComponent>, private apiCreateCountry: CountryCreateService, 
+    private apiListCountry: ListCountryService, private refresh: ObtenerlistaService,private storageData: StorageService) {
     this.MCountry = {} as MCountryEntity;
+    this.MUserAuthenticated = this.storageData.obtenerDatosMapeados();
   }
 
   onSubmit() {
     
     
     this.MCountry.nameCountry = this.userForm.value.nombre as unknown as string;
-    
+    this.MCountry.idUserEntiyId=this.MUserAuthenticated!.idUser;
     console.log(this.MCountry.nameCountry);
     
     this.apiCreateCountry.PostCreateCountry(this.MCountry).subscribe(data=> {

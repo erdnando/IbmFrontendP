@@ -1,4 +1,4 @@
-<div style="width: 500px; height: 600px; padding: 40px;">
+<div style="width: 550px; height: 600px; padding: 40px;">
   <article>
       <b>Nombre:</b> {{mApprover.horusReportEntity.userEntity.nameUser}}
       <br>
@@ -13,6 +13,8 @@
       <b> N° Reporte: </b> {{mApprover.horusReportEntity.strReport}}
       <br>
       <b> Reporte de horas: </b> {{mApprover.horusReportEntity.countHours}}
+      <br>
+      <b> Observaciones solicitante: </b> {{mApprover.description}}
       <br>
      <!-- <b> Cliente: </b> {{mApprover.horusReportEntity.clientEntityId}}-->
       <!-- <b> Cliente: </b> {{mApprover.horusReportEntity.userEntity.idUser}}-->
@@ -31,7 +33,7 @@
             </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="field-width" appearance="outline" *ngIf="userForm.value.aprobacion == '0' && MUser.rolEntity.nameRole == 'Usuario Aprobador N1'">
+      <mat-form-field class="field-width" appearance="outline" *ngIf="userForm.value.aprobacion == '0' && (MUser.rolEntity.nameRole == 'Usuario Aprobador N1' || MUser.rolEntity.nameRole == 'Usuario estandar')">
         <mat-label>Aprobador</mat-label>
         <mat-select [formControl]="aprobador" required>
             <mat-option *ngFor="let aprobador of MAprobadorUser" [value]="aprobador.userEntityId">
@@ -48,8 +50,9 @@
   </div>
   </div>
 
-    <div style="text-align: center; margin-top: 40px;">
-      <button mat-button (click)="crearAprobacion()"  class="button-close"> Guardar </button>
+    <div style="text-align: center; margin-top: 60px;">
+      <button mat-raised-button color="primary" [disabled]="btnOKState" (click)="crearAprobacion()"  class=""> 
+        Aceptar<mat-spinner style="position:absolute;margin-left:15px; margin-top: -60px;text-align: center; " [diameter]="25" *ngIf="btnOKState"></mat-spinner> </button>
   </div>
 
 

@@ -6,5 +6,5 @@ export interface MCountryEntity{
     nameCountry: string;
     zonaHoraria:string;
     Descripcion:string;
-
+    idUserEntiyId:string;
 }

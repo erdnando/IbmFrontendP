@@ -1,6 +1,6 @@
 import {Component,EventEmitter,HostListener,OnInit,Output,} from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { Subject, map } from 'rxjs';
 import { LoadToolbarService } from 'src/app/Plantillas/toolbar/services/LoadToolbar/LoadToolbar.service';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
@@ -10,6 +10,8 @@ import { animate,keyframes,style,transition,trigger,} from '@angular/animations'
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { MCountryEntity } from 'src/app/Models/MCountryEntiry';
 import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.service';
+import { Guid } from 'guid-typescript';
+import { ApproverTimeService } from 'src/app/Views/aprovve-time/services/approverTime/approver-time.service';
 
 interface SideNavTogg1e {
   screenWidth: number;
@@ -19,6 +21,11 @@ interface SideNavTogg1e {
 interface MiObjetoApp {
   [key: string]: any;
 }
+
+interface MiObjNotif {
+  [key: string]: any;
+}
+
 
 @Component({
   selector: 'app-sidenav',
@@ -32,7 +39,7 @@ interface MiObjetoApp {
       ]),
       transition(':leave', [
         style({ opacity: 1 }),
-        animate('350ms', style({ opacity: 0 })),
+        animate('150ms', style({ opacity: 0 })),
       ]),
     ]),
     trigger('rotate', [
@@ -49,6 +56,11 @@ interface MiObjetoApp {
   ],
 })
 export class SidenavComponent implements OnInit {
+  ee: EventEmitter<number> = new EventEmitter<number>();
+  counterNotif: number;
+  private _refreshAppTime$ = new Subject<any>();
+
+  
   Close: boolean = false;
 
   @Output() onToggleSideNav: EventEmitter<SideNavTogg1e> = new EventEmitter();
@@ -62,6 +74,7 @@ export class SidenavComponent implements OnInit {
   ListCountry: MCountryEntity[] = [];
   MUser: MUserEntity | null = null;
   Mmen: MRolMenu[] = [];
+  
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -105,7 +118,15 @@ export class SidenavComponent implements OnInit {
       this.paisSeleccionado = this.MUser!.countryEntity.nameCountry;
       this.Role = this.MUser!.rolEntity.idRole;
       this.cergarMenuList();
+      this.cargaNotificaciones(this.MUser!.idUser);
     }
+
+    this.listCountryService.ee.subscribe(counterNotif => {
+      console.log("consumiento evento notificacion de aprobaciones");
+      console.log(counterNotif);
+
+      this.counterNotif = counterNotif;
+    });
   }
 
   constructor(
@@ -113,7 +134,11 @@ export class SidenavComponent implements OnInit {
     private router: Router,
     private loadToolbarService: LoadToolbarService,
     private listCountryService: ObtenerlistaService,
-    private rutaActual: RutaActualService) {}
+    private rutaActual: RutaActualService,
+    private consultApproverTime: ApproverTimeService,
+   ) {
+      this.counterNotif=0;
+   }
 
   enviarPaisSeleccionado() {
     let value = this.paisSeleccionado || '';
@@ -132,6 +157,11 @@ export class SidenavComponent implements OnInit {
 
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
+    this.onToggleSideNav.emit({collapsed: this.collapsed,screenWidth: this.screenWidth,});
+  }
+
+  toggleopen(): void {
+    this.collapsed =true;
     this.onToggleSideNav.emit({collapsed: this.collapsed,screenWidth: this.screenWidth,});
   }
 
@@ -163,6 +193,9 @@ export class SidenavComponent implements OnInit {
   }
 
   cerrarSesion() {
+    
+    this.logEndSession(this.MUser!.idUser);
+
     this.storageService.eliminarDatosGuardados();
     this.router.navigate(['login']);
   }
@@ -170,5 +203,41 @@ export class SidenavComponent implements OnInit {
   onContentClickSidenav() {
     this.Close = true;
   }
+
+  cargaNotificaciones(idUser: any){
+
+    console.log('obteniendo aprobaciones...'+ idUser);
+    this.consultApproverTime
+    .GetApproverTime(idUser)
+    .pipe(map((data: MiObjNotif) => data))
+    .subscribe((data) => {
+      let lista = data['data'];
+
+      console.log('datos obtenidos;;;;');
+      console.log(lista);
+
+      
+      this.counterNotif=lista.length;
+      console.log('emitiendo evento en la carga inicial dela aplicacion:::'+this.counterNotif);
+      
+    });
+  }
+
+  logEndSession(idUser: any){
+
+    console.log('registrando log out...'+ idUser);
+    this.consultApproverTime
+    .Log(idUser)
+    .pipe(map((data: any) => data))
+    .subscribe((data:any) => {
+      
+      console.log(data);
+      console.log('log out logged');
+     
+    });
+  }
+
+
+ 
 }
 

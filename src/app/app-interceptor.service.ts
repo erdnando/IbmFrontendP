@@ -7,6 +7,10 @@ import { MResponse } from './Models/MResponse';
 import { ApiLogin } from './Views/Login/services/login/api.login';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { MUserEntity } from './Models/MUserEntity';
+import { ApproverTimeService } from './Views/aprovve-time/services/approverTime/approver-time.service';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +19,16 @@ export class AppInterceptorService implements HttpInterceptor {
 
   Userlogin!: MLogin;
   mResponse!:MResponse;
-  constructor(private storageService: StorageService,private apiLogin:ApiLogin,private router: Router) {
+ 
+  
+  constructor(
+    private storageService: StorageService,
+    private apiLogin:ApiLogin,
+    private router: Router,
+   ) {
     this.Userlogin = {} as MLogin;
     this.mResponse = {} as MResponse;
+   
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -106,6 +117,9 @@ export class AppInterceptorService implements HttpInterceptor {
 
     }
 
+
+    
+
     const authRequest = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
@@ -130,4 +144,10 @@ export class AppInterceptorService implements HttpInterceptor {
       })
     );
   }
+
+
+
+/*
+ 
+  */
 }

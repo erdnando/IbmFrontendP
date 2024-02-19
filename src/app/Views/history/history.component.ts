@@ -27,7 +27,7 @@ interface MiObjetoApp{
 
 export class HistoryComponent {
 
-  columnasAMostrar = ['fechaEnvio','creationDate', 'cliente', 'reporte', 'horas','aprobador','aprobador2', 'estado'];
+  columnasAMostrar = ['fechaReporte','fechaEnvio','employeeCode', 'cliente', 'reporte', 'horas', 'estado'];
 
   selectedCountry: string = '';
   MUser: MUserEntity;
@@ -105,7 +105,7 @@ export class HistoryComponent {
 
       console.log(listap);
       this.mListHorusReport.data = listap;
-      let ListaFilt = listap;
+     // let ListaFilt = listap;
 
       /*
       if (this.MUser.rolEntity.nameRole != 'Super Administrador') {
@@ -116,7 +116,7 @@ export class HistoryComponent {
         ListaFilt = ListaFilt.filter((x: any) => {x.userEntityId == this.MUser.idUser});
       }*/
 
-      this.mListHorusReport.data = ListaFilt;
+      //this.mListHorusReport.data = ListaFilt;
     });
 
   }
@@ -128,14 +128,15 @@ export class HistoryComponent {
     this.mListHorusReport.filterPredicate = (data: any, filter: string) => {
       console.log(data);
 
-      const approverId = data.approverId.toLowerCase().includes(filter);
-      const approverId2 = data.approverId2.toLowerCase().includes(filter);
-      const nameClient = data.clientEntity.nameClient.toLowerCase().includes(filter);
+     // const approverId = data.approverId.toLowerCase().includes(filter);
+      const employeeCode = data.userEntity.employeeCode.toLowerCase().includes(filter);
+      const nameClient = data.userEntity.nameUser.toLowerCase().includes(filter);
+      const surnameUser = data.userEntity.surnameUser.toLowerCase().includes(filter);
       const numberReport = data.strReport.toString().toLowerCase().includes(filter);
-      const creationDate = data.creationDate.toString().toLowerCase().includes(filter);
+      const creationDate = data.strCreationDate.toString().toLowerCase().includes(filter);
       
       
-      return approverId || nameClient || numberReport || creationDate || approverId2;
+      return  employeeCode || numberReport || creationDate || nameClient || surnameUser;
     };
     this.mListHorusReport.filter = this.filterValue.trim().toLowerCase();
 

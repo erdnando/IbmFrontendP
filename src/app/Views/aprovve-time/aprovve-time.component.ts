@@ -30,11 +30,12 @@ export class AprovveTimeComponent {
 
   columnasAMostrar = [
     'fechaEnvio',
-    'empleado',
+    'reporte',
     'identificacion',
+    'empleado',
     'horas',
     'horaInicio',
-    'horaInicio',
+    'horaFinal',
     'estado',
   ];
 
@@ -58,8 +59,7 @@ export class AprovveTimeComponent {
     }else if (boton == 'rechazadas') {
       this.botonfiltrado = 3;
     } 
-//console.log('botonfiltrado');
-  //  console.log(this.botonfiltrado);
+
 
     return this.mApproverTime.filter((dato) => dato.state === this.botonfiltrado);
   }
@@ -76,6 +76,7 @@ export class AprovveTimeComponent {
     this.ValidateRole();
     this.obtenerLista.refreshAppTime$.subscribe(lista => {
       this.mApproverTime = lista;
+      console.log("mApproverTime::::");
       console.log(this.mApproverTime);
     });
   }

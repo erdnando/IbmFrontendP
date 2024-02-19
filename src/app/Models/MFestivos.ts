@@ -6,8 +6,10 @@ export interface MFestivos {
     idFestivo: string;
     descripcion: string;
     diaFestivo: string;
+    sDiaFestivo: string;
     countryId: string;
     country: MCountryEntity;
     ano: string;
+    idUserEntiyId: string;
 
 }

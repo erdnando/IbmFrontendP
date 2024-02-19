@@ -77,18 +77,7 @@ export class ARPComponent {
     this.porcentajeCarga=0;
   }
   ngOnInit() {
-   /* Swal.fire({
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      showCancelButton: false,
-      showConfirmButton: false,
-      width: 0
-    });
-
-    setTimeout(() => {
-      Swal.close();
-  }, 2000); 
-    */
+   
     console.log('Datos ' , this.botonARP , this.botonTSE , this.botonSTE);
     this.validateRole();
     this.consultcountries();
@@ -242,97 +231,15 @@ export class ARPComponent {
     switch (boton){
       case 'ARP':
         this.botonARP = true; 
-        // if (filemb<= 10) {
-        //   this.botonARP = false;
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oopss ',
-        //     text: 'Error: El archivo no contiene información, por favor verifica!',
-        //     confirmButtonColor: '#0A6EBD',
-        //   });
-        // } else {
-        //   switch (file.name) {
-        //     case "PORTAL_ARP.xlsx":
-        //       this.botonARP = true;                
-        //       break;
-        //     case "PORTAL_ARP.xls":
-        //       this.botonARP = true;                
-        //       break;
-        //     default:
-        //       this.botonARP = false;
-        //       Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oopss ',
-        //         text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_ARP"!',
-        //         confirmButtonColor: '#0A6EBD',
-        //       });
-        //       break;
-        //   }
-        // }
-        
         
         return 
       case 'TSE':
         this.botonTSE = true;
-        // if (filemb<= 10) {
-        //   this.botonTSE = false;
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oopss ',
-        //     text: 'Error: El archivo no contiene información, por favor verifica!',
-        //     confirmButtonColor: '#0A6EBD',
-        //   });
-        // } else {
-        //   switch (file.name) {
-        //     case "PORTAL_TSE.xlsx":
-        //       this.botonTSE = true;                
-        //       break;
-        //     case "PORTAL_TSE.xls":
-        //       this.botonTSE = true;                
-        //       break;
-        //     default:
-        //       this.botonTSE = false;
-        //       Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oopss ',
-        //         text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_TSE"!',
-        //         confirmButtonColor: '#0A6EBD',
-        //       });
-        //       break;
-        //   }
-          
-        // }
+        
         return
       case 'STE':
         this.botonSTE = true;                
-        // if (filemb<= 3) {
-        //   this.botonSTE = false;
-        //   Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oopss ',
-        //     text: 'Error: El archivo no contiene información, por favor verifica!',
-        //     confirmButtonColor: '#0A6EBD',
-        //   });
-        // } else {
-        //   switch (file.name) {
-        //     case "PORTAL_STE.xlsx":
-              
-        //       break;
-        //     case "PORTAL_STE.xls":
-        //       this.botonSTE = true;                
-        //       break;
-        //     default:
-        //       this.botonSTE = false;
-        //       Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oopss ',
-        //         text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_STE"!',
-        //         confirmButtonColor: '#0A6EBD',
-        //       });
-        //       break;
-        //   }
-          
-        // }
+       
         return
       case 'Horario':
         this.botonHorario = true;
@@ -520,7 +427,7 @@ export class ARPComponent {
     let file2 =  fileInput2[0];
     let file3 =  fileInput3[0];
     let idCarga='00000000-0000-0000-0000-000000000000';
-
+    var idUserEntiyId=this.MUser.idUser.toString();
     this.porcentajeCarga = 0;
 
     if (file && file2 && file3) 
@@ -536,6 +443,8 @@ export class ARPComponent {
       fileReader.onload = (e) => {
           
         
+        
+       
 
           var workBook = XLSX.read(fileReader.result, { type: 'binary' });
           var sheetNames = workBook.SheetNames;
@@ -614,7 +523,7 @@ export class ARPComponent {
 
 
                       //carga ARP
-                      this.loadArpExcelService.UploadARP(this.ExcelData,valpais!,idCarga!).subscribe( data => { 
+                      this.loadArpExcelService.UploadARP(this.ExcelData,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
                       console.log(data);
                       this.mResponseLoadGuid=data;
                       idCarga = data.data;
@@ -686,7 +595,7 @@ export class ARPComponent {
               // console.log(this.ExcelData);
               var valpais = this.pais.value?.toString();
 
-              this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!,idCarga!).subscribe( data => { 
+              this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
               console.log(data);
               this.mResponseLoadGuid=data;
                 idCarga = data.data;
@@ -751,7 +660,7 @@ export class ARPComponent {
               // console.log(this.ExcelData);
               var valpais = this.pais.value?.toString();
 
-              this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!,idCarga!).subscribe( data => { 
+              this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
               console.log(data)
               this.mSummary = data;
 
@@ -823,7 +732,7 @@ export class ARPComponent {
                       //Si las tres variables de carga OK vienen en 0 (Cero), se manda directamente a Notificaciones
 
                       if (soloNotificaciones ) {
-                          this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
+                          this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
                             console.log(data)
                             //this.mSummary = data;
               
@@ -831,7 +740,7 @@ export class ARPComponent {
                             this.activarBarra = false;
                             });
                          } else {
-                          this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString()).subscribe( data => { 
+                          this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
                             console.log(data)
                             this.mSummaryFinal=data;
                             
@@ -864,7 +773,7 @@ export class ARPComponent {
                             });
 
 
-                            this.loadArpExcelService.NotificacionesProceso(idCarga.toString()).subscribe( data => { 
+                            this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
                               console.log(data)
                               //this.mSummary = data;
                 
@@ -882,6 +791,7 @@ export class ARPComponent {
 
                          //-----------------------------------------------------------
                     }else{
+                      console.log('something strange')
                       //no acepta carga;
                       //-----------------------------------------------------------
                       //sigue activa la carga anterior

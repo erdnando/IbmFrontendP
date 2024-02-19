@@ -5,6 +5,7 @@ import { MAprobador } from 'src/app/Models/MAprobador';
 import { ApproverCreateService } from 'src/app/AdminViews/AdminApprover/services/approverCreate/approver-create.service';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/Service/storage-service/storage.service';
 
 @Component({
   selector: 'app-pop-up-schedule-create',
@@ -17,21 +18,26 @@ import Swal from 'sweetalert2';
 export class PopUpScheduleCreateComponent {
 
   MApprover: MAprobador;
+  MUser: any;
 
   userForm = new FormGroup({
     descripcion: new FormControl('', [Validators.required]),
     nivel: new FormControl('', [Validators.required])
   });
 
-  constructor(public dialogRef: MatDialogRef<PopUpScheduleCreateComponent>, private apicreateApprover: ApproverCreateService, private refreshClients: ObtenerlistaService) {
+  constructor(public dialogRef: MatDialogRef<PopUpScheduleCreateComponent>, private apicreateApprover: ApproverCreateService, 
+    private refreshClients: ObtenerlistaService,private storageData: StorageService) {
     this.MApprover = {} as MAprobador;
+    this.MUser = this.storageData.obtenerDatosMapeados();
   }
 
   onSubmit() {
     
     this.MApprover.descripcion = this.userForm.value.descripcion as unknown as string;
     this.MApprover.nivel = Number(this.userForm.value.nivel);
-    
+    this.MApprover.idUserEntiyId=this.MUser!.idUser;
+
+
     console.log(this.MApprover.descripcion);
     console.log(typeof this.MApprover.nivel);
     

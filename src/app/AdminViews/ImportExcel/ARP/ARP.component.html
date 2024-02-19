@@ -1,4 +1,4 @@
-<div class="body">
+<div class="body viewmodule ">
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Carga de Archivos</strong></h1>
         <div class="div-em">
@@ -19,7 +19,10 @@
         <br>
 
     <div class="body-excel" style="width: 95%;">
-        <div class="overlay" *ngIf="activarBarra"></div>
+        <div class="overlay" *ngIf="activarBarra" style="padding:40%;position: fixed;padding-top: 20%;">
+            <mat-spinner [diameter]="50"></mat-spinner>
+
+        </div>
         <div style="width: 100%;">
         <mat-progress-bar mode="determinate" [value]="porcentajeCarga" *ngIf="activarBarra"></mat-progress-bar>
         <p *ngIf="activarBarra" class="texto-barra-carga">{{ porcentajeCarga }}% completado ({{ porcentajeCarga == 0 ? "Cargando..." : mensajeProgressBar}})</p>
@@ -64,8 +67,10 @@
 
 
 
-
-        <button [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" class="boton" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos</button>
+<div style="text-align: center;">
+    <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
+</div>
+        
 
     </div>
         
