@@ -23,6 +23,7 @@ import { UserConsultCountryService } from 'src/app/Views/user/services/userConsu
 import { UserExceptionsConsultCountryService } from 'src/app/Views/user/services/userConsultCountry/user-exceptions-consult-country.service';
 import { RolesMenuService } from 'src/app/AdminViews/AdminRoles/services/rolesMenu/roles-menu.service';
 import { Guid } from 'guid-typescript';
+import { ReportExceptionService } from 'src/app/AdminViews/usersExceptions/service/reportExceptionService/report-exception.service';
 
 
 interface MiObjeto {
@@ -57,6 +58,7 @@ export class ObtenerlistaService {
   private _refreshListUsersRol$ = new Subject<any>();
   private _refreshListUsersCountry$ = new Subject<any>(); 
   private _refreshListUsersExceptionsCountry$ = new Subject<any>(); 
+  private _refreshReportException$ = new Subject<any>(); 
   private _refreshListUser$ = new Subject<any>();
   private _refreshAppTime$ = new Subject<any>();
 
@@ -74,7 +76,8 @@ export class ObtenerlistaService {
     private apilistUsers: ListUsersService,
     private apiConsultHotario: ConsultaHorarioUserService,
     private consultApproverTime: ApproverTimeService,
-    private listUsersExceptions: ListExceptionService
+    private listUsersExceptions: ListExceptionService,
+    private reportExceptions: ReportExceptionService,
     ) {
       this.MListCountry = [];
       this.MRoles = [];
@@ -340,9 +343,23 @@ export class ObtenerlistaService {
       this._refreshUserException$.next(lista) ;
     });
   }
+  
+  loadListReportExceptions(){
+    this.reportExceptions
+    .GetListExceptions()
+    .pipe(map((data: MiObjeto) => data))
+    .subscribe((data) => {
+      let lista = data['data'];
+      this._refreshReportException$.next(lista) ;
+    });
+  }
 
   get refreshUserException$(){
     return this._refreshUserException$.asObservable();
+  }
+
+  get refreshReportException$(){
+    return this._refreshReportException$.asObservable();
   }
 
 }

@@ -44,6 +44,7 @@ import { SamlCallbackComponent } from './Views/saml-callback/saml-callback.compo
 import { ScheduleComponent } from './Views/schedule/schedule/schedule.component';
 import { PopUpScheduleUpdateComponent } from './Views/schedule/pop-up-schedule-update/pop-up-schedule-update.component';
 import { PopUpScheduleCreateComponent } from './Views/schedule/pop-up-schedule-create/pop-up-schedule-create.component';
+import { PopUpAddReportExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-report-exception/pop-up-add-report-exception.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -100,6 +101,7 @@ export const routingComponents = [
   ClientsComponent,
   PopUpClientsCreateComponent,
   PopUpClientsUpdateComponent,
+  PopUpAddReportExceptionComponent,
   ApproverComponent,
   PopUpApproverUpdateComponent,
   PopUpApproverCreateComponent,

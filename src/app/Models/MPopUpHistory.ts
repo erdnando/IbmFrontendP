@@ -10,7 +10,7 @@ export interface MPopUpHistory {
     horas: string;
     clientEntity: MClientEntity;
     userEntity:MUserEntity;
-    fechaenvio: Date;
+    fechaenvio: string;
     actividad: number;
     activity: number;
     aprobaador1: string;

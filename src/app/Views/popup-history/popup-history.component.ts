@@ -32,6 +32,7 @@ export class PopupHistoryComponent {
   tipoHoras: string = "";
   procedencia : string = "";
   Aprobacion = Aprobacion2;
+  assignments: any[] = [];
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopupHistoryComponent>, private datesModal: PopUpHistoryService) {
@@ -40,10 +41,12 @@ export class PopupHistoryComponent {
 
   getColor(estado: string): string {
     switch (estado) {
+      case "AprobadoN0":
+        return '#219C90';
       case "AprobadoN1":
-          return '#219C90';
-          case "AprobadoN2":
-            return '#219C90';
+        return '#219C90';
+      case "AprobadoN2":
+        return '#219C90';
       case "Rechazado":
           return '#D83F31';
       case "Pendiente":
@@ -55,10 +58,12 @@ export class PopupHistoryComponent {
 
 cargarIcono(estado: string): string{
   switch (estado) {
+    case "AprobadoN0":
+        return 'check_circle';
     case "AprobadoN1":
         return 'check_circle';
-        case "AprobadoN2":
-          return 'check_circle';
+    case "AprobadoN2":
+      return 'check_circle';
     case "Rechazado":
         return 'cancel';
     case "Pendiente":
@@ -81,6 +86,7 @@ cargarIcono(estado: string): string{
     ).subscribe((data) => {
       let listap = data["data"];
       this.MListHorus = listap;
+      this.assignments = listap[0].assignments;
       console.log(this.MListHorus)
       console.log(this.data.reporte)
       this.MListHorusResport = listap[0];

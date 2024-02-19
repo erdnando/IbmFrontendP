@@ -1,64 +1,34 @@
-<div style="height: 550px; padding: 40px;">
-
+<!-- <div style="height: 550px; padding: 40px;"> -->
+<h2 mat-dialog-title>Historial</h2>
+<mat-dialog-content>
     <article>
         <strong>Actividad:</strong> {{this.tipoHoras}}
         <br>
-        <strong>Fecha de envio:</strong> {{MListHorusResport.fechaenvio | date:'dd/MM/yyyy'}}
+        <strong>Fecha de envio:</strong> {{MListHorusResport.fechaenvio? MListHorusResport.fechaenvio.split(" ")[0] : ''}}
         <br>
         <strong>N° Reporte:</strong> {{MListHorusResport.strNumeroreporte}}
         <br>
         <strong>Reporte de horas:</strong> {{MListHorusResport.horas}}
         <br>
-        <strong>Cliente:</strong> {{MListHorusResport.userEntity!.nameUser +' '+MListHorusResport.userEntity!.surnameUser}}
+        <strong>Cliente:</strong> {{MListHorusResport.userEntity?.nameUser +' '+MListHorusResport.userEntity?.surnameUser}}
         <br>
         <br>
     </article>
 
     <div>
-        <mat-table [dataSource]="[MListHorus[MListHorus.length-1]]">
-
-            <ng-container matColumnDef="aprobador1">
-                <mat-header-cell *matHeaderCellDef> Aprobador 1 </mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.aprobaador1}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="aprobador2">
-                <mat-header-cell *matHeaderCellDef> Aprobador 2 </mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.aprobaador2}}</mat-cell>
-            </ng-container>
-           <!-- <ng-container matColumnDef="aprobador2">
-                <mat-header-cell *matHeaderCellDef> Aprobador 2 </mat-header-cell>
-                <mat-cell *matCellDef="let element">-------</mat-cell>
-                <mat-cell *matCellDef="let element" >
-                    <label *ngIf="element.estadoAprobadorNIvel2 > 0"> {{element.aprobaador2}}</label>
-                </mat-cell>
-            </ng-container> -->
-
-            <!-- Estado  -->
-            <ng-container matColumnDef="estado">
-                <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    <button 
-                            mat-button class="button-stade" 
-                            [ngStyle]="{'background-color':'white'}"
-                            [title]="Aprobacion[element.estadoReporte]">
-                            <mat-icon style="font-size: 20px;"  [ngStyle]="{'color': getColor(Aprobacion[element.estadoReporte])}">
-                                {{cargarIcono(Aprobacion[element.estadoReporte])}}
-                            </mat-icon>                        
-                        </button>                   
-                </mat-cell>
-
-           <!--     <mat-cell *matCellDef="let element" >
-                    <button mat-button class="button-stade"  [ngStyle]="{'background-color': getColor(Aprobacion[element.estadoAprobadorNIvel2])}">{{Aprobacion[element.estadoAprobadorNIvel2.toString()]}}
-                    </button>                    
-                </mat-cell>-->
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
-
-        </mat-table>
+        <mat-list class="assignment-list">
+            <mat-list-item *ngFor="let assignment of assignments">
+              <span matListItemTitle>
+                {{assignment.userEntity.roleEntity.nameRole}}
+                <mat-icon style="font-size: 20px; float:right; margin-top:12px;" [ngStyle]="{'color': getColor(Aprobacion[assignment.resultado])}">{{cargarIcono(Aprobacion[assignment.resultado])}}</mat-icon>
+              </span>
+              <span matListItemLine>{{assignment.userEntity.nameUser}} {{assignment.userEntity.surnameUser}}</span>
+              <span matListItemLine>{{assignment.description}}</span>
+            </mat-list-item>
+          </mat-list>
+        
     </div>
+</mat-dialog-content>
 
     <!--<div   *ngIf="MListHorusResport.estadoAprobadorNIvel2 > 10">
         <mat-table [dataSource]="[MListHorus[MListHorus.length -1]]" >
@@ -93,15 +63,10 @@
         </mat-table>
     </div>-->
 
-    <p>
-        <b>Observaciones</b>
-        <br>
-        {{MListHorusResport.observaciones}}
-    </p>
-
-
-    <div style="text-align: center;">
-        <button mat-button (click)="onClose()" class="button-close"> Cerrar </button>
+<mat-dialog-actions>
+    <button mat-button (click)="onClose()" class="button-close"> Cerrar </button>
+</mat-dialog-actions>
+<!--     <div style="text-align: center;">
     </div>
-
-</div>
+ -->
+<!-- </div> -->

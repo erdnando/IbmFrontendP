@@ -20,6 +20,9 @@ import { PopUpUpdateExceptionComponent } from '../pop-up-update-exception/pop-up
 import { DatePipe } from '@angular/common';
 import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.service';
 import { PopUpUsersUpdateComponent } from '../../AdminUsers/pop-up-users-update/pop-up-users-update.component';
+import { ReportExceptionService } from '../service/reportExceptionService/report-exception.service';
+import Swal from 'sweetalert2';
+import { PopUpAddReportExceptionComponent } from '../pop-up-add-report-exception/pop-up-add-report-exception.component';
 
 interface MiObjeto {
   [key: string]: any;
@@ -35,23 +38,30 @@ export class UsersExceptionsComponent {
 
   datesTable = new MatTableDataSource<any>();
   filterValue: string = "";
+  reportsFilterValue: string = "";
   Approving: boolean = false;
   MUser: MUserEntity;
   //selectedCountry: string;
   MRoles: MRol[];
+  MReports = new MatTableDataSource<any>();
+  MReportFilters: any[] = [{name: 'report', value: ''}, {name: 'user_code', value: ''}];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('datesTablePaginator') datesTablePaginator!: MatPaginator;
+  @ViewChild('musersPaginator') musersPaginator!: MatPaginator;
+  @ViewChild('mreportsPaginator') mreportsPaginator!: MatPaginator;
 
   @ViewChild(MatSort) sort!: MatSort;
 
   ngAfterViewInit() {
-    this.datesTable.paginator = this.paginator;
-    this.MUsers.paginator = this.paginator;
+    this.datesTable.paginator = this.datesTablePaginator;
+    this.MUsers.paginator = this.musersPaginator;
+    this.MReports.paginator = this.mreportsPaginator;
   }
 
   columnasAMostrarUser = ['nombre', 'codigo', 'fecha', 'horaInicio'];
 
   columnasAMostrarUserExceptuado = ['nombre', 'email', 'rol', 'pais'];
+  columnasAMostrarReporteExceptuado = ['report', 'user_code', 'date', 'exception_date'];
   columnasUserExceptuado = [
     { nombre: 'nombre', titulo: 'Nombre' },
     { nombre: 'email', titulo: 'Correo Electronico' },
@@ -65,6 +75,7 @@ export class UsersExceptionsComponent {
     private refresh: ObtenerlistaService,
     private rutaActual: RutaActualService,
     private serviceLists: ObtenerlistaService,
+    private reportExceptionService: ReportExceptionService,
   ) {
     this.MRoles = [];
     this.MListCountry = [];
@@ -113,10 +124,27 @@ export class UsersExceptionsComponent {
     this.validateRole();
 
     this.refresh.loadListUsersExceptions();
+    this.refresh.loadListReportExceptions();
 
     this.refresh.refreshUserException$.subscribe((exceptions) => {
       console.log(exceptions)
       this.datesTable.data = exceptions;
+    });
+
+    this.MReports.filterPredicate = (data, filter) => {
+      let result = false;
+      for (let reportFilter of this.MReportFilters) {
+        if (reportFilter.value == '') continue;
+        if (reportFilter.name == 'user_code') {
+          if (data.userEntity.employeeCode.includes(filter)) { result = true; break; }
+        } else {
+          if (data[reportFilter.name].includes(filter)) { result = true; break; }
+        }
+      }
+      return result;
+    };
+    this.refresh.refreshReportException$.subscribe((exceptions) => {
+      this.MReports.data = exceptions;
     });
 
     //----------------new---------------------------
@@ -184,6 +212,27 @@ export class UsersExceptionsComponent {
 
   }
 
+  addReportException() {
+    let dialogRef = this.dialog.open(PopUpAddReportExceptionComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this._refreshListReportExceptions();
+    });
+  }
+
+  cancelReportExcepcion(report: any) {
+    console.log('report', report);
+    this.reportExceptionService.cancelReportException(report.idReportException).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Excepción Cancelada Correctamente',
+        confirmButtonColor: '#0A6EBD',
+      });
+
+      this._refreshListReportExceptions();
+    });
+  }
+
   //----------------------------------------
   MUsers = new MatTableDataSource<any>();
   MListRol: MRol[] = [];
@@ -249,11 +298,21 @@ export class UsersExceptionsComponent {
     this.MUsers.filter = this.filterValue.trim().toLowerCase();
   }
 
+  _applyReportExceptionsFilter(columnName: string, event: any) {
+    this.reportsFilterValue = (event.target as HTMLInputElement).value;
+    this.MReportFilters.find(x => x.name == columnName).value = this.reportsFilterValue;
+    this.MReports.filter = this.reportsFilterValue;
+  }
+
   _refreshListUsers(){
     this.refresh.refreshListUser$.subscribe((listap) => {
       console.log(listap)
       this.MUsers.data = listap;
     });
+  }
+
+  _refreshListReportExceptions(){
+    this.refresh.loadListReportExceptions();
   }
 
   _RecibirPaisSeleccionado() {

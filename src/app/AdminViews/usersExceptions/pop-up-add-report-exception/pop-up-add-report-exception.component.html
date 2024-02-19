@@ -1,0 +1,20 @@
+<div class="body">
+
+    <mat-toolbar  >
+        <h1>Excepcion</h1>
+      </mat-toolbar>
+    
+        <div class="example-container" [formGroup]="reportForm">
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Reporte: </mat-label>
+                <input matInput placeholder="" formControlName="report">
+            </mat-form-field>            
+        </div>
+    
+        <div style="text-align: center;">
+            <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="reportForm.invalid" class="">Agregar</button>
+        </div>
+        
+    
+    </div>
+    
