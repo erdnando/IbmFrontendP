@@ -58,7 +58,7 @@ export class ARPComponent {
   columnasARP:string[]=["DOC_NUM","TOOL","PAIS","ID_EMPLEADO","NUMERO_CLIENTE","NOMBRE_CLIENTE","ESTADO","FECHA_REP","HORA_INICIO","HORA_FIN","TOTAL_MINUTOS","CATEGORIA","ACTIVIDAD","COMENTARIO","FECHA_EXTRATED"];
   columnasTSE:string[]=["Recurso de servicio: Usuario: ISO 2","TSE: Work Order","Recurso de servicio: Usuario: Número de empleado","Recurso de servicio: Usuario: Zona horaria","Orden de trabajo: Caso: Account CMR Number","Orden de trabajo: Caso: Account Name Text","TSE: Status","TSE: Start Time","TSE: End Time","Duration in Hours","WO: Subject"];
   columnasSTE:string[]=["Session Time Unique ID","Session Time Support Agent Country","Número del caso","Session Time Creator Employee Serial Number","Account CMR Number","Nombre de la cuenta: Nombre de la cuenta","Start Date/Time","End Date/Time","Session Time: Total Duration","Case Subject"];
-  columnasexcelWorkdayG:string[]=["Employee ID","Worker","Time Type","Reported Date","Calculated Quantity","Status"];
+  columnasexcelWorkdayG:string[]=["Employee ID","Worker","Reported Date","Original Reported Quantity","Time Type","Status","Calculated Date","In Time","Out Time","Calculated Quantity","Calculation Tags","Source Time or Time Off Block"];
   pais = new FormControl('');
   MListCountry: MCountryEntity[];
   MListGMT: MGmt[];
@@ -438,9 +438,11 @@ export class ARPComponent {
         var workBook = XLSX.read(fileReader.result, { type: 'binary' });
         var sheetNames = workBook.SheetNames;
         this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+        console.log(this.ExcelData.length);
         let valiFile = true;
         this.columnasexcelWorkdayG.forEach(element => {
-          if (!this.ExcelData[0][element]) {
+          console.log('VALOR ES .. ' + this.ExcelData[0][element])
+          if (!this.ExcelData[0][element]) { 
             valiFile=false; 
           }   
         });
