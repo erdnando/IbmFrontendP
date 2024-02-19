@@ -19,7 +19,7 @@
         <mat-list class="assignment-list">
             <mat-list-item *ngFor="let assignment of assignments">
               <span matListItemTitle>
-                {{assignment.userEntity.roleEntity.nameRole}}
+                {{assignment.userEntityId == "53765c41-411f-4add-9034-7debaf04f276"? "Sistema" : assignment.userEntity.roleEntity.nameRole}}
                 <mat-icon style="font-size: 20px; float:right; margin-top:12px;" [ngStyle]="{'color': getColor(Aprobacion[assignment.resultado])}">{{cargarIcono(Aprobacion[assignment.resultado])}}</mat-icon>
               </span>
               <span matListItemLine>{{assignment.userEntity.nameUser}} {{assignment.userEntity.surnameUser}}</span>
