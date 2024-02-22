@@ -727,7 +727,7 @@ export class ARPComponent {
                     cancelButtonText:'Cancelar carga' 
                   }).then((willDelete) => {
 
-                    if(willDelete.value){
+                    if(willDelete.value==true){
 
                       //Si las tres variables de carga OK vienen en 0 (Cero), se manda directamente a Notificaciones
 
@@ -785,22 +785,17 @@ export class ARPComponent {
                             this.activarBarra = false;
                             });
                          }
-
-                          
-                          
-
                          //-----------------------------------------------------------
-                    }else{
-                      console.log('something strange')
+                    }else if(willDelete.value==false){
+                      console.log('something strange');
                       //no acepta carga;
                       //-----------------------------------------------------------
-                      //sigue activa la carga anterior
                       //-----------------------------------------------------------
                       this.activarBarra = false;
                       this.fileInput3.nativeElement.value = null;
                     }
             
-                  console.log(willDelete)
+                  console.log(willDelete);
                 });
               
               });
