@@ -36,7 +36,7 @@ export class AppInterceptorService implements HttpInterceptor {
     const token = datosmap == null ?"":datosmap.token;
 
     console.log(req.url);
-    if(!req.url.endsWith("Login")){ 
+    if(!req.url.endsWith("Login") && !req.url.endsWith("CargaAvance")){ 
 
         console.log("calling api");
         
@@ -57,9 +57,9 @@ export class AppInterceptorService implements HttpInterceptor {
               showCancelButton: true,
               confirmButtonText: 'Renovar sesión' , 
               cancelButtonText:'Salir' 
-            }).then((willDelete) => {
+            }).then((willDeletexx) => {
 
-              if(willDelete.value){
+              if(willDeletexx.value){
                 //renovar
                 var datosmap = this.storageService.obtenerDatosMapeados()
                 this.Userlogin.userName = datosmap.email;

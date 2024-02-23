@@ -723,13 +723,11 @@ export class ARPComponent {
                     confirmButtonColor: '#0A6EBD',
                     showConfirmButton: true,
                     showCancelButton: true,
-                    confirmButtonText: soloNotificaciones ? 'Notificar hallazgos' :'Continuar proceso' , 
+                    confirmButtonText: 'Continuar proceso' , 
                     cancelButtonText:'Cancelar carga' 
-                  }).then((willDelete) => {
+                  }).then((result) => {
 
-                    if(willDelete.value==true){
-
-                      //Si las tres variables de carga OK vienen en 0 (Cero), se manda directamente a Notificaciones
+                    if(result.isConfirmed){
 
                       if (soloNotificaciones ) {
                           this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
@@ -786,7 +784,7 @@ export class ARPComponent {
                             });
                          }
                          //-----------------------------------------------------------
-                    }else if(willDelete.value==false){
+                    }else if(result.isDenied){
                       console.log('something strange');
                       //no acepta carga;
                       //-----------------------------------------------------------
@@ -795,7 +793,7 @@ export class ARPComponent {
                       this.fileInput3.nativeElement.value = null;
                     }
             
-                  console.log(willDelete);
+                 // console.log(willDeletex);
                 });
               
               });
