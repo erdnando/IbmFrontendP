@@ -59,6 +59,7 @@ export class RegisterTimeComponent {
   pipe = new DatePipe('en-US');
   activarBarra = false;
   todayDate!: Date;
+  selectedByDefault:string;
 
   constructor(
     private storageService: StorageService,
@@ -88,7 +89,7 @@ export class RegisterTimeComponent {
     this.inicio = this.horaInicio.value;
     this.fin = this.horaInicio.value;
     this.MHoursResponse = {} as MPortalDBResponse;
-
+    this.selectedByDefault="Standby";
     
   }
 
@@ -196,7 +197,7 @@ export class RegisterTimeComponent {
             this.MHours.clientEntityId = null as unknown as Guid;
             this.MHours.description = this.descripcion.value as string;
             this.MHours.tipoReporte = 1;
-            this.MHours.acitivity = this.actividad.value as unknown as number;
+            this.MHours.acitivity = 0;//this.actividad.value as unknown as number;
             this.MHours.countHours = this.cantidadHoras.toString() as unknown as string;
             this.MHours.approverId = this.aprobador.value?.toString() as unknown as string;
             this.MHours.numberReport = 0;
@@ -255,48 +256,6 @@ export class RegisterTimeComponent {
                 }
 
 
-
-                // if(data.data != null){
-                //   if (data.state==99) {
-                //     Swal.fire({
-                //       icon: 'error',
-                //       title: 'Oops...',
-                //       text: 'Error en el registro de horas, no existe horario asignado.',
-                //       confirmButtonColor: '#0A6EBD',
-                //     });
-                //   } else if (data.IdPortalDb != null) {
-                //     Swal.fire({
-                //       icon: 'success',
-                //       title: 'Registro de horas se genero correctamente',
-                //       confirmButtonColor: '#0A6EBD',
-                //     });
-                //     this.fecha.reset();
-                //     this.fecha.reset();
-                //     this.horaInicio.reset();
-                //     this.horaFin.reset();
-                //     this.descripcion.reset();
-                //     this.actividad.reset();
-                //     this.aprobador.reset();
-                //   }
-                //  }//else if (data.IdPortalDb == null) {
-                //   Swal.fire({
-                //     icon: 'error',
-                //     title: 'Oops...',
-                //     text: 'Error en el registro de horas (registro existente).',
-                //     confirmButtonColor: '#0A6EBD',
-                //   });
-                // } else {
-                //   if (data.data || data) {
-                   
-                //   } else {
-                //     Swal.fire({
-                //       icon: 'error',
-                //       title: 'Oops...',
-                //       text: 'Error en el registro de horas.',
-                //       confirmButtonColor: '#0A6EBD',
-                //     });
-                //   }
-                // }
               }
             );
 

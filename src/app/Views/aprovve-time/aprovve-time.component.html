@@ -46,7 +46,7 @@
                 <ng-container matColumnDef="fechaEnvio">
                     <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                         {{element.horusReportEntity.strStartDate | date:'dd/MM/yyyy'}} 
+                         {{element.horusReportEntity.strStartDate.substring(0,10) }} 
                     </mat-cell>
                 </ng-container>
 

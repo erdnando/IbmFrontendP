@@ -65,15 +65,18 @@
                                     <input matInput [(ngModel)]="cantidadHoras" name="cantidadHoras" readonly>
                                 </mat-form-field>
                             
-                    
                                 <mat-form-field class="example-full-width" appearance="outline">
                                     <mat-label>Actividad</mat-label>
-                                    <mat-select [formControl]="actividad" required>
+                                    <input matInput [(ngModel)]="selectedByDefault" name="actividad" readonly>
+                                </mat-form-field>
+                                <!--<mat-form-field class="example-full-width" appearance="outline">
+                                    <mat-label>Actividad</mat-label>
+                                    <mat-select [formControl]="actividad" required >
                                         <mat-option [value]="0">
                                             Standby
                                         </mat-option>                                        
                                     </mat-select>
-                                </mat-form-field>
+                                </mat-form-field>-->
                     
                     <div class="example-container">
                         <mat-form-field class="field-width" appearance="outline">
@@ -94,7 +97,10 @@
                 </fieldset>
             </div>
             <div style="text-align: right; padding-top: 30px;">
-                <button mat-raised-button color="primary" class="" [disabled]="activarBarra || (fecha.invalid || horaInicio.invalid || horaFin.invalid || actividad.invalid || aprobador.invalid)" (click)="enviar()">Enviar<mat-icon>send</mat-icon></button>
+                <button mat-raised-button color="primary" class="" [disabled]="activarBarra || (fecha.invalid || horaInicio.invalid || horaFin.invalid || actividad.invalid || aprobador.invalid)" (click)="enviar()">
+                    Enviar
+                    <mat-spinner style="position:absolute;margin-left:0px; margin-top: -60px;text-align: center; " [diameter]="25" *ngIf="activarBarra"></mat-spinner>
+                    <mat-icon>send</mat-icon></button>
             </div>
 
         </form>
