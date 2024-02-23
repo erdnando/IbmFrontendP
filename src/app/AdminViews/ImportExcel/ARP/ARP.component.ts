@@ -29,6 +29,7 @@ export class ARPComponent {
   @ViewChild('fileInput3') fileInput3: any;
   @ViewChild('fileInput4') fileInput4: any;
   @ViewChild('fileInputWorkdayG') fileInputWorkdayG: any;
+  @ViewChild('downloadWorkdayFileEl') downloadWorkdayFileEl: any;
 
   ExcelData: any;
   excelData1: any;
@@ -367,13 +368,15 @@ export class ARPComponent {
           let json_object = JSON.stringify(XL_row_object);
           // aqui parseamos a json
           const datos = JSON.parse(json_object);
-          console.log(this.ExcelData);
-          if(this.ExcelData.length){
-
-            console.log(this.ExcelData);
+          if(this.ExcelData.length) {
             this.loadArpExcelService.PostLoadHorariosWorkdayG(this.ExcelData).subscribe(data => {
-              console.log(data);
-              if(data){
+              const blob = new Blob([data], { type: 'application/octet-stream' });
+              const url= window.URL.createObjectURL(blob);
+              this.downloadWorkdayFileEl.nativeElement.href = url;
+              this.downloadWorkdayFileEl.nativeElement.download = 'workdayy.xlsx';
+              this.downloadWorkdayFileEl.nativeElement.click();
+              /* window.open(url); */
+              /* if(data){
                 Swal.fire({
                   icon: 'success',
                   title: 'Carga de archivo completada.',
@@ -389,7 +392,7 @@ export class ARPComponent {
                   confirmButtonColor: '#0A6EBD',
                 });
                 this.fileInputWorkdayG.nativeElement.value = null;
-              }
+              } */
             });
             
             console.log("El archivo pasa")
