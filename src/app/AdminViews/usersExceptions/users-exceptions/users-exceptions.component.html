@@ -1,7 +1,7 @@
 <div class="body viewmodule ">
 
     <div>
-        <h1 style="color: #61677A; font-size: 2em;"><strong>Usuarios exceptuados</strong></h1>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Excepciones</strong></h1>
         <div class="div-em">
             <span>Encuentra información sobre excepciones .Haz clic en el estado de tu interes para obtener más detalles</span>
             
@@ -192,7 +192,7 @@
                 <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
             </div>
         </mat-tab>
-        <mat-tab>
+        <!-- <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">supervisor_account</mat-icon>
                 Excepcion de Reportes
@@ -201,6 +201,78 @@
             <div *ngIf="Approving">
                 <div style="text-align: right; ">
                     <button mat-raised-button color="primary" (click)="addReportException()">Agregar<mat-icon>library_add</mat-icon></button>
+                </div>
+
+                <em class="filter-text">Filtrar por:</em>
+                <hr class="filter-divider">
+
+                <div class="filters" *ngIf="Approving">
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label>Reporte:</mat-label>
+                        <input matInput (keyup)="_applyReportExceptionsFilter('report', $event)" placeholder="Reporte" #input>
+                    </mat-form-field>
+                    <mat-form-field class="field-width" appearance="outline">
+                        <mat-label>Codigo Empleado:</mat-label>
+                        <input matInput (keyup)="_applyReportExceptionsFilter('user_code', $event)" placeholder="Codigo Empleado">
+                    </mat-form-field>
+                </div>
+
+                
+                    <div class="table-container">
+                        <mat-table [dataSource]="MReports" style="min-width:900px;">
+    
+                             <ng-container matColumnDef="report">
+                                <mat-header-cell *matHeaderCellDef>Reporte</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.report}}</mat-cell>
+                            </ng-container>
+
+                             <ng-container matColumnDef="user_code">
+                                <mat-header-cell *matHeaderCellDef>Codigo Empleado</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.userEntity.employeeCode}}</mat-cell>
+                            </ng-container>
+
+                             <ng-container matColumnDef="date">
+                                <mat-header-cell *matHeaderCellDef>Fecha</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.creationDate | date:'yyyy-MM-dd'}}</mat-cell>
+                            </ng-container>
+
+                             <ng-container matColumnDef="exception_date">
+                                <mat-header-cell *matHeaderCellDef>Fecha de Excepcion</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.exceptionDate | date:'yyyy-MM-dd'}}</mat-cell>
+                            </ng-container>
+    
+                            <ng-container matColumnDef="options">
+                                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <button mat-button (click)="cancelReportExcepcion(element)" color="accent" [disabled]="element.exceptionDate">Cancelar</button>
+                                </mat-cell>
+                            </ng-container>
+    
+    
+                            <mat-header-row *matHeaderRowDef="columnasAMostrarReporteExceptuado.concat('options')"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: columnasAMostrarReporteExceptuado.concat('options');"></mat-row>
+                        </mat-table>
+                    </div>
+
+                    <mat-paginator #mreportsPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+
+            </div>
+
+            <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+                <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+            </div>
+        </mat-tab> -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">supervisor_account</mat-icon>
+                Excepcion de Workday
+            </ng-template>
+            <br>
+            <div *ngIf="Approving">
+                <div style="text-align: right; ">
+                    <button mat-raised-button color="primary" (click)="addWorkdayException()">Agregar<mat-icon>library_add</mat-icon></button>
                 </div>
 
                 <em class="filter-text">Filtrar por:</em>
@@ -223,13 +295,13 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field> -->
-                    <mat-form-field class="field-width" appearance="outline">
+                    <!-- <mat-form-field class="field-width" appearance="outline">
                         <mat-label>Reporte:</mat-label>
                         <input matInput (keyup)="_applyReportExceptionsFilter('report', $event)" placeholder="Reporte" #input>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <mat-form-field class="field-width" appearance="outline">
                         <mat-label>Codigo Empleado:</mat-label>
-                        <input matInput (keyup)="_applyReportExceptionsFilter('user_code', $event)" placeholder="Codigo Empleado">
+                        <input matInput (keyup)="_applyWorkdayExceptionsFilter('employeeCode', $event)" placeholder="Codigo Empleado">
                     </mat-form-field>
                     <!-- <table class="example-full-width" cellspacing="0">
                         <tr>
@@ -244,46 +316,89 @@
                 
                 <!-- <div class="mat-elevation-z8"> -->
                     <div class="table-container">
-                        <mat-table [dataSource]="MReports" style="min-width:900px;">
+                        <mat-table [dataSource]="MWorkdays" style="min-width:2200px;">
     
-                             <!-- Reporte -->
-                             <ng-container matColumnDef="report">
-                                <mat-header-cell *matHeaderCellDef>Reporte</mat-header-cell>
-                                <mat-cell *matCellDef="let element"> {{element.report}}</mat-cell>
-                            </ng-container>
-
                              <!-- Codigo Empleado -->
-                             <ng-container matColumnDef="user_code">
+                             <ng-container matColumnDef="employee_code">
                                 <mat-header-cell *matHeaderCellDef>Codigo Empleado</mat-header-cell>
                                 <mat-cell *matCellDef="let element"> {{element.userEntity.employeeCode}}</mat-cell>
                             </ng-container>
-
-                             <!-- Fecha -->
-                             <ng-container matColumnDef="date">
-                                <mat-header-cell *matHeaderCellDef>Fecha</mat-header-cell>
-                                <mat-cell *matCellDef="let element"> {{element.creationDate | date:'yyyy-MM-dd'}}</mat-cell>
-                            </ng-container>
-
-                             <!-- Fecha de Excepcion -->
-                             <ng-container matColumnDef="exception_date">
-                                <mat-header-cell *matHeaderCellDef>Fecha de Excepcion</mat-header-cell>
-                                <mat-cell *matCellDef="let element"> {{element.exceptionDate | date:'yyyy-MM-dd'}}</mat-cell>
-                            </ng-container>
     
+                             <!-- Nombre Empleado -->
+                             <ng-container matColumnDef="employee_name">
+                                <mat-header-cell *matHeaderCellDef>Nombre Empleado</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.employeeName}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Fecha Original -->
+                             <ng-container matColumnDef="original_date">
+                                <mat-header-cell *matHeaderCellDef>Fecha Original</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.originalDate | date:'yyyy-MM-dd'}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Hora Inicio Original -->
+                             <ng-container matColumnDef="original_start_time">
+                                <mat-header-cell *matHeaderCellDef>Hora Inicio Original</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.originalStartTime}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Hora Fin Original -->
+                             <ng-container matColumnDef="original_end_time">
+                                <mat-header-cell *matHeaderCellDef>Hora Fin Original</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.originalEndTime}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Fecha Real -->
+                             <ng-container matColumnDef="real_date">
+                                <mat-header-cell *matHeaderCellDef>Fecha Real</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.realDate | date:'yyyy-MM-dd'}}</mat-cell>
+                            </ng-container>
+
+                            <!-- Hora Inicio Real -->
+                            <ng-container matColumnDef="real_start_time">
+                                <mat-header-cell *matHeaderCellDef>Hora Inicio Real</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.realStartTime}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Hora Fin Real -->
+                             <ng-container matColumnDef="real_end_time">
+                                <mat-header-cell *matHeaderCellDef>Hora Fin Real</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.realEndTime}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Tipo de reporte -->
+                             <ng-container matColumnDef="report_type">
+                                <mat-header-cell *matHeaderCellDef>Tipo Reporte</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.reportType}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Justificacion -->
+                             <ng-container matColumnDef="justification">
+                                <mat-header-cell *matHeaderCellDef>Justificacion</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.justification}}</mat-cell>
+                            </ng-container>
+
+                             <!-- Gerente que Aprueba -->
+                             <ng-container matColumnDef="approving_manager">
+                                <mat-header-cell *matHeaderCellDef>Gerente que Aprueba</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.approvingManager}}</mat-cell>
+                            </ng-container>
+
                             <ng-container matColumnDef="options">
                                 <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                                 <mat-cell *matCellDef="let element">
-                                    <button mat-button (click)="cancelReportExcepcion(element)" color="accent" [disabled]="element.exceptionDate">Cancelar</button>
+                                    <button mat-button (click)="activateWorkdayException(element)" color="accent" *ngIf="!element.active">Activar</button>
+                                    <button mat-button (click)="deactivateWorkdayException(element)" color="accent" *ngIf="element.active">Desactivar</button>
                                 </mat-cell>
                             </ng-container>
     
     
-                            <mat-header-row *matHeaderRowDef="columnasAMostrarReporteExceptuado.concat('options')"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: columnasAMostrarReporteExceptuado.concat('options');"></mat-row>
+                            <mat-header-row *matHeaderRowDef="columnasAMostrarWorkdayExceptuado.concat('options')"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: columnasAMostrarWorkdayExceptuado.concat('options');"></mat-row>
                         </mat-table>
                     </div>
 
-                    <mat-paginator #mreportsPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
+                    <mat-paginator #mworkdaysPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
                     aria-label="Select page of periodic elements">
                 </mat-paginator>
 

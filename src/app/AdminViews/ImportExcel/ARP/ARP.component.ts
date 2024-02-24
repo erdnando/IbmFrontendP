@@ -395,7 +395,8 @@ export class ARPComponent {
               } */
             });
             
-            console.log("El archivo pasa")
+            this.fileInputWorkdayG.nativeElement.value = "";
+            console.log("El archivo pasa");
             this.botonWorkdayG = false;
           }else{
             Swal.fire({

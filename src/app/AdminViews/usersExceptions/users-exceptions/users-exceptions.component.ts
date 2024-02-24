@@ -23,6 +23,8 @@ import { PopUpUsersUpdateComponent } from '../../AdminUsers/pop-up-users-update/
 import { ReportExceptionService } from '../service/reportExceptionService/report-exception.service';
 import Swal from 'sweetalert2';
 import { PopUpAddReportExceptionComponent } from '../pop-up-add-report-exception/pop-up-add-report-exception.component';
+import { PopUpAddWorkdayExceptionComponent } from '../pop-up-add-workday-exception/pop-up-add-workday-exception.component';
+import { WorkdayExceptionService } from '../service/workdayExceptionService/workday-exception.service';
 
 interface MiObjeto {
   [key: string]: any;
@@ -39,16 +41,20 @@ export class UsersExceptionsComponent {
   datesTable = new MatTableDataSource<any>();
   filterValue: string = "";
   reportsFilterValue: string = "";
+  workdaysFilterValue: string = "";
   Approving: boolean = false;
   MUser: MUserEntity;
   //selectedCountry: string;
   MRoles: MRol[];
   MReports = new MatTableDataSource<any>();
   MReportFilters: any[] = [{name: 'report', value: ''}, {name: 'user_code', value: ''}];
+  MWorkdays = new MatTableDataSource<any>();
+  MWorkdayFilters: any[] = [{name: 'employeeCode', value: ''}, {name: 'countryEntityId', value: ''}];
 
   @ViewChild('datesTablePaginator') datesTablePaginator!: MatPaginator;
   @ViewChild('musersPaginator') musersPaginator!: MatPaginator;
   @ViewChild('mreportsPaginator') mreportsPaginator!: MatPaginator;
+  @ViewChild('mworkdaysPaginator') mworkdaysPaginator!: MatPaginator;
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -56,12 +62,14 @@ export class UsersExceptionsComponent {
     this.datesTable.paginator = this.datesTablePaginator;
     this.MUsers.paginator = this.musersPaginator;
     this.MReports.paginator = this.mreportsPaginator;
+    this.MWorkdays.paginator = this.mworkdaysPaginator;
   }
 
   columnasAMostrarUser = ['nombre', 'codigo', 'fecha', 'horaInicio'];
 
   columnasAMostrarUserExceptuado = ['nombre', 'email', 'rol', 'pais'];
   columnasAMostrarReporteExceptuado = ['report', 'user_code', 'date', 'exception_date'];
+  columnasAMostrarWorkdayExceptuado = ['employee_code', 'employee_name', 'original_date', 'original_start_time', 'original_end_time', 'real_date', 'real_start_time', 'real_end_time', 'report_type', 'justification', 'approving_manager'];
   columnasUserExceptuado = [
     { nombre: 'nombre', titulo: 'Nombre' },
     { nombre: 'email', titulo: 'Correo Electronico' },
@@ -76,6 +84,7 @@ export class UsersExceptionsComponent {
     private rutaActual: RutaActualService,
     private serviceLists: ObtenerlistaService,
     private reportExceptionService: ReportExceptionService,
+    private workdayExceptionService: WorkdayExceptionService,
   ) {
     this.MRoles = [];
     this.MListCountry = [];
@@ -125,6 +134,7 @@ export class UsersExceptionsComponent {
 
     this.refresh.loadListUsersExceptions();
     this.refresh.loadListReportExceptions();
+    this.refresh.loadListWorkdayExceptions();
 
     this.refresh.refreshUserException$.subscribe((exceptions) => {
       console.log(exceptions)
@@ -145,6 +155,18 @@ export class UsersExceptionsComponent {
     };
     this.refresh.refreshReportException$.subscribe((exceptions) => {
       this.MReports.data = exceptions;
+    });
+
+    this.MWorkdays.filterPredicate = (data, filter) => {
+      let result = false;
+      for (let workdayFilter of this.MWorkdayFilters) {
+        if (workdayFilter.value == '') continue;
+        if (data[workdayFilter.name].includes(filter)) { result = true; break; }
+      }
+      return result;
+    };
+    this.refresh.refreshWorkdayException$.subscribe((exceptions) => {
+      this.MWorkdays.data = exceptions;
     });
 
     //----------------new---------------------------
@@ -220,6 +242,14 @@ export class UsersExceptionsComponent {
     });
   }
 
+  addWorkdayException() {
+    let dialogRef = this.dialog.open(PopUpAddWorkdayExceptionComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this._refreshListWorkdayExceptions();
+    });
+  }
+
   cancelReportExcepcion(report: any) {
     console.log('report', report);
     this.reportExceptionService.cancelReportException(report.idReportException).subscribe(() => {
@@ -230,6 +260,32 @@ export class UsersExceptionsComponent {
       });
 
       this._refreshListReportExceptions();
+    });
+  }
+
+  activateWorkdayException(exception: any) {
+    console.log('exception', exception);
+    this.workdayExceptionService.activateWorkdayException(exception.idWorkdayException).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Excepción Activada Correctamente',
+        confirmButtonColor: '#0A6EBD',
+      });
+
+      this._refreshListWorkdayExceptions();
+    });
+  }
+
+  deactivateWorkdayException(exception: any) {
+    console.log('exception', exception);
+    this.workdayExceptionService.deactivateWorkdayException(exception.idWorkdayException).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Excepción Desactivada Correctamente',
+        confirmButtonColor: '#0A6EBD',
+      });
+
+      this._refreshListWorkdayExceptions();
     });
   }
 
@@ -304,6 +360,12 @@ export class UsersExceptionsComponent {
     this.MReports.filter = this.reportsFilterValue;
   }
 
+  _applyWorkdayExceptionsFilter(columnName: string, event: any) {
+    this.workdaysFilterValue = (event.target as HTMLInputElement).value;
+    this.MWorkdayFilters.find(x => x.name == columnName).value = this.workdaysFilterValue;
+    this.MWorkdays.filter = this.workdaysFilterValue;
+  }
+
   _refreshListUsers(){
     this.refresh.refreshListUser$.subscribe((listap) => {
       console.log(listap)
@@ -313,6 +375,10 @@ export class UsersExceptionsComponent {
 
   _refreshListReportExceptions(){
     this.refresh.loadListReportExceptions();
+  }
+
+  _refreshListWorkdayExceptions(){
+    this.refresh.loadListWorkdayExceptions();
   }
 
   _RecibirPaisSeleccionado() {

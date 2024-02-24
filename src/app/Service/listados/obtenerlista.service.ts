@@ -24,6 +24,7 @@ import { UserExceptionsConsultCountryService } from 'src/app/Views/user/services
 import { RolesMenuService } from 'src/app/AdminViews/AdminRoles/services/rolesMenu/roles-menu.service';
 import { Guid } from 'guid-typescript';
 import { ReportExceptionService } from 'src/app/AdminViews/usersExceptions/service/reportExceptionService/report-exception.service';
+import { WorkdayExceptionService } from 'src/app/AdminViews/usersExceptions/service/workdayExceptionService/workday-exception.service';
 
 
 interface MiObjeto {
@@ -59,6 +60,7 @@ export class ObtenerlistaService {
   private _refreshListUsersCountry$ = new Subject<any>(); 
   private _refreshListUsersExceptionsCountry$ = new Subject<any>(); 
   private _refreshReportException$ = new Subject<any>(); 
+  private _refreshWorkdayException$ = new Subject<any>(); 
   private _refreshListUser$ = new Subject<any>();
   private _refreshAppTime$ = new Subject<any>();
 
@@ -78,6 +80,7 @@ export class ObtenerlistaService {
     private consultApproverTime: ApproverTimeService,
     private listUsersExceptions: ListExceptionService,
     private reportExceptions: ReportExceptionService,
+    private workdayExceptions: WorkdayExceptionService,
     ) {
       this.MListCountry = [];
       this.MRoles = [];
@@ -353,6 +356,16 @@ export class ObtenerlistaService {
       this._refreshReportException$.next(lista) ;
     });
   }
+  
+  loadListWorkdayExceptions(){
+    this.workdayExceptions
+    .GetListExceptions()
+    .pipe(map((data: MiObjeto) => data))
+    .subscribe((data) => {
+      let lista = data['data'];
+      this._refreshWorkdayException$.next(lista) ;
+    });
+  }
 
   get refreshUserException$(){
     return this._refreshUserException$.asObservable();
@@ -360,6 +373,10 @@ export class ObtenerlistaService {
 
   get refreshReportException$(){
     return this._refreshReportException$.asObservable();
+  }
+
+  get refreshWorkdayException$(){
+    return this._refreshWorkdayException$.asObservable();
   }
 
 }

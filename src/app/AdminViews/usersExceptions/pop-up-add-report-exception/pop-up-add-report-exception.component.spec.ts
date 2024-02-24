@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopUpCountriesCreateComponent } from './pop-up-countries-create.component';
+import { PopUpAddReportExceptionComponent } from './pop-up-add-report-exception.component';
 
-describe('PopUpCountriesCreateComponent', () => {
-  let component: PopUpCountriesCreateComponent;
-  let fixture: ComponentFixture<PopUpCountriesCreateComponent>;
+describe('PopUpAddReportExceptionComponent', () => {
+  let component: PopUpAddReportExceptionComponent;
+  let fixture: ComponentFixture<PopUpAddReportExceptionComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PopUpCountriesCreateComponent]
+      declarations: [PopUpAddReportExceptionComponent]
     });
-    fixture = TestBed.createComponent(PopUpCountriesCreateComponent);
+    fixture = TestBed.createComponent(PopUpAddReportExceptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

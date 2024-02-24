@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Historial</h2>
+<mat-dialog-content>
+    <div class="example-container" [formGroup]="exceptionForm">
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Codigo empleado:</mat-label>
+            <input matInput placeholder="" formControlName="EmployeeCode">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Nombre empleado:</mat-label>
+            <input matInput placeholder="" formControlName="EmployeeName">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Pais: </mat-label>
+            <mat-select formControlName="CountryEntityId" >
+                <mat-option *ngFor="let country of MListCountry" [value]="country.idCounty">
+                    {{country.nameCountry}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Fecha original</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="OriginalDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Hora inicio original:</mat-label>
+            <input matInput type="time" placeholder="" formControlName="OriginalStartTime">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Hora fin original:</mat-label>
+            <input matInput type="time" placeholder="" formControlName="OriginalEndTime">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Fecha real</mat-label>
+            <input matInput [matDatepicker]="picker2" formControlName="RealDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Hora inicio real:</mat-label>
+            <input matInput type="time" placeholder="" formControlName="RealStartTime">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Hora fin real:</mat-label>
+            <input matInput type="time" placeholder="" formControlName="RealEndTime">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Tipo de reporte:</mat-label>
+            <mat-select formControlName="ReportType">
+                <mat-option value="STANDBY">STANDBY</mat-option>
+                <mat-option value="OVERTIME">OVERTIME</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Justificacion:</mat-label>
+            <input matInput placeholder="" formControlName="Justification">
+        </mat-form-field>
+        <mat-form-field class="field-width" appearance="outline">
+            <mat-label>Gerente que aprueba:</mat-label>
+            <input matInput placeholder="" formControlName="ApprovingManager">
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="exceptionForm.invalid" class="">Agregar</button>
+</mat-dialog-actions>    
