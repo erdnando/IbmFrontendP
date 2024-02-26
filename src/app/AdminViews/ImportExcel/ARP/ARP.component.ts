@@ -53,6 +53,7 @@ export class ARPComponent {
   botonARP = false;
   botonTSE= false;
   botonSTE = false;
+  paisSeleccionado = false;
   botonHorario = false;
   botonWorkdayG = false;
   columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
@@ -79,7 +80,7 @@ export class ARPComponent {
   }
   ngOnInit() {
    
-    console.log('Datos ' , this.botonARP , this.botonTSE , this.botonSTE);
+    console.log('Datos ' , this.botonARP , this.botonTSE , this.botonSTE, this.paisSeleccionado);
     this.validateRole();
     this.consultcountries();
     this.cargaGMT();
@@ -873,6 +874,7 @@ export class ARPComponent {
 
   select(selPais: any) {
     console.log(selPais.value);
+    this.paisSeleccionado = true;
   }
 
   unsubscribeIntervalSubscriptionFiles(): void {
