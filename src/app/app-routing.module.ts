@@ -68,11 +68,11 @@ const routes: Routes = [
   { path: 'admin/roles', component: RolesComponent },
   { path: 'arpcomponent', component: ARPComponent },
   { path: 'admin/users-exception', component: UsersExceptionsComponent },
-  //{ path: '**', component: LoginComponent }
+  { path: '', component: LoginComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
