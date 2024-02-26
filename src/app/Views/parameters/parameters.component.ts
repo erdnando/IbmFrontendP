@@ -183,10 +183,14 @@ export class ParametersComponent implements OnInit {
         }
       }
     });
-
+   
     this.consultarHorarioEmpleado();
 
-    this.selectAux(this.MUser.countryEntityId);
+    
+    setTimeout(() => {
+      this.selectAux(this.MUser.countryEntityId);
+     }, 300);
+    
 
     
   }
@@ -416,7 +420,7 @@ export class ParametersComponent implements OnInit {
     this.cdr.detectChanges();
 
     this.agregarFestivos = false;
-    
+    console.log("Pais seleccioando por default:"+ countryId)
 
     if (this.pais.value !== null) {
       this.codeEmployed.reset();
@@ -467,7 +471,7 @@ export class ParametersComponent implements OnInit {
 
     this.agregarFestivos = false;
     
-
+    console.log("Pais seleccioando:"+ this.pais.value)
     if (this.pais.value !== null) {
       this.codeEmployed.reset();
       this.date.reset();
