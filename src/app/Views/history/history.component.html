@@ -30,7 +30,7 @@
             <!-- Fecha envio -->
             <ng-container matColumnDef="fechaReporte">
                 <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{(element.strStartDate) | date:'dd/MM/yyyy'}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{(element.strStartDate.substring(0,10)) }} </mat-cell>
             </ng-container>
     
             <!-- Fecha creacion -->
