@@ -67,10 +67,10 @@ export class HistoryComponent {
   getColor(estado: string): string {
     switch (estado) {
         case "AprobadoN1":
+        case "AprobadoN2":
             return '#219C90';
-            case "AprobadoN2":
-              return '#219C90';
         case "Rechazado":
+        case "Descartado":
             return '#D83F31';
         case "Pendiente":
             return '#E9B824';
@@ -82,15 +82,15 @@ export class HistoryComponent {
   cargarIcono(estado: string): string{
     switch (estado) {
       case "AprobadoN1":
-          return 'check_circle';
-          case "AprobadoN2":
-            return 'check_circle';
+      case "AprobadoN2":
+        return 'check_circle';
       case "Rechazado":
-          return 'cancel';
+      case "Descartado":
+        return 'cancel';
       case "Pendiente":
-          return 'schedule';
+        return 'schedule';
       default:
-          return '';
+        return '';
   }
   }
 
