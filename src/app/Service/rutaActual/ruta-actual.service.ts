@@ -35,7 +35,8 @@ export class RutaActualService {
         //catch xml data 
         const urlParams = new URLSearchParams(window.location.search);
         const xmlParam = urlParams.get('uxm_erd');
-        
+        console.log("url::::");
+        console.log(urlParams);
 
         console.log("parametro obtenido:"+ xmlParam);
         console.log('version 1.0.0.9');
