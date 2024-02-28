@@ -5,9 +5,11 @@ export enum Aprobacion {
 }
 
 export enum Aprobacion2 {
+    Pendiente = 0,
     AprobadoN1 = 1,
     AprobadoN2 = 2,
     Rechazado = 3,
-    Pendiente = 0,
+    Cerrada = 4,
     AprobadoN0 = 5,
+    Descartado = 6,
 }

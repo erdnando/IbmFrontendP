@@ -42,12 +42,11 @@ export class PopupHistoryComponent {
   getColor(estado: string): string {
     switch (estado) {
       case "AprobadoN0":
-        return '#219C90';
       case "AprobadoN1":
-        return '#219C90';
       case "AprobadoN2":
         return '#219C90';
       case "Rechazado":
+      case "Descartado":
           return '#D83F31';
       case "Pendiente":
           return '#E9B824';
@@ -59,12 +58,11 @@ export class PopupHistoryComponent {
 cargarIcono(estado: string): string{
   switch (estado) {
     case "AprobadoN0":
-        return 'check_circle';
     case "AprobadoN1":
-        return 'check_circle';
     case "AprobadoN2":
       return 'check_circle';
     case "Rechazado":
+    case "Descartado":
         return 'cancel';
     case "Pendiente":
         return 'schedule';
