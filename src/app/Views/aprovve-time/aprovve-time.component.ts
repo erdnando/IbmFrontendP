@@ -44,6 +44,7 @@ export class AprovveTimeComponent {
   mApproverTime: MApproverTime[] = [];
   botonfiltrado: number = 1;
   Aprobacion = Aprobacion2;
+  isLoading: boolean =false;
 
   filtrarDatos(boton: string) {
 
@@ -73,11 +74,14 @@ export class AprovveTimeComponent {
     this.MUser = this.storageService.obtenerDatosMapeados();
   }
   ngOnInit() {
+    this.isLoading=true;
     this.ValidateRole();
     this.obtenerLista.refreshAppTime$.subscribe(lista => {
+      
       this.mApproverTime = lista;
       console.log("mApproverTime::::");
       console.log(this.mApproverTime);
+      this.isLoading=false;
     });
   }
 

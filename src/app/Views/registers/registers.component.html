@@ -82,6 +82,14 @@
                 <mat-header-row *matHeaderRowDef="columnasAMostrar.concat('editar')"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar');"></mat-row>
             </mat-table>
+
+            <div *ngIf="isLoading" 
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner [diameter]="50"
+                color="primary" 
+                mode="indeterminate">
+            </mat-progress-spinner>
+            </div>
         </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
             aria-label="Select page of periodic elements">

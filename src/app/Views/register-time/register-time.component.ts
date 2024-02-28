@@ -207,7 +207,7 @@ export class RegisterTimeComponent {
             (await this.apiReportHours.PostCreatePortalDbReport(this.MHours)).subscribe(
               (data) => {
                 console.log(data.data)
-                
+                this.activarBarra = false;
                 this.MHoursResponse = data;
 
                 if (this.MHoursResponse.data.state==99) {
@@ -262,7 +262,7 @@ export class RegisterTimeComponent {
          //------------------------
         }//end else
 
-        this.activarBarra = false;
+        //this.activarBarra = false;
       }
     );
 

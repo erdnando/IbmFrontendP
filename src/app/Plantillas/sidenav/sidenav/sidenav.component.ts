@@ -103,13 +103,13 @@ export class SidenavComponent implements OnInit {
     if (this.MUser) {
       this.paisSeleccionado = this.MUser?.countryEntity?.nameCountry;
       console.log('Nombre Rol : ' + this.MUser!.rolEntity?.nameRole)
-      if (this.MUser!.rolEntity?.nameRole == 'Super Administrador') {
+     
         console.log(this.MUser!.rolEntity.nameRole)
         this.EnableButton = false;
         this.listCountryService.loadCountries().subscribe((paises) => {
           this.ListCountry = paises;
         });
-      }
+     
   
       this.enviarPaisSeleccionado();
       this.screenWidth = window.innerWidth;

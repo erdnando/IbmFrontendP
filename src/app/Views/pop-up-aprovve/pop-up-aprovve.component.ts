@@ -33,11 +33,17 @@ export class PopUpAprovveComponent {
   idUser: any;
   MUser: MUserEntity;
   btnOKState: boolean=false;
+  btnOKStateLoading: boolean=false;
+  //confirmedControl = new FormControl(false);
+  checked: boolean = false;
+  filterStatusPrivatUser: boolean = true;
 
   userForm = new FormGroup({
     aprobacion: new FormControl('', [Validators.required]),
     descripcion: new FormControl('', [Validators.required]),
   });
+
+ 
 
   @ViewChild(AprovveTimeComponent, { static: true })
   aprovveTimeComponent!: AprovveTimeComponent;
@@ -54,10 +60,13 @@ export class PopUpAprovveComponent {
     this.mApproverCreate = {} as MApproverTimeCreate;
     this.Aproved();
     this.MAprobadorUser =[];
+    this.btnOKState = true;
+    this.btnOKStateLoading=false;
   }
 
   crearAprobacion(){
     this.btnOKState = true;
+    this.btnOKStateLoading=true;
     console.log(this.userForm.value.aprobacion);
     this.mApproverCreate.roleAprobador=this.MUser.rolEntity.nameRole; //OK
     this.mApproverCreate.horusReportEntityId = this.mApprover.horusReportEntityId;
@@ -109,6 +118,7 @@ export class PopUpAprovveComponent {
     this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe(data=> {
       console.log(data);
       this.btnOKState = false;
+      this.btnOKStateLoading=false;
       if (data.data) {
         
         if(this.userForm.value.aprobacion == '0'){
@@ -145,7 +155,40 @@ export class PopUpAprovveComponent {
   }
 
   
+  changeValue(value:boolean) {
+    this.btnOKState=true;
+    this.checked = !value;
+    let bAprobado=false;
+    //si es una aprobacion
+    if(this.userForm.value.aprobacion == '0'){
+      bAprobado=true;
+    }
 
+
+    if(bAprobado){
+
+        if(this.aprobador.value=='' || this.userForm.value.descripcion=='' ){
+          this.btnOKState=true;
+          this.btnOKStateLoading=false;
+        }else{
+        this.btnOKState=false;
+        }
+    }else{
+      //rechazado
+      if(this.userForm.value.aprobacion=='' || this.userForm.value.descripcion=='' ){
+        this.btnOKState=true;
+        this.btnOKStateLoading=false;
+      }else{
+      this.btnOKState=false;
+      }
+    }
+   
+}
+
+changingForm(){
+  this.checked = false;
+  this.btnOKState=true;
+}
   Aproved()
     {
 /*

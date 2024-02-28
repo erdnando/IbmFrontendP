@@ -21,6 +21,7 @@ export interface MListHorusReport{
   countHours: string;
   approverId: string;
   startTime: string;
+  endTime: string;
   strStartDate : string;
   countryEntity: MCountryEntity;
 

@@ -122,6 +122,15 @@
                 <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
             </mat-table>
+
+            <div *ngIf="isLoading" 
+            style="display: flex; justify-content: center; align-items: center; background: white;">
+            <mat-progress-spinner [diameter]="50"
+                color="primary" 
+                mode="indeterminate">
+            </mat-progress-spinner>
+            </div>
+
         </div>
     </div>
 

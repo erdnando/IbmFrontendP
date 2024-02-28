@@ -1,6 +1,7 @@
 
 import { MClientEntity } from "./MClienteEntity";
 import { MCountryEntity } from "./MCountryEntiry";
+import { MListHorusReport } from "./MListHorusReport";
 import { MUserEntity } from "./MUserEntity";
 
 export interface MPopUpHistory {
@@ -18,5 +19,7 @@ export interface MPopUpHistory {
     estadoReporte: number;
     observaciones: string;
     pais: MCountryEntity;
+   // horusReportentity:MListHorusReport;
+  
 
 }
