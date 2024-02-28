@@ -77,9 +77,9 @@ export class RegisterTimeComponent {
       this.calcularHoras();
     });
 
-    this.horaFin.valueChanges.subscribe(() => {
+    /* this.horaFin.valueChanges.subscribe(() => {
       this.generarCodigo();
-    });
+    }); */
 
     this.Aproved();
 
