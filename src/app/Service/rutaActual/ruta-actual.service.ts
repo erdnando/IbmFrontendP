@@ -32,45 +32,56 @@ export class RutaActualService {
     this.router.events.subscribe((evento) => {
       if (evento instanceof NavigationEnd) {
 
+
+        let arrUrlItems = window.location.hash.split('?');
+        let uxm_erd="";
+        if(arrUrlItems.length>1){
+           uxm_erd=arrUrlItems[1].replace('uxm_erd=','');
+        }
+       
+   
+        console.log("===========================================");
+        console.log(uxm_erd);
+
         //catch xml data 
-        const urlParams = new URLSearchParams(window.location.search);
-        const xmlParam = urlParams.get('uxm_erd');
+        //const urlParams = new URLSearchParams(window.location.search);
+        const xmlParam = uxm_erd;// urlParams.get('uxm_erd');
         console.log("url::::");
-        console.log(urlParams);
+        console.log(uxm_erd);
 
         console.log("parametro obtenido:"+ xmlParam);
-        console.log('version 1.0.0.9');
-        if(xmlParam!=null){
+        console.log('version 1.0.0.10');
+        if(xmlParam!=""){
           console.log("flujo sso");
           //TODO
           //si el contenido emieza con ERROR, redirigir a la pagina de error con el mensaje de error
           //si no, continuar...
 
 
-        //removing from query string uxm_erd
-       this.router.navigate([], {
-        queryParams: {
-          'uxm_erd': null,
-        },
-        queryParamsHandling: 'merge'
-        });
-       
-  
-        // Decode the String
-        var decodedStringAtoB = atob(xmlParam);
-        console.log("decodificado: " + decodedStringAtoB);
-       
-        //validar que el usuario (email) exista
-        this.objJson = JSON.parse(decodedStringAtoB);
-        console.log("ObjetoJason: " + this.objJson.email);
+          //removing from query string uxm_erd
+        /*this.router.navigate([], {
+          queryParams: {
+            'uxm_erd': null,
+          },
+          queryParamsHandling: 'merge'
+          });*/
         
-       
+    
+          // Decode the String
+          var decodedStringAtoB = atob(xmlParam);
+          console.log("decodificado: " + decodedStringAtoB);
+        
+          //validar que el usuario (email) exista
+          this.objJson = JSON.parse(decodedStringAtoB);
+          console.log("ObjetoJason: " + this.objJson.email);
           
         
-        
-        setTimeout(() => {
-          this.getAndAddTokenToStorage(this.objJson);
-         }, 500);
+            
+          
+          
+          setTimeout(() => {
+            this.getAndAddTokenToStorage(this.objJson);
+          }, 500);
         
 
       }else{

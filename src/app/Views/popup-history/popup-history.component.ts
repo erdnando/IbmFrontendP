@@ -33,10 +33,13 @@ export class PopupHistoryComponent {
   procedencia : string = "";
   Aprobacion = Aprobacion2;
   assignments: any[] = [];
-
+  startTime:string;
+  endTime:string;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<PopupHistoryComponent>, private datesModal: PopUpHistoryService) {
     this.MListHorusResport = {} as MPopUpHistory;
+    this.startTime="";
+    this.endTime="";
   }
 
   getColor(estado: string): string {
@@ -83,12 +86,27 @@ cargarIcono(estado: string): string{
       map((data: MiObjetoApp) => data)
     ).subscribe((data) => {
       let listap = data["data"];
+      console.log("listap::::");
+      console.log(listap);
+
       this.MListHorus = listap;
+      console.log("MListHorus::::");
+      console.log(this.MListHorus);
+
       this.assignments = listap[0].assignments;
-      console.log(this.MListHorus)
+      console.log("this.assignments[0].horusReportEntity::::");
+      console.log(this.assignments[0].horusReportEntity.startTime);
+      console.log(this.assignments[0].horusReportEntity.endTime);
+      this.startTime=this.assignments[0].horusReportEntity.startTime;
+      this.endTime=this.assignments[0].horusReportEntity.endTime;
+
+      //console.log(this.MListHorus)
       console.log(this.data.reporte)
+      console.log("data.reporte::::");
+      console.log(this.data.reporte);
+
       this.MListHorusResport = listap[0];
-      console.log("MListHorusResport::::")
+      console.log("MListHorusResport::::");
       console.log(this.MListHorusResport);
 
 

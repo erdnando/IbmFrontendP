@@ -41,6 +41,7 @@ export class RegistersComponent {
   mListHorusReportList: MListHorusReport[] = [];
   MUser: MUserEntity;
   filterValue: string = '';
+  isLoading:boolean=false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -94,12 +95,14 @@ export class RegistersComponent {
   }
 
   validateRole(){
-    if (this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador' || this.MUser.rolEntity.nameRole =='Usuario Aprobador N2') {
+    if (this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador' || 
+     this.MUser.rolEntity.nameRole =='Usuario Aprobador N2' || this.MUser.rolEntity.nameRole =='Usuario Aprobador N1') {
       this.Approving = true;
     }
-  }
+  } 
 
   ConsultarDatasource(){
+    this.isLoading=true;
     this.apiHistory
     .GetRegistersHoursReport()
     .pipe(map((data: MiObjetoApp) => data))
@@ -107,17 +110,21 @@ export class RegistersComponent {
       let listap = data['data'];
       this.mListHorusReportList = listap;
       let ListaFilt = listap;
-      if (this.MUser.rolEntity.nameRole != 'Super Administrador') {
-        ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
-      }
+      
+   
 
-      if (this.MUser.rolEntity.nameRole != 'Administrador' && this.MUser.rolEntity.nameRole != 'Super Administrador') {
+      if (this.MUser.rolEntity.nameRole == 'Super Administrador' || this.MUser.rolEntity.nameRole == 'Administrador' ||
+          this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1' || this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2') {
+          
+            ListaFilt = listap.filter((x: any) => x.userEntity.countryEntity.nameCountry == this.selectedCountry);
+
+      }else if (this.MUser.rolEntity.nameRole == 'Usuario estandar') {
         ListaFilt = ListaFilt.filter((x: any) => {x.userEntityId == this.MUser.idUser});
       }
 
 
       this.mListHorusReport.data = ListaFilt;
-     // this.ngOnInit(); //no debe ir
+      this.isLoading=false;
     });
   }
 
