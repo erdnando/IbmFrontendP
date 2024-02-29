@@ -330,6 +330,14 @@ export class DashboardComponent implements AfterViewInit {
       resposive:true,
 
     };
+
+    
+     setTimeout(() => {
+      this.resizeChart(window.innerWidth);
+      }, 100);
+
+
+  
   
   }
 
@@ -338,7 +346,7 @@ export class DashboardComponent implements AfterViewInit {
       console.log('window inner width', window.innerWidth);
       this.resizeChart(window.innerWidth);
       
-    }, 1000);
+    }, 100);
   }
 
  
@@ -439,7 +447,7 @@ export class DashboardComponent implements AfterViewInit {
               ],
               chart: {
                 height: 230,
-                /* width:700, */
+                 width:1000, 
                 type: "bar",
                 toolbar: {
                     show: true   
@@ -546,7 +554,7 @@ export class DashboardComponent implements AfterViewInit {
               ],
               chart: {
                 height: 230,
-                /* width:700, */
+                width:1000, 
                 type: "bar",
                 toolbar: {
                   show: true   

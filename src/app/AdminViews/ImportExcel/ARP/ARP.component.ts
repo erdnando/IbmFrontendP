@@ -733,8 +733,9 @@ export class ARPComponent {
                   }).then((result) => {
 
                     if(result.isConfirmed){
-
+                      console.log("Continuar proceso:::::::");
                       if (soloNotificaciones ) {
+                        console.log("solo notificaciones:::::::");
                           this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
                             console.log(data)
                             //this.mSummary = data;
@@ -743,6 +744,7 @@ export class ARPComponent {
                             this.activarBarra = false;
                             });
                          } else {
+                          console.log("calling ValidaLimitesExcepcionesOverlapping:::::::");
                           this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
                             console.log(data)
                             this.mSummaryFinal=data;
