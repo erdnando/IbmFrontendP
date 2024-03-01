@@ -676,6 +676,9 @@ export class ARPComponent {
               //this.activarBarra = false;
               var soloNotificaciones=false;
               this.fileInput3.nativeElement.value = null;
+
+              this.unsubscribeIntervalSubscriptionFiles();
+
               if (this.mSummary.data.eN_PROCESO_ARP=="0" && this.mSummary.data.eN_PROCESO_STE=="0" && this.mSummary.data.eN_PROCESO_TSE =="0" ){
                 soloNotificaciones=true;
               }
@@ -684,7 +687,7 @@ export class ARPComponent {
 
                   Swal.fire({
                     icon: 'success',
-                    title: this.mSummary.data.mensaje,
+                    title: this.mSummary.data.mensaje + (soloNotificaciones? "(No se generó ningun overtime)":""),
                     allowOutsideClick:false,
                     html: `
                     <span>Resumen de la ejecución:</span>
@@ -731,7 +734,9 @@ export class ARPComponent {
                     confirmButtonText: 'Continuar proceso' , 
                     cancelButtonText:'Cancelar carga' 
                   }).then((result) => {
-
+                     
+                    console.log("event after select an option:::::");
+                    console.log(result);
                     if(result.isConfirmed){
                       console.log("Continuar proceso:::::::");
                       if (soloNotificaciones ) {

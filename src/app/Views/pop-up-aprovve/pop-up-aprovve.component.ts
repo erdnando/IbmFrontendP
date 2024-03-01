@@ -201,7 +201,7 @@ changingForm(){
           console.log(this.MAprobadorUser);
         });*/
 
-      
+        let sistemaGuid ='53765c41-411f-4add-9034-7debaf04f276' as unknown as Guid;
       //if it is N1 call N2
       if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N1'){
         this.apiUser.GetAprovved(2).pipe(
@@ -210,6 +210,9 @@ changingForm(){
             let listap = data["data"];
             console.log(listap)
             this.MAprobadorUser = listap.result;
+
+           
+            this.MAprobadorUser=this.MAprobadorUser.filter(x => x.userEntity.idUser !=sistemaGuid);//sistema
             console.log(this.MAprobadorUser);
           });
           //is it is standar call N1
@@ -220,6 +223,7 @@ changingForm(){
             let listap = data["data"];
             console.log(listap)
             this.MAprobadorUser = listap.result;
+            this.MAprobadorUser=this.MAprobadorUser.filter(x => x.userEntity.idUser !=sistemaGuid);//sistema
             console.log(this.MAprobadorUser);
           });
       }

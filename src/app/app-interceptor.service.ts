@@ -36,7 +36,7 @@ export class AppInterceptorService implements HttpInterceptor {
     const token = datosmap == null ?"":datosmap.token;
 
     console.log(req.url);
-    if(!req.url.endsWith("Login") || !req.url.includes("CargaAvance")){ 
+    if(!req.url.endsWith("Login") && !req.url.includes("CargaAvance")){ 
 
         console.log("calling api::::::::"+req.url);
         

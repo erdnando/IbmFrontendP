@@ -80,7 +80,7 @@ export class RegisterTimeComponent {
     /* this.horaFin.valueChanges.subscribe(() => {
       this.generarCodigo();
     }); */
-
+    this.MUser = this.storageService.obtenerDatosMapeados();
     this.Aproved();
 
     this.MClient = [];
@@ -160,18 +160,21 @@ export class RegisterTimeComponent {
 
   async enviar() {
     this.activarBarra = true;
-    let todayWithPipe = null;
+    //let todayWithPipe = null;
+    let todayWithPipeUS=null;
     //2023-12-14T00:00:00.0000000
-    //todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy/MM/dd');
-    todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd');
+    
+    todayWithPipeUS = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'dd/MM/yyyy');
+    //todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd');
 
-    let fechaSeleccionada = new Date(todayWithPipe?.toString() as unknown as string);
+    //let fechaSeleccionada = new Date(todayWithPipe?.toString() as unknown as string);
+    let fechaSeleccionadaUS = new Date(todayWithPipeUS?.toString() as unknown as string);
     //------------validacion horario definido----------------------------------------------------------
-    this.MHorarioR.ano=fechaSeleccionada.getFullYear().toString();
+    this.MHorarioR.ano=fechaSeleccionadaUS.getFullYear().toString();
     this.MHorarioR.userEntityId= this.MUser.idUser as Guid;
-    this.MHorarioR.week=this.getWeek(new Date(todayWithPipe?.toString() as unknown as string)).toString();
+    this.MHorarioR.week=this.getWeek(new Date(todayWithPipeUS?.toString() as unknown as string)).toString();
+    console.log("Consulta horario::::::::");
     console.log(this.MHorarioR);
-
     (await this.apiReportHours.GetConsultHorarioByWeek(this.MHorarioR)).subscribe(
       async (data) => {
         
@@ -179,6 +182,7 @@ export class RegisterTimeComponent {
 
 
         if (data.data == null) {
+          this.activarBarra = false;
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -307,16 +311,45 @@ export class RegisterTimeComponent {
   }
 
   Aproved() {
+    this.MUser = this.storageService.obtenerDatosMapeados();
+    if(this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || 
+       this.MUser.rolEntity.nameRole == 'Administrador'||
+       this.MUser.rolEntity.nameRole =='Super Administrador'){
+        
+        this.apiUser
+          .GetAprovved(3)
+          .pipe(map((data: MiObjetoApp) => data))
+          .subscribe((data) => {
+            let listap = data['data'];
+            console.log(listap, listap.result)
+            this.MAprobadorUser = listap.result;
+            this.MAprobadorUser = this.MAprobadorUser.filter(x => x.userEntity.countryEntityId == this.MUser.countryEntityId)
+          console.log("roles disponibles:::");
+            console.log(JSON.stringify(this.MAprobadorUser[0]));
+          });
+
+    }else{
+
+      
     this.apiUser
-      .GetAprovved(1)
-      .pipe(map((data: MiObjetoApp) => data))
-      .subscribe((data) => {
-        let listap = data['data'];
-        console.log(listap, listap.result)
-        this.MAprobadorUser = listap.result;
-        this.MAprobadorUser = this.MAprobadorUser.filter(x => x.userEntity.countryEntityId == this.MUser.countryEntityId)
-      });
+    .GetAprovved(1)
+    .pipe(map((data: MiObjetoApp) => data))
+    .subscribe((data) => {
+      let listap = data['data'];
+      console.log(listap, listap.result)
+      this.MAprobadorUser = listap.result;
+      this.MAprobadorUser = this.MAprobadorUser.filter(x => x.userEntity.countryEntityId == this.MUser.countryEntityId)
+    console.log("roles disponibles:::");
+      console.log(JSON.stringify(this.MAprobadorUser[0]));
+    });
+
+
+    }
+
+    
   }
+
+  
   select(plan: any) {
     this.idcliente.setValue(plan.value);
   }
