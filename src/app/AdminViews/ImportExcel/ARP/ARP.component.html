@@ -110,14 +110,23 @@
             <div>
                 <div class="centrado">
                     <label class="mi-etiqueta">
-                        Cargar plantilla de Workday Gerentes 
+                        Cargar plantilla Workday Horas 
                         <br>
-                        <input type="file" [disabled]="activarBarraWorkday" (change)="activarARP('WorkdayG',$event)" id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInputWorkdayG>
+                        <input type="file" [disabled]="activarBarraWorkday" (change)="activarARP('WorkdayHoras',$event)" id="input-excel" placeholder="Carga de plantilla horas" accept=".xlsx, .xls" #fileInputWorkdayHoras>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="centrado">
+                    <label class="mi-etiqueta">
+                        Cargar plantilla Workday Users 
+                        <br>
+                        <input type="file" [disabled]="activarBarraWorkday" (change)="activarARP('WorkdayUsers',$event)" id="input-excel" placeholder="Carga de plantilla users" accept=".xlsx, .xls" #fileInputWorkdayUsers>
                     </label>
                 </div>
             </div>
 
-        <button class="boton" *ngIf="botonWorkdayG" (click)="readExcelWorkdayG(fileInputWorkdayG)">
+        <button class="boton" *ngIf="botonWorkdayHoras && botonWorkdayUsers" (click)="readExcelWorkdayG(fileInputWorkdayHoras, fileInputWorkdayUsers)">
             Subir Archivo
         </button>
         <a #downloadWorkdayFileEl style="display:none;"></a>

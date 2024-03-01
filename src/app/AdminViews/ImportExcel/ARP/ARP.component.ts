@@ -7,7 +7,7 @@ import { MUserEntity } from 'src/app/Models/MUserEntity';
 import Swal from "sweetalert2";
 import { MCountryEntity } from "src/app/Models/MCountryEntiry";
 import { ListCountryService } from "../../AdminCountries/services/list-country/list-country.service";
-import { Subscription, interval, map } from "rxjs";
+import { Observable, Subject, Subscription, forkJoin, interval, map } from "rxjs";
 import { MResponseLoadGuid, MSummary, MSummaryFinal } from "src/app/Models/MSummary";
 import { Guid } from "guid-typescript";
 import { MGmt } from 'src/app/Models/MGmt';
@@ -28,7 +28,8 @@ export class ARPComponent {
   @ViewChild('fileInput2') fileInput2: any;
   @ViewChild('fileInput3') fileInput3: any;
   @ViewChild('fileInput4') fileInput4: any;
-  @ViewChild('fileInputWorkdayG') fileInputWorkdayG: any;
+  @ViewChild('fileInputWorkdayHoras') fileInputWorkdayHoras: any;
+  @ViewChild('fileInputWorkdayUsers') fileInputWorkdayUsers: any;
   @ViewChild('downloadWorkdayFileEl') downloadWorkdayFileEl: any;
 
   ExcelData: any;
@@ -55,12 +56,14 @@ export class ARPComponent {
   botonSTE = false;
   paisSeleccionado = false;
   botonHorario = false;
-  botonWorkdayG = false;
+  botonWorkdayHoras = false;
+  botonWorkdayUsers = false;
   columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
   columnasARP:string[]=["DOC_NUM","TOOL","PAIS","ID_EMPLEADO","NUMERO_CLIENTE","NOMBRE_CLIENTE","ESTADO","FECHA_REP","HORA_INICIO","HORA_FIN","TOTAL_MINUTOS","CATEGORIA","ACTIVIDAD","COMENTARIO","FECHA_EXTRATED"];
   columnasTSE:string[]=["Recurso de servicio: Usuario: ISO 2","TSE: Work Order","Recurso de servicio: Usuario: Número de empleado","Recurso de servicio: Usuario: Zona horaria","Orden de trabajo: Caso: Account CMR Number","Orden de trabajo: Caso: Account Name Text","TSE: Status","TSE: Start Time","TSE: End Time","Duration in Hours","WO: Subject"];
   columnasSTE:string[]=["Session Time Unique ID","Session Time Support Agent Country","Número del caso","Session Time Creator Employee Serial Number","Account CMR Number","Nombre de la cuenta: Nombre de la cuenta","Start Date/Time","End Date/Time","Session Time: Total Duration","Case Subject"];
-  columnasexcelWorkdayG:string[]=["Employee ID","Worker","Reported Date","Original Reported Quantity","Time Type","Status","Calculated Date","In Time","Out Time","Calculated Quantity","Calculation Tags","Source Time or Time Off Block"];
+  columnasexcelWorkdayHoras:string[]=["Employee ID","Worker","Reported Date","Original Reported Quantity","Time Type","Status","Calculated Date","In Time","Out Time","Calculated Quantity","Calculation Tags","Source Time or Time Off Block"];
+  columnasexcelWorkdayUsers:string[]=["Worker", "Employee ID", "Legal Name", "Preferred Name", "Home CNUM"];
   pais = new FormControl('');
   MListCountry: MCountryEntity[];
   MListGMT: MGmt[];
@@ -211,13 +214,11 @@ export class ARPComponent {
       this.botonSTE = !estatus;
       this.botonTSE = !estatus;
       this.botonHorario=!estatus;
-      this.botonWorkdayG=!estatus;
       if(!estatus){
         this.fileInput1.nativeElement.value = null;
         this.fileInput2.nativeElement.value = null;
         this.fileInput3.nativeElement.value = null;
         this.fileInput4.nativeElement.value = null;
-        this.fileInputWorkdayG.nativeElement.value=null;
 
       }
      
@@ -246,9 +247,12 @@ export class ARPComponent {
       case 'Horario':
         this.botonHorario = true;
         return
-      case 'WorkdayG':
-        this.botonWorkdayG = true;
-        return
+      case 'WorkdayHoras':
+        this.botonWorkdayHoras = true;
+        return;
+      case 'WorkdayUsers':
+        this.botonWorkdayUsers = true;
+        return;
     }
 
   }
@@ -335,88 +339,140 @@ export class ARPComponent {
     }
   }
 
-  readFileWorkdayG(fileInput: any) {
-    let file = fileInput[0]; // Accede al primer archivo seleccionado
+  readFileWorkdayG(horasFileInput: any, usersFileInput: any) {
+    let hoursFile = horasFileInput[0]; // Accede al primer archivo seleccionado
+    let usersFile = usersFileInput[0]; // Accede al primer archivo seleccionado
 
-    if (file) {
-      let fileReader = new FileReader();
+    if (hoursFile || usersFile) {
+      forkJoin({hours: this.readFileWorkdayHours(hoursFile), users: this.readFileWorkdayUsers(usersFile)}).subscribe({
+        next: data => {
+          console.log('data', data);
+          
+          let datas = {
+            hours: data.hours,
+            users: data.users,
+          };
+          this.loadArpExcelService.PostLoadHorariosWorkdayG(datas).subscribe(data => {
+            this.activarBarraWorkday = false;
+            const blob = new Blob([data], { type: 'application/octet-stream' });
+            const url= window.URL.createObjectURL(blob);
+            this.downloadWorkdayFileEl.nativeElement.href = url;
+            this.downloadWorkdayFileEl.nativeElement.download = 'workdayy.xlsx';
+            this.downloadWorkdayFileEl.nativeElement.click();
+            /* window.open(url); */
+            /* if(data){
+              Swal.fire({
+                icon: 'success',
+                title: 'Carga de archivo completada.',
+                confirmButtonColor: '#0A6EBD',
+              });
+              this.fileInputWorkdayG.nativeElement.value = null;
+              this.activarBarra = false;
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                confirmButtonColor: '#0A6EBD',
+              });
+              this.fileInputWorkdayG.nativeElement.value = null;
+            } */
+          });
+          
+          this.fileInputWorkdayHoras.nativeElement.value = "";
+          this.fileInputWorkdayUsers.nativeElement.value = "";
+          console.log("El archivo pasa");
+          this.botonWorkdayHoras = false;
+          this.botonWorkdayUsers = false;
 
-      fileReader.readAsBinaryString(file);
-
-      fileReader.onload = (e) => {
-        var workBook = XLSX.read(fileReader.result, { type: 'binary' });
-        var sheetNames = workBook.SheetNames;
-        this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-        console.log(this.ExcelData.length);
-        let valiFile = true;
-        this.columnasexcelWorkdayG.forEach(element => {
-          console.log('VALOR ES .. ' + this.ExcelData[0][element])
-          if (!this.ExcelData[0][element]) { 
-            valiFile=false; 
-          }   
-        });
-        if (!valiFile) {
+        },
+        error: (e) => {
+          console.log('error', e);
+          this.activarBarraWorkday = false;
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'El archivo es inválido por favor verifique: \n * Columnas incorrectas',
+            text: e,
             confirmButtonColor: '#0A6EBD',
           });
-          this.fileInputWorkdayG.nativeElement.value = null;
-          this.activarBarra = false;
-        }else{
-          let XL_row_object = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
-          let json_object = JSON.stringify(XL_row_object);
-          // aqui parseamos a json
-          const datos = JSON.parse(json_object);
-          if(this.ExcelData.length) {
-            this.loadArpExcelService.PostLoadHorariosWorkdayG(this.ExcelData).subscribe(data => {
-              const blob = new Blob([data], { type: 'application/octet-stream' });
-              const url= window.URL.createObjectURL(blob);
-              this.downloadWorkdayFileEl.nativeElement.href = url;
-              this.downloadWorkdayFileEl.nativeElement.download = 'workdayy.xlsx';
-              this.downloadWorkdayFileEl.nativeElement.click();
-              /* window.open(url); */
-              /* if(data){
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Carga de archivo completada.',
-                  confirmButtonColor: '#0A6EBD',
-                });
-                this.fileInputWorkdayG.nativeElement.value = null;
-                this.activarBarra = false;
-              }else{
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Oops...',
-                  text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
-                  confirmButtonColor: '#0A6EBD',
-                });
-                this.fileInputWorkdayG.nativeElement.value = null;
-              } */
-            });
-            
-            this.fileInputWorkdayG.nativeElement.value = "";
-            console.log("El archivo pasa");
-            this.botonWorkdayG = false;
-          }else{
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Error:  Archivo vacio.',
-              confirmButtonColor: '#0A6EBD',
-            });
-            this.botonWorkdayG = false;
-          }
+          this.botonWorkdayHoras = false;
+          this.botonWorkdayUsers = false;
         }
-        
-
-        
-      }
+      });
     } else {
       console.error("No se ha seleccionado ningún archivo.");
     }
   }
+
+  readFileWorkdayHours(file: any): Observable<any> {
+    let sub = new Subject<any>();
+
+    let fileReader = new FileReader();
+    fileReader.readAsBinaryString(file);
+      
+    fileReader.onload = (e) => {
+      var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+      var sheetNames = workBook.SheetNames;
+      let ExcelData: any = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false, range: 1 });
+      console.log('exceldata', ExcelData);
+      console.log('exceldata 0', ExcelData[0]);
+      
+      console.log(ExcelData.length);
+      let valiFile = true;
+      this.columnasexcelWorkdayHoras.forEach(element => {
+        console.log('VALOR ES .. ' + ExcelData[0][element])
+        if (!ExcelData[0][element]) { 
+          valiFile=false; 
+        }   
+      });
+      if (!valiFile) {
+        this.fileInputWorkdayHoras.nativeElement.value = null;
+        this.activarBarra = false;
+        sub.error('El archivo es inválido por favor verifique: \n * Columnas incorrectas');
+      }else{
+        sub.next(ExcelData);
+        sub.complete();
+      }
+      
+    }
+
+    return sub.asObservable();
+  }
+
+  readFileWorkdayUsers(file: any): Observable<any> {
+    let sub = new Subject<any>();
+
+    let fileReader = new FileReader();
+    fileReader.readAsBinaryString(file);
+      
+    fileReader.onload = (e) => {
+      var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+      var sheetNames = workBook.SheetNames;
+      let ExcelData: any[] = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false, blankrows: false, header: this.columnasexcelWorkdayUsers, range: 1});
+      console.log('exceldata', ExcelData);
+      console.log('exceldata 0', ExcelData[0]);
+      
+      let valiFile = true;
+      this.columnasexcelWorkdayUsers.forEach(element => {
+        console.log('VALOR ES .. ' + ExcelData[0][element])
+        if (!ExcelData[0][element]) { 
+          valiFile=false; 
+        }   
+      });
+      if (!valiFile) {
+        this.fileInputWorkdayUsers.nativeElement.value = null;
+        this.activarBarra = false;
+        sub.error('El archivo es inválido por favor verifique: \n * Columnas incorrectas');
+      }else{
+        sub.next(ExcelData);
+        sub.complete();
+      }
+      
+    }
+
+    return sub.asObservable();
+  }
+
  
   readfilefinal(fileInput: any,fileInput2: any,fileInput3: any){
 
@@ -868,13 +924,13 @@ export class ARPComponent {
     
   }
 
-  readExcelWorkdayG(file: any) {
-    if (this.validarArchivo(file)) {
-      this.barraProgreso(true);
-      this.readFileWorkdayG(file.files);
+  readExcelWorkdayG(horasFile: any, usersFile: any) {
+    if (this.validarArchivo(horasFile) && this.validarArchivo(usersFile)) {
+      this.activarBarraWorkday = true;
+      this.readFileWorkdayG(horasFile.files, usersFile.files);
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
-      this.barraProgreso(false);
+      this.activarBarraWorkday = false;
     }
    // this.barraProgreso()
   }
