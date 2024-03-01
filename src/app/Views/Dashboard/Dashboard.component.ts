@@ -290,7 +290,10 @@ export class DashboardComponent implements AfterViewInit {
     this._reporteGralStandBy=[] as ReporteHorasTLS[];
     this._reporteGralOver=[] as ReporteHorasTLS[];
     this.repgralUnit={} as RepGralHoras;
+
+   console.log("=================Leyendo datos usuario from storage en constructor del dashboard=============");
     this.MUser = this.storageData.obtenerDatosMapeados();
+    console.log(this.MUser);
    // this.getReqRepAnioTLS();
    //this.seriesStandBy=0;
   }
@@ -308,6 +311,12 @@ export class DashboardComponent implements AfterViewInit {
 
   ngOnInit() {
    
+    //console.log("=================Leyendo datos usuario from storage en dashboard=============");
+    //this.MUser = this.storageData.obtenerDatosMapeados();
+    //console.log(this.MUser);
+
+
+
     this.noAno=this.currentDate.getFullYear();
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
@@ -321,6 +330,14 @@ export class DashboardComponent implements AfterViewInit {
       resposive:true,
 
     };
+
+    
+     setTimeout(() => {
+      this.resizeChart(window.innerWidth);
+      }, 100);
+
+
+  
   
   }
 
@@ -328,7 +345,8 @@ export class DashboardComponent implements AfterViewInit {
     setTimeout(()=> {
       console.log('window inner width', window.innerWidth);
       this.resizeChart(window.innerWidth);
-    }, 1000);
+      
+    }, 100);
   }
 
  
@@ -363,16 +381,25 @@ export class DashboardComponent implements AfterViewInit {
       
       this.noAno = newValue;
       console.log(newValue);
-      this.getReqRepAnioTLS();
+      //this.getReqRepAnioTLS();
+      
+      setTimeout(() => {
+        this.getReqRepAnioTLS();
+      }, 1000);
+      
     }
     
   }
 
   getReqRepAnioTLS(){
-    this._reqRepAnioTLS.anio=this.noAno;
-    this._reqRepAnioTLS.usuario=this.MUser.employeeCode.toString();
-
+   
+//if(this.MUser==null)return;
     try {
+      this._reqRepAnioTLS.anio=this.noAno;
+      this._reqRepAnioTLS.usuario=this.MUser.employeeCode.toString();
+
+
+
       this._apiDashboard.GetReporteAnioTLS(this._reqRepAnioTLS)?.pipe(
         map((dataGraf: any) => {
           if (dataGraf && dataGraf.data) {
@@ -420,7 +447,7 @@ export class DashboardComponent implements AfterViewInit {
               ],
               chart: {
                 height: 230,
-                /* width:700, */
+                 width:1000, 
                 type: "bar",
                 toolbar: {
                     show: true   
@@ -527,7 +554,7 @@ export class DashboardComponent implements AfterViewInit {
               ],
               chart: {
                 height: 230,
-                /* width:700, */
+                width:1000, 
                 type: "bar",
                 toolbar: {
                   show: true   
@@ -678,6 +705,8 @@ export class DashboardComponent implements AfterViewInit {
     
   }
   getReqRepHorasTLS(){
+    //if(this.MUser==null)return;
+
     this._reqRepHorasTLS.semana=this.noSemana;
     this._reqRepHorasTLS.usuario=this.MUser.employeeCode.toString();
     this._reqRepHorasTLS.anio=this.noAno;
