@@ -19,9 +19,14 @@ export class UserConsultByCodeEmService {
   constructor(private http:HttpClient)
   { }
 
-  GetUserEmployeCode(idUser: string, countryId: string):Observable<MResponse>{
+  GetUserIdByEmployeCode(employeeCode: string, countryId: string):Observable<MResponse>{
+    let direccion = this.URLLocal +"User/GetUserIdByEmployeCode?EmployeeCode=" + employeeCode + "&PaisId=" + countryId;
+    console.log(direccion);
+    return this.http.get<MResponse>(direccion);
 
-    let direccion = this.URLLocal +"User/GetByEmployeCode?EmployeeCode=" + idUser + "&PaisId=" + countryId;
+  }
+  GetUserByEmployeCode(employeeCode: string):Observable<MResponse> {
+    let direccion = this.URLLocal +"User/GetByEmployeCode?EmployeeCode=" + employeeCode;
     console.log(direccion);
     return this.http.get<MResponse>(direccion);
 

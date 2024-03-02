@@ -426,7 +426,7 @@ export class ScheduleComponent {
     applyFilter(event: any) {
       let codeEmploye = (event.target as HTMLInputElement).value;
       this.consultUserByEmployee
-        .GetUserEmployeCode(codeEmploye, this.pais.value!)
+        .GetUserIdByEmployeCode(codeEmploye, this.pais.value!)
         .pipe(map((data: any) => data))
         .subscribe((data) => {
           if (data.data !== '00000000-0000-0000-0000-000000000000') {

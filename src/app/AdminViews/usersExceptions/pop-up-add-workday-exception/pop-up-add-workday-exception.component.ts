@@ -11,6 +11,8 @@ import { ReportExceptionService } from '../service/reportExceptionService/report
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { WorkdayExceptionService } from '../service/workdayExceptionService/workday-exception.service';
+import { debounceTime, map } from 'rxjs';
+import { UserConsultByCodeEmService } from 'src/app/Views/user/services/userConsultByCodeEm/user-consult-by-code-em.service';
 
 @Component({
   selector: 'app-pop-up-add-workday-exception',
@@ -41,6 +43,7 @@ export class PopUpAddWorkdayExceptionComponent {
     private storageService: StorageService,
     private workdayExcepcionService: WorkdayExceptionService,
     private refresh: ObtenerlistaService,
+    private consultUserByEmployee: UserConsultByCodeEmService,
   ) {}
 
   ngOnInit() {
@@ -57,6 +60,23 @@ export class PopUpAddWorkdayExceptionComponent {
 
       this.MListCountry = OptionSelectNew; */
     });
+
+    this.exceptionForm.get('EmployeeCode')?.valueChanges.pipe(debounceTime(500)).subscribe(value => {
+      if (value) {
+        this.getUserByEmployeeCode(value);
+      }
+    });
+  }
+
+  getUserByEmployeeCode(employeeCode: string) {
+    this.consultUserByEmployee
+      .GetUserByEmployeCode(employeeCode)
+      .pipe(map((data: any) => data))
+      .subscribe((data) => {
+        console.log('data', data);
+        let employeeName = `${data.data?.nameUser?? ''} ${data.data?.surnameUser?? ''}`.trim();
+        this.exceptionForm.get('EmployeeName')?.setValue(employeeName);
+      });
   }
 
   onSubmit() {
