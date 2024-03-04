@@ -312,7 +312,8 @@ export class RegisterTimeComponent {
 
   Aproved() {
     this.MUser = this.storageService.obtenerDatosMapeados();
-    if(this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || 
+
+    /*if(this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2' || 
        this.MUser.rolEntity.nameRole == 'Administrador'||
        this.MUser.rolEntity.nameRole =='Super Administrador'){
         
@@ -328,7 +329,7 @@ export class RegisterTimeComponent {
             console.log(JSON.stringify(this.MAprobadorUser[0]));
           });
 
-    }else{
+    }else{*/
 
       
     this.apiUser
@@ -344,7 +345,7 @@ export class RegisterTimeComponent {
     });
 
 
-    }
+   // }
 
     
   }
