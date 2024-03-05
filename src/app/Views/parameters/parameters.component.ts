@@ -197,13 +197,14 @@ export class ParametersComponent implements OnInit {
 
   exportToExcel(){
 
+    let name = "Plantilla_Festivos.xlsx";
     let element = this.Seasons;
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
 
     const book: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(book, worksheet, 'Sheet1');
 
-    XLSX.writeFile(book, this.name);
+    XLSX.writeFile(book, name);
     console.log(book);
   }
 
@@ -1059,8 +1060,10 @@ resetPicker(){
     let fechadia = date.getDate();
     let fechames = (date.getMonth()+1);
     let fechaanio = date.getFullYear();
-    let fechadiast = fechadia<10?"0"+fechadia:fechadia
+    let fechadiast = fechadia<10?"0"+fechadia:fechadia;
+
     this.mHorarioListExcel.forEach(element => {
+
       let fechsplit = new Date(element.fechaWorking.toString()).toLocaleDateString();
       let diafor=fechsplit.split("/");
       let diaformat = diafor[2] + "/" + (diafor[1].length==1? "0"+diafor[1]:diafor[1]) +"/"+(diafor[0].length==1? "0"+diafor[0]:diafor[0])
