@@ -144,11 +144,12 @@
                 <ng-container *ngIf="ListparametersOver.length; else noData">
                     <ng-container *ngFor="let item of ListparametersOver">
                         <div>
-                            <mat-form-field
+                            <mat-form-field [ngClass]="{'mat-form-field-warned': limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false }"
                                 appearance="outline">
                                 <mat-label> Limites legales diarios: </mat-label>
                                 <input matInput type="text" placeholder="40" [formControl]="limitDay"
                                     [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
+                                <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false">Si es igual a 0 su país podrá ingresar standby y overtime  sin ningún tipo de restricción</mat-hint>
                             </mat-form-field>
                         </div>
                         <div>
@@ -220,10 +221,11 @@
                     <ng-container *ngIf="ListparametersStand.length; else noData">
                         <ng-container *ngFor="let item of ListparametersStand">
                             <div>
-                                <mat-form-field style="text-align: left;"
+                                <mat-form-field style="text-align: left;" [ngClass]="{'mat-form-field-warned': limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false }"
                                     appearance="outline">
                                     <mat-label> Limites legales diarios: </mat-label>
                                     <input matInput type="text" as-number decimalMarker="," mask="separator.2" thousandSeparator="." [formControl]="limitDay" [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
+                                    <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false">Si es igual a 0 su país podrá ingresar standby y overtime  sin ningún tipo de restricción</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>

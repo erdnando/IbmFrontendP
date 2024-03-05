@@ -357,7 +357,7 @@ export class ARPComponent {
             const blob = new Blob([data], { type: 'application/octet-stream' });
             const url= window.URL.createObjectURL(blob);
             this.downloadWorkdayFileEl.nativeElement.href = url;
-            this.downloadWorkdayFileEl.nativeElement.download = 'workdayy.xlsx';
+            this.downloadWorkdayFileEl.nativeElement.download = 'Workday.xlsx';
             this.downloadWorkdayFileEl.nativeElement.click();
             /* window.open(url); */
             /* if(data){
