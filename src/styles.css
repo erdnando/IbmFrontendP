@@ -43,3 +43,19 @@ body {
 .table-container {
     overflow: auto;
 }
+
+.mat-form-field-warned.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mdc-notched-outline__leading {
+    border-color: #f49536 !important;
+}
+
+.mat-form-field-warned.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mdc-notched-outline__notch {
+    border-color: #f49536 !important;
+}
+
+.mat-form-field-warned.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mdc-notched-outline__trailing {
+    border-color: #f49536 !important;
+}
+
+.mat-mdc-form-field-warning {
+    color: #f49536;
+}

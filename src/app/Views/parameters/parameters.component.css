@@ -321,7 +321,7 @@ hr.filter-divider {
 .limites > div {
     width: 100%;
     flex: 1 1 auto;
-    padding: 0 5px;
+    padding: 5px;
 }
 
 .limites .mat-mdc-form-field {

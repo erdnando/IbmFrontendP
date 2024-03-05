@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import{MatCardModule} from "@angular/material/card"
-import{MatFormFieldModule} from "@angular/material/form-field"
+import{MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from "@angular/material/form-field"
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatToolbarModule} from '@angular/material/toolbar'
@@ -135,6 +135,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     NgxMatFileInputModule,
     NgxMaterialTimepickerModule,
     MatProgressBarModule
+  ],
+  providers: [
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' } }
   ]
 })
 
