@@ -45,7 +45,7 @@ export class RegisterTimeComponent {
   aprobadores: [] = [];
   aprobador = new FormControl('');
   descripcion = new FormControl('');
-  fecha = new FormControl('');
+  fecha = new FormControl(null);
   actividad = new FormControl('');
   horaInicio = new FormControl('');
   horaFin = new FormControl('');
@@ -159,20 +159,22 @@ export class RegisterTimeComponent {
   }
 
   async enviar() {
+    let dateValue = this.fecha.value;
+    if (!dateValue) return;
+    let selectedDate = dateValue as Date;
+
     this.activarBarra = true;
     //let todayWithPipe = null;
     let todayWithPipeUS=null;
     //2023-12-14T00:00:00.0000000
-    
-    todayWithPipeUS = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'dd/MM/yyyy');
+    todayWithPipeUS = this.pipe.transform(selectedDate, 'dd/MM/yyyy');
     //todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd');
 
     //let fechaSeleccionada = new Date(todayWithPipe?.toString() as unknown as string);
-    let fechaSeleccionadaUS = new Date(todayWithPipeUS?.toString() as unknown as string);
     //------------validacion horario definido----------------------------------------------------------
-    this.MHorarioR.ano=fechaSeleccionadaUS.getFullYear().toString();
+    this.MHorarioR.ano=selectedDate.getFullYear().toString();
     this.MHorarioR.userEntityId= this.MUser.idUser as Guid;
-    this.MHorarioR.week=this.getWeek(new Date(todayWithPipeUS?.toString() as unknown as string)).toString();
+    this.MHorarioR.week=this.getWeek(selectedDate).toString();
     console.log("Consulta horario::::::::");
     console.log(this.MHorarioR);
     (await this.apiReportHours.GetConsultHorarioByWeek(this.MHorarioR)).subscribe(
@@ -192,7 +194,7 @@ export class RegisterTimeComponent {
         } else {
             //continua con el proceso
             let todayWithPipe = null;
-            todayWithPipe = this.pipe.transform(this.fecha.value?.toString() as unknown as string,'yyyy-MM-dd');
+            todayWithPipe = this.pipe.transform(selectedDate,'yyyy-MM-dd');
             
             this.MHours.userEntityId = this.MUser.idUser as Guid;
             this.MHours.startDate = ((todayWithPipe?.toString() as unknown as string) + ' ' + this.horaInicio.value) as string;
