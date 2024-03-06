@@ -26,6 +26,7 @@ import { PopUpHorarioComponent } from '../../pop-up-horario/pop-up-horario.compo
 import Swal from 'sweetalert2';
 import { HorarioCreateService } from '../../parameters/services/horarioCreate/horario-create.service';
 import { UserConsultByCodeEmService } from '../../user/services/userConsultByCodeEm/user-consult-by-code-em.service';
+import { Time } from '@angular/common';
 
 interface MiObjeto {
   [key: string]: any;
@@ -286,6 +287,31 @@ export class ScheduleComponent {
       //this.valoresInicio[dia] = [this.horaInicio.value!,this.horaFin.value!];
       if (dia.length === 0) {
         throw new Error('La lista está vacía');
+      }
+
+      console.log("hora inicio", this.horaInicio.value, "hora fin", this.horaFin.value);
+      if (this.horaInicio.value && this.horaFin.value) {
+        let startDate = new Date();
+        const [startHour, startMinutes] = this.horaInicio.value.split(":");
+        startDate.setHours(+startHour, +startMinutes, 0);
+        let endDate = new Date();
+        const [endHour, endMinutes] = this.horaFin.value.split(":");
+        endDate.setHours(+endHour, +endMinutes, 0);
+        if (startDate > endDate || endDate < startDate) {
+          setTimeout(() => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'La hora inicio debe ser menor a la hora fin',
+              confirmButtonColor: '#0A6EBD',
+              allowOutsideClick: false
+            });
+          });
+
+          this.horaInicio.setValue('');
+          this.horaFin.setValue('');
+          return;
+        }
       }
   
       if(dia.length === 1){
