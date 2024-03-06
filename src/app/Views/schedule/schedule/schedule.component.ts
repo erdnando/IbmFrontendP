@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpScheduleUpdateComponent } from '../pop-up-schedule-update/pop-up-schedule-update.component';
 import { PopUpScheduleCreateComponent } from '../pop-up-schedule-create/pop-up-schedule-create.component';
@@ -27,6 +27,7 @@ import Swal from 'sweetalert2';
 import { HorarioCreateService } from '../../parameters/services/horarioCreate/horario-create.service';
 import { UserConsultByCodeEmService } from '../../user/services/userConsultByCodeEm/user-consult-by-code-em.service';
 import { Time } from '@angular/common';
+import { LoadArpExcelService } from 'src/app/AdminViews/ImportExcel/services/LoadArpExcel/LoadArpExcel.service';
 
 interface MiObjeto {
   [key: string]: any;
@@ -35,6 +36,8 @@ interface MiObjetoApp {
   [key: string]: any;
 }
 
+type Aoa = any[][];
+
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -42,6 +45,8 @@ interface MiObjetoApp {
 })
 export class ScheduleComponent {
 
+  @ViewChild('fileInputHorario') fileInputHorario: any;
+  
   Datos = [
     { day: 'Lunes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Martes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
@@ -58,7 +63,7 @@ export class ScheduleComponent {
   MApprover: MAprobador[];
   a : MAprobador[];
   MUser: any;
-
+  columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
 
   MListCountry: MCountryEntity[];
   ExcelData: any;
@@ -135,6 +140,7 @@ export class ScheduleComponent {
     private apiListCountry: ListCountryService,
     private horarioCreate: HorarioCreateService,
     private consultUserByEmployee: UserConsultByCodeEmService,
+    private loadArpExcelService: LoadArpExcelService
   ) {
     this.MApprover = [];
     this.a = [];
@@ -616,6 +622,204 @@ export class ScheduleComponent {
         this.consultarHorarioEmpleado();
       }
   
+    }
+
+    readExcelHorario(file: any) {
+
+      this.readFileHorario(file.files);
+
+
+     // if (this.validarArchivo(file)) {
+       // this.barraProgreso(true);
+      //  this.readFileHorario(file.files);
+     // } else {
+       // console.log('Error: Uno o más archivos no pasaron la validación');
+       // this.barraProgreso(false);
+     // }
+      
+    }
+
+    cargarArchivoHorario() {
+      let elemento = document.getElementById('fileInputHorario');
+      if(elemento) {
+        elemento.click();
+        this.agregarFestivos = true;
+      } else {
+        console.log("No se encontró el elemento con id 'fileInputHorario'");
+      }
+    }
+
+    excelDateToJSDate(serial: any) {
+      let utc_days  = Math.floor(serial - 25569);
+      let utc_value = utc_days * 86400;                                        
+      let date_info = new Date(utc_value * 1000);
+   
+      let year = date_info.getUTCFullYear();
+      let month = date_info.getUTCMonth() + 1;
+      let day = date_info.getUTCDate();
+   
+      let dayStr = day < 10 ? '0' + day.toString() : day.toString();
+      let monthStr = month < 10 ? '0' + month.toString() : month.toString();
+   
+      return `${year}-${monthStr}-${dayStr}`;
+  
+   }
+
+    //subir plantilla
+  manejarArchivoHorario(event: any) {
+    const target: DataTransfer = <DataTransfer>(event.target);
+
+    if (target.files.length == 0) throw new Error('No ha seleccionado ningun archivo');
+    if (target.files.length !== 1) throw new Error('No se puede cargar múltiples archivos');
+    const reader: FileReader = new FileReader();
+
+
+    reader.onload = (e: any) => {
+     //===========================================================================
+            var workBook = XLSX.read(reader.result, { type: 'binary' });
+            var sheetNames = workBook.SheetNames;
+            this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+            let valiFile = true;
+            this.columnasexcel.forEach(element => {
+              if (!this.ExcelData[0][element]) {
+                valiFile=false; 
+              }   
+            });
+            if (!valiFile) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo es inválido por favor verifique: \n * Columnas incorrectas',
+                confirmButtonColor: '#0A6EBD',
+              });
+              this.fileInputHorario.nativeElement.value = null;
+              // this.activarBarra = false;
+            }else{
+              let XL_row_object = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+              let json_object = JSON.stringify(XL_row_object);
+              // aqui parseamos a json
+              const datos = JSON.parse(json_object);
+              console.log(this.ExcelData);
+              if(this.ExcelData.length){
+
+                console.log(this.ExcelData);
+                this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe(data => {
+                  console.log(data);
+                  if(data){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Carga de archivo completada.',
+                      confirmButtonColor: '#0A6EBD',
+                    });
+                    this.fileInputHorario.nativeElement.value = null;
+                    // this.activarBarra = false;
+                  }else{
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                      confirmButtonColor: '#0A6EBD',
+                    });
+                    this.fileInputHorario.nativeElement.value = null;
+                  }
+                });
+                
+                console.log("El archivo pasa")
+                //this.botonHorario = false;
+              }else{
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Error:  Archivo vacio.',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                // this.botonHorario = false;
+              }
+            }
+
+     //===========================================================================
+    };
+  
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+
+  readFileHorario(fileInput: any) {
+      let file = fileInput[0]; // Accede al primer archivo seleccionado
+  
+      if (file) {
+        let fileReader = new FileReader();
+  
+        fileReader.readAsBinaryString(file);
+  
+        fileReader.onload = (e) => {
+          var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+          var sheetNames = workBook.SheetNames;
+          this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+          let valiFile = true;
+          this.columnasexcel.forEach(element => {
+            if (!this.ExcelData[0][element]) {
+              valiFile=false; 
+            }   
+          });
+          if (!valiFile) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'El archivo es inválido por favor verifique: \n * Columnas incorrectas',
+              confirmButtonColor: '#0A6EBD',
+            });
+            this.fileInputHorario.nativeElement.value = null;
+           // this.activarBarra = false;
+          }else{
+            let XL_row_object = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+            let json_object = JSON.stringify(XL_row_object);
+            // aqui parseamos a json
+            const datos = JSON.parse(json_object);
+            console.log(this.ExcelData);
+            if(this.ExcelData.length){
+  
+              console.log(this.ExcelData);
+              this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe(data => {
+                console.log(data);
+                if(data){
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Carga de archivo completada.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                  this.fileInputHorario.nativeElement.value = null;
+                 // this.activarBarra = false;
+                }else{
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                  this.fileInputHorario.nativeElement.value = null;
+                }
+              });
+              
+              console.log("El archivo pasa")
+              //this.botonHorario = false;
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error:  Archivo vacio.',
+                confirmButtonColor: '#0A6EBD',
+              });
+             // this.botonHorario = false;
+            }
+          }
+          
+  
+          
+        }
+      } else {
+        console.error("No se ha seleccionado ningún archivo.");
+      }
     }
 
     exportToExcelHours(){

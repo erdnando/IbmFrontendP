@@ -167,7 +167,8 @@ export class PopUpAprovveComponent {
 
     if(bAprobado){
 
-        if(this.aprobador.value=='' || this.userForm.value.descripcion=='' ){
+        //if(this.aprobador.value=='' || this.userForm.value.descripcion=='' ){
+        if( this.userForm.value.descripcion=='' ){
           this.btnOKState=true;
           this.btnOKStateLoading=false;
         }else{

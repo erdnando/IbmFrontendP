@@ -174,21 +174,40 @@
     </div>
 
     <div class="buttons">
+
+        
+
+
         <button mat-raised-button color="primary" class="" (click)="exportToExcelHours()">
             Descargar Plantilla(CSV)
             <mat-icon>
                 download
             </mat-icon> 
         </button>
-        <!---  <td *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha">
-                <button class="button-options-excel" (click)="cargarArchivoHorarios()">
-                    Subir Plantilla(CSV)
-                    <mat-icon>
-                        upload
-                    </mat-icon> 
-                </button>
-                <input type="file" id="input-excel" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorarios($event)" />
-            </td> -->
+        
+      <!--  <button mat-raised-button color="primary" class="" (click)="readExcelHorario(fileInput4)">
+            Subir Plantilla(CSV)
+            <mat-icon>
+                upload
+            </mat-icon> 
+        </button>
+        
+        <input type="file"  id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+    -->
+    <button  mat-raised-button color="primary" class="" (click)="cargarArchivoHorario()" *ngIf="habilitarExcel">
+        Subir Plantilla(CSV)
+        <mat-icon>
+            upload
+        </mat-icon> 
+    </button>
+    <input type="file" id="fileInputHorario" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorario($event)" />
+
+
+
+
+
+
+            
         <button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length && confirmedControl.value">
             Guardar Cambios
             <mat-icon>
