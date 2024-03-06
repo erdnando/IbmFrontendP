@@ -33,7 +33,7 @@
                 <mat-form-field style="width: 100%;" appearance="outline">
                     <mat-label>Time zone</mat-label>
                     <mat-select [formControl]="pais" (selectionChange)="select(pais)">
-                        <mat-option *ngFor="let zona of MListGMT" [value]="zona.paisGMT">
+                        <mat-option *ngFor="let zona of MListGMT" [value]="zona.diferencia">
                             {{zona.time}}
                         </mat-option>
                     </mat-select>
@@ -134,30 +134,42 @@
        
     </mat-tab>
 
-    <!-- <mat-tab>
+
+
+    <mat-tab>
         <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon">upload_file</mat-icon>
             Subir Plantilla Zona Horaria Usuarios
         </ng-template>
         <br>
-        <div class="body-excel">
-            <mat-progress-bar mode="indeterminate" *ngIf="activarBarraWorkday"></mat-progress-bar>
+
+        <div class="body-excel" style="width: 95%;">
+            <div class="overlay" *ngIf="activarBarra" style="padding:40%;position: fixed;padding-top: 20%;">
+                <mat-spinner [diameter]="50"></mat-spinner>
+
+            </div>
+            <div style="width: 100%;">
+            <mat-progress-bar mode="determinate" [value]="porcentajeCarga" *ngIf="activarBarra"></mat-progress-bar>
+            <p *ngIf="activarBarra" class="texto-barra-carga">{{ porcentajeCarga }}% completado ({{ porcentajeCarga == 0 ? "Cargando..." : mensajeProgressBar}})</p>
+            </div>
+            <br/>
             <div>
-                <div class="centrado">
+                <div>
                     <label class="mi-etiqueta">
-                        Cargar plantilla de Usuarios 
-                        <br>
-                        <input type="file" [disabled]="activarBarraWorkday" (change)="activarARP('UserGMT',$event)" id="input-excel" placeholder="Carga de plantilla Usuarios" accept=".xlsx, .xls" #fileInputUserGMT>
+                        Archivo Usuarios Zona Horaria: <br>
+                        <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('UserGMT',$event)" #fileInputUserGMT>
                     </label>
                 </div>
             </div>
-            <div style="text-align: center;">
-                <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonUsers && paisSeleccionado" (click)="readExcelUsers(fileInputUserGMT)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
-            </div>
+
+    <div style="text-align: center;">
+        <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonUsers" (click)="readExcelUsers(fileInputUserGMT)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
+    </div>
             
+
         </div>
-       
-    </mat-tab> -->
+        
+    </mat-tab>
 </mat-tab-group>
 
     </div>
