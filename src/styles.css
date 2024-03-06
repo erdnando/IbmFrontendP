@@ -44,6 +44,10 @@ body {
     overflow: auto;
 }
 
+.mat-mdc-form-field-subscript-wrapper {
+    min-height: 22px;
+}
+
 .mat-form-field-warned.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mdc-notched-outline__leading {
     border-color: #f49536 !important;
 }
