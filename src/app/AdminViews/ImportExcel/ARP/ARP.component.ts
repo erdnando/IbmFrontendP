@@ -31,6 +31,7 @@ export class ARPComponent {
   @ViewChild('fileInputWorkdayHoras') fileInputWorkdayHoras: any;
   @ViewChild('fileInputWorkdayUsers') fileInputWorkdayUsers: any;
   @ViewChild('downloadWorkdayFileEl') downloadWorkdayFileEl: any;
+  @ViewChild('fileInputUserGMT') fileInputUserGMT: any;
 
   ExcelData: any;
   excelData1: any;
@@ -58,12 +59,14 @@ export class ARPComponent {
   botonHorario = false;
   botonWorkdayHoras = false;
   botonWorkdayUsers = false;
+  botonUsers = false;
   columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
   columnasARP:string[]=["DOC_NUM","TOOL","PAIS","ID_EMPLEADO","NUMERO_CLIENTE","NOMBRE_CLIENTE","ESTADO","FECHA_REP","HORA_INICIO","HORA_FIN","TOTAL_MINUTOS","CATEGORIA","ACTIVIDAD","COMENTARIO","FECHA_EXTRATED"];
   columnasTSE:string[]=["Recurso de servicio: Usuario: ISO 2","TSE: Work Order","Recurso de servicio: Usuario: Número de empleado","Recurso de servicio: Usuario: Zona horaria","Orden de trabajo: Caso: Account CMR Number","Orden de trabajo: Caso: Account Name Text","TSE: Status","TSE: Start Time","TSE: End Time","Duration in Hours","WO: Subject"];
   columnasSTE:string[]=["Session Time Unique ID","Session Time Support Agent Country","Número del caso","Session Time Creator Employee Serial Number","Account CMR Number","Nombre de la cuenta: Nombre de la cuenta","Start Date/Time","End Date/Time","Session Time: Total Duration","Case Subject"];
   columnasexcelWorkdayHoras:string[]=["Employee ID","Worker","Reported Date","Original Reported Quantity","Time Type","Status","Calculated Date","In Time","Out Time","Calculated Quantity","Calculation Tags","Source Time or Time Off Block"];
   columnasexcelWorkdayUsers:string[]=["Worker", "Employee ID", "Legal Name", "Preferred Name", "Home CNUM"];
+  columnasUSRZH:string[]=["Número de empleado","Zona horaria"];
   pais = new FormControl('');
   MListCountry: MCountryEntity[];
   MListGMT: MGmt[];
@@ -100,20 +103,24 @@ export class ARPComponent {
     //this.MListGMT.push({id:8, time:'(GMT-04:00) Atlantic Time (Canada)',diferencia:-4,paisGMT:""});
     this.MListGMT.push({id:9, time:'(GMT-04:00) Venezuela',diferencia:-4,paisGMT:"Venezuela"});
     //this.MListGMT.push({id:10, time:'(GMT-04:00) Manaus',diferencia:-4});
-    this.MListGMT.push({id:11, time:'(GMT-04:00) Chile',diferencia:-4,paisGMT:"Chile"});
+    this.MListGMT.push({id:11, time:'(GMT-04:00) Santiago,Punta Arenas  (Chile)',diferencia:-4,paisGMT:"Chile"});
+    this.MListGMT.push({id:11, time:'(GMT-05:00) Isla de Pascua  (Chile)',diferencia:-5,paisGMT:"Chile"});
     this.MListGMT.push({id:12, time:'(GMT-05:00) Colombia',diferencia:-5,paisGMT:"Colombia"});
     this.MListGMT.push({id:12, time:'(GMT-05:00) Peru',diferencia:-5,paisGMT:"Peru"});
-    this.MListGMT.push({id:12, time:'(GMT-05:00) Ecuador',diferencia:-5,paisGMT:"Ecuador"});
+    this.MListGMT.push({id:12, time:'(GMT-05:00) Quito  (Ecuador)',diferencia:-5,paisGMT:"Ecuador"});
+    this.MListGMT.push({id:12, time:'(GMT-06:00) Islas Galápagos  (Ecuador)',diferencia:-6,paisGMT:"Ecuador"});
     //this.MListGMT.push({id:13, time:'(GMT-05:00) Eastern Time (US and Canada) ',diferencia:-5});
     //this.MListGMT.push({id:14, time:'(GMT-05:00) Indiana (East) ',diferencia:-5});
     //this.MListGMT.push({id:15, time:'(GMT-06:00) Central America ',diferencia:-6});
     //this.MListGMT.push({id:16, time:'(GMT-06:00) Central Time (US and Canada)',diferencia:-6});
-    this.MListGMT.push({id:17, time:'(GMT-06:00) México ',diferencia:-6,paisGMT:"Mexico"});
+    this.MListGMT.push({id:17, time:'(GMT-06:00) México (México)',diferencia:-6,paisGMT:"Mexico"});
+    this.MListGMT.push({id:20, time:'(GMT-07:00) Chihuahua, La Paz,B.C.S., Mazatlan  (México)',diferencia:-7,paisGMT:"Mexico"});
+    this.MListGMT.push({id:22, time:'(GMT-08:00) Pacific Time (US and Canada); Tijuana, B.C.  (México)',diferencia:-8,paisGMT:"Mexico"});
     //this.MListGMT.push({id:18, time:'(GMT-06:00) Saskatchewan',diferencia:-6});
     //this.MListGMT.push({id:19, time:'(GMT-07:00) Arizona',diferencia:-7});
-    //this.MListGMT.push({id:20, time:'(GMT-07:00) Chihuahua, La Paz, Mazatlan ',diferencia:-7,paisGMT:""});
+    
     //this.MListGMT.push({id:21, time:'(GMT-07:00) Mountain Time (US and Canada)',diferencia:-7});
-    //this.MListGMT.push({id:22, time:'(GMT-08:00) Pacific Time (US and Canada); Tijuana ',diferencia:-8,paisGMT:""});
+    
     //this.MListGMT.push({id:23, time:'(GMT-09:00) Alaska',diferencia:-9});
     //this.MListGMT.push({id:24, time:'(GMT-10:00) Hawaii',diferencia:-10});
     //this.MListGMT.push({id:25, time:'(GMT-11:00) Midway Island, Samoa',diferencia:-11});
@@ -253,6 +260,11 @@ export class ARPComponent {
       case 'WorkdayUsers':
         this.botonWorkdayUsers = true;
         return;
+      case 'UserGMT':
+        this.botonUsers = true;
+        return;
+
+        
     }
 
   }
@@ -973,6 +985,113 @@ export class ARPComponent {
       });
 
   
+  }
+
+  readExcelUsers(fileInputUsergmt: any) {
+    
+    this.barraProgreso(true);
+    
+    if (this.validarArchivo(fileInputUsergmt)) {
+      
+      this.readfileUserGMT(fileInputUsergmt.files);
+      
+    } else {
+      console.log('Error: Uno o más archivos no pasaron la validación');
+      
+    }
+  }
+
+  readfileUserGMT(fileInputUserGmt: any){
+
+    Swal.fire({
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      width: 0
+    });
+    
+    let file = fileInputUserGmt[0]; 
+    
+
+    if (file) 
+    {
+      let fileReader = new FileReader();
+      
+
+      fileReader.readAsBinaryString(file);
+      
+      
+
+      fileReader.onload = (e) => {
+          var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+          var sheetNames = workBook.SheetNames;
+          this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+
+          if(this.ExcelData.length > 0){
+            let valiFile = true;
+            this.columnasUSRZH.forEach(element => {
+              if (this.ExcelData[0][element]==undefined) {
+                valiFile=false; 
+              }   
+            });
+            if (!valiFile) {
+              this.fileInputUserGMT.nativeElement.value = null;
+              this.activarBarra = false;
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo es inválido por favor verifique: \n * Columnas incorrectas',
+                confirmButtonColor: '#0A6EBD',
+              });
+              
+            }else{
+              console.log('inicia carga');
+              console.log("idCarga:::::USERSGMT");
+              //carga ARP
+              this.loadArpExcelService.UploadUserGMT(this.ExcelData).subscribe( data => { 
+                console.log(data);
+                if(data.data=="Success"){
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Carga de archivo completada.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                  this.fileInputUserGMT.nativeElement.value = null;
+                  this.activarBarra = false;
+                }else{
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                    confirmButtonColor: '#0A6EBD',
+                  });
+                  this.fileInputUserGMT.nativeElement.value = null;
+                  this.activarBarra = false;
+                }
+              });   
+            }
+
+          }else{
+            this.fileInputUserGMT.nativeElement.value = null;
+            this.activarBarra = false;
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'El archivo no contiene información, por favor verifique!',
+              confirmButtonColor: '#0A6EBD',
+            });
+          }
+      }
+    } else {
+      console.error("No se ha seleccionado ningún archivo.");
+      
+      this.barraProgreso(false);
+    }
+
+    this.botonUsers = false;
+    
+    this.fileInputUserGMT.nativeElement.value = null;
   }
 
 

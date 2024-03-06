@@ -76,7 +76,7 @@
         
     </mat-tab>
 
-    <mat-tab>
+    <!-- <mat-tab>
         <ng-template mat-tab-label>
             <mat-icon class="example-tab-icon">upload_file</mat-icon>
             Subir Plantilla Horarios
@@ -97,7 +97,7 @@
         </button>
         </div>
        
-    </mat-tab>
+    </mat-tab> -->
 
     <mat-tab>
         <ng-template mat-tab-label>
@@ -133,6 +133,31 @@
         </div>
        
     </mat-tab>
+
+    <!-- <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">upload_file</mat-icon>
+            Subir Plantilla Zona Horaria Usuarios
+        </ng-template>
+        <br>
+        <div class="body-excel">
+            <mat-progress-bar mode="indeterminate" *ngIf="activarBarraWorkday"></mat-progress-bar>
+            <div>
+                <div class="centrado">
+                    <label class="mi-etiqueta">
+                        Cargar plantilla de Usuarios 
+                        <br>
+                        <input type="file" [disabled]="activarBarraWorkday" (change)="activarARP('UserGMT',$event)" id="input-excel" placeholder="Carga de plantilla Usuarios" accept=".xlsx, .xls" #fileInputUserGMT>
+                    </label>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonUsers && paisSeleccionado" (click)="readExcelUsers(fileInputUserGMT)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
+            </div>
+            
+        </div>
+       
+    </mat-tab> -->
 </mat-tab-group>
 
     </div>

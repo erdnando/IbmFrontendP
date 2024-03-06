@@ -16,7 +16,7 @@
         
         <ol class="sidenav-nav" >
 
-          <li class="sidenav-nav-item">
+          <li class="sidenav-nav-item" style="text-align: center;">
             <a title="{{MUser?.nameUser +' '+ MUser?.surnameUser}}"  class="sidenav-nav-linkx"   >
               <mat-icon class="sidenav-linkx-icon" (mouseover)="toggleopen()">assignment_ind</mat-icon>
               <div>
@@ -46,8 +46,16 @@
               [routerLinkActiveOptions]="{exact: true}">
               <mat-icon class="sidenav-link-icon">power_settings_new</mat-icon>
               <span class="sidenav-link-text " @fadeInOut *ngIf="collapsed">CERRAR SESIÓN</span>
+              
             </a>
+            
           </li>
+          
+          <li class="sidenav-nav-item">
+            <br/>
+              <span class="sidenav-link-text " style="color: white;" @fadeInOut *ngIf="collapsed">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v1.0.0.0.12</span>
+          </li>
+
         </ol>
       </div>
     </mat-nav-list>

@@ -642,36 +642,40 @@ export class ScheduleComponent {
         };
         season.push(rowseason);
       });
-      // season = [
-      //   { 
-      //     dia: 'Lunes', 
-      //     horaInicio: '00:00', 
-      //     horaFin: '00:00',
-      //     fecha: 'dd/MM/YYYY', 
-      //     codigo_Empleado: '255', 
-      //     pais: pais.countryEntity.nameCountry
-      //   },
-      //   { 
-      //     dia: 'Martes', 
-      //     horaInicio: '00:00', 
-      //     horaFin: '00:00' 
-      //   },
-      //   { 
-      //     dia: 'Miércoles', 
-      //     horaInicio: '00:00', 
-      //     horaFin: '00:00' 
-      //   },
-      //   { 
-      //     dia: 'Jueves', 
-      //     horaInicio: '00:00', 
-      //     horaFin: '00:00' 
-      //   },
-      //   { 
-      //     dia: 'Viernes',
-      //     horaInicio: '00:00', 
-      //     horaFin: '00:00' 
-      //   },
-      // ];
+
+      if(season.length==0){
+        season = [
+          { 
+            dia: 'Lunes', 
+            horaInicio: '00:00', 
+            horaFin: '00:00',
+            fecha: 'dd/MM/YYYY', 
+            codigo_Empleado: '', 
+            pais: pais.countryEntity.nameCountry
+          },
+          { 
+            dia: 'Martes', 
+            horaInicio: '00:00', 
+            horaFin: '00:00' 
+          },
+          { 
+            dia: 'Miércoles', 
+            horaInicio: '00:00', 
+            horaFin: '00:00' 
+          },
+          { 
+            dia: 'Jueves', 
+            horaInicio: '00:00', 
+            horaFin: '00:00' 
+          },
+          { 
+            dia: 'Viernes',
+            horaInicio: '00:00', 
+            horaFin: '00:00' 
+          },
+        ];
+      }
+       
   
       const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(season);
   
