@@ -311,11 +311,20 @@ export class DashboardComponent implements AfterViewInit {
 
   ngOnInit() {
    
-    //console.log("=================Leyendo datos usuario from storage en dashboard=============");
-    //this.MUser = this.storageData.obtenerDatosMapeados();
-    //console.log(this.MUser);
+    console.log("=================Leyendo datos usuario from storage en dashboard=============");
+    this.MUser = this.storageData.obtenerDatosMapeados();
+    console.log(this.MUser);
+    if(this.MUser==null){
 
+      Swal.fire({
+        icon: 'error',
+        title: 'No se han podido obtener datos de su login. Por favor reportelo con el administrador',
+        confirmButtonColor: '#0A6EBD',
+      });
+      return;
+    }else{
 
+    
 
     this.noAno=this.currentDate.getFullYear();
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
@@ -336,6 +345,7 @@ export class DashboardComponent implements AfterViewInit {
       this.resizeChart(window.innerWidth);
       }, 100);
 
+    }
 
   
   
