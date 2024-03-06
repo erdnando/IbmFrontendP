@@ -8,7 +8,7 @@ import { MUserCreate } from 'src/app/Models/MUserCreate';
 import { MLogin } from 'src/app/Models/MLogin';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { ApiLogin } from 'src/app/Views/Login/services/login/api.login';
-
+import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,7 @@ export class RutaActualService {
    
            //catch xml data 
            
-           const xmlParam = uxm_erd;
+           const xmlParam = uxm_erd.replace("%3D%3D","");
            console.log("url::::");
            console.log(uxm_erd);
            console.log("parametro obtenido:"+ xmlParam);
@@ -64,7 +64,9 @@ export class RutaActualService {
            
           
            // Decode the String
-           var decodedStringAtoB = atob(xmlParam);
+           var decodedStringAtoB = atob(xmlParam);//atob(xmlParam);//atob
+           //var decodedStringAtoB = Buffer.from(xmlParam, 'base64').toString('utf8');
+
            console.log("decodificado: " + decodedStringAtoB);
          
            //validar que el usuario (email) exista
@@ -89,6 +91,41 @@ export class RutaActualService {
     });
   }
 
+  decodeBase64(base64: string) {
+    const base64chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  
+    if (!base64.match(/^[A-Za-z0-9+/]+={0,2}$/)) {
+      throw new Error("Invalid base64 string");
+    }
+  
+    const padding = base64.endsWith("==") ? 2 : base64.endsWith("=") ? 1 : 0;
+    const bytes = new Uint8Array((base64.length * 6) / 8 - padding);
+    let i = 0;
+    let j = 0;
+  
+    while (i < base64.length) {
+      const index1 = base64chars.indexOf(base64[i++]);
+      const index2 = base64chars.indexOf(base64[i++]);
+      const index3 = base64chars.indexOf(base64[i++]);
+      const index4 = base64chars.indexOf(base64[i++]);
+  
+      const decoded1 = (index1 << 2) | (index2 >> 4);
+      const decoded2 = ((index2 & 0x0f) << 4) | (index3 >> 2);
+      const decoded3 = ((index3 & 0x03) << 6) | index4;
+  
+      bytes[j++] = decoded1;
+  
+      if (index3 !== 64) {
+        bytes[j++] = decoded2;
+      }
+      if (index4 !== 64) {
+        bytes[j++] = decoded3;
+      }
+    }
+  
+    return bytes.buffer;
+  }
  
 
   getAndAddTokenToStorage(objJsonx:any){
