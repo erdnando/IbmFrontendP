@@ -138,5 +138,13 @@ export class LoadArpExcelService {
     return this.http.post<MSummaryFinal>(direccion,requestData);
   }
 
+  UploadUserGMT(data: object): Observable<MResponseLoadGuid> {
+    let direccion = this.URLLocal + "Load/UploadUserGMT";
+    console.log(direccion);
+    const requestData= {
+      data:data,
+    };
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
+  }
   
 }
