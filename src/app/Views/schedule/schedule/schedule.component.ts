@@ -48,13 +48,13 @@ export class ScheduleComponent {
   @ViewChild('fileInputHorario') fileInputHorario: any;
   
   Datos = [
+    { day: 'Domingo', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Lunes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Martes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Miércoles', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Jueves', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Viernes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
     { day: 'Sábado', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Domingo', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
   ];
   
   columnasAMostrar = ['dias', 'inicio','a', 'fin', 'checkbox'];
@@ -289,37 +289,40 @@ export class ScheduleComponent {
       }
     }
 
+    validateHorarios () {
+      for (let horario of this.mHorarioList) {
+        if (!this.validateHorario(horario.day, horario.horaInicio, horario.horaFin)) return false;
+      }
+      return true;
+    }
+  
+    validateHorario(day: string, horaInicio: string, horaFin: string) {
+      let startDate = new Date();
+      const [startHour, startMinutes] = horaInicio.split(":");
+      startDate.setHours(+startHour, +startMinutes, 0);
+      let endDate = new Date();
+      const [endHour, endMinutes] = horaFin.split(":");
+      endDate.setHours(+endHour, +endMinutes, 0);
+      if(startDate >= endDate || endDate <= startDate) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'La hora fin debe ser mayor a la hora inicio',
+          confirmButtonColor: '#0A6EBD',
+          allowOutsideClick: false
+        });
+        return false;
+      }
+  
+      return true;
+    }
+
     guardarValorInicio(dia: any[]) {
       //this.valoresInicio[dia] = [this.horaInicio.value!,this.horaFin.value!];
       if (dia.length === 0) {
         throw new Error('La lista está vacía');
       }
 
-      console.log("hora inicio", this.horaInicio.value, "hora fin", this.horaFin.value);
-      if (this.horaInicio.value && this.horaFin.value) {
-        let startDate = new Date();
-        const [startHour, startMinutes] = this.horaInicio.value.split(":");
-        startDate.setHours(+startHour, +startMinutes, 0);
-        let endDate = new Date();
-        const [endHour, endMinutes] = this.horaFin.value.split(":");
-        endDate.setHours(+endHour, +endMinutes, 0);
-        if (startDate > endDate || endDate < startDate) {
-          setTimeout(() => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'La hora inicio debe ser menor a la hora fin',
-              confirmButtonColor: '#0A6EBD',
-              allowOutsideClick: false
-            });
-          });
-
-          this.horaInicio.setValue('');
-          this.horaFin.setValue('');
-          return;
-        }
-      }
-  
       if(dia.length === 1){
         console.log('este el el primer lengt', dia)
         this.mHorario = {
@@ -596,8 +599,7 @@ export class ScheduleComponent {
         );
       }
   
-      this.week1 = [];    
-  
+      this.week1 = [];
       let date = new Date(this.date.value as unknown as Date);
       let year = date.getFullYear().toString();
       let week = getWeek(date);
@@ -898,6 +900,9 @@ export class ScheduleComponent {
   
       console.log(this.mHorarioList);
       if(this.mHorarioList.length){
+        let valid = this.validateHorarios();
+        if (!valid) return;
+
         this.horarioCreate
         .PostCreateHorario(this.mHorarioList)
         .subscribe((data) => {

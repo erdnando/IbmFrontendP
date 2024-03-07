@@ -28,22 +28,51 @@ export class PopUpHorarioComponent {
     private horarioCreate: HorarioCreateService
   ) { }
 
+  validateHorarios () {
+    for (let horario of this.mHorarioList) {
+      if (!this.validateHorario(horario.day, horario.horaInicio, horario.horaFin)) return false;
+    }
+    return true;
+  }
+
+  validateHorario(day: string, horaInicio: string, horaFin: string) {
+    let startDate = new Date();
+    const [startHour, startMinutes] = horaInicio.split(":");
+    startDate.setHours(+startHour, +startMinutes, 0);
+    let endDate = new Date();
+    const [endHour, endMinutes] = horaFin.split(":");
+    endDate.setHours(+endHour, +endMinutes, 0);
+    if(startDate >= endDate || endDate <= startDate) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'La hora fin debe ser mayor a la hora inicio',
+        confirmButtonColor: '#0A6EBD',
+        allowOutsideClick: false
+      });
+    
+      return false;
+    }
+
+    return true;
+  }
 
   guardarValoresInFin(object: any, event: any) {
-
+    console.log('hora inicio', object.horaInicio);
     let horasInicioFiltradas = this.listHoraInicio.
       filter(item => item.dia === object.day).
       map(item => item.horaInicio);
 
     if (horasInicioFiltradas.length) {
-      this.horaInicio = horasInicioFiltradas[0]
-      let indexar = this.listHoraInicio.findIndex(item => item.dia === object.day);
-      if (indexar !== -1) {
-        this.listHoraInicio.splice(indexar, 1);
-      }
+      this.horaInicio = horasInicioFiltradas[0];
     } else {
       this.horaInicio = object.horaInicio
     }
+
+    /* if (this.horaInicio && event.value) {
+      if (!this.validateHorario(object.day, this.horaInicio, event.value)) return;
+    } */
+
 
     this.mHorario = {
       horaInicio: this.horaInicio as string,
@@ -70,8 +99,8 @@ export class PopUpHorarioComponent {
   }
 
   actualizarHorario() {
-
-    console.log(this.listHoraInicio)
+    console.log(this.listHoraInicio);
+    
     if (this.listHoraInicio.length) {
       for (let element of this.listHoraInicio) {
         let index = this.mHorarioList.findIndex(
@@ -98,7 +127,9 @@ export class PopUpHorarioComponent {
     console.log(this.mHorarioList)
 
     if (this.mHorarioList.length) {
-
+      let valid = this.validateHorarios();
+      if (!valid) return;
+      
       this.horarioCreate
         .PostCreateHorario(this.mHorarioList)
 
@@ -134,7 +165,6 @@ export class PopUpHorarioComponent {
 
 
   miFuncion(event: any, day: string) {
-
     let diaHoraInicio = { horaInicio: event.value, dia: day };
     console.log(diaHoraInicio)
 
