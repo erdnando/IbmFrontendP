@@ -57,12 +57,12 @@ export class RutaActualService {
            //catch xml data 
            
            let xmlParam = uxm_erd.replace("%3D","");
-           xmlParam = uxm_erd.replace("%3D","");
-           xmlParam = uxm_erd.replace("%3D","");
-           console.log("url::::");
+           xmlParam = xmlParam.replace("%3D","");
+           xmlParam = xmlParam.replace("%3D","");
+           console.log("uxm_erd original::::");
            console.log(uxm_erd);
-           console.log("parametro obtenido:"+ xmlParam);
-
+           console.log("uxm_erd limpio::::");
+           console.log(xmlParam);
            
           
            // Decode the String
