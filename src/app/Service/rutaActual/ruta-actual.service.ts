@@ -45,7 +45,7 @@ export class RutaActualService {
         let arrUrlItems = window.location.hash.split('?');
         let uxm_erd="";
 
-        console.log('version 1.0.0.14');
+        console.log('version 1.0.0.15');
 
         if(arrUrlItems.length>1){
           console.log("flujo sso");
@@ -56,11 +56,13 @@ export class RutaActualService {
    
            //catch xml data 
            
-           const xmlParam = uxm_erd.replace("%3D%3D","");
-           console.log("url::::");
+           let xmlParam = uxm_erd.replace("%3D","");
+           xmlParam = xmlParam.replace("%3D","");
+           xmlParam = xmlParam.replace("%3D","");
+           console.log("uxm_erd original::::");
            console.log(uxm_erd);
-           console.log("parametro obtenido:"+ xmlParam);
-
+           console.log("uxm_erd limpio::::");
+           console.log(xmlParam);
            
           
            // Decode the String
