@@ -9,6 +9,7 @@ import { MLogin } from 'src/app/Models/MLogin';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { ApiLogin } from 'src/app/Views/Login/services/login/api.login';
 import { Buffer } from 'buffer';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -70,14 +71,23 @@ export class RutaActualService {
            //var decodedStringAtoB = Buffer.from(xmlParam, 'base64').toString('utf8');
 
            console.log("decodificado: " + decodedStringAtoB);
+           if(decodedStringAtoB.trim().startsWith("Error")){
+            Swal.fire({
+              icon: 'error',
+              title: 'No se han podido obtener datos de su login. Por favor reportelo con el administrador',
+              confirmButtonColor: '#0A6EBD',
+            });
+           }else{
+                //validar que el usuario (email) exista
+                this.objJson = JSON.parse(decodedStringAtoB);
+                console.log("ObjetoJason: " + this.objJson.email);
+                
+                // setTimeout(() => {
+                  this.getAndAddTokenToStorage(this.objJson);
+                //}, 500);
+           }
          
-           //validar que el usuario (email) exista
-           this.objJson = JSON.parse(decodedStringAtoB);
-           console.log("ObjetoJason: " + this.objJson.email);
-           
-          // setTimeout(() => {
-             this.getAndAddTokenToStorage(this.objJson);
-           //}, 500);
+          
 
         }else{
           console.log("flujo normal");
