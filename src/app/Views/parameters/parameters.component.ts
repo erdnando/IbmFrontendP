@@ -92,6 +92,7 @@ export class ParametersComponent implements OnInit {
   fesitvosExcel: any[] = [];
   event:string[]=[];
   bDeliting:boolean;
+  message0 = "Si es igual a 0 su país podrá ingresar standby y overtime  sin ningún tipo de restricción";
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -711,7 +712,7 @@ resetPicker(){
         week: this.semanaAno,
         userEntityId: this.idUserByEmployeCode,
         day: dia[0],
-        fechaWorking: this.obtenerFecha(dia[0]),
+        fechaWorking: this.obtenerFecha(dia[0]).toString(),
         ano: this.fechaSemanaAno
       };
       let index = this.mHorarioList.findIndex(
@@ -733,7 +734,7 @@ resetPicker(){
           userEntityId: this.idUserByEmployeCode,
           day: x.day,
           ano: this.fechaSemanaAno,
-          fechaWorking:this.obtenerFecha(x.day),
+          fechaWorking:this.obtenerFecha(x.day).toString(),
         }; 
         console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
         let index = this.mHorarioList.findIndex(

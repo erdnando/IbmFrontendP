@@ -212,7 +212,6 @@ export class RegisterTimeComponent {
 
             (await this.apiReportHours.PostCreatePortalDbReport(this.MHours)).subscribe(
               (data) => {
-                console.log(data.data)
                 this.activarBarra = false;
                 this.MHoursResponse = data;
 
@@ -300,7 +299,7 @@ export class RegisterTimeComponent {
     this.calcularHoras();
     // this.enviar();
 
-    if (this.MHours.countHours > '23.983333333333334') {
+    if (this.cantidadHoras > 23.983333333333334) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -308,7 +307,6 @@ export class RegisterTimeComponent {
         confirmButtonColor: '#0A6EBD',
       });
       this.horaFin = new FormControl();
-      this.MHours.countHours = '0';
     }
   }
 

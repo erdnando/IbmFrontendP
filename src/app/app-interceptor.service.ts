@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { MUserEntity } from './Models/MUserEntity';
 import { ApproverTimeService } from './Views/aprovve-time/services/approverTime/approver-time.service';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -25,6 +26,7 @@ export class AppInterceptorService implements HttpInterceptor {
     private storageService: StorageService,
     private apiLogin:ApiLogin,
     private router: Router,
+    private dialog: MatDialog,
    ) {
     this.Userlogin = {} as MLogin;
     this.mResponse = {} as MResponse;
@@ -107,6 +109,7 @@ export class AppInterceptorService implements HttpInterceptor {
 
               }else{
                 //salir
+                this.dialog.closeAll();
                 this.storageService.eliminarDatosGuardados();
                 this.router.navigate(['login']);
               }
@@ -130,6 +133,7 @@ export class AppInterceptorService implements HttpInterceptor {
     return next.handle(authRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
+          this.dialog.closeAll();
           Swal.fire({
             icon: 'warning',
             title: 'Oops...',

@@ -331,7 +331,7 @@ export class ScheduleComponent {
           week: this.semanaAno,
           userEntityId: this.idUserByEmployeCode,
           day: dia[0],
-          fechaWorking: this.obtenerFecha(dia[0]),
+          fechaWorking: this.obtenerFecha(dia[0]).toISOString(),
           ano: this.fechaSemanaAno
         };
         let index = this.mHorarioList.findIndex(
@@ -353,7 +353,7 @@ export class ScheduleComponent {
             userEntityId: this.idUserByEmployeCode,
             day: x.day,
             ano: this.fechaSemanaAno,
-            fechaWorking:this.obtenerFecha(x.day),
+            fechaWorking:this.obtenerFecha(x.day).toISOString(),
           }; 
           console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
           let index = this.mHorarioList.findIndex(
