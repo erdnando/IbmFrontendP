@@ -183,6 +183,7 @@ export class PopUpHorarioComponent {
   }
 
   ngOnInit() {
+    debugger;
     this.horario = this.data.horario;
 
     this.verificacionDias(this.horario);
@@ -192,10 +193,13 @@ export class PopUpHorarioComponent {
   verificacionDias(horarios: MCreateHorario[]) {
 
     let diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    let date = new Date(horarios[0].fechaWorking);
+    date.setDate(date.getDate() - date.getDay());
 
     // si no existe un dia en el horario guardado, lo añade e inicializa las horas vacias
     diasSemana.forEach(dia => {
       let diaEncontrado = horarios.find(horario => horario.day === dia);
+      let fechaWorking = date.toISOString();
       if (!diaEncontrado) {
         horarios.push({
           userEntityId: horarios[0].userEntityId,
@@ -204,9 +208,11 @@ export class PopUpHorarioComponent {
           horaFin: '',
           day: dia,
           ano: horarios[0].ano,
-          fechaWorking:horarios[0].fechaWorking
+          fechaWorking:fechaWorking
         });
       }
+
+      date.setDate(date.getDate() + 1);
     });
 
     horarios.sort((a: any, b: any) => diasSemana.indexOf(a.day) - diasSemana.indexOf(b.day));

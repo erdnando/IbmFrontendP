@@ -149,34 +149,37 @@
                                 <mat-label> Limites legales diarios: </mat-label>
                                 <input matInput type="text" placeholder="40" [formControl]="limitDay"
                                     [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
-                                <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false">Si es igual a 0 su país podrá ingresar standby y overtime  sin ningún tipo de restricción</mat-hint>
+                                <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false">{{message0}}</mat-hint>
                             </mat-form-field>
                         </div>
                         <div>
-                            <mat-form-field
+                            <mat-form-field [ngClass]="{'mat-form-field-warned': limitWeek.value != null && limitWeek.value != ''? +limitWeek.value == 0 : false }"
                                 appearance="outline">
                                 <mat-label> Limites legales semanales: </mat-label>
                                 <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="."  [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
                                     name="targetHourWeek" (keypress)="onKeyPressOnlyNumbers($event)"
                                     maxlength="6">
+                                <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitWeek.value != null && limitWeek.value != ''? +limitWeek.value == 0 : false">{{message0}}</mat-hint>
                             </mat-form-field>
                         </div>
                         <div>
-                            <mat-form-field
+                            <mat-form-field [ngClass]="{'mat-form-field-warned': limitMonth.value != null && limitMonth.value != ''? +limitMonth.value == 0 : false }"
                                 appearance="outline">
                                 <mat-label> Limites legales mensuales: </mat-label>
                                 <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
                                     name="targetHourMonth" (keypress)="onKeyPressOnlyNumbers($event)"
                                     maxlength="6">
+                                <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitMonth.value != null && limitMonth.value != ''? +limitMonth.value == 0 : false">{{message0}}</mat-hint>
                             </mat-form-field>
                         </div>
                         <div>
-                            <mat-form-field
+                            <mat-form-field [ngClass]="{'mat-form-field-warned': limitYear.value != null && limitYear.value != ''? +limitYear.value == 0 : false }"
                                 appearance="outline">
                                 <mat-label> Limites legales anuales: </mat-label>
                                 <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
                                     name="targetHourYear" (keypress)="onKeyPressOnlyNumbers($event)"
                                     maxlength="7">
+                                <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitYear.value != null && limitYear.value != ''? +limitYear.value == 0 : false">{{message0}}</mat-hint>
                             </mat-form-field>
                         </div>
                     </ng-container><br>
@@ -225,37 +228,40 @@
                                     appearance="outline">
                                     <mat-label> Limites legales diarios: </mat-label>
                                     <input matInput type="text" as-number decimalMarker="," mask="separator.2" thousandSeparator="." [formControl]="limitDay" [(ngModel)]="item.targetTimeDay" name="targetTimeDay" (keypress)="onKeyPressOnlyNumbers($event)" maxlength="4">
-                                    <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false">Si es igual a 0 su país podrá ingresar standby y overtime  sin ningún tipo de restricción</mat-hint>
+                                    <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitDay.value != null && limitDay.value != ''? +limitDay.value == 0 : false">{{message0}}</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field style="text-align: center;"
+                                <mat-form-field style="text-align: center;" [ngClass]="{'mat-form-field-warned': limitWeek.value != null && limitWeek.value != ''? +limitWeek.value == 0 : false }"
                                     appearance="outline">
                                     <mat-label> Limites legales semanales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitWeek" [(ngModel)]="item.targetHourWeek"
                                         name="targetHourWeek"
                                         (keypress)="onKeyPressOnlyNumbers($event)"
                                         maxlength="6">
+                                        <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitWeek.value != null && limitWeek.value != ''? +limitWeek.value == 0 : false">{{message0}}</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field style="text-align: right;"
+                                <mat-form-field style="text-align: right;" [ngClass]="{'mat-form-field-warned': limitMonth.value != null && limitMonth.value != ''? +limitMonth.value == 0 : false }"
                                     appearance="outline">
                                     <mat-label> Limites legales mensuales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitMonth" [(ngModel)]="item.targetHourMonth"
                                         name="targetHourMonth"
                                         (keypress)="onKeyPressOnlyNumbers($event)"
                                         maxlength="6">
+                                    <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitMonth.value != null && limitMonth.value != ''? +limitMonth.value == 0 : false">{{message0}}</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div>
-                                <mat-form-field style="text-align: right;"
+                                <mat-form-field style="text-align: right;" [ngClass]="{'mat-form-field-warned': limitYear.value != null && limitYear.value != ''? +limitYear.value == 0 : false }"
                                     appearance="outline">
                                     <mat-label> Limites legales anuales: </mat-label>
                                     <input matInput type="text" as-number decimalMarker=","  mask="separator.2" thousandSeparator="." [formControl]="limitYear" [(ngModel)]="item.targetHourYear"
                                         name="targetHourYear"
                                         (keypress)="onKeyPressOnlyNumbers($event)"
                                         maxlength="7">
+                                    <mat-hint class="mat-mdc-form-field-warning" *ngIf="limitYear.value != null && limitYear.value != ''? +limitYear.value == 0 : false">{{message0}}</mat-hint>
                                 </mat-form-field>
                             </div>
                         </ng-container>
