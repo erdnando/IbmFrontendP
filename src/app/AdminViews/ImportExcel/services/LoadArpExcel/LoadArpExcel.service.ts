@@ -46,7 +46,7 @@ export class LoadArpExcelService {
   PostLoadHorariosWorkdayG(data:object):Observable<any>{
     let direccion = this.URLLocal +"Horario/LoadExcelMan"; 
     console.log(direccion);
-    return this.http.post(direccion,data, { responseType: 'blob' });
+    return this.http.post(direccion,data, { observe: 'response', responseType: 'blob' });
   }
 
   PostLoadFinal(data: object, data2: object, data3: object): Observable<boolean> {

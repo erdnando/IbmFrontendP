@@ -28,6 +28,7 @@ import { HorarioCreateService } from '../../parameters/services/horarioCreate/ho
 import { UserConsultByCodeEmService } from '../../user/services/userConsultByCodeEm/user-consult-by-code-em.service';
 import { Time } from '@angular/common';
 import { LoadArpExcelService } from 'src/app/AdminViews/ImportExcel/services/LoadArpExcel/LoadArpExcel.service';
+import { ScheduleService } from 'src/app/Service/schedule/schedule.service';
 
 interface MiObjeto {
   [key: string]: any;
@@ -46,6 +47,7 @@ type Aoa = any[][];
 export class ScheduleComponent {
 
   @ViewChild('fileInputHorario') fileInputHorario: any;
+  @ViewChild('downloadTemplateEl') downloadTemplateEl: any;
   
   Datos = [
     { day: 'Domingo', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
@@ -63,7 +65,7 @@ export class ScheduleComponent {
   MApprover: MAprobador[];
   a : MAprobador[];
   MUser: any;
-  columnasexcel:string[]=["dia","horaInicio","horaFin","fecha","codigo_Empleado","pais"];
+  columnasexcel:string[]=["#", "NOMBRE DIA", "HORA INICIO", "HORA FIN", "FECHA", "CODIGO EMP", "PAIS"];
 
   MListCountry: MCountryEntity[];
   ExcelData: any;
@@ -140,7 +142,8 @@ export class ScheduleComponent {
     private apiListCountry: ListCountryService,
     private horarioCreate: HorarioCreateService,
     private consultUserByEmployee: UserConsultByCodeEmService,
-    private loadArpExcelService: LoadArpExcelService
+    private loadArpExcelService: LoadArpExcelService,
+    private scheduleService: ScheduleService,
   ) {
     this.MApprover = [];
     this.a = [];
@@ -995,6 +998,36 @@ export class ScheduleComponent {
           });
       } else {
       }
+    }
+
+    downloadTemplate() {
+      this.scheduleService.getTemplate().subscribe(resp => {
+        const m = (resp.headers.get('content-disposition') as string).match(/filename="([^"]+)"/);
+        const fileName = m? m[1] : '';
+        const blob = new Blob([resp.body]);
+        const url= window.URL.createObjectURL(blob);
+        this.downloadTemplateEl.nativeElement.href = url;
+        this.downloadTemplateEl.nativeElement.download = fileName;
+        this.downloadTemplateEl.nativeElement.click();
+        /* window.open(url); */
+        /* if(data){
+          Swal.fire({
+            icon: 'success',
+            title: 'Carga de archivo completada.',
+            confirmButtonColor: '#0A6EBD',
+          });
+          this.fileInputWorkdayG.nativeElement.value = null;
+          this.activarBarra = false;
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+            confirmButtonColor: '#0A6EBD',
+          });
+          this.fileInputWorkdayG.nativeElement.value = null;
+        } */
+      });
     }
 
 }

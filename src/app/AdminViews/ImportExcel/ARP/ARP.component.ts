@@ -364,12 +364,14 @@ export class ARPComponent {
             hours: data.hours,
             users: data.users,
           };
-          this.loadArpExcelService.PostLoadHorariosWorkdayG(datas).subscribe(data => {
+          this.loadArpExcelService.PostLoadHorariosWorkdayG(datas).subscribe(resp => {
             this.activarBarraWorkday = false;
-            const blob = new Blob([data], { type: 'application/octet-stream' });
+            const m = (resp.headers.get('content-disposition') as string).match(/filename="([^"]+)"/);
+            const fileName = m? m[1] : '';
+            const blob = new Blob([resp.body]);
             const url= window.URL.createObjectURL(blob);
             this.downloadWorkdayFileEl.nativeElement.href = url;
-            this.downloadWorkdayFileEl.nativeElement.download = 'Workday.xlsx';
+            this.downloadWorkdayFileEl.nativeElement.download = fileName;
             this.downloadWorkdayFileEl.nativeElement.click();
             /* window.open(url); */
             /* if(data){

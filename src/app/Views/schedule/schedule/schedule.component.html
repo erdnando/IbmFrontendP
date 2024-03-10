@@ -178,12 +178,13 @@
         
 
 
-        <button mat-raised-button color="primary" class="" (click)="exportToExcelHours()">
+        <button mat-raised-button color="primary" class="" (click)="downloadTemplate()">
             Descargar Plantilla(CSV)
             <mat-icon>
                 download
             </mat-icon> 
         </button>
+        <a #downloadTemplateEl style="display:none;"></a>
         
       <!--  <button mat-raised-button color="primary" class="" (click)="readExcelHorario(fileInput4)">
             Subir Plantilla(CSV)
@@ -200,7 +201,7 @@
             upload
         </mat-icon> 
     </button>
-    <input type="file" id="fileInputHorario" style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorario($event)" />
+    <input type="file" id="fileInputHorario" #fileInputHorario style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorario($event)" />
 
 
 

@@ -183,7 +183,6 @@ export class PopUpHorarioComponent {
   }
 
   ngOnInit() {
-    debugger;
     this.horario = this.data.horario;
 
     this.verificacionDias(this.horario);
