@@ -316,11 +316,11 @@ export class DashboardComponent implements AfterViewInit {
     console.log(this.MUser);
     if(this.MUser==null){
 
-      Swal.fire({
+      /*Swal.fire({
         icon: 'error',
         title: 'No se han podido obtener datos de su login. Por favor reportelo con el administrador',
         confirmButtonColor: '#0A6EBD',
-      });
+      });*/
       return;
     }else{
 
