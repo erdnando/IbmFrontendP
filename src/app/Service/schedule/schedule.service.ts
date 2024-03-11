@@ -15,7 +15,7 @@ export class ScheduleService {
   ) {}
 
   getTemplate(): Observable<any> {
-    return this.http.get(`${this.URLLocal}Horario/Template`, { observe: 'response', responseType: 'blob' });
+    return this.http.get(`${this.URLLocal}Horario/Template`);
   }
 
   

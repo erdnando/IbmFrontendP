@@ -1002,7 +1002,9 @@ export class ScheduleComponent {
 
     downloadTemplate() {
       this.scheduleService.getTemplate().subscribe(resp => {
-        const m = (resp.headers.get('content-disposition') as string).match(/filename="([^"]+)"/);
+        console.log("downloadTemplate", resp);
+        return;
+        let m: any = (resp.headers.get('content-disposition') as string).match(/filename="([^"]+)"/);
         const fileName = m? m[1] : '';
         const blob = new Blob([resp.body]);
         const url= window.URL.createObjectURL(blob);
