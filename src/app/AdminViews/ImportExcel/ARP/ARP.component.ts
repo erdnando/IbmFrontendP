@@ -366,7 +366,7 @@ export class ARPComponent {
           };
           this.loadArpExcelService.PostLoadHorariosWorkdayG(datas).subscribe(resp => {
             this.activarBarraWorkday = false;
-            const m = (resp.headers.get('content-disposition') as string).match(/filename="([^"]+)"/);
+            const m = (resp.headers.get('content-disposition') as string).match(/filename=([^;]+);/);
             const fileName = m? m[1] : '';
             const blob = new Blob([resp.body]);
             const url= window.URL.createObjectURL(blob);
