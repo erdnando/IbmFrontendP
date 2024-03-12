@@ -40,7 +40,7 @@ export class RegisterTimeService {
 
   async GetConsultHorarioByWeek(userEntityId: Guid, date: Date):Promise<Observable<MResponse>>{
 
-    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+userEntityId.toString()+"&date="+Date.toString();
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+userEntityId.toString()+"&date="+date.toISOString();
     
     console.log(direccion);
     return await this.http.get<MResponse>(direccion);
