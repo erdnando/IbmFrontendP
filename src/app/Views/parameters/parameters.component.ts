@@ -861,7 +861,7 @@ resetPicker(){
     
   
     if(this.habilitarHorariobyFecha && this.habilitarHorario){
-      this.serviceList.loadHorarios(this.idUserByEmployeCode, this.semanaAno, this.fechaSemanaAno).subscribe(horario => {
+      this.serviceList.loadHorarios(this.idUserByEmployeCode, date).subscribe(horario => {
         
         if(horario!=null){
 

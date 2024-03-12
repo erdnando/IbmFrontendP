@@ -299,8 +299,8 @@ export class ObtenerlistaService {
       });
   }
 
-  loadHorarios(id: string, semana: string, ano: string): Observable<any[]>{
-    return this.apiConsultHotario.GetHorario(id, semana, ano).pipe(
+  loadHorarios(id: string, date: Date): Observable<any[]>{
+    return this.apiConsultHotario.GetHorario(id, date).pipe(
       map((data: MiObjeto) => {
         let lista = data["data"];
         this.mHorarioList = lista;

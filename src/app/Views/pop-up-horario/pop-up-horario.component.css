@@ -34,3 +34,8 @@
 .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background {
     background-color: currentColor;
 }
+
+.mat-mdc-table .date {
+  color: #9a9a9a;
+  font-size: 0.9em;
+}

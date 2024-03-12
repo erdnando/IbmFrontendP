@@ -50,13 +50,13 @@ export class ScheduleComponent {
   @ViewChild('downloadTemplateEl') downloadTemplateEl: any;
   
   Datos = [
-    { day: 'Domingo', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Lunes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Martes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Miércoles', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Jueves', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Viernes', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Sábado', horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Domingo', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Lunes',  date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Martes',  date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Miércoles', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Jueves', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Viernes', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    { day: 'Sábado', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
   ];
   
   columnasAMostrar = ['dias', 'inicio','a', 'fin', 'checkbox'];
@@ -326,16 +326,19 @@ export class ScheduleComponent {
         throw new Error('La lista está vacía');
       }
 
+      
       if(dia.length === 1){
+        let date = this.obtenerFecha(dia[0]);
+        let week = this.getWeek(date);
         console.log('este el el primer lengt', dia)
         this.mHorario = {
           horaInicio: this.horaInicio.value as string,
           horaFin: this.horaFin.value as string,
-          week: this.semanaAno,
+          week: week.toString(),
           userEntityId: this.idUserByEmployeCode,
           day: dia[0],
-          fechaWorking: this.obtenerFecha(dia[0]).toISOString(),
-          ano: this.fechaSemanaAno
+          fechaWorking: date.toISOString(),
+          ano: date.getFullYear().toString()
         };
         let index = this.mHorarioList.findIndex(
           (mHorario) => mHorario.day === this.mHorario.day
@@ -349,14 +352,16 @@ export class ScheduleComponent {
       }
       else if(dia.length > 1){
         for(let x of dia){
+          let date = this.obtenerFecha(x.day);
+          let week = this.getWeek(date);
           this.mHorario= {
             horaInicio:  this.convertirHoraAMPMa24(x.horaInicio) as string,
             horaFin: this.convertirHoraAMPMa24(x.horaFin) as string,
-            week: this.semanaAno,
+            week: week.toString(),
             userEntityId: this.idUserByEmployeCode,
             day: x.day,
-            ano: this.fechaSemanaAno,
-            fechaWorking:this.obtenerFecha(x.day).toISOString(),
+            ano: date.getFullYear().toString(),
+            fechaWorking:date.toISOString(),
           }; 
           console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
           let index = this.mHorarioList.findIndex(
@@ -496,7 +501,7 @@ export class ScheduleComponent {
       
     
       if(this.habilitarHorariobyFecha && this.habilitarHorario){
-        this.serviceList.loadHorarios(this.idUserByEmployeCode, this.semanaAno, this.fechaSemanaAno).subscribe(horario => {
+        this.serviceList.loadHorarios(this.idUserByEmployeCode, date).subscribe(horario => {
           
           if(horario!=null){
   
@@ -543,6 +548,11 @@ export class ScheduleComponent {
             this.picker?.select(null);
             }
             this.semanaAno='';*/
+            date.setDate(date.getDate() - date.getDay());
+            for (let dato of this.Datos) {
+              dato.date = new Date(date);
+              date.setDate(date.getDate()+1);
+            }
         }
        
         });
@@ -592,20 +602,19 @@ export class ScheduleComponent {
       }
     }
 
-    onDateChange(event: any) {
+    getWeek(date: Date): number {
+      let onejan = new Date(date.getFullYear(), 0, 1);
+      return Math.ceil(
+        ((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) /
+          7
+      );
+    }
 
-      function getWeek(date: Date): number {
-        let onejan = new Date(date.getFullYear(), 0, 1);
-        return Math.ceil(
-          ((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) /
-            7
-        );
-      }
-  
+    onDateChange(event: any) {
       this.week1 = [];
       let date = new Date(this.date.value as unknown as Date);
       let year = date.getFullYear().toString();
-      let week = getWeek(date);
+      let week = this.getWeek(date);
       this.semanaAno = week.toString();
       this.fechaSemanaAno = year;
       console.log(this.fechaSemanaAno,' ano ', this.semanaAno, ' semana')

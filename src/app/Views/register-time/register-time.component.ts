@@ -128,37 +128,33 @@ export class RegisterTimeComponent {
           +horaFinParts[1] < +horaInicioParts[1])
       ) {
         // Si la hora de fin es menor que la hora de inicio, asumimos que es del día siguiente
-        horaFinDate.setDate(horaFinDate.getDate() + 1);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'El rango de horas ingresado no es correcto.',
-          confirmButtonColor: '#0A6EBD',
-        });
-        this.horaFin.reset();
         this.cantidadHoras = 0;
-        return
+        return;
       }
       horaFinDate.setHours(+horaFinParts[0], +horaFinParts[1], 0, 0);
 
       const diferencia = horaFinDate.getTime() - horaInicioDate.getTime();
 
       this.cantidadHoras = diferencia / (1000 * 60 * 60);
+    } 
+  }
 
-      if (this.cantidadHoras == 0 || this.cantidadHoras > 23.983333333333334) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'El rango de horas ingresado no es correcto.',
-          confirmButtonColor: '#0A6EBD',
-        });
-        this.horaFin.reset();
-      }
-    } else {
+  validateHours(): boolean {
+    if (this.cantidadHoras == 0 || this.cantidadHoras > 23.983333333333334) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El rango de horas ingresado no es correcto.',
+        confirmButtonColor: '#0A6EBD',
+      });
+      return false;
     }
+
+    return true;
   }
 
   async enviar() {
+    if(!this.validateHours()) return;
     let dateValue = this.fecha.value;
     if (!dateValue) return;
     let selectedDate = dateValue as Date;

@@ -16,9 +16,9 @@ export class ConsultaHorarioUserService {
   constructor(private http:HttpClient)
   { }
 
-  GetHorario(idUser: string, semana: string, ano: string):Observable<MResponse>{
+  GetHorario(idUser: string, date: Date):Observable<MResponse>{
 
-    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+idUser+"&week="+semana+"&ano="+ano;
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+idUser+"&date="+date.toISOString();
     console.log(direccion);
     return this.http.get<MResponse>(direccion);
 

@@ -222,6 +222,11 @@
     width: 100%;
 }
 
+.table-h .date {
+    color: #9a9a9a;
+    font-size: 0.9em;
+}
+
 
 .div-h3{
     width: 40%;

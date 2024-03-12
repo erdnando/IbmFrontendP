@@ -77,7 +77,9 @@
 
                 <!-- Dias -->
                 <ng-container matColumnDef="dias">
-                    <mat-cell *matCellDef="let element"> {{element.day}} </mat-cell>
+                    <mat-cell *matCellDef="let element">
+                        <div>{{element.day}} <div class="date">{{element.date | date: 'yyyy-MM-dd'}}</div></div>
+                    </mat-cell>
                 </ng-container>
 
                 <!-- inicio  -->
