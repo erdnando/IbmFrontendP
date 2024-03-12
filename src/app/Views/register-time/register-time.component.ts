@@ -173,7 +173,7 @@ export class RegisterTimeComponent {
     this.MHorarioR.week=this.getWeek(selectedDate).toString();
     console.log("Consulta horario::::::::");
     console.log(this.MHorarioR);
-    (await this.apiReportHours.GetConsultHorarioByWeek(this.MHorarioR)).subscribe(
+    (await this.apiReportHours.GetConsultHorarioByWeek(this.MHorarioR.userEntityId, selectedDate)).subscribe(
       async (data) => {
         
         console.log(data);

@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Guid } from "guid-typescript";
 import { Observable } from "rxjs";
 import { MHorarioRegistrado } from "src/app/Models/MHorarioRegistrado";
 import { MCreateHorusReport, MCreatePortalDB, MPortalDBResponse } from "src/app/Models/MHorusReport";
@@ -37,9 +38,9 @@ export class RegisterTimeService {
 
   }
 
-  async GetConsultHorarioByWeek(fechaP:MHorarioRegistrado):Promise<Observable<MResponse>>{
+  async GetConsultHorarioByWeek(userEntityId: Guid, date: Date):Promise<Observable<MResponse>>{
 
-    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+fechaP.userEntityId+"&week="+fechaP.week+"&ano="+fechaP.ano;
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW?IdUser="+userEntityId.toString()+"&date="+Date.toString();
     
     console.log(direccion);
     return await this.http.get<MResponse>(direccion);
