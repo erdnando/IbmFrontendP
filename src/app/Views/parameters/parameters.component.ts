@@ -74,7 +74,7 @@ export class ParametersComponent implements OnInit {
   idParametersStand: string = '';
   idParametersOver: string = '';
   agregarFestivos: boolean = false;
-  festivos: [] = [];
+  festivos: any[] = [];
   MFestivos: MFestivos;
   MFestivosList: MFestivos[];
   EntityFestivos: MFestivos[];
@@ -290,14 +290,15 @@ export class ParametersComponent implements OnInit {
 
   //confirmacion festivos
   falseAgregarFestivos() {
-    for (let festivo of this.storageFestivos.obtenerDiasFestivosAnos()) {
+    let festivos = this.storageFestivos.obtenerDiasFestivosAnos();
+    for (let festivo of festivos) {
       this.MFestivos = {} as MFestivos;
       //this.MFestivos.diaFestivo = festivo[0];
-      this.MFestivos.ano = festivo[1];
+      this.MFestivos.ano = festivo.ano;
       this.MFestivos.countryId = this.pais.value as unknown as string;
-      this.MFestivos.descripcion = 'Dia Fesitvo';
+      this.MFestivos.descripcion = festivo.descripcion;
       this.MFestivos.idUserEntiyId = this.MUser!.idUser;
-      this.MFestivos.sDiaFestivo = festivo[0];
+      this.MFestivos.sDiaFestivo = festivo.diafestivo_DD_MM_YYYY;
      // this.MFestivos.idFestivo = '';
       this.EntityFestivos.push(this.MFestivos);
     }
@@ -993,7 +994,7 @@ resetPicker(){
     let dayStr = day < 10 ? '0' + day.toString() : day.toString();
     let monthStr = month < 10 ? '0' + month.toString() : month.toString();
  
-    return `${year}-${monthStr}-${dayStr}`;
+    return `${dayStr}/${monthStr}/${year}`;
 
  }
 
@@ -1043,11 +1044,8 @@ resetPicker(){
   }
 
   guardarFestivosExcel(lista: any[]){
-    for (let list of lista){
-      let listaFestivos = [];
-      listaFestivos.push(list.diafestivo_DD_MM_YYYY,list.ano)
-      console.log(list.diafestivo_DD_MM_YYYY, 'esta es la lista')
-      this.storageFestivos.guardarDiasFestivos(listaFestivos);
+    for (let festivo of lista){
+      this.storageFestivos.guardarDiasFestivos(festivo);
     }
     
   }

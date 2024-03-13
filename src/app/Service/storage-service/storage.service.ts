@@ -60,18 +60,11 @@ export class StorageService {
     }
   }
 
-  public guardarDiasFestivos(lista: any[]):boolean{
-    
-    if(this.festivos.includes(lista[0])){
-      return false;
-    }else{
-      this.festivos.push(lista[0]);
-      this.festivosAnos.push(lista);
-      this.listaDiasFestivos.next(this.festivos);
-      return true;
-    }
-    
-    
+  public guardarDiasFestivos(festivo: any):boolean{
+    if(this.festivos.findIndex(x => x.diafestivo_DD_MM_YYYY == festivo.diafestivo_DD_MM_YYYY) > -1) return false;
+    this.festivos = [...this.festivos, festivo];
+    this.listaDiasFestivos.next(this.festivos);
+    return true;
   }
 
   public obtenerDiasFestivos(): Subject<any>{
@@ -79,7 +72,7 @@ export class StorageService {
   }
 
   public obtenerDiasFestivosAnos(): any[]{
-    return this.festivosAnos
+    return this.festivos;
   }
 
   public limpiarDiasFestivos(): void{
@@ -90,7 +83,7 @@ export class StorageService {
 
 
   public eliminarFestivo(festivo: any): void {
-    const index = this.festivos.indexOf(festivo);
+    const index = this.festivos.findIndex(x => x.diafestivo_DD_MM_YYYY == festivo.diafestivo_DD_MM_YYYY);
     if (index > -1) {
       this.festivos.splice(index, 1);
       this.listaDiasFestivos.next(this.festivos);

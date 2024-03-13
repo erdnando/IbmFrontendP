@@ -13,7 +13,6 @@ import Swal from 'sweetalert2';
 export class PopupFestivosComponent {
 
   date = new FormControl(null);
-  dates:string [] = [];
   MFestivos: MFestivos[];
   guardar: StorageService;
 
@@ -23,8 +22,6 @@ export class PopupFestivosComponent {
   }
 
   onDateChange(event: any) {
-
-    this.dates= [];
     console.log("on onDateChange");
     let date = new Date(this.date.value as unknown as Date);
     let day = date.getDate(); 
@@ -32,17 +29,17 @@ export class PopupFestivosComponent {
     let year = date.getFullYear().toString();
 
     let dayStr = day < 10 ? '0' + day.toString() : day.toString();
-let monthStr = month < 10 ? '0' + month.toString() : month.toString();
+    let monthStr = month < 10 ? '0' + month.toString() : month.toString();
     
-
    // this.dates.push(year+"-"+monthStr+"-"+dayStr);
-    this.dates.push(dayStr+"/"+monthStr+"/"+year);
-    this.dates.push(year)
-    let retorno = this.guardar.guardarDiasFestivos(this.dates)
-    if (retorno){
-      console.log(this.dates+" esto es en el popUp");
-    }
-    else{
+    let festivo = {
+      descripcion: "",
+      diafestivo_DD_MM_YYYY: dayStr+"/"+monthStr+"/"+year,
+      pais: "",
+      ano: date.getFullYear().toString(),
+    };
+    let retorno = this.guardar.guardarDiasFestivos(festivo)
+    if (!retorno) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

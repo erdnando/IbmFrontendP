@@ -65,7 +65,7 @@
                     <div *ngSwitchCase="true" class="fest">
                         <div style="overflow: auto; max-height: 300x;">
                             <ul id="date-list" class="list-fest">
-                                <li style="margin-top: 0px;margin-bottom: 5px; width: 80%; ;" *ngFor="let festivo of festivos">{{festivo}}
+                                <li style="margin-top: 0px;margin-bottom: 5px; width: 80%; ;" *ngFor="let festivo of festivos">{{festivo.diafestivo_DD_MM_YYYY}}
                                     <button class="delete-icon icon-grow-shadow" (click)="eliminarFestivo(festivo)">
                                         <mat-icon>remove_circle</mat-icon>
                                     </button>
