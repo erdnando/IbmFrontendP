@@ -44,7 +44,7 @@ export class RegisterTimeComponent {
   clientes: [] = [];
   aprobadores: [] = [];
   aprobador = new FormControl('');
-  descripcion = new FormControl('');
+  descripcion = new FormControl('', { nonNullable: true });
   fecha = new FormControl(null);
   actividad = new FormControl('');
   horaInicio = new FormControl('');
@@ -211,44 +211,23 @@ export class RegisterTimeComponent {
                 this.activarBarra = false;
                 this.MHoursResponse = data;
 
-                if (this.MHoursResponse.data.state==99) {
+                if (this.MHoursResponse.data.error) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Error en el registro de horas, no existe horario asignado.',
+                    text: this.MHoursResponse.data.message,
                     confirmButtonColor: '#0A6EBD',
                   });
-                } else if (this.MHoursResponse.data.state==100) {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Error en el registro de horas, por tratar de asignar un horario standby durante horario laboral.',
-                    confirmButtonColor: '#0A6EBD',
-                  });
-                }else if (this.MHoursResponse.data.state==101) {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Error en el registro de horas, el registro supera el límite de horas para StandBy.',
-                    confirmButtonColor: '#0A6EBD',
-                  });
-                }else if (this.MHoursResponse.data.state==102) {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Error en el registro de horas, existe Overlaping.',
-                    confirmButtonColor: '#0A6EBD',
-                  });
-                }else {
-                       this.fecha.reset();
-                     this.fecha.reset();
-                     this.horaInicio.reset();
-                     this.horaFin.reset();
-                     this.descripcion.reset();
-                     this.actividad.reset();
-                     this.aprobador.reset();
-                     this.cantidadHoras=0;
-                     this.reporte='';
+                } else {
+                  this.fecha.reset();
+                  this.fecha.reset();
+                  this.horaInicio.reset();
+                  this.horaFin.reset();
+                  this.descripcion.reset();
+                  this.actividad.reset();
+                  this.aprobador.reset();
+                  this.cantidadHoras=0;
+                  this.reporte='';
                   Swal.fire({
                     icon: 'success',
                     title: 'Registro de horas se genero correctamente',

@@ -31,6 +31,8 @@ export interface MCreatePortalDB{
   approverId: string;
   numberReport: number;
   state:number;
+  error: boolean;
+  message: string;
   dateApprovalSystem:Date;
   countryId:Guid
 }
