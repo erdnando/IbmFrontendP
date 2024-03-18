@@ -193,7 +193,9 @@ export class PopUpHorarioComponent {
 
     let diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     let date = new Date(horarios[0].fechaWorking);
-    date.setDate(date.getDate() - date.getDay());
+    let dia = date.getUTCDate();
+    let diaSemana = date.getUTCDay();
+    date.setUTCDate(dia - diaSemana);
 
     // si no existe un dia en el horario guardado, lo añade e inicializa las horas vacias
     diasSemana.forEach(dia => {
@@ -211,7 +213,7 @@ export class PopUpHorarioComponent {
         });
       }
 
-      date.setDate(date.getDate() + 1);
+      date.setUTCDate(date.getUTCDate() + 1);
     });
 
     horarios.sort((a: any, b: any) => diasSemana.indexOf(a.day) - diasSemana.indexOf(b.day));

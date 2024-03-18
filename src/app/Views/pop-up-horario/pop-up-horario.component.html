@@ -9,7 +9,7 @@
     <!-- Dias -->
     <ng-container matColumnDef="dias">
         <mat-cell *matCellDef="let element">
-            <div>{{element.day}} <div class="date">{{element.fechaWorking.substr(0, 10)}}</div></div>
+            <div>{{element.day}} <div class="date">{{element.fechaWorking | date: "YYYY-MM-dd": 'UTC'}}</div></div>
         </mat-cell>
     </ng-container>
 
