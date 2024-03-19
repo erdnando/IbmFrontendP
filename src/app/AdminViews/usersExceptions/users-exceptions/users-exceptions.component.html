@@ -56,7 +56,7 @@
                             <!-- fecha  -->
                             <ng-container matColumnDef="fecha">
                                 <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd'}} </mat-cell>
+                                <mat-cell *matCellDef="let element"> {{element.startDate | date:'yyyy-MM-dd':'UTC'}} </mat-cell>
                             </ng-container>
             
                             <!-- hora inicio  -->

@@ -115,31 +115,38 @@ export class PopUpAprovveComponent {
     
     console.log(this.mApproverCreate);
 
-    this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe(data=> {
+    this.serviceApproverTimeCreate.PostCreateApproverTime(this.mApproverCreate).subscribe((data:any)=> {
       console.log(data);
       this.btnOKState = false;
       this.btnOKStateLoading=false;
       if (data.data) {
-        
-        if(this.userForm.value.aprobacion == '0'){
-          Swal.fire({
-            icon: 'success',
-            title: 'Aprobacion creada',
-            confirmButtonColor: '#0A6EBD',
-          });
-        }
-        else{
+        if (!data.data.error) {
+          if(this.userForm.value.aprobacion == '0'){
+            Swal.fire({
+              icon: 'success',
+              title: 'Aprobacion creada',
+              confirmButtonColor: '#0A6EBD',
+            });
+          }
+          else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Aprobacion rechazada',
+              confirmButtonColor: '#0A6EBD',
+            });
+          }
+          
+          this.dialogRef.close();  
+          this.obtnerLista.loadApproverTime(this.idUser);
+
+        } else {
           Swal.fire({
             icon: 'error',
-            title: 'Aprobacion rechazada',
+            title: 'Oops...',
+            text: data.data.message,
             confirmButtonColor: '#0A6EBD',
           });
         }
-        
-        this.dialogRef.close();  
-        this.obtnerLista.loadApproverTime(this.idUser);
-
-        
       } else {
         Swal.fire({
           icon: 'error',
