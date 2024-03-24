@@ -69,6 +69,7 @@
 
 <div style="text-align: center;">
     <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE && paisSeleccionado" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
+    <a #downloadARPFileEl style="display:none;"></a>
 </div>
         
 

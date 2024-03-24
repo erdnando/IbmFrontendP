@@ -146,5 +146,12 @@ export class LoadArpExcelService {
     };
     return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
+
+  getNotificationsFile(idCarga: string): Observable<any> {
+    let direccion = this.URLLocal +"Load/NotificationsFile?idCarga="+idCarga; 
+    console.log(direccion);
+    
+    return this.http.get(direccion, { observe: 'response', responseType: 'blob' });
+  }
   
 }

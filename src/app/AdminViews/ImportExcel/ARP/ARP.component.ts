@@ -31,6 +31,7 @@ export class ARPComponent {
   @ViewChild('fileInputWorkdayHoras') fileInputWorkdayHoras: any;
   @ViewChild('fileInputWorkdayUsers') fileInputWorkdayUsers: any;
   @ViewChild('downloadWorkdayFileEl') downloadWorkdayFileEl: any;
+  @ViewChild('downloadARPFileEl') downloadARPFileEl: any;
   @ViewChild('fileInputUserGMT') fileInputUserGMT: any;
 
   ExcelData: any;
@@ -366,7 +367,7 @@ export class ARPComponent {
           };
           this.loadArpExcelService.PostLoadHorariosWorkdayG(datas).subscribe(resp => {
             this.activarBarraWorkday = false;
-            const m = (resp.headers.get('content-disposition') as string).match(/filename=([^;]+);/);
+            const m = (resp.headers.get('content-disposition') as string).match(/filename=\"?([^;\"]+)\"?;?/);
             const fileName = m? m[1] : '';
             const blob = new Blob([resp.body]);
             const url= window.URL.createObjectURL(blob);
@@ -811,60 +812,70 @@ export class ARPComponent {
                       console.log("Continuar proceso:::::::");
                       if (soloNotificaciones ) {
                         console.log("solo notificaciones:::::::");
-                          this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
+                        this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
+                          console.log(data)
+                          //this.mSummary = data;
+            
+                          this.showImgARP=true;
+                          this.activarBarra = false;
+                        });
+                      } else {
+                        console.log("calling ValidaLimitesExcepcionesOverlapping:::::::");
+                        this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString(),idUserEntiyId!).subscribe(data => { 
+                          console.log(data);
+                          this.mSummaryFinal=data;
+                          
+                          Swal.fire({
+                            icon: 'success',
+                            title: this.mSummaryFinal.data.mensaje,
+                            allowOutsideClick:false,
+                            html: `
+                            <span>Resumen de la ejecución:</span>
+                            <span>` +idCarga.toString()+`</span>
+                            <hr/>
+                            <br>
+                            <ol style='font-size: small;'>
+                              <li style='color: darkblue;'>Registros Insertados en PortalDB <b>(` +this.mSummaryFinal.data.registroS_PORTALDB+`)</b></li>
+                              <br/>
+                              <li>No aplica por overlaping ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
+                              <li>No aplica por overlaping STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
+                              <li>No aplica por overlaping TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
+                              <li>No aplica por límites de hora ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_ARP+`)</b></li>
+                              <li>No aplica por límites de hora STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_STE+`)</b></li>
+                              <li>No aplica por límites de hora TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_TSE+`)</b></li>
+                              
+                              <br/>
+                              <br/>
+                            </ol> 
+                                `,
+                            confirmButtonColor: '#0A6EBD',
+                            showConfirmButton: true,
+                            confirmButtonText:'Generar archivo notificaciones' , 
+                          }).then((result) => {
+                            this.loadArpExcelService.getNotificationsFile(idCarga).subscribe(resp => {
+                              const m = (resp.headers.get('content-disposition') as string).match(/filename=\"?([^;\"]+)\"?;?/);
+                              const fileName = m? m[1] : '';
+                              const blob = new Blob([resp.body]);
+                              const url= window.URL.createObjectURL(blob);
+                              this.downloadARPFileEl.nativeElement.href = url;
+                              this.downloadARPFileEl.nativeElement.download = fileName;
+                              this.downloadARPFileEl.nativeElement.click();
+                            });
+                          });
+
+
+                          /* this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
                             console.log(data)
                             //this.mSummary = data;
               
                             this.showImgARP=true;
-                            this.activarBarra = false;
-                            });
-                         } else {
-                          console.log("calling ValidaLimitesExcepcionesOverlapping:::::::");
-                          this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
-                            console.log(data)
-                            this.mSummaryFinal=data;
                             
-                            Swal.fire({
-                              icon: 'success',
-                              title: this.mSummaryFinal.data.mensaje,
-                              allowOutsideClick:false,
-                              html: `
-                              <span>Resumen de la ejecución:</span>
-                              <span>` +idCarga.toString()+`</span>
-                              <hr/>
-                              <br>
-                              <ol style='font-size: small;'>
-                                <li style='color: darkblue;'>Registros Insertados en PortalDB <b>(` +this.mSummaryFinal.data.registroS_PORTALDB+`)</b></li>
-                                <br/>
-                                <li>No aplica por overlaping ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
-                                <li>No aplica por overlaping STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
-                                <li>No aplica por overlaping TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
-                                <li>No aplica por límites de hora ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_ARP+`)</b></li>
-                                <li>No aplica por límites de hora STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_STE+`)</b></li>
-                                <li>No aplica por límites de hora TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_TSE+`)</b></li>
-                                
-                                <br/>
-                                <br/>
-                              </ol> 
-                                  `,
-                              confirmButtonColor: '#0A6EBD',
-                              showConfirmButton: true,
-                              confirmButtonText:'Generar notificaciones' , 
-                            });
-
-
-                            this.loadArpExcelService.NotificacionesProceso(idCarga.toString(),idUserEntiyId!).subscribe( data => { 
-                              console.log(data)
-                              //this.mSummary = data;
-                
-                              this.showImgARP=true;
-                              
-                              });
-              
-                            this.showImgARP=true;
-                            this.activarBarra = false;
-                            });
-                         }
+                          }); */
+            
+                          this.showImgARP=true;
+                          this.activarBarra = false;
+                        });
+                      }
                          //-----------------------------------------------------------
                     }else if(result.isDenied){
                       console.log('something strange');
