@@ -33,8 +33,14 @@
       <mat-form-field class="field-width" appearance="outline">
           <mat-label>Indique si desea aprobar o rechazar la solicitud del empleado:</mat-label>
           <mat-select formControlName="aprobacion"  (selectionChange)="changingForm()" >
-              <mat-option value=0>Aprobar</mat-option>
-              <mat-option value=1>Rechazar</mat-option>
+              <mat-option value="0">
+                <ng-container *ngIf="MUser.rolEntity.nameRole == 'Usuario estandar'">Enviar</ng-container>
+                <ng-container *ngIf="MUser.rolEntity.nameRole != 'Usuario estandar'">Aprobar</ng-container>
+              </mat-option>
+              <mat-option value="1">
+                <ng-container *ngIf="MUser.rolEntity.nameRole == 'Usuario estandar'">Eliminar</ng-container>
+                <ng-container *ngIf="MUser.rolEntity.nameRole != 'Usuario estandar'">Rechazar</ng-container>
+              </mat-option>
             </mat-select>
       </mat-form-field>
 
