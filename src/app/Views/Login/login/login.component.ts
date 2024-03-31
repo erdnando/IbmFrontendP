@@ -48,8 +48,6 @@ export class LoginComponent {
 Login(){
 
   if (this.verpas==false) {
-
-         //Just use this url in develpment and QA!!!!!  Updated 31 03 2024
          //QA
          window.location.href='https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltlsqa&NameIdFormat=Email&Target=https://transversal-portaltls-api.1el8z9mf01yx.br-sao.codeengine.appdomain.cloud';
       }else{
