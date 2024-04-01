@@ -48,10 +48,8 @@ export class LoginComponent {
 Login(){
 
   if (this.verpas==false) {
-
-         // this.cookieService.delete('cookieSAML2');
-         window.location.href='https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltls&NameIdFormat=Email&Target=https://transversal-portaltls-api.shfyjbr2p4o.us-south.codeengine.appdomain.cloud';
-  
+         //QA
+         window.location.href='https://preprod.login.w3.ibm.com/saml/sps/saml20ip/saml20/logininitial?RequestBinding=HTTPPost&PartnerId=portaltlsqa&NameIdFormat=Email&Target=https://transversal-portaltls-api.1el8z9mf01yx.br-sao.codeengine.appdomain.cloud';
       }else{
 
         this.Userlogin.userName = this.user.value as string;
