@@ -72,6 +72,7 @@ export class HistoryComponent {
         case "Rechazado":
         case "Descartado":
             return '#D83F31';
+        case "AprobadoN0":
         case "Pendiente":
             return '#E9B824';
         default:
@@ -87,6 +88,7 @@ export class HistoryComponent {
       case "Rechazado":
       case "Descartado":
         return 'cancel';
+      case "AprobadoN0":
       case "Pendiente":
         return 'schedule';
       default:
