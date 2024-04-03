@@ -308,7 +308,7 @@ export class RegisterTimeComponent {
 
       
     this.apiUser
-    .GetAprovved(1)
+    .GetAprovved(1, this.MUser.countryEntityId)
     .pipe(map((data: MiObjetoApp) => data))
     .subscribe((data) => {
       let listap = data['data'];

@@ -212,7 +212,7 @@ changingForm(){
         let sistemaGuid ='53765c41-411f-4add-9034-7debaf04f276' as unknown as Guid;
       //if it is N1 call N2
       if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N1'){
-        this.apiUser.GetAprovved(2).pipe(
+        this.apiUser.GetAprovved(2, this.MUser.countryEntityId).pipe(
           map((data: MiObjeto) => data)
           ).subscribe((data) =>{
             let listap = data["data"];
@@ -225,7 +225,7 @@ changingForm(){
           });
           //is it is standar call N1
       }else if(this.MUser.rolEntity.nameRole=='Usuario estandar'){
-        this.apiUser.GetAprovved(1).pipe(
+        this.apiUser.GetAprovved(1, this.MUser.countryEntityId).pipe(
           map((data: MiObjeto) => data)
           ).subscribe((data) =>{
             let listap = data["data"];

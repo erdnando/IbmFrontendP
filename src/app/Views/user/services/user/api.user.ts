@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Guid } from "guid-typescript";
 import { Observable } from "rxjs";
 import { MResponse } from "src/app/Models/MResponse";
 import {MUserEntity} from 'src/app/Models/MUserEntity'
@@ -30,9 +31,9 @@ export class ApiUser {
     console.log(direccion);
     return this.http.get<any>(direccion);
   }
-  GetAprovved(Nive:Number):Observable<MResponse>{
+  GetAprovved(Nive:Number, pais: Guid):Observable<MResponse>{
 
-      let direccion = this.URLLocal + "User/Aproved?nivel="+Nive;
+      let direccion = this.URLLocal + "User/Aproved?nivel="+Nive+"&pais="+pais;
       console.log(direccion);
       return this.http.get<MResponse>(direccion);
 
