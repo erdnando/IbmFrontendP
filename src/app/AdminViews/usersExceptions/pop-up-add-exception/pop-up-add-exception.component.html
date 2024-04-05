@@ -21,6 +21,13 @@
         <div [formGroup]="userForm">
         <!--[min]="fechaActual"-->
             <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Tipo de reporte:</mat-label>
+                <mat-select formControlName="ReportType">
+                    <mat-option value="STANDBY">STANDBY</mat-option>
+                    <mat-option value="OVERTIME">OVERTIME</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Fecha</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="fecha"  required>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

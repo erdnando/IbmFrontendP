@@ -34,6 +34,7 @@ export class PopUpAddExceptionComponent {
   mUsersException: MUserException;
 
   userForm = new FormGroup({
+    ReportType: new FormControl('', [Validators.required]),
     fecha: new FormControl('', [Validators.required]),
     horas: new FormControl('', [Validators.required]),
     descripcion: new FormControl('', [Validators.required]),
@@ -61,6 +62,7 @@ export class PopUpAddExceptionComponent {
     this.mUsersException.startDate = new  Date(this.userForm.value.fecha!);
     this.mUsersException.horas = Number(this.userForm.value.horas);
     this.mUsersException.description = this.userForm.value.descripcion!;
+    this.mUsersException.reportType = this.userForm.value.ReportType!;
     this.mUsersException.assignedUserId = this.MUserEnitityException.idUser;
     this.mUsersException.userid = this.MUserEntity.idUser;
     
