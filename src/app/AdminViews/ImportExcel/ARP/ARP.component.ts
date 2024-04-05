@@ -850,9 +850,9 @@ export class ARPComponent {
                                 `,
                             confirmButtonColor: '#0A6EBD',
                             showConfirmButton: true,
-                            confirmButtonText:'Generar archivo notificaciones' , 
+                            confirmButtonText:'Aceptar' , 
                           }).then((result) => {
-                            this.loadArpExcelService.getNotificationsFile(idCarga).subscribe(resp => {
+                            /* this.loadArpExcelService.getNotificationsFile(idCarga).subscribe(resp => {
                               const m = (resp.headers.get('content-disposition') as string).match(/filename=\"?([^;\"]+)\"?;?/);
                               const fileName = m? m[1] : '';
                               const blob = new Blob([resp.body]);
@@ -860,7 +860,7 @@ export class ARPComponent {
                               this.downloadARPFileEl.nativeElement.href = url;
                               this.downloadARPFileEl.nativeElement.download = fileName;
                               this.downloadARPFileEl.nativeElement.click();
-                            });
+                            }); */
                           });
 
 

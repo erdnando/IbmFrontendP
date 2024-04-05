@@ -11,6 +11,7 @@ import { Aprobacion2 } from 'src/app/enum/aprobacion.enum';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface MiObjeto {
   [key: string]: any;
@@ -45,6 +46,9 @@ export class AprovveTimeComponent {
   botonfiltrado: number = 1;
   Aprobacion = Aprobacion2;
   isLoading: boolean =false;
+
+  inconsistencesDS: MatTableDataSource<any> = new MatTableDataSource();
+  inconsistencesColumnsToDisplay = ['codigoPais', 'employeeCode', 'employeeName', 'employeeEmail', 'managerName', 'managerEmail', 'creationDate', 'startDateTime', 'endDateTime', 'report', 'activity', 'totalHours', 'tool', 'status', 'comments'];
 
   filtrarDatos(boton: string) {
 
@@ -81,6 +85,12 @@ export class AprovveTimeComponent {
       this.mApproverTime = lista;
       console.log("mApproverTime::::");
       console.log(this.mApproverTime);
+      this.isLoading=false;
+    });
+
+    this.obtenerLista.loadListInconsistencies(null, this.MUser.employeeCode);
+    this.obtenerLista.refreshInconsistence$.subscribe(lista => {
+      this.inconsistencesDS.data = lista;
       this.isLoading=false;
     });
   }

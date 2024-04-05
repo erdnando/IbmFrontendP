@@ -15,6 +15,104 @@
                 <mat-icon class="example-tab-icon">watch_later</mat-icon>
                 Pendientes por aprobar
             </ng-template>
+            <div *ngIf="Approving">
+                <div class="table-container">
+                    <mat-table [dataSource]="filtrarDatos(botonPresionado)" class="table" style="min-width: 800px;">
+                        <!-- Fecha envio -->
+                        <ng-container matColumnDef="fechaEnvio">
+                            <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                 {{element.horusReportEntity.strStartDate.substring(0,10) }} 
+                            </mat-cell>
+                        </ng-container>
+        
+                         <!-- Reporte -->
+                         <ng-container matColumnDef="reporte">
+                            <mat-header-cell *matHeaderCellDef> Reporte </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                 {{element.horusReportEntity.strReport}} 
+                            </mat-cell>
+                        </ng-container>
+            
+                         <!-- Identifiacion  -->
+                         <ng-container matColumnDef="identificacion">
+                            <mat-header-cell *matHeaderCellDef> No. empleado</mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.employeeCode}} </mat-cell>
+                        </ng-container>
+            
+        
+                        <!-- empleado  -->
+                        <ng-container matColumnDef="empleado">
+                            <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.nameUser+"
+                                "+element.horusReportEntity.userEntity.surnameUser}} </mat-cell>
+                        </ng-container>
+            
+                       
+                        <!-- Reporte Horas  -->
+                        <ng-container matColumnDef="horas">
+                            <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{element.horusReportEntity.countHours}} </mat-cell>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="horaInicio">
+                            <mat-header-cell *matHeaderCellDef> Hora Inicio </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                 {{element.horusReportEntity.startTime}} 
+                            </mat-cell>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="horaFinal">
+                            <mat-header-cell *matHeaderCellDef> Hora Final </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                 {{element.horusReportEntity.endTime}} 
+                            </mat-cell>
+                        </ng-container>
+            
+                        <!-- Estado  -->
+                        <ng-container *ngIf="botonPresionado == 'pendientes'"  matColumnDef="estado">
+                            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button mat-button color="primary"  class="" (click)="openDialog(element)">Detalles<mat-icon>search</mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+            
+                        <!-- Estado  -->
+                        <ng-container *ngIf="botonPresionado == 'aprobadasN1'  || botonPresionado == 'aprobadasN2'  ||botonPresionado == 'rechazadas'"
+                            matColumnDef="estado">
+                            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+                            <mat-cell *matCellDef="let element">
+                                <button 
+                                mat-button class="button-stade"  
+                                [ngStyle]="{'background-color': 'transparent'}" 
+                                [title]="Aprobacion[element.state]">
+                                    <mat-icon  [ngStyle]="{'color': getColor(Aprobacion[element.state])}">
+                                        {{cargarIcono(Aprobacion[element.state])}}
+                                    </mat-icon>
+            
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+            
+                        <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+                    </mat-table>
+        
+                    <div *ngIf="isLoading" 
+                    style="display: flex; justify-content: center; align-items: center; background: white;">
+                    <mat-progress-spinner [diameter]="50"
+                        color="primary" 
+                        mode="indeterminate">
+                    </mat-progress-spinner>
+                    </div>
+        
+                </div>
+            </div>
+        
+            <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+                <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+            </div>
         </mat-tab>
 
         <mat-tab *ngIf="MUser.rolEntity.nameRole == 'Usuario estandarx' || MUser.rolEntity.nameRole == 'Usuario Aprobador N1x' || MUser.rolEntity.nameRole == 'Super Administradorx'">
@@ -37,104 +135,120 @@
                 Rechazadas
             </ng-template>
         </mat-tab>
-    </mat-tab-group>
 
-    <div *ngIf="Approving">
-        <div class="table-container">
-            <mat-table [dataSource]="filtrarDatos(botonPresionado)" class="table" style="min-width: 800px;">
-                <!-- Fecha envio -->
-                <ng-container matColumnDef="fechaEnvio">
-                    <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                         {{element.horusReportEntity.strStartDate.substring(0,10) }} 
-                    </mat-cell>
-                </ng-container>
+        <mat-tab>
+            <ng-template mat-tab-label (click)="botonPresionado = 'inconsistencias'">
+                <mat-icon class="example-tab-icon">clear</mat-icon>
+                Inconsistencias
+            </ng-template>
+            <div class="table-container">
+                <mat-table [dataSource]="inconsistencesDS" class="table" style="min-width: 3500px;">
+                    <!-- Pais de empleado -->
+                    <ng-container matColumnDef="codigoPais">
+                        <mat-header-cell *matHeaderCellDef>Pais de empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.codigoPais }}</mat-cell>
+                    </ng-container>
 
-                 <!-- Reporte -->
-                 <ng-container matColumnDef="reporte">
-                    <mat-header-cell *matHeaderCellDef> Reporte </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                         {{element.horusReportEntity.strReport}} 
-                    </mat-cell>
-                </ng-container>
-    
-                 <!-- Identifiacion  -->
-                 <ng-container matColumnDef="identificacion">
-                    <mat-header-cell *matHeaderCellDef> No. empleado</mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.employeeCode}} </mat-cell>
-                </ng-container>
-    
+                    <!-- Codigo de empleado -->
+                    <ng-container matColumnDef="employeeCode">
+                        <mat-header-cell *matHeaderCellDef>Codigo de empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.employeeCode }}</mat-cell>
+                    </ng-container>
 
-                <!-- empleado  -->
-                <ng-container matColumnDef="empleado">
-                    <mat-header-cell *matHeaderCellDef> Empleado </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.userEntity.nameUser+"
-                        "+element.horusReportEntity.userEntity.surnameUser}} </mat-cell>
-                </ng-container>
-    
-               
-                <!-- Reporte Horas  -->
-                <ng-container matColumnDef="horas">
-                    <mat-header-cell *matHeaderCellDef> Reporte Horas </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.horusReportEntity.countHours}} </mat-cell>
-                </ng-container>
+                    <!-- Nombre del empleado -->
+                    <ng-container matColumnDef="employeeName">
+                        <mat-header-cell *matHeaderCellDef>Nombre del empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.employeeName }}</mat-cell>
+                    </ng-container>
 
-                <ng-container matColumnDef="horaInicio">
-                    <mat-header-cell *matHeaderCellDef> Hora Inicio </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                         {{element.horusReportEntity.startTime}} 
-                    </mat-cell>
-                </ng-container>
+                    <!-- Correo del empleado -->
+                    <ng-container matColumnDef="employeeEmail">
+                        <mat-header-cell *matHeaderCellDef>Correo del empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.employeeEmail }}</mat-cell>
+                    </ng-container>
 
-                <ng-container matColumnDef="horaFinal">
-                    <mat-header-cell *matHeaderCellDef> Hora Final </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                         {{element.horusReportEntity.endTime}} 
-                    </mat-cell>
-                </ng-container>
-    
-                <!-- Estado  -->
-                <ng-container *ngIf="botonPresionado == 'pendientes'"  matColumnDef="estado">
-                    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        <button mat-button color="primary"  class="" (click)="openDialog(element)">Detalles<mat-icon>search</mat-icon>
-                        </button>
-                    </mat-cell>
-                </ng-container>
-    
-                <!-- Estado  -->
-                <ng-container *ngIf="botonPresionado == 'aprobadasN1'  || botonPresionado == 'aprobadasN2'  ||botonPresionado == 'rechazadas'"
-                    matColumnDef="estado">
-                    <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-                    <mat-cell *matCellDef="let element">
-                        <button 
-                        mat-button class="button-stade"  
-                        [ngStyle]="{'background-color': 'transparent'}" 
-                        [title]="Aprobacion[element.state]">
-                            <mat-icon  [ngStyle]="{'color': getColor(Aprobacion[element.state])}">
-                                {{cargarIcono(Aprobacion[element.state])}}
-                            </mat-icon>
-    
-                        </button>
-                    </mat-cell>
-                </ng-container>
-    
-                <mat-header-row *matHeaderRowDef="columnasAMostrar"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
-            </mat-table>
+                    <!-- Nombre del gerente -->
+                    <ng-container matColumnDef="managerName">
+                        <mat-header-cell *matHeaderCellDef>Nombre del gerente</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.managerName }}</mat-cell>
+                    </ng-container>
 
-            <div *ngIf="isLoading" 
-            style="display: flex; justify-content: center; align-items: center; background: white;">
-            <mat-progress-spinner [diameter]="50"
-                color="primary" 
-                mode="indeterminate">
-            </mat-progress-spinner>
+                    <!-- Correo del gerente -->
+                    <ng-container matColumnDef="managerEmail">
+                        <mat-header-cell *matHeaderCellDef>Correo del gerente</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.managerEmail }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Fecha de generado el informe -->
+                    <ng-container matColumnDef="creationDate">
+                        <mat-header-cell *matHeaderCellDef>Fecha de generado el informe</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.creationDate }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Fecha y hora inicio del reporte -->
+                    <ng-container matColumnDef="startDateTime">
+                        <mat-header-cell *matHeaderCellDef>Fecha y hora inicio del reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.startDateTime }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Fecha y hora fin del reporte -->
+                    <ng-container matColumnDef="endDateTime">
+                        <mat-header-cell *matHeaderCellDef>Fecha y hora fin del reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.endDateTime }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Numero de Caso si es ARP TSE O STE -->
+                    <ng-container matColumnDef="report">
+                        <mat-header-cell *matHeaderCellDef>Numero de Caso si es ARP TSE o STE</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.report }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Actividad del Reporte -->
+                    <ng-container matColumnDef="activity">
+                        <mat-header-cell *matHeaderCellDef>Actividad del Reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.activity }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Total Horas -->
+                    <ng-container matColumnDef="totalHours">
+                        <mat-header-cell *matHeaderCellDef>Total Horas</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.totalHours }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Herramienta de donde se genero -->
+                    <ng-container matColumnDef="tool">
+                        <mat-header-cell *matHeaderCellDef>Herramienta de donde se genero</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.tool }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Estado Portal TLS Overlaping Horarios -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>Estado Portal TLS Overlaping Horarios</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.status }}</mat-cell>
+                    </ng-container>
+
+                    <!-- Comentarios o detalle del error -->
+                    <ng-container matColumnDef="comments">
+                        <mat-header-cell *matHeaderCellDef>Comentarios o detalle del error</mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="flex-wrap:wrap">
+                            <div *ngIf="element.problems"><span style="color:#ff0086;">Problemas:</span> {{element.problems}}</div>
+                            <div *ngIf="element.actions"><span style="color:#006cff;">Acciones:</span> {{element.actions}}</div>
+                        </mat-cell>
+                    </ng-container>
+        
+                    <mat-header-row *matHeaderRowDef="inconsistencesColumnsToDisplay"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: inconsistencesColumnsToDisplay;"></mat-row>
+                </mat-table>
+    
+                <div *ngIf="isLoading" 
+                style="display: flex; justify-content: center; align-items: center; background: white;">
+                <mat-progress-spinner [diameter]="50"
+                    color="primary" 
+                    mode="indeterminate">
+                </mat-progress-spinner>
+                </div>
+    
             </div>
-
-        </div>
-    </div>
-
-    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
-        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
-    </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>

@@ -25,6 +25,7 @@ import { RolesMenuService } from 'src/app/AdminViews/AdminRoles/services/rolesMe
 import { Guid } from 'guid-typescript';
 import { ReportExceptionService } from 'src/app/AdminViews/usersExceptions/service/reportExceptionService/report-exception.service';
 import { WorkdayExceptionService } from 'src/app/AdminViews/usersExceptions/service/workdayExceptionService/workday-exception.service';
+import { LoadService } from '../load/load.service';
 
 
 interface MiObjeto {
@@ -60,7 +61,8 @@ export class ObtenerlistaService {
   private _refreshListUsersCountry$ = new Subject<any>(); 
   private _refreshListUsersExceptionsCountry$ = new Subject<any>(); 
   private _refreshReportException$ = new Subject<any>(); 
-  private _refreshWorkdayException$ = new Subject<any>(); 
+  private _refreshWorkdayException$ = new Subject<any>();
+  private _refreshInconsistence$ = new Subject<any>(); 
   private _refreshListUser$ = new Subject<any>();
   private _refreshAppTime$ = new Subject<any>();
 
@@ -81,6 +83,7 @@ export class ObtenerlistaService {
     private listUsersExceptions: ListExceptionService,
     private reportExceptions: ReportExceptionService,
     private workdayExceptions: WorkdayExceptionService,
+    private load: LoadService,
     ) {
       this.MListCountry = [];
       this.MRoles = [];
@@ -367,6 +370,16 @@ export class ObtenerlistaService {
     });
   }
 
+  loadListInconsistencies(idCarga: string | null = null, employeeCode: string | null = null) {
+    this.load
+    .GetListInconsistencies(idCarga, employeeCode)
+    .pipe(map((data: MiObjeto) => data))
+    .subscribe((data) => {
+      let lista = data['data'];
+      this._refreshInconsistence$.next(lista) ;
+    });
+  }
+
   get refreshUserException$(){
     return this._refreshUserException$.asObservable();
   }
@@ -377,6 +390,10 @@ export class ObtenerlistaService {
 
   get refreshWorkdayException$(){
     return this._refreshWorkdayException$.asObservable();
+  }
+
+  get refreshInconsistence$(){
+    return this._refreshInconsistence$.asObservable();
   }
 
 }
