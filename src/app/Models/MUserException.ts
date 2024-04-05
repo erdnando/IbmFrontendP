@@ -9,6 +9,7 @@ export interface MUserException{
   startDate:Date,
   horas:number;
   description:string;
+  reportType:string;
   user: MUserEntity;
 
 }
