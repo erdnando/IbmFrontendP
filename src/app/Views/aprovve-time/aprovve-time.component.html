@@ -139,7 +139,7 @@
         <mat-tab>
             <ng-template mat-tab-label (click)="botonPresionado = 'inconsistencias'">
                 <mat-icon class="example-tab-icon">clear</mat-icon>
-                Inconsistencias
+                <span [matBadge]="inconsistencesDS.data.length" matBadgeOverlap="false" matBadgeColor="warn" [matBadgeHidden]="inconsistencesDS.data.length == 0">Inconsistencias</span>
             </ng-template>
             <div class="table-container">
                 <mat-table [dataSource]="inconsistencesDS" class="table" style="min-width: 3500px;">

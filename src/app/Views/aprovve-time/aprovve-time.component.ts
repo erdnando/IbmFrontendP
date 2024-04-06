@@ -104,11 +104,15 @@ export class AprovveTimeComponent {
   }
 
   openDialog(element: any) {
-    this.dialog.open(PopUpAprovveComponent, {
+    let dialogRef = this.dialog.open(PopUpAprovveComponent, {
       data: {
         object: element,
         idUser: this.MUser.idUser
       },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.obtenerLista.loadListInconsistencies(null, this.MUser.employeeCode);
     });
   }
 
