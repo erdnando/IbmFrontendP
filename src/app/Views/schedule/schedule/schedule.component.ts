@@ -717,9 +717,10 @@ export class ScheduleComponent {
               if(this.ExcelData.length){
 
                 console.log(this.ExcelData);
-                this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe(data => {
+                this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe((data: any) => {
+                  debugger;
                   console.log(data);
-                  if(data){
+                  if(data.data){
                     Swal.fire({
                       icon: 'success',
                       title: 'Carga de archivo completada.',
