@@ -554,10 +554,22 @@ export class ARPComponent {
 
 
                 //Get idCarga
-                this.loadArpExcelService.GetCarga().subscribe( data => { 
+                this.loadArpExcelService.GetCarga().subscribe( (data: any) => { 
                     console.log(data);
                     this.mResponseLoadGuid=data;
-                    idCarga = data.data;
+                    if (data.data.error) {
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.data.message,
+                        confirmButtonColor: '#0A6EBD',
+                      });
+
+                      this.activarBarra = false;
+                      return;
+                    }
+
+                    idCarga = data.data.data;
                     console.log("idCarga:::::ARP");
                     console.log(idCarga);
 
@@ -921,6 +933,7 @@ export class ARPComponent {
       this.barraProgreso(false);
     }
 
+    this.pais.reset();
     this.botonARP = false;
     this.botonTSE = false;
     this.botonSTE = false;
