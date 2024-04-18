@@ -1015,7 +1015,7 @@ export class ARPComponent {
 
   readExcelUsers(fileInputUsergmt: any) {
     
-    this.barraProgreso(true);
+    this.activarBarra = true;
     
     if (this.validarArchivo(fileInputUsergmt)) {
       
@@ -1023,6 +1023,8 @@ export class ARPComponent {
       
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
+      this.activarBarra = false;
+      this.botonUsers = false;
       
     }
   }
@@ -1112,7 +1114,7 @@ export class ARPComponent {
     } else {
       console.error("No se ha seleccionado ningún archivo.");
       
-      this.barraProgreso(false);
+      this.activarBarra = false;
     }
 
     this.botonUsers = false;
