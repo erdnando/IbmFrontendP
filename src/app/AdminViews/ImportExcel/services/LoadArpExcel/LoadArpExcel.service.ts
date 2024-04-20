@@ -70,6 +70,13 @@ export class LoadArpExcelService {
     return this.http.get<MResponseLoadGuid>(direccion);
   }
 
+  CancelarCarga(idCarga:string): Observable<MResponseLoadGuid> {
+    let direccion = this.URLLocal + "Load/CancelarCarga?idCarga=" + idCarga;
+    console.log(direccion);
+    
+    return this.http.get<MResponseLoadGuid>(direccion);
+  }
+
   GetCargaAvance(idCarga:string) : Observable<any> {
     let direccion = this.URLLocal + "Load/CargaAvance?idCarga=" + idCarga;
     console.log(direccion);

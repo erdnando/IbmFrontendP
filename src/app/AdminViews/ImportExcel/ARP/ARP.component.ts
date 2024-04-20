@@ -505,6 +505,7 @@ export class ARPComponent {
     let idCarga='00000000-0000-0000-0000-000000000000';
     var idUserEntiyId=this.MUser.idUser.toString();
     this.porcentajeCarga = 0;
+    let paisValue = this.pais.value;
 
     if (file && file2 && file3) 
     {
@@ -547,9 +548,9 @@ export class ARPComponent {
               }else{
 
                  console.log('inicia carga');
-                 console.log(this.pais.value);
+                 console.log(paisValue);
                  console.log('--------------');
-                var valpais = this.pais.value?.toString();
+                var valpais = paisValue?.toString();
                 //var idCarga = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
 
 
@@ -681,7 +682,7 @@ export class ARPComponent {
               
             }else{
               // console.log(this.ExcelData);
-              var valpais = this.pais.value?.toString();
+              var valpais = paisValue?.toString();
 
               this.loadArpExcelService.UploadTSE(this.ExcelData1,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
               console.log(data);
@@ -746,7 +747,7 @@ export class ARPComponent {
               
             }else{
               // console.log(this.ExcelData);
-              var valpais = this.pais.value?.toString();
+              var valpais = paisValue?.toString();
 
               this.loadArpExcelService.UploadSTE(this.ExcelData2,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
               console.log(data)
@@ -768,10 +769,13 @@ export class ARPComponent {
 
                   this.activarBarra = false;
 
+                  let timerInterval: any;
                   Swal.fire({
                     icon: 'success',
                     title: this.mSummary.data.mensaje + (soloNotificaciones? "(No se generó ningun overtime)":""),
                     allowOutsideClick:false,
+                    timer: 120000,
+                    timerProgressBar: true,
                     html: `
                     <span>Resumen de la ejecución:</span>
                     <span>` +this.mSummary.data.idCarga+`</span>
@@ -810,12 +814,33 @@ export class ARPComponent {
                       <li>Reportes con datos inválidos TSE <b>(` +this.mSummary.data.tsexDatosNovalidos+`)</b></li>
                       * Reportes sin hora inicio, fin o de otros paises no contemplados.                                                     
                     </ol> 
+                    <div id="timer"></div>
                         `,
                     confirmButtonColor: '#0A6EBD',
                     showConfirmButton: true,
                     showCancelButton: true,
                     confirmButtonText: 'Continuar proceso' , 
-                    cancelButtonText:'Cancelar carga' 
+                    cancelButtonText:'Cancelar carga',
+                    didOpen: () => {
+                      let popup = Swal.getPopup();
+                      if (!popup) return;
+
+                      const timer = popup.querySelector("#timer");
+                      if (!timer) return;
+                      
+                      timerInterval = setInterval(() => {
+                        let timerLeft = Swal.getTimerLeft();
+                        timerLeft = timerLeft? timerLeft : 0;
+                        const date = new Date(timerLeft);
+                        const minutes = date.getMinutes().toString().padStart(2, "0");
+                        const seconds = date.getSeconds().toString().padStart(2, "0");
+                        timer.textContent = `${minutes}:${seconds}`;
+                      }, 100);
+                    },
+                    willClose: () => {
+                      clearInterval(timerInterval);
+                    }
+
                   }).then((result) => {
                      
                     console.log("event after select an option:::::");
@@ -889,11 +914,36 @@ export class ARPComponent {
                         });
                       /* } */
                          //-----------------------------------------------------------
-                    }else if(result.isDenied){
-                      console.log('something strange');
+                    }else if (result.isDenied || result.dismiss) {
                       //no acepta carga;
                       //-----------------------------------------------------------
                       //-----------------------------------------------------------
+                      //Get idCarga
+                      this.loadArpExcelService.CancelarCarga(idCarga).subscribe( (data: any) => { 
+                        this.mResponseLoadGuid = data;
+                        if (data.data.error) {
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.data.message,
+                            confirmButtonColor: '#0A6EBD',
+                          });
+
+                          this.activarBarra = false;
+                          return;
+                        }
+
+                        Swal.fire({
+                          icon: 'success',
+                          title: 'Carga '+idCarga,
+                          text: data.data.message,
+                          confirmButtonText: 'Aceptar',
+                          confirmButtonColor: '#0A6EBD',
+                        });
+
+                        
+                      });
+                      
                       this.activarBarra = false;
                       this.fileInput3.nativeElement.value = null;
                     }
