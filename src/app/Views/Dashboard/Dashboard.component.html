@@ -1,7 +1,15 @@
 <div class="body viewmodule " style="margin-left: 70px;padding: 40px;margin-top: 10px;">
 
     <div>
-        <h1 style="color: #61677A; font-size: 2em;"><strong>Dashboard</strong></h1>
+        <div class="col-md-12" style="display:flex; flex-flow: row wrap; align-items: baseline;">
+            <span style="color: #61677A; font-size: 2em; margin-bottom: 10px;"><strong>Dashboard</strong></span>
+            <div style="flex: 1 1 auto;"></div>
+            <mat-form-field class="field-width" appearance="outline" *ngIf="this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador'||this.MUser.rolEntity.nameRole =='Usuario Aprobador N1'||this.MUser.rolEntity.nameRole =='Usuario Aprobador N2'">
+                <mat-label>Codigo Empleado</mat-label>
+                <input matInput type="text" [formControl]="employeeCodeFormControl" name="employeeCode">
+            </mat-form-field>
+        </div>
+
         <div class="div-em">
             <span>Encuentra información general de la aplicación. Haz clic en la opción de tu interes para obtener más detalles</span>
             

@@ -8,7 +8,7 @@ import { RepGralHoras } from "src/app/Models/MReporteHorasTLS";
 import { ApiDashboard } from 'src/app/Views/Dashboard/services/api.Dashboard';
 import { MatTableDataSource } from '@angular/material/table';
 import { MUserEntity } from 'src/app/Models/MUserEntity';
-import { Observable, map } from 'rxjs';
+import { Observable, debounceTime, map } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Chart, registerables } from 'chart.js';
 
@@ -23,6 +23,7 @@ import {
 import * as ApexCharts from 'apexcharts';
 import { ApiLogin } from '../Login/services/login/api.login';
 import { MLogin } from 'src/app/Models/MLogin';
+import { FormControl } from '@angular/forms';
 
 export type ChartOptions = {
   id: string;
@@ -77,6 +78,8 @@ export class DashboardComponent implements AfterViewInit {
   currentDate = new Date();
   weekNumber:number=0;
  // Userlogin : MLogin;
+  employeeCode = '';
+  employeeCodeFormControl = new FormControl();
 
   constructor(private storageData: StorageService, private router: Router,private _apiDashboard:ApiDashboard) {
 
@@ -324,8 +327,8 @@ export class DashboardComponent implements AfterViewInit {
       return;
     }else{
 
-    
-
+    this.employeeCode = this.MUser.employeeCode;
+    this.employeeCodeFormControl = new FormControl(this.employeeCode, []);
     this.noAno=this.currentDate.getFullYear();
     let startDate = new Date(this.currentDate.getFullYear(), 0, 1);
     let days = Math.floor((Number(this.currentDate) - Number(startDate)) /(24 * 60 * 60 * 1000));
@@ -347,6 +350,11 @@ export class DashboardComponent implements AfterViewInit {
 
     }
 
+    this.employeeCodeFormControl.valueChanges.pipe(debounceTime(500)).subscribe(value => {
+      if (value) {
+        this.onEmployeeCodeChange(value);
+      }
+    });
   
   
   }
@@ -373,9 +381,19 @@ export class DashboardComponent implements AfterViewInit {
     }else {
       this.noSemana = newValue;
       console.log(newValue);
-      this.getReqRepHorasTLS();
+      if (this.employeeCode) {
+        this.getReqRepHorasTLS();
+      }
     }
     
+  }
+
+  onEmployeeCodeChange(employeeCode: string) {
+    this.employeeCode = employeeCode;
+    if (this.employeeCode) {
+      this.getReqRepAnioTLS();
+      this.getReqRepHorasTLS();
+    }
   }
 
   valuechangeAno(newValue:number) {
@@ -394,7 +412,9 @@ export class DashboardComponent implements AfterViewInit {
       //this.getReqRepAnioTLS();
       
       setTimeout(() => {
-        this.getReqRepAnioTLS();
+        if (this.employeeCode) {
+          this.getReqRepAnioTLS();
+        }
       }, 1000);
       
     }
@@ -406,7 +426,7 @@ export class DashboardComponent implements AfterViewInit {
 //if(this.MUser==null)return;
     try {
       this._reqRepAnioTLS.anio=this.noAno;
-      this._reqRepAnioTLS.usuario=this.MUser.employeeCode.toString();
+      this._reqRepAnioTLS.usuario=this.employeeCode.toString();
 
 
 
@@ -718,7 +738,7 @@ export class DashboardComponent implements AfterViewInit {
     //if(this.MUser==null)return;
 
     this._reqRepHorasTLS.semana=this.noSemana;
-    this._reqRepHorasTLS.usuario=this.MUser.employeeCode.toString();
+    this._reqRepHorasTLS.usuario=this.employeeCode.toString();
     this._reqRepHorasTLS.anio=this.noAno;
     
     //this._reqRepHorasTLS.usuario=sessionStorage.getItem("User").toString();
