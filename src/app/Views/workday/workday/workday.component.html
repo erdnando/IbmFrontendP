@@ -1,0 +1,129 @@
+<div class="body viewmodule">
+    <div>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Workday</strong></h1>
+        <div class="div-em">
+            <span>Comparador de registros</span>
+            
+        </div>
+        <hr class="divider">
+    </div>
+    <br/>
+    <div class="body-excel">
+        <mat-progress-bar mode="indeterminate" *ngIf="activarBarra"></mat-progress-bar>
+        
+            <div>
+                <div class="centrado">
+                    <label class="mi-etiqueta">Cargar plantilla Workday Horas
+                        <br>
+                        <input type="file" [disabled]="activarBarra" (change)="activarARP('WorkdayHoras',$event)" id="input-excel" placeholder="Carga de plantilla horas" accept=".xlsx, .xls" #fileInputWorkdayHoras>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="centrado">
+                    <label class="mi-etiqueta">
+                        Cargar plantilla Workday Users 
+                        <br>
+                        <input type="file" [disabled]="activarBarra" (change)="activarARP('WorkdayUsers',$event)" id="input-excel" placeholder="Carga de plantilla users" accept=".xlsx, .xls" #fileInputWorkdayUsers>
+                    </label>
+                </div>
+            </div>
+        
+        <div class="options">
+            <button class="boton" *ngIf="botonWorkdayHoras && botonWorkdayUsers" (click)="readExcelWorkdayG(fileInputWorkdayHoras, fileInputWorkdayUsers)">
+                Subir Archivo
+            </button>
+            <button class="boton" (click)="exportExcel()" *ngIf="uploaded">
+                Exportar Excel
+            </button>
+        </div>
+        <a #downloadWorkdayFileEl style="display:none;"></a>
+    </div>
+    <div *ngIf="uploaded">
+        <!-- <em class="filter-text">Filtrar por:</em>
+        <hr class="filter-divider">
+
+        <div class="filters">
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Codigo Empleado:</mat-label>
+                <input matInput (keyup)="_applyWorkdayExceptionsFilter('employeeCode', $event)" placeholder="Codigo Empleado">
+            </mat-form-field>
+        </div> -->
+
+        
+        <!-- <div class="mat-elevation-z8"> -->
+            <div class="table-container">
+                <mat-table [dataSource]="MWorkdays" style="min-width:2200px;">
+
+                     <!-- Id Empleado -->
+                     <ng-container matColumnDef="id_empleado">
+                        <mat-header-cell *matHeaderCellDef>Id Empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.employeeCode}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Nombre Empleado -->
+                    <ng-container matColumnDef="nombre_empleado">
+                        <mat-header-cell *matHeaderCellDef>Nombre Empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.employeeName}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Tipo reporte -->
+                    <ng-container matColumnDef="tipo">
+                        <mat-header-cell *matHeaderCellDef>Tipo Reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.type}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Tipo reporte -->
+                    <ng-container matColumnDef="fecha">
+                        <mat-header-cell *matHeaderCellDef>Fecha del Reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.date| date:'yyyy-MM-dd':'UTC'}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora Inicio -->
+                    <ng-container matColumnDef="hora_inicio">
+                        <mat-header-cell *matHeaderCellDef>Hora Inicio</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.startTime}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora Fin -->
+                    <ng-container matColumnDef="hora_fin">
+                        <mat-header-cell *matHeaderCellDef>Hora Fin</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.endTime}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Total Horas -->
+                    <ng-container matColumnDef="horas">
+                        <mat-header-cell *matHeaderCellDef>Total Horas</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.hours}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Resultado de Aprobacion -->
+                    <ng-container matColumnDef="resultado_aprobacion">
+                        <mat-header-cell *matHeaderCellDef>Resultado Aprobacion</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.finalStatus}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="options">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <!-- <button mat-button (click)="activateWorkdayException(element)" color="accent" *ngIf="!element.active">Activar</button>
+                            <button mat-button (click)="deactivateWorkdayException(element)" color="accent" *ngIf="element.active">Desactivar</button> -->
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="columnasAMostrar.concat('options')"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('options');"></mat-row>
+                </mat-table>
+            </div>
+
+            <mat-paginator #mworkdaysPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+
+        <!-- </div> -->
+
+
+
+    </div>
+</div>

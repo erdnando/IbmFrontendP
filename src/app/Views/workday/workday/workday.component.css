@@ -1,0 +1,122 @@
+.body{
+    padding: 40px;
+    margin-left: 60px;
+  }
+  .body-excel {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      /* align-items: center; */
+      /* gap: 20px; */
+      /* margin-left: 70px; */
+      /* height: 90vh; */
+  
+    }
+  
+    .body-excel > div {
+      width: 100%;
+      flex: 1 1 auto;
+      overflow: hidden;
+    }
+  
+    .body-excel > div > div {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 10px;
+      overflow: hidden;
+    }
+  
+    .body-excel mat-form-field {
+      width: 100%;
+    }
+
+    .options {
+        text-align: right;
+    }
+  
+    .body-excel button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #548CA8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .body
+  
+    .body-excel button:hover {
+      background-color: #0056b3;
+    }
+  
+    .mi-etiqueta {
+      color: #333; 
+      font-size: 16px; 
+      font-weight: bold; 
+  }
+  
+  .mi-etiqueta input[type="file"] {
+      background-color: #f8f8f8; 
+      color: #333; 
+      padding: 10px;
+  }
+  
+  .viewmodule {
+      
+    margin-left: 92px!important;
+    margin-right: 10px;
+    margin-top: 11px;
+    border-radius: 8px;
+    border-color: skyblue!important;
+    border: 1px outset;
+  padding: 10px;
+  box-shadow: -2px 0px 22px -13px black;
+  }
+  
+  /* 
+  .title-form{
+    width: 60%;
+    height: 50px;
+    color: white; 
+    margin-bottom: 10px;
+    background: linear-gradient(130deg,#548CA8 85%, transparent 15%);
+  } */
+  
+  
+  
+  /*
+  xs: begin: 0, end: 599.9px
+  sm: begin: 600px, end: 959.9px
+  md: begin: 960px, end: 1279.9px
+  lg: begin: 1280px, end: 1919.9px
+  xl: begin: 1920px, end: 4999.99px
+  */
+  
+  @media screen and (min-width: 1279.9px) {
+    .body-excel > div {
+        width: 50%;
+    }
+  }
+  
+  
+  
+  .mat-mdc-progress-bar{
+    height: 10px !important;
+  }
+  
+  ::ng-deep .mdc-linear-progress__buffer {
+    height: 10px !important; /* Altura deseada del buffer */
+  }
+  
+  ::ng-deep .mat-mdc-progress-bar .mdc-linear-progress__bar {
+    --mdc-linear-progress-active-indicator-height: 10px !important; /* Cambia el tamaño del indicador activo */
+  }
+  
+  .texto-barra-carga {
+    text-align: center;
+  }
+  

@@ -46,6 +46,7 @@ import { PopUpScheduleUpdateComponent } from './Views/schedule/pop-up-schedule-u
 import { PopUpScheduleCreateComponent } from './Views/schedule/pop-up-schedule-create/pop-up-schedule-create.component';
 import { PopUpAddReportExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-report-exception/pop-up-add-report-exception.component';
 import { PopUpAddWorkdayExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-workday-exception/pop-up-add-workday-exception.component';
+import { WorkdayComponent } from './Views/workday/workday/workday.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -68,6 +69,7 @@ const routes: Routes = [
   { path: 'admin/roles', component: RolesComponent },
   { path: 'arpcomponent', component: ARPComponent },
   { path: 'admin/users-exception', component: UsersExceptionsComponent },
+  { path: 'workday', component: WorkdayComponent },
  // { path: '', component: LoginComponent }
 ];
 
@@ -88,6 +90,7 @@ export const routingComponents = [
   ParametersComponent,
   RegistersComponent,
   ScheduleComponent,
+  WorkdayComponent,
   PopUpScheduleUpdateComponent,
   PopUpScheduleCreateComponent,
   ProfilesComponent,
