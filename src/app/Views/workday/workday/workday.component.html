@@ -100,7 +100,15 @@
                     <!-- Resultado de Aprobacion -->
                     <ng-container matColumnDef="resultado_aprobacion">
                         <mat-header-cell *matHeaderCellDef>Resultado Aprobacion</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.finalStatus}}</mat-cell>
+                        <mat-cell *matCellDef="let element">
+                            <ng-container [ngSwitch]="element.finalStatus">
+                                <mat-icon *ngSwitchCase="'APROBADO POR EXCEPCION'" fontIcon="done" class="approved"></mat-icon>
+                                <mat-icon *ngSwitchCase="'APROBADO'" fontIcon="done" class="approved"></mat-icon>
+                                <mat-icon *ngSwitchCase="'RECHAZADO'" fontIcon="close" class="refused"></mat-icon>
+                                <mat-icon *ngSwitchDefault fontIcon="timer" class="in-progress"></mat-icon>
+                            </ng-container>
+                            {{element.finalStatus}}
+                        </mat-cell>
                     </ng-container>
                     
                     <ng-container matColumnDef="options">

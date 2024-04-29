@@ -2,6 +2,12 @@
     padding: 40px;
     margin-left: 60px;
   }
+
+  mat-header-cell {
+    background-color: #f3f3f3 !important;
+    color: #45474B;  
+  }
+
   .body-excel {
       width: 100%;
       display: flex;
@@ -75,6 +81,30 @@
     border: 1px outset;
   padding: 10px;
   box-shadow: -2px 0px 22px -13px black;
+  }
+
+  .mat-icon.approved {
+    color: #00db00;
+  }
+
+  .mat-icon.refused {
+    color: #ff002d;
+  }
+
+  .mat-icon.in-progress {
+    color: #ffbf00;
+  }
+
+  .mat-column-hora_inicio, .mat-column-hora_fin, .mat-column-fecha, .mat-column-horas, .mat-column-tipo, .mat-column-id_empleado {
+    flex: 0 0 auto;
+  }
+
+  .mat-column-hora_inicio, .mat-column-hora_fin, .mat-column-horas {
+    width: 120px;
+  }
+
+  .mat-column-fecha, .mat-column-tipo, .mat-column-id_empleado {
+    width: 150px;
   }
   
   /* 
