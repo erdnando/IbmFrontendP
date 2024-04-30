@@ -112,6 +112,8 @@ export class AprovveTimeComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.mApproverTime = [];
+      this.obtenerLista.loadApproverTime(this.MUser.idUser);
       this.obtenerLista.loadListInconsistencies(null, this.MUser.employeeCode);
     });
   }
