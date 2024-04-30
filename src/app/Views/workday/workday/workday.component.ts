@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApproverListService } from 'src/app/AdminViews/AdminApprover/services/approverList/approver-list.service';
 import { MAprobador } from 'src/app/Models/MAprobador';
@@ -44,7 +44,7 @@ type Aoa = any[][];
   styleUrls: ['./workday.component.css'],
   providers: [DatePipe]
 })
-export class WorkdayComponent {
+export class WorkdayComponent implements AfterViewInit {
 
   @ViewChild('fileInputWorkdayHoras') fileInputWorkdayHoras: any;
   @ViewChild('fileInputWorkdayUsers') fileInputWorkdayUsers: any;
@@ -96,6 +96,7 @@ export class WorkdayComponent {
   }
 
   ngAfterViewInit() {
+    console.log('si esta entrando');
     this.MWorkdays.paginator = this.mworkdaysPaginator;
   }
 
@@ -218,6 +219,10 @@ export class WorkdayComponent {
             this.downloadWorkdayFileEl.nativeElement.href = url;
             this.downloadWorkdayFileEl.nativeElement.download = fileName;
             this.downloadWorkdayFileEl.nativeElement.click(); */
+
+            setTimeout(() => {
+              this.MWorkdays.paginator = this.mworkdaysPaginator;
+            });
           });
           
           this.fileInputWorkdayHoras.nativeElement.value = "";
