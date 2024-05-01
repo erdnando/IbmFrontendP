@@ -88,7 +88,7 @@ export class PopUpAprovveComponent {
       this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
 
       //validate if it is Aprobador N2
-      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
+      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2' || this.MUser.rolEntity.nameRole=='Super Administrador' || this.MUser.rolEntity.nameRole=='Administrador' || this.MUser.rolEntity.nameRole=='Gerente'){
         //this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
         this.mApproverCreate.aprobador2UserEntityId=  this.mApprover.userEntityId;;
       }
@@ -105,7 +105,7 @@ export class PopUpAprovveComponent {
       this.mApproverCreate.empleadoUserEntityId= this.mApprover.horusReportEntity.userEntity.idUser;
 
       //validate if it is Aprobador N2
-      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2'){
+      if(this.MUser.rolEntity.nameRole=='Usuario Aprobador N2' || this.MUser.rolEntity.nameRole=='Super Administrador' || this.MUser.rolEntity.nameRole=='Administrador' || this.MUser.rolEntity.nameRole=='Gerente'){
         //this.mApproverCreate.userId = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
         this.mApproverCreate.aprobador2UserEntityId=   this.mApprover.userEntityId as unknown as Guid;
       }
