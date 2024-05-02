@@ -46,7 +46,7 @@ export class RutaActualService {
         let arrUrlItems = window.location.hash.split('?');
         let uxm_erd="";
 
-        console.log('version 1.0.0.15');
+        console.log('version 1.0.0.16');
 
         if(arrUrlItems.length>1){
           console.log("flujo sso");
