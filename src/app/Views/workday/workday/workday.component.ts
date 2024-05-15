@@ -135,23 +135,24 @@ export class WorkdayComponent implements AfterViewInit {
     fileReader.onload = (e) => {
       var workBook = XLSX.read(fileReader.result, { type: 'binary' });
       var sheetNames = workBook.SheetNames;
-      let ExcelData: any = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false, header: this.columnasexcelWorkdayHoras, range: 1 });
-      console.log('exceldata', ExcelData);
+      let ExcelData: any = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false, header: 1, range: 1 });
       console.log('exceldata 0', ExcelData[0]);
-      console.log(ExcelData.length);
       let valiFile = true;
-      let columns = Object.keys(ExcelData[0]);
-      this.columnasexcelWorkdayHoras.forEach((element, index) => {
+      let columns = Object.values(ExcelData[0]);
+      
+      this.columnasexcelWorkdayHoras.forEach((item, index) => {
         console.log('VALOR ES .. ' + columns[index]);
-        if (columns.findIndex(x => x == element) == -1) { 
+        if (columns.findIndex(x => x == item) == -1) { 
           valiFile=false; 
         }   
       });
       if (!valiFile) {
         this.fileInputWorkdayHoras.nativeElement.value = null;
+        this.fileInputWorkdayUsers.nativeElement.value = null;
         this.activarBarra = false;
         sub.error('El archivo es inválido por favor verifique: \n * Columnas incorrectas');
       }else{
+        ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false, range: 1 });
         ExcelData.shift();
         sub.next(ExcelData);
         sub.complete();
@@ -183,6 +184,7 @@ export class WorkdayComponent implements AfterViewInit {
         }   
       });
       if (!valiFile) {
+        this.fileInputWorkdayHoras.nativeElement.value = null;
         this.fileInputWorkdayUsers.nativeElement.value = null;
         this.activarBarra = false;
         sub.error('El archivo es inválido por favor verifique: \n * Columnas incorrectas');
