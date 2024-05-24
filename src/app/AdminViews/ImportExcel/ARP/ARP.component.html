@@ -17,8 +17,118 @@
                 Subir Archivos ARP/TSE/STE
         </ng-template>
         <br>
+        <div style="text-align: right; ">
+            <button mat-raised-button (click)="addLoad()" color="primary">Cargar<mat-icon>library_add</mat-icon></button>
+        </div>
 
-    <div class="body-excel" style="width: 95%;">
+        <em class="filter-text">Filtrar por:</em>
+        <hr class="filter-divider">
+
+        <div class="filters">
+            <!-- <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Pais: </mat-label>
+                <mat-select formControlName="pais" (selectionChange)="_selectCountryUser($event.value)">
+                    <mat-option *ngFor="let cliente of MListCountry" [value]="cliente.idCounty">
+                        {{cliente.nameCountry}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label> Rol: </mat-label>
+                <mat-select formControlName="rol" (selectionChange)="_select($event.value)">
+                    <mat-option *ngFor="let cliente of MListRol" [value]="cliente.idRole">
+                        {{cliente.nameRole}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+            <!-- <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Reporte:</mat-label>
+                <input matInput (keyup)="_applyReportExceptionsFilter('report', $event)" placeholder="Reporte" #input>
+            </mat-form-field> -->
+            <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Nombre Empleado:</mat-label>
+                <input matInput (input)="onLoadsFilterChange('nombreEmpleado', $event)">
+            </mat-form-field>
+            <!-- <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td [formGroup]="userForm">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table> -->
+        </div>
+
+        
+        <!-- <div class="mat-elevation-z8"> -->
+            <div class="table-container">
+                <mat-table [dataSource]="loadsDataSource" style="min-width:max-content;">
+
+                    <!-- Id -->
+                    <ng-container matColumnDef="idArpLoad">
+                        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.idArpLoad}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Fecha -->
+                    <ng-container matColumnDef="fechaCreacion">
+                        <mat-header-cell *matHeaderCellDef>Fecha</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.fechaCreacion | date:'YYYY-MM-dd'}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Nombre de Empleado -->
+                    <ng-container matColumnDef="nombreEmpleado">
+                        <mat-header-cell *matHeaderCellDef>Nombre Empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.userEntity.nameUser}} {{element.userEntity.surnameUser}}</mat-cell>
+                    </ng-container>
+
+                    <!-- ARPCarga -->
+                    <ng-container matColumnDef="arpCarga">
+                        <mat-header-cell *matHeaderCellDef>ARP Reportes</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.arpCarga}}</mat-cell>
+                    </ng-container>
+
+                    <!-- TSECarga -->
+                    <ng-container matColumnDef="tseCarga">
+                        <mat-header-cell *matHeaderCellDef>TSE Reportes</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.tseCarga}}</mat-cell>
+                    </ng-container>
+
+                    <!-- STECarga -->
+                    <ng-container matColumnDef="steCarga">
+                        <mat-header-cell *matHeaderCellDef>STE Reportes</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.steCarga}}</mat-cell>
+                    </ng-container>
+                    
+                    <!-- Status -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <ng-container [ngSwitch]="element.estado">
+                                <ng-container *ngSwitchCase="1">En proceso</ng-container>
+                                <ng-container *ngSwitchCase="2">Terminada</ng-container>
+                                <ng-container *ngSwitchCase="3">Error</ng-container>
+                                <ng-container *ngSwitchCase="4">Cancelada</ng-container>
+                            </ng-container>
+                        </mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="options">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <!-- <button mat-button (click)="activateWorkdayException(element)" color="accent" *ngIf="!element.active">Activar</button>
+                            <button mat-button (click)="deactivateWorkdayException(element)" color="accent" *ngIf="element.active">Desactivar</button> -->
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="columnasAMostrarCarga.concat('options')"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasAMostrarCarga.concat('options');" (click)="onLoadRowClick(row)"></mat-row>
+                </mat-table>
+            </div>
+
+            <mat-paginator #loadsPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons pageSize="10"></mat-paginator>
+    <!-- <div class="body-excel" style="width: 95%;">
         <div class="overlay" *ngIf="activarBarra" style="padding:40%;position: fixed;padding-top: 20%;">
             <mat-spinner [diameter]="50"></mat-spinner>
 
@@ -43,7 +153,7 @@
         <div>
             <div>
                 <label class="mi-etiqueta">
-                    Archivo ARP: <br><!-- <mat-icon class="example-tab-icon">done-circule</mat-icon> <mat-icon>close</mat-icon><br> -->
+                    Archivo ARP: <br>
                     <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('ARP',$event)" #fileInput1>
                 </label>
             </div>
@@ -73,13 +183,13 @@
 </div>
         
 
-    </div>
+    </div> -->
     <br/>
     
-    <div style="text-align: justify;width: 90%;margin-left: 29px;">
+    <!-- <div style="text-align: justify;width: 90%;margin-left: 29px;">
         <p style="color: #eb5981;font-size: 1.2em;"><strong>PARA TENER EN CUENTA</strong></p>
         <p>Señor usuario, recuerde que para realizar su carga de archvios <b>ARP, TSE y STE</b>, debe modificar el nombre de los archivos de excel a <b>PORTAL_ARP, PORTAL_TSE, PORTAL_STE</b>, no olvide que la informacion dentro del excel no debe ser modificada para evitar errores, todos los datos que desee modificar debe hacerlo dentro de las plataformas alternas al portal.</p>
-    </div>
+    </div> -->
     </mat-tab>
 
     <!-- <mat-tab>

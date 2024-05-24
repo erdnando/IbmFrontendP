@@ -21,4 +21,32 @@ export class LoadService {
     let empCode = employeeCode?? '';
     return this.http.get<MResponse>(direccion, {params: {idCarga: idCarg, employeeCode: empCode}});
   }
+
+  GetListLoads(): Observable<MResponse>{
+    let direccion = this.URLLocal +"Load/List";
+    return this.http.get<MResponse>(direccion);
+  }
+
+  GetLoad(id: number | string): Observable<MResponse>{
+    let direccion = this.URLLocal +"Load/Consult";
+    return this.http.get<MResponse>(direccion, {params: {id}});
+  }
+
+  GetArpParameters(idLoad: number | string, params: any): Observable<MResponse>{
+    let direccion = this.URLLocal +"Load/ArpParameters/List";
+    params.idLoad = idLoad;
+    return this.http.get<MResponse>(direccion, {params});
+  }
+
+  GetTseParameters(idLoad: number | string, params: any): Observable<MResponse>{
+    let direccion = this.URLLocal +"Load/TseParameters/List";
+    params.idLoad = idLoad;
+    return this.http.get<MResponse>(direccion, {params});
+  }
+
+  GetSteParameters(idLoad: number | string, params: any): Observable<MResponse>{
+    let direccion = this.URLLocal +"Load/SteParameters/List";
+    params.idLoad = idLoad;
+    return this.http.get<MResponse>(direccion, {params});
+  }
 }

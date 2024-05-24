@@ -63,3 +63,28 @@ body {
 .mat-mdc-form-field-warning {
     color: #f49536;
 }
+
+.mat-mdc-form-field-type-ngx-mat-file-input .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix,
+.mat-mdc-form-field-type-ngx-mat-file-input .mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix  {
+    padding-top: unset;
+    padding-bottom: unset; 
+}
+
+.mat-mdc-form-field-type-ngx-mat-file-input .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding-top: unset;
+    padding-bottom: unset; 
+}
+
+/* .mat-mdc-form-field-type-ngx-mat-file-input .mat-mdc-form-field-infix {
+    min-height: unset;
+} */
+
+h2.mat-mdc-dialog-title {
+    margin: 0;
+}
+
+.mat-mdc-tab-body-content {
+    overflow: hidden !important;
+    display: flex;
+    flex-flow: column nowrap;
+}

@@ -71,6 +71,42 @@ padding: 10px;
 box-shadow: -2px 0px 22px -13px black;
 }
 
+mat-header-cell {
+  background-color: #f3f3f3 !important;
+  color: #45474B;  
+}
+
+.filter-divider {
+  padding: 10px;
+  border: none;
+  border-top: 2px solid #4a4a4a;
+  width: 100%;
+}
+
+.filters .mat-mdc-form-field {
+  margin: 0 5px;
+}
+
+.mat-mdc-progress-bar{
+  height: 10px !important;
+}
+
+::ng-deep .mdc-linear-progress__buffer {
+  height: 10px !important; /* Altura deseada del buffer */
+}
+
+::ng-deep .mat-mdc-progress-bar .mdc-linear-progress__bar {
+  --mdc-linear-progress-active-indicator-height: 10px !important; /* Cambia el tamaño del indicador activo */
+}
+
+.texto-barra-carga {
+  text-align: center;
+}
+
+.mat-mdc-row:hover {
+  background-color: rgb(248, 248, 248);
+}
+
 /* 
 .title-form{
   width: 60%;
@@ -98,18 +134,4 @@ xl: begin: 1920px, end: 4999.99px
 
 
 
-.mat-mdc-progress-bar{
-  height: 10px !important;
-}
 
-::ng-deep .mdc-linear-progress__buffer {
-  height: 10px !important; /* Altura deseada del buffer */
-}
-
-::ng-deep .mat-mdc-progress-bar .mdc-linear-progress__bar {
-  --mdc-linear-progress-active-indicator-height: 10px !important; /* Cambia el tamaño del indicador activo */
-}
-
-.texto-barra-carga {
-  text-align: center;
-}

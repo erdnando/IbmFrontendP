@@ -1,0 +1,186 @@
+<h2 mat-dialog-title>Detalle de Carga</h2>
+<mat-dialog-content>
+    <app-loader *ngIf="loading"></app-loader>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>ARP</ng-template>
+            <div class="table-container">
+                <mat-table matSort #arpSort="matSort" [dataSource]="loadArpDetailsDataSource" (matSortChange)="sortArpData($event)" style="min-width:800px;">
+
+                    <!-- Id -->
+                    <!-- <ng-container matColumnDef="idArpLoad">
+                        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.idArpLoad}}</mat-cell>
+                    </ng-container> -->
+
+                    <!-- Fecha -->
+                    <ng-container matColumnDef="fechA_REP">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.fechA_REP.substring(0,10).split("/").reverse().join("-")}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora inicio -->
+                    <ng-container matColumnDef="horaInicio">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Hora inicio</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.horaInicio}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora fin -->
+                    <ng-container matColumnDef="horaFin">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Hora fin</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.horaFin}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Codigo de Empleado -->
+                    <ng-container matColumnDef="employeeCode">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Codigo Empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.employeeCode}}</mat-cell>
+                    </ng-container>
+                    
+                    <!-- Status -->
+                    <ng-container matColumnDef="estatusProceso">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.estatusProceso}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="options">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <!-- <button mat-button (click)="activateWorkdayException(element)" color="accent" *ngIf="!element.active">Activar</button>
+                            <button mat-button (click)="deactivateWorkdayException(element)" color="accent" *ngIf="element.active">Desactivar</button> -->
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="columnasAMostrar; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+                </mat-table>
+            </div>
+            <mat-paginator #arpParametersPaginator 
+                [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                (page)="onPaginatorPage($event)"
+            ></mat-paginator>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>TSE</ng-template>
+            <div class="table-container">
+                <mat-table matSort #tseSort="matSort" [dataSource]="loadTseDetailsDataSource" (matSortChange)="sortTseData($event)" style="min-width:800px;">
+
+                    <!-- Id -->
+                    <!-- <ng-container matColumnDef="idArpLoad">
+                        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.idArpLoad}}</mat-cell>
+                    </ng-container> -->
+
+                    <!-- Fecha -->
+                    <ng-container matColumnDef="fechA_REP">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.fechA_REP.substring(0,10).split("/").reverse().join("-")}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora inicio -->
+                    <ng-container matColumnDef="horaInicio">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Hora inicio</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.horaInicio}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora fin -->
+                    <ng-container matColumnDef="horaFin">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Hora fin</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.horaFin}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Codigo de Empleado -->
+                    <ng-container matColumnDef="employeeCode">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Codigo Empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.employeeCode}}</mat-cell>
+                    </ng-container>
+                    
+                    <!-- Status -->
+                    <ng-container matColumnDef="estatusProceso">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.estatusProceso}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="options">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <!-- <button mat-button (click)="activateWorkdayException(element)" color="accent" *ngIf="!element.active">Activar</button>
+                            <button mat-button (click)="deactivateWorkdayException(element)" color="accent" *ngIf="element.active">Desactivar</button> -->
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="columnasAMostrar; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+                </mat-table>
+            </div>
+            <mat-paginator #tseParametersPaginator 
+                [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                (page)="onPaginatorPage($event)"
+            ></mat-paginator>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>STE</ng-template>
+            <div class="table-container">
+                <mat-table matSort #steSort="matSort" [dataSource]="loadSteDetailsDataSource" (matSortChange)="sortSteData($event)" style="min-width:800px;">
+
+                    <!-- Id -->
+                    <!-- <ng-container matColumnDef="idArpLoad">
+                        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.idArpLoad}}</mat-cell>
+                    </ng-container> -->
+
+                    <!-- Fecha -->
+                    <ng-container matColumnDef="fechA_REP">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.fechA_REP.substring(0,10).split("/").reverse().join("-")}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora inicio -->
+                    <ng-container matColumnDef="horaInicio">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Hora inicio</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.horaInicio}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Hora fin -->
+                    <ng-container matColumnDef="horaFin">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Hora fin</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.horaFin}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Codigo de Empleado -->
+                    <ng-container matColumnDef="employeeCode">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Codigo Empleado</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.employeeCode}}</mat-cell>
+                    </ng-container>
+                    
+                    <!-- Status -->
+                    <ng-container matColumnDef="estatusProceso">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.estatusProceso}}</mat-cell>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="options">
+                        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <!-- <button mat-button (click)="activateWorkdayException(element)" color="accent" *ngIf="!element.active">Activar</button>
+                            <button mat-button (click)="deactivateWorkdayException(element)" color="accent" *ngIf="element.active">Desactivar</button> -->
+                        </mat-cell>
+                    </ng-container>
+
+
+                    <mat-header-row *matHeaderRowDef="columnasAMostrar; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: columnasAMostrar;"></mat-row>
+                </mat-table>
+            </div>
+            <mat-paginator #steParametersPaginator 
+                [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                (page)="onPaginatorPage($event)"
+            ></mat-paginator>
+        </mat-tab>
+    </mat-tab-group>
+</mat-dialog-content>
+<!-- <mat-dialog-actions>
+    <button type="button" mat-raised-button color="primary" mat-dialog-close>Aceptar</button>
+</mat-dialog-actions> -->

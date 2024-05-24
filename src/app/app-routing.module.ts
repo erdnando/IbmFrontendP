@@ -47,6 +47,9 @@ import { PopUpScheduleCreateComponent } from './Views/schedule/pop-up-schedule-c
 import { PopUpAddReportExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-report-exception/pop-up-add-report-exception.component';
 import { PopUpAddWorkdayExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-workday-exception/pop-up-add-workday-exception.component';
 import { WorkdayComponent } from './Views/workday/workday/workday.component';
+import { PopUpAddLoadComponent } from './AdminViews/ImportExcel/pop-up-add-load/pop-up-add-load.component';
+import { PopUpLoadDetailComponent } from './AdminViews/ImportExcel/pop-up-load-detail/pop-up-load-detail.component';
+import { LoaderComponent } from './Views/loader/loader.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -106,6 +109,9 @@ export const routingComponents = [
   PopUpClientsUpdateComponent,
   PopUpAddReportExceptionComponent,
   PopUpAddWorkdayExceptionComponent,
+  PopUpAddLoadComponent,
+  PopUpLoadDetailComponent,
+  LoaderComponent,
   ApproverComponent,
   PopUpApproverUpdateComponent,
   PopUpApproverCreateComponent,
