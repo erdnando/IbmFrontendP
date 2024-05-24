@@ -19,6 +19,12 @@
                         <mat-cell *matCellDef="let element">{{element.fechA_REP.substring(0,10).split("/").reverse().join("-")}}</mat-cell>
                     </ng-container>
 
+                    <!-- Reporte -->
+                    <ng-container matColumnDef="reporte">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.reporte}}</mat-cell>
+                    </ng-container>
+
                     <!-- Hora inicio -->
                     <ng-container matColumnDef="horaInicio">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Hora inicio</mat-header-cell>
@@ -71,6 +77,12 @@
                         <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.idArpLoad}}</mat-cell>
                     </ng-container> -->
+
+                    <!-- Reporte -->
+                    <ng-container matColumnDef="reporte">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.reporte}}</mat-cell>
+                    </ng-container>
 
                     <!-- Fecha -->
                     <ng-container matColumnDef="fechA_REP">
@@ -130,6 +142,12 @@
                         <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
                         <mat-cell *matCellDef="let element"> {{element.idArpLoad}}</mat-cell>
                     </ng-container> -->
+
+                    <!-- Reporte -->
+                    <ng-container matColumnDef="reporte">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Reporte</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.reporte}}</mat-cell>
+                    </ng-container>
 
                     <!-- Fecha -->
                     <ng-container matColumnDef="fechA_REP">

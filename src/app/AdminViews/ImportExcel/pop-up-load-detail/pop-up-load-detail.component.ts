@@ -25,7 +25,7 @@ export class PopUpLoadDetailComponent {
   page: number = 0;
   pageSize: number = 5;
   loading: boolean = false;
-  columnasAMostrar: string[] = ['fechA_REP', 'horaInicio', 'horaFin', 'employeeCode', 'estatusProceso'];
+  columnasAMostrar: string[] = ['reporte', 'fechA_REP', 'horaInicio', 'horaFin', 'employeeCode', 'estatusProceso'];
   loadArpDetailsDataSource = new MatTableDataSource<any>();
   loadTseDetailsDataSource = new MatTableDataSource<any>();
   loadSteDetailsDataSource = new MatTableDataSource<any>();
