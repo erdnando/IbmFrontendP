@@ -195,9 +195,9 @@ export class PopUpAddLoadComponent {
       this.botonTSE = !estatus;
       this.botonHorario=!estatus;
       if(!estatus){
-        this.fileInput1.nativeElement.value = null;
-        this.fileInput2.nativeElement.value = null;
-        this.fileInput3.nativeElement.value = null;
+        this.form.get('arp')?.setValue(null);
+        this.form.get('tse')?.setValue(null);
+        this.form.get('ste')?.setValue(null);
 
       }
      
@@ -450,7 +450,7 @@ export class PopUpAddLoadComponent {
             }
 
           }else{
-            this.fileInput2.nativeElement.value = null;
+            this.form.get('tse')?.setValue(null);
             this.activarBarra = false;
             Swal.fire({
               icon: 'error',
@@ -461,7 +461,7 @@ export class PopUpAddLoadComponent {
           }
 
         }else{
-          this.fileInput2.nativeElement.value = null;
+          this.form.get('tse')?.setValue(null);
           this.activarBarra = false;
           Swal.fire({
               icon: 'error',
