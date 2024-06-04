@@ -131,14 +131,16 @@ export class HistoryComponent {
       console.log(data);
 
      // const approverId = data.approverId.toLowerCase().includes(filter);
+     const fechaActividad = data.strStartDate.toString().toLowerCase().includes(filter);
+     const creationDate = data.strCreationDate.toString().toLowerCase().includes(filter);
       const employeeCode = data.userEntity.employeeCode.toLowerCase().includes(filter);
       const nameClient = data.userEntity.nameUser.toLowerCase().includes(filter);
       const surnameUser = data.userEntity.surnameUser.toLowerCase().includes(filter);
       const numberReport = data.strReport.toString().toLowerCase().includes(filter);
-      const creationDate = data.strCreationDate.toString().toLowerCase().includes(filter);
       
       
-      return  employeeCode || numberReport || creationDate || nameClient || surnameUser;
+      
+      return  fechaActividad || creationDate || employeeCode || numberReport || nameClient || surnameUser;
     };
     this.mListHorusReport.filter = this.filterValue.trim().toLowerCase();
 

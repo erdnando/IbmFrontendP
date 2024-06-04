@@ -29,14 +29,14 @@
     
             <!-- Fecha envio -->
             <ng-container matColumnDef="fechaReporte">
-                <mat-header-cell *matHeaderCellDef> Fecha reporte </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Fecha actividad </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{(element.strStartDate.substring(0,10)) }} </mat-cell>
             </ng-container>
     
             <!-- Fecha creacion -->
             <ng-container matColumnDef="fechaEnvio">
-                <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.strCreationDate.substring(0,10) }} </mat-cell>
+                <mat-header-cell *matHeaderCellDef> Ingreso al portal </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.strCreationDate.substring(0,10) + " ["+element.startTime + "-" + element.endTime + "]" }} </mat-cell>
             </ng-container>
     
             <!-- N° Cliente  --> 
@@ -53,7 +53,7 @@
     
             <!-- N° Reporte  -->
             <ng-container matColumnDef="reporte">
-                <mat-header-cell *matHeaderCellDef> N° Reporte </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Tipo de Reporte </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.strReport}} </mat-cell>
             </ng-container>
 
