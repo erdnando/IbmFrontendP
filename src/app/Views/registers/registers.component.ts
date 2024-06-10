@@ -25,6 +25,7 @@ interface MiObjetoApp {
 })
 export class RegistersComponent {
   columnasAMostrar = [
+   'fechaReporte',
     'nombre',
     'empleado',
     'correo',
@@ -70,7 +71,23 @@ export class RegistersComponent {
       const codigoEmpleadoCoincide = data.userEntity.employeeCode.toLowerCase().includes(filter);
       const emailCoincide = data.userEntity.email.toLowerCase().includes(filter);
       const apellidoCoincide = data.userEntity.surnameUser.toLowerCase().includes(filter);
-      return nombreCoincide || codigoEmpleadoCoincide || emailCoincide || apellidoCoincide;
+
+      const paisCoincide = data.userEntity.countryEntity.nameCountry.toLowerCase().includes(filter);
+      const reporteCoincide = data.numberReport.toString().includes(filter);
+
+      const hrsReportadasCoincide = data.countHours.toString().includes(filter);
+      
+      //console.log("data")
+     // console.log(data)
+      //let arrFecha = data.strCreationDate.substring(0,10).split('-');
+      //let fechaReconvertida = arrFecha[2] +"/"+ arrFecha[1] +"/"+ arrFecha[0];
+      //const creationDateCoincide = fechaReconvertida.toString().includes(filter);
+
+      const creationDateCoincide = data.strCreationDate.substring(0,10).includes(filter);
+
+      
+
+      return nombreCoincide || codigoEmpleadoCoincide || emailCoincide || apellidoCoincide || paisCoincide || reporteCoincide || creationDateCoincide || hrsReportadasCoincide;
     };
     this.mListHorusReport.filter = this.filterValue.trim().toLowerCase();
 
@@ -107,6 +124,9 @@ export class RegistersComponent {
     .GetRegistersHoursReport()
     .pipe(map((data: MiObjetoApp) => data))
     .subscribe((data) => {
+
+      console.log("data api list")
+      console.log(data)
       let listap = data['data'];
       this.mListHorusReportList = listap;
       let ListaFilt = listap;
@@ -130,6 +150,11 @@ export class RegistersComponent {
 
   RecibirPaisSeleccionado() {
     this.selectedCountry = this.rutaActual.globalVar;
+  }
+
+  formatFecha(stringFecha: string){
+    let arrFecha = stringFecha.split('-')
+    return arrFecha[2] +"/"+ arrFecha[1] +"/"+ arrFecha[0];
   }
 
 }
