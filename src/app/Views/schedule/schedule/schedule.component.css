@@ -360,6 +360,17 @@ hr.filter-divider {
   box-shadow: -2px 0px 22px -13px black;
   }
 
+  .schedules-table .mat-mdc-cell {
+    flex-flow: row wrap;
+  }
+
+.schedules-table .mat-mdc-cell > * {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+}
+
 
 /*
 xs: begin: 0, end: 599.9px

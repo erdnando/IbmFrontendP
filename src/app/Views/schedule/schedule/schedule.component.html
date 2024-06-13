@@ -73,39 +73,50 @@
 
             <legend>Turnos: </legend>
 
-            <mat-table [dataSource]="Datos" *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha  && !this.agregarHorariosexcel" #tabla1>
+            <mat-table [dataSource]="Datos" class="schedules-table" *ngIf="this.habilitarHorario && this.habilitarHorariobyFecha  && !this.agregarHorariosexcel" #tabla1>
 
                 <!-- Dias -->
                 <ng-container matColumnDef="dias">
                     <mat-cell *matCellDef="let element">
-                        <div>{{element.day}} <div class="date">{{element.date | date: 'yyyy-MM-dd'}}</div></div>
+                        <div *ngFor="let schedule of element">
+                            <div>{{schedule.day}} <div class="date">{{schedule.date | date: 'yyyy-MM-dd'}}</div></div>
+                        </div>
                     </mat-cell>
                 </ng-container>
 
                 <!-- inicio  -->
                 <ng-container matColumnDef="inicio">
-                    <mat-cell   *matCellDef="let element">
-                        <input *ngIf="element.editable" type="time" [formControl]="horaInicio" (change)="guardarValorInicio([element.day])">
+                    <mat-cell *matCellDef="let element; let dayIndex = index">
+                        <div *ngFor="let schedule of element; let dayScheduleIndex = index">
+                            <input *ngIf="schedule.editable" type="time" [(ngModel)]="schedule.horaInicio" (change)="guardarValorInicio(dayIndex, dayScheduleIndex, [schedule])">
+                        </div>
                     </mat-cell>
                 </ng-container>
 
                 <!-- a  -->
                 <ng-container matColumnDef="a">
-                    <mat-cell *matCellDef="let element">a</mat-cell>
+                    <mat-cell *matCellDef="let element">
+                        <div *ngFor="let schedule of element">a</div>
+                    </mat-cell>
                 </ng-container>
 
                 <!-- fin  -->
                 <ng-container matColumnDef="fin">
-                    <mat-cell  *matCellDef="let element">
-                        <input *ngIf="element.editable" style="width: 100%;" type="time" [formControl]="horaFin" 
-                            (change)="guardarValorInicio([element.day])">
+                    <mat-cell  *matCellDef="let element; let dayIndex = index">
+                        <div *ngFor="let schedule of element; let dayScheduleIndex = index">
+                            <input *ngIf="schedule.editable" type="time" [(ngModel)]="schedule.horaFin" 
+                                (change)="guardarValorInicio(dayIndex, dayScheduleIndex, [schedule])">
+                        </div>
                     </mat-cell>
                 </ng-container>
 
                 <!-- Checkbox -->
                 <ng-container matColumnDef="checkbox">
-                    <mat-cell *matCellDef="let element">
-                        <mat-checkbox (change)="element.editable = $event.checked; guardarValorInicio([element.day])" ></mat-checkbox>
+                    <mat-cell *matCellDef="let element; let dayIndex = index">
+                        <div *ngFor="let schedule of element; let dayScheduleIndex = index">
+                            <mat-checkbox (change)="schedule.editable = $event.checked; guardarValorInicio(dayIndex, dayScheduleIndex, [schedule])" ></mat-checkbox>
+                            <button mat-icon-button *ngIf="dayScheduleIndex == 0" (click)="addDaySchedule(dayIndex)"><mat-icon>add</mat-icon></button>
+                        </div>
                     </mat-cell>
                 </ng-container>
 
