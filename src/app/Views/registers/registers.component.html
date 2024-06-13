@@ -30,6 +30,11 @@
         <div class="table-container">
             <mat-table [dataSource]="mListHorusReport" class="table" style="min-width: 1200px;">
     
+                 <ng-container matColumnDef="fechaReporte">
+                    <mat-header-cell *matHeaderCellDef> Fecha envio </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{( element.strCreationDate.substring(0,10)   ) }} </mat-cell>
+                </ng-container>
+
                 <!-- Nombre-->
                 <ng-container matColumnDef="nombre">
                     <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>

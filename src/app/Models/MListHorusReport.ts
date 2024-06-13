@@ -24,5 +24,5 @@ export interface MListHorusReport{
   endTime: string;
   strStartDate : string;
   countryEntity: MCountryEntity;
-
+  
 }
