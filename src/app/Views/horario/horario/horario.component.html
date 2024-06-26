@@ -1,0 +1,212 @@
+<div class="body viewmodule">
+    <div>
+        <h1 style="color: #61677A; font-size: 2em;"><strong>Horarios</strong></h1>
+        <div class="div-em">
+            <span>Encuentra información sobre los horarios personales de trabajo. Haz clic en la opción de tu interes para obtener más detalles</span>
+            
+        </div>
+        <hr class="divider">
+    </div>
+    <br/>
+
+
+    <!-- <div class="div-form">
+        <mat-toolbar class="title-form">
+            <h1>Aprobadores</h1>
+        </mat-toolbar>
+    </div> -->
+    <!-- <div *ngIf="Approving">
+        <div style="text-align: right; ">
+            <button mat-raised-button color="primary" class="" (click)="crearUsuario()">Crear<mat-icon>library_add</mat-icon></button>
+        </div>
+
+        <div class="table-container">
+            <mat-table [dataSource]="MApprover" class="table" style="min-width: 500px;">
+                <ng-container matColumnDef="descripcion">
+                    <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="nivel">
+                    <mat-header-cell *matHeaderCellDef> Nivel </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.nivel}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="editar">
+                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button style="color:green"  (click)="openDialog(element.idAprobador, element.descripcion,element.nivel)"
+                            class="">Editar <mat-icon>edit_note</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+
+
+                <ng-container matColumnDef="eliminar">
+                    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button style="color:red" class="">Eliminar <mat-icon>delete</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columnasAMostrar.concat('editar','eliminar')"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('editar','eliminar');"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+    <div *ngIf="!Approving" style="text-align: -webkit-center; margin-top: 20px;">
+        <h3 class="h3">Información no disponible, comuníquese con el administrador. </h3>
+    </div> -->
+
+
+    <div class="filters">
+        <mat-form-field style="text-align: left; margin-top: 10px; padding: 10px;"
+            appearance="outline">
+            <mat-select [formControl]="pais" (selectionChange)="select(pais)"  [(ngModel)]="this.MUser.countryEntityId" required>
+                <mat-option [value]="pais.idCounty" *ngFor="let pais of MListCountry">
+                    {{pais.nameCountry}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="habilitarExcel" style="text-align: right;" appearance="outline">
+            <mat-label> Codigo empleado: </mat-label>
+            <input  matInput  (blur)="applyFilter($event)" placeholder="Ex. ium" [formControl]="codeEmployed" (keypress)="onKeyPressOnlyLettersNumbers($event)" maxlength="25">
+        </mat-form-field>
+
+        <mat-form-field style="text-align: right;" appearance="outline">
+            <mat-label> Dia de la Semana: </mat-label>
+            <input #calendario [disabled]="!habilitarExcel" matInput  [matDatepicker]="picker"   (dateChange)="onDateChange($event)"
+                [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field style="text-align: right;" appearance="outline">
+            <mat-label> Numero de la semana del año: </mat-label>
+            <input matInput [ngModel]="semanaAno" readonly>
+        </mat-form-field>
+
+       
+
+    </div>
+
+
+  
+    <mat-tab-group animationDuration="300ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">history</mat-icon>
+                Horario 1
+            </ng-template>
+            <br>
+
+            <div class="horarios" style="width: 99%;">
+                <fieldset class="table-h">
+
+                    <legend>Turnos: </legend>
+
+                    <mat-table [dataSource]="nuevoHorario" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
+
+                        <!-- Dias -->
+                        <ng-container matColumnDef="dias">
+                            <mat-cell *matCellDef="let element">
+                                <div>{{element.day}} <div class="date">{{element.fechaWorking | date: "YYYY-MM-dd": 'UTC'}}</div></div>
+                            </mat-cell>
+                        </ng-container>
+                    
+                        <!-- inicio  -->
+                        <ng-container matColumnDef="inicio">
+                            <mat-cell   *matCellDef="let element">
+                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="miFuncion($event.target, element.day)" type="time" >
+                            </mat-cell>
+                        </ng-container>
+                    
+                        <!-- a  -->
+                        <ng-container matColumnDef="a">
+                            <mat-cell *matCellDef="let element">a</mat-cell>
+                        </ng-container>
+                    
+                        <!-- fin  -->
+                        <ng-container matColumnDef="fin">
+                            <mat-cell  *matCellDef="let element">
+                                <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="miFuncionFin($event.target,  element.day)">
+                            </mat-cell>
+                        </ng-container>
+                    
+                        <!-- editar  -->
+                        <ng-container matColumnDef="checkbox">
+                            <mat-cell *matCellDef="let element">
+                                <mat-checkbox [(ngModel)]="element.editable"  (change)="element.editable = $event.checked"></mat-checkbox>
+                            </mat-cell>
+                        </ng-container>
+                    
+                    
+                        <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('checkbox');"></mat-row>
+                    
+                    </mat-table>
+
+
+                   
+
+                </fieldset>
+            </div>
+        </mat-tab>
+
+       
+    </mat-tab-group>
+
+    <mat-checkbox color="primary" labelPosition="after" [formControl]="confirmedControl">Se ha realizado una revision exhaustiva de
+        las horas registradas, y se ha confirmado que cumple con los estandares establecidos por la
+        compañia y con las normativas legales vigentes antes de su aprobacion.</mat-checkbox>
+
+
+
+
+        
+
+    <div class="buttons">
+
+        
+
+
+        <button mat-raised-button color="primary" class="" (click)="downloadTemplate()">
+            Descargar Plantilla(CSV)
+            <mat-icon>
+                download
+            </mat-icon> 
+        </button>
+        <a #downloadTemplateEl style="display:none;"></a>
+        
+      <!--  <button mat-raised-button color="primary" class="" (click)="readExcelHorario(fileInput4)">
+            Subir Plantilla(CSV)
+            <mat-icon>
+                upload
+            </mat-icon> 
+        </button>
+        
+        <input type="file"  id="input-excel" placeholder="Carga de plantilla horarios" accept=".xlsx, .xls" #fileInput4>
+    -->
+    <button  mat-raised-button color="primary" class="" (click)="cargarArchivoHorario()" *ngIf="habilitarExcel">
+        Subir Plantilla(CSV)
+        <mat-icon>
+            upload
+        </mat-icon> 
+    </button>
+    <input type="file" id="fileInputHorario" #fileInputHorario style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorario($event)" />
+
+
+
+
+
+
+            
+        <button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length && confirmedControl.value">
+            Guardar Cambios
+            <mat-icon>
+                save
+            </mat-icon> 
+        </button>
+
+        <button mat-raised-button color="primary" class="" (click)="guardaHorarios()" > Guardar </button>
+    </div>
+</div>

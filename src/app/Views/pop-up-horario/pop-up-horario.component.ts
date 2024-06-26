@@ -227,7 +227,6 @@ export class PopUpHorarioComponent {
 
     this.nuevoHorario = horarios.map(horario => {
       return { ...horario, editable: horario.horaInicio !== '' && horario.horaFin !== '' };
-      //return { ...horario, editable: false };
     });
 
   }

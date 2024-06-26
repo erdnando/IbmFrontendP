@@ -41,9 +41,15 @@ import { PopUpAddExceptionComponent } from './AdminViews/usersExceptions/pop-up-
 import { PopUpUpdateExceptionComponent } from './AdminViews/usersExceptions/pop-up-update-exception/pop-up-update-exception.component';
 import { GaugeComponent } from './Views/gauge/gauge.component'
 import { SamlCallbackComponent } from './Views/saml-callback/saml-callback.component';
+
 import { ScheduleComponent } from './Views/schedule/schedule/schedule.component';
+import { HorarioComponent } from './Views/horario/horario/horario.component';
+
 import { PopUpScheduleUpdateComponent } from './Views/schedule/pop-up-schedule-update/pop-up-schedule-update.component';
 import { PopUpScheduleCreateComponent } from './Views/schedule/pop-up-schedule-create/pop-up-schedule-create.component';
+import { PopUpHorarioUpdateComponent } from './Views/horario/pop-up-horario-update/pop-up-horario-update.component';
+import { PopUpHorarioCreateComponent } from './Views/horario/pop-up-horario-create/pop-up-horario-create.component';
+
 import { PopUpAddReportExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-report-exception/pop-up-add-report-exception.component';
 import { PopUpAddWorkdayExceptionComponent } from './AdminViews/usersExceptions/pop-up-add-workday-exception/pop-up-add-workday-exception.component';
 import { WorkdayComponent } from './Views/workday/workday/workday.component';
@@ -64,6 +70,7 @@ const routes: Routes = [
   { path: 'parameters', component: ParametersComponent },
   { path: 'registers', component: RegistersComponent },
   { path: 'schedules', component: ScheduleComponent },
+  { path: 'horario', component: HorarioComponent },
   { path: 'admin/users', component: UsersComponent },
   { path: 'admin/clients', component: ClientsComponent },
   { path: 'admin/approvers', component: ApproverComponent },
@@ -93,9 +100,12 @@ export const routingComponents = [
   ParametersComponent,
   RegistersComponent,
   ScheduleComponent,
+  HorarioComponent,
   WorkdayComponent,
   PopUpScheduleUpdateComponent,
   PopUpScheduleCreateComponent,
+  PopUpHorarioUpdateComponent,
+  PopUpHorarioCreateComponent,
   ProfilesComponent,
   PopupHistoryComponent,
   PopUpAprovveComponent,
