@@ -244,12 +244,7 @@ export class PopUpHorarioComponent {
     this.mHorarioList = data;
     /* this.nuevoHorario = horarios.map(horario => {
       return { ...horario, editable: horario.horaInicio !== '' && horario.horaFin !== '' };
-<<<<<<< HEAD
-    });
-=======
-      //return { ...horario, editable: false };
-    }); */
->>>>>>> 44886c9f457a5d1f5fc21e35b129d400e2e031ff
+    });*/
 
   }
 
