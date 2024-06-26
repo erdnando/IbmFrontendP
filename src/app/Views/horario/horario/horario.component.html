@@ -200,13 +200,13 @@
 
 
             
-        <button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length && confirmedControl.value">
+        <!--<button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length && confirmedControl.value">
             Guardar Cambios
             <mat-icon>
                 save
             </mat-icon> 
-        </button>
+        </button>-->
 
-        <button mat-raised-button color="primary" class="" (click)="guardaHorarios()" > Guardar </button>
+        <button mat-raised-button color="primary" class="" (click)="guardaHorarios()" *ngIf="mHorarioList.length && confirmedControl.value"> Guardar </button>
     </div>
 </div>

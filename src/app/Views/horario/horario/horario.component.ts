@@ -1158,7 +1158,7 @@ creaHorario1
 
                 console.log(this.ExcelData);
                 this.loadArpExcelService.PostLoadHorarios(this.ExcelData).subscribe((data: any) => {
-                  debugger;
+                 // debugger;
                   console.log(data);
                   if(data.data){
                     Swal.fire({
@@ -1167,7 +1167,9 @@ creaHorario1
                       confirmButtonColor: '#0A6EBD',
                     });
                     this.fileInputHorario.nativeElement.value = null;
+                    //reload
                     // this.activarBarra = false;
+                    this.consultarHorarioEmpleado();
                   }else{
                     Swal.fire({
                       icon: 'error',
