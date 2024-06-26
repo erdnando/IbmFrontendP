@@ -787,7 +787,12 @@ creaHorario1
       if (this.listHoraInicio.length) {
         for (let element of this.listHoraInicio) {
           let index = this.mHorarioList.findIndex( (mHorario) => mHorario.day === element.dia );
-          this.mHorarioList[index].horaInicio = element.horaInicio;
+          try{
+            this.mHorarioList[index].horaInicio = element.horaInicio;
+          }catch(errx){
+            console.log("No indice")
+          }
+         
         }
       }
 
@@ -795,7 +800,12 @@ creaHorario1
       if (this.listHoraFin.length) {
         for (let elementFin of this.listHoraFin) {
           let index = this.mHorarioList.findIndex( (mHorario) => mHorario.day === elementFin.dia );
-          this.mHorarioList[index].horaFin = elementFin.horaFin;
+          
+          try{
+            this.mHorarioList[index].horaFin = elementFin.horaFin;
+          }catch(errx){
+            console.log("No indice")
+          }
         }
       }
       
@@ -820,13 +830,15 @@ creaHorario1
             if (data.data) {
               Swal.fire({
                 icon: 'success',
-                title: 'Actualizacion completada correctamente.',
+                title: 'Horario creado correctamente.',
                 confirmButtonColor: '#0A6EBD',
               });
               //this.dialogRef.close();
               this.mHorarioList = [];
               this.listHoraInicio=[];
               this.listHoraFin=[];
+
+              this.consultarHorarioEmpleado();
             } else {
               Swal.fire({
                 icon: 'error',
@@ -879,8 +891,13 @@ creaHorario1
       console.log(this.nuevoHorario);
       this.nuevoHorario.forEach((item,index)=>{
         if(!item.editable){
-          this.mHorarioList[index].horaFin="";
-          this.mHorarioList[index].horaInicio="";
+          try{
+            this.mHorarioList[index].horaFin="";
+            this.mHorarioList[index].horaInicio="";
+          }catch(errx){
+            console.log("No indice")
+          }
+         
         }
       })
 
@@ -909,6 +926,7 @@ creaHorario1
               this.mHorarioList = [];
               this.listHoraInicio=[];
               this.listHoraFin=[];
+             // this.consultarHorarioEmpleado();
               
             } else {
               Swal.fire({
@@ -949,7 +967,8 @@ creaHorario1
               this.mHorarioList = [];
               this.listHoraInicio=[];
               this.listHoraFin=[];
-              
+              this.hayHorario==false;
+              this.consultarHorarioEmpleado();
             } else {
               Swal.fire({
                 icon: 'error',
