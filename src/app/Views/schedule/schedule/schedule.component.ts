@@ -49,14 +49,16 @@ export class ScheduleComponent {
   @ViewChild('fileInputHorario') fileInputHorario: any;
   @ViewChild('downloadTemplateEl') downloadTemplateEl: any;
   
+  days: string[] = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
   Datos = [
-    { day: 'Domingo', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Lunes',  date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Martes',  date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Miércoles', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Jueves', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Viernes', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
-    { day: 'Sábado', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false },
+    [{ day: 'Domingo', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
+    [{ day: 'Lunes',  date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
+    [{ day: 'Martes',  date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
+    [{ day: 'Miércoles', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
+    [{ day: 'Jueves', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
+    [{ day: 'Viernes', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
+    [{ day: 'Sábado', date: new Date(), horaInicio: '08:00 a.m', horaFin: '05:00 p.m', editable: false }],
   ];
   
   columnasAMostrar = ['dias', 'inicio','a', 'fin', 'checkbox'];
@@ -102,9 +104,9 @@ export class ScheduleComponent {
   horaFin = new FormControl('');
   valoresInicio: { [dia: string]: string[] } = {};
   mHorario: MCreateHorario;
-  mHorarioList: MCreateHorario[] = [];
-  mHorarioListExcel: MCreateHorario[] = [];
-  mHoraioConsult: MCreateHorario[] = [];
+  mHorarioList: any[] = [[],[],[],[],[],[],[]];
+  mHorarioListExcel: any[] = [[],[],[],[],[],[],[]];
+  mHoraioConsult: any[] = [[],[],[],[],[],[],[]];
   semanaAno: string = '';
 
   habilitarHorario = false;
@@ -252,7 +254,7 @@ export class ScheduleComponent {
       if (this.pais.value !== null) {
         this.codeEmployed.reset();
         this.date.reset();
-        this.mHorarioList = []
+        this.mHorarioList = [[],[],[],[],[],[],[]];
         this.habilitarHorario = false;
         this.habilitarHorariobyFecha = false;
         this.habilitarExcel = true
@@ -293,8 +295,10 @@ export class ScheduleComponent {
     }
 
     validateHorarios () {
-      for (let horario of this.mHorarioList) {
-        if (!this.validateHorario(horario.day, horario.horaInicio, horario.horaFin)) return false;
+      for (let daySchedules of this.mHorarioList) {
+        for (let schedule of daySchedules) {
+          if (!this.validateHorario(schedule.day, schedule.horaInicio, schedule.horaFin)) return false;
+        }
       }
       return true;
     }
@@ -320,38 +324,59 @@ export class ScheduleComponent {
       return true;
     }
 
-    guardarValorInicio(dia: any[]) {
+    addDaySchedule(dayIndex: number) {
+      let schedule = { day: this.days[dayIndex], date: this.obtenerFecha(this.days[dayIndex]), horaInicio: '', horaFin: '', editable: false };
+      /* let data = [...this.Datos[dayIndex], schedule]; */
+      let data = [];
+      for (let i = 0; i < this.Datos.length; i++) {
+        if (i == dayIndex) {
+          data.push([...this.Datos[i], schedule]);
+        } else {
+          data.push(this.Datos[i]);
+        }
+      }
+
+      this.Datos = data;
+      console.log('datos', this.Datos);
+    }
+
+    guardarValorInicio(dayIndex: number, dayScheduleIndex: number, data: any[]) {
       //this.valoresInicio[dia] = [this.horaInicio.value!,this.horaFin.value!];
-      if (dia.length === 0) {
+      if (data.length === 0) {
         throw new Error('La lista está vacía');
       }
 
       
-      if(dia.length === 1){
-        let date = this.obtenerFecha(dia[0]);
+      if(data.length === 1){
+        let schedule = data[0];
+        let date = this.obtenerFecha(schedule.day);
         let week = this.getWeek(date);
-        console.log('este el el primer lengt', dia)
+        console.log('este es el primer length', data)
         this.mHorario = {
-          horaInicio: this.horaInicio.value as string,
-          horaFin: this.horaFin.value as string,
+          horaInicio: schedule.horaInicio,
+          horaFin: schedule.horaFin,
           week: week.toString(),
           userEntityId: this.idUserByEmployeCode,
-          day: dia[0],
+          day: schedule.day,
           fechaWorking: date.toISOString(),
           ano: date.getFullYear().toString()
         };
-        let index = this.mHorarioList.findIndex(
-          (mHorario) => mHorario.day === this.mHorario.day
-        );
+        /* let index = this.mHorarioList[dayIndex].findIndex(
+          (mHorario: MCreateHorario) => mHorario.day === this.mHorario.day
+        ); */
     
-        if (index !== -1) {
-          this.mHorarioList[index] = this.mHorario;
-        } else {
-          this.mHorarioList.push(this.mHorario);
-        }
+        /* if (index !== -1) { */
+          this.mHorarioList[dayIndex][dayScheduleIndex] = this.mHorario;
+        /* } else {
+          this.mHorarioList[dayIndex].push(this.mHorario);
+        } */
+
+        /* if (schedule.editable) {
+
+        } */
       }
-      else if(dia.length > 1){
-        for(let x of dia){
+      else if(data.length > 1){
+        for(let x of data){
           let date = this.obtenerFecha(x.day);
           let week = this.getWeek(date);
           this.mHorario= {
@@ -364,16 +389,16 @@ export class ScheduleComponent {
             fechaWorking:date.toISOString(),
           }; 
           console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
-          let index = this.mHorarioList.findIndex(
-            (mHorario) => mHorario.day === this.mHorario.day
+          let index = this.mHorarioList[dayIndex].findIndex(
+            (mHorario: MCreateHorario) => mHorario.day === this.mHorario.day
           );
       
           if (index !== -1) {
-            this.mHorarioList[index] = this.mHorario;
-            this.mHorarioListExcel[index] = this.mHorario;
+            this.mHorarioList[dayIndex][index] = this.mHorario;
+            this.mHorarioListExcel[dayIndex][index] = this.mHorario;
           } else {
             this.mHorarioList
-            this.mHorarioListExcel.push(this.mHorario);
+            this.mHorarioListExcel[dayIndex].push(this.mHorario);
           }
         }  
         console.log(this.mHorarioList)
@@ -549,9 +574,11 @@ export class ScheduleComponent {
             }
             this.semanaAno='';*/
             date.setDate(date.getDate() - date.getDay());
-            for (let dato of this.Datos) {
-              dato.date = new Date(date);
-              date.setDate(date.getDate()+1);
+            for (let dayData of this.Datos) {
+              for (let schedule of dayData) {
+                schedule.date = new Date(date);
+                date.setDate(date.getDate()+1);
+              }
             }
         }
        
@@ -906,18 +933,20 @@ export class ScheduleComponent {
     }
 
     crearHorario() {
-      this. mHorarioList = this.mHorarioList.
-      filter(horario => horario.horaInicio !== '' && horario.horaFin !== '');
+      /* this. mHorarioList = this.mHorarioList.
+      filter(horario => horario.horaInicio !== '' && horario.horaFin !== ''); */
   
-      console.log(this.mHorarioList, 'esto es lo que se envia en la creacion')
-  
-      console.log(this.mHorarioList);
       if(this.mHorarioList.length){
         let valid = this.validateHorarios();
         if (!valid) return;
 
+        let data: any[] = [];
+        for (let dayData of this.mHorarioList) {
+          data = [...data, ...dayData.filter((horario: any) => horario.horaInicio !== '' && horario.horaFin !== '')];
+        }
+
         this.horarioCreate
-        .PostCreateHorario(this.mHorarioList)
+        .PostCreateHorario(data)
         .subscribe((data) => {
           if (data.data) {
             Swal.fire({
@@ -933,7 +962,7 @@ export class ScheduleComponent {
            this.horaFin.reset();
            this.horaInicio.reset();
            this.date.reset();
-           this.mHorarioList = [];
+           this.mHorarioList = [[],[],[],[],[],[],[]];
          } else {
             Swal.fire({
               icon: 'error',
@@ -956,7 +985,9 @@ export class ScheduleComponent {
 
     resetEditable() {
       this.Datos.forEach(dato => {
-        dato.editable = false;
+        for (let dayData of dato) {
+          dayData.editable = false;
+        }
       });
     }
 
@@ -969,7 +1000,7 @@ export class ScheduleComponent {
       if (this.pais.value !== null) {
         this.codeEmployed.reset();
         this.date.reset();
-        this.mHorarioList = []
+        this.mHorarioList = [[],[],[],[],[],[],[]];
         this.habilitarHorario = false;
         this.habilitarHorariobyFecha = false;
         this.habilitarExcel = true

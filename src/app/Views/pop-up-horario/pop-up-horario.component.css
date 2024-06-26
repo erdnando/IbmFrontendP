@@ -39,3 +39,14 @@
   color: #9a9a9a;
   font-size: 0.9em;
 }
+
+.schedules-table .mat-mdc-cell {
+  flex-flow: row wrap;
+}
+
+.schedules-table .mat-mdc-cell > * {
+  width: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
