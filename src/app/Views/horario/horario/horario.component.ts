@@ -29,6 +29,7 @@ import { UserConsultByCodeEmService } from '../../user/services/userConsultByCod
 import { Time } from '@angular/common';
 import { LoadArpExcelService } from 'src/app/AdminViews/ImportExcel/services/LoadArpExcel/LoadArpExcel.service';
 import { HorarioService } from 'src/app/Service/horario/horario.service';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 interface MiObjeto {
   [key: string]: any;
@@ -132,6 +133,7 @@ export class HorarioComponent {
   listHoraInicio: any[] = [];
   listHoraFin: any[] = [];
   horaIniciox: string = "";
+  tabSelected: string = "0";
 
   confirmedControl = new FormControl(false);
   
@@ -174,6 +176,12 @@ export class HorarioComponent {
 
     this.ListparametersStand = [];
     this.ListparametersOver = [];
+
+    //clean horarios objects
+    this.storageService.setHorario1([]);
+    this.storageService.setHorario2([]);
+    this.storageService.setHorario3([]);
+
 
   }
   
@@ -549,7 +557,7 @@ export class HorarioComponent {
       this.cdr.detectChanges();
       this.mHorarioListExcel=[];
       this.mHorarioList=[];
-      let pais= this.storageFestivos.obtenerDatosMapeados();
+      let pais= this.storageFestivos.obtenerDatosMapeados();   
       let date = new Date(this.date.value as unknown as Date);
       let fechadia = date.getDate();
       let fechames = (date.getMonth()+1);
@@ -764,21 +772,46 @@ export class HorarioComponent {
       console.log(this.listHoraFin, 'evento');
     }
 
-guardaHorarios(){
-      if( this.hayHorario==true){
+    onTabSelected(tabChangeEvent: MatTabChangeEvent){
 
-        //Actualizar horario
-        this.actualizarHorario1();
+      console.log('tabChangeEvent => ', tabChangeEvent); 
+      console.log('index => ', tabChangeEvent.index); 
+      //0,1 and 2
+      this.tabSelected=tabChangeEvent.index.toString();
+      console.log("usuario del horario:",this.idUserByEmployeCode);
 
+     /*
+      console.log("fecha seleccionada:" );
+      let fechax = new Date(this.date.value as unknown as Date);
+      if(fechax.getFullYear()==1969){
+       
+        console.log(this.storageService.getFechaHorarioSelected() );
       }else{
+        console.log(new Date(this.date.value as unknown as Date))
 
-        //Crear horario
-        this.creaHorario1();
-      }
-}
+        this.storageService.setFechaHorarioSelected(new Date(this.date.value as unknown as Date));
+  
+        console.log(this.storageService.getFechaHorarioSelected() );
 
-creaHorario1
-    () {
+      }*/
+      
+    
+    }
+
+    guardaHorarios(){
+          if( this.hayHorario==true){
+
+            //Actualizar horario
+            this.actualizarHorario1();
+
+          }else{
+
+            //Crear horario
+            this.creaHorario1();
+          }
+    }
+
+    creaHorario1() {
       console.log("Actualizando horario 1")
       console.log(this.listHoraInicio);
       console.log(this.listHoraFin);
@@ -823,8 +856,7 @@ creaHorario1
         let valid = this.validateHorarios();
         if (!valid) return;
         
-        this.horarioCreate
-          .PostCreateHorario(this.mHorarioList)
+        this.horarioCreate.PostCreateHorario(this.mHorarioList)
   
           .subscribe((data) => {
             if (data.data) {
