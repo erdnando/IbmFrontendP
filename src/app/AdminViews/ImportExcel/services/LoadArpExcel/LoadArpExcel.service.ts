@@ -93,7 +93,7 @@ export class LoadArpExcelService {
       idCarga: idCarga,
       idUserEntiyId:idUserEntiyId
     };
-    return this.http.post<MResponseLoadGuid>(direccion, requestData).pipe(timeout(this.timeoutx));
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
 
   UploadTSE(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
@@ -105,7 +105,7 @@ export class LoadArpExcelService {
       idCarga: idCarga,
       idUserEntiyId:idUserEntiyId
     };
-    return this.http.post<MResponseLoadGuid>(direccion, requestData).pipe(timeout(this.timeoutx));
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
   }
 
   UploadSTE(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MSummary> {
@@ -117,7 +117,7 @@ export class LoadArpExcelService {
       idUserEntiyId:idUserEntiyId
     };
     console.log(direccion);
-    return this.http.post<MSummary>(direccion, requestData).pipe(timeout(this.timeoutx));
+    return this.http.post<MSummary>(direccion, requestData);
   }
 
   
