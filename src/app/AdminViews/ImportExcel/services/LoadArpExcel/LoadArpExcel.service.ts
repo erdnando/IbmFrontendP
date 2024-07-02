@@ -5,7 +5,7 @@ import { MResponse } from "src/app/Models/MResponse";
 import { Global } from 'src/app/global';
 import { MResponseLoadGuid, MResponseNotificaciones, MResponseOverlapingPortalDB, MSummary, MSummaryFinal } from 'src/app/Models/MSummary';
 import { Guid } from 'guid-typescript';
-
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class LoadArpExcelService {
   //url:string ="https://ibm-webapp-01.azurewebsites.net/api/v1/";
   // url:string ="http://localhost:2429/api/v1/";
   private URLLocal = Global.Url;
-
+  private timeoutx = 1000 * 3600;//1 hora
 
   constructor(private http:HttpClient)
   { }
@@ -93,7 +93,7 @@ export class LoadArpExcelService {
       idCarga: idCarga,
       idUserEntiyId:idUserEntiyId
     };
-    return this.http.post<MResponseLoadGuid>(direccion, requestData);
+    return this.http.post<MResponseLoadGuid>(direccion, requestData).pipe(timeout(this.timeoutx));
   }
 
   UploadTSE(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
@@ -105,7 +105,7 @@ export class LoadArpExcelService {
       idCarga: idCarga,
       idUserEntiyId:idUserEntiyId
     };
-    return this.http.post<MResponseLoadGuid>(direccion, requestData);
+    return this.http.post<MResponseLoadGuid>(direccion, requestData).pipe(timeout(this.timeoutx));
   }
 
   UploadSTE(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MSummary> {
@@ -117,7 +117,7 @@ export class LoadArpExcelService {
       idUserEntiyId:idUserEntiyId
     };
     console.log(direccion);
-    return this.http.post<MSummary>(direccion, requestData);
+    return this.http.post<MSummary>(direccion, requestData).pipe(timeout(this.timeoutx));
   }
 
   

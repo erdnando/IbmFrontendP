@@ -169,7 +169,7 @@
 
                     <legend>Turnos: </legend>
 
-                    <mat-table [dataSource]="nuevoHorario" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
+                    <mat-table [dataSource]="nuevoHorario2" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
 
                         <!-- Dias -->
                         <ng-container matColumnDef="dias">
@@ -181,7 +181,7 @@
                         <!-- inicio  -->
                         <ng-container matColumnDef="inicio">
                             <mat-cell   *matCellDef="let element">
-                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="miFuncion($event.target, element.day)" type="time" >
+                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="miFuncion2($event.target, element.day)" type="time" >
                             </mat-cell>
                         </ng-container>
                     
@@ -201,6 +201,7 @@
                         <ng-container matColumnDef="checkbox">
                             <mat-cell *matCellDef="let element">
                                 <mat-checkbox [(ngModel)]="element.editable"  (change)="element.editable = $event.checked"></mat-checkbox>
+                                <!--<mat-checkbox [(ngModel)]="element.editable"  (change)="checkChanged1($event.checked,  element.editable)" ></mat-checkbox>-->
                             </mat-cell>
                         </ng-container>
                     
@@ -219,7 +220,7 @@
        
     </mat-tab-group>
 
-    <mat-checkbox color="primary" labelPosition="after" [formControl]="confirmedControl">Se ha realizado una revision exhaustiva de
+    <mat-checkbox color="primary" labelPosition="after" [formControl]="confirmedControl"  >Se ha realizado una revision exhaustiva de
         las horas registradas, y se ha confirmado que cumple con los estandares establecidos por la
         compañia y con las normativas legales vigentes antes de su aprobacion.</mat-checkbox>
 
@@ -229,9 +230,6 @@
         
 
     <div class="buttons">
-
-        
-
 
         <button mat-raised-button color="primary" class="" (click)="downloadTemplate()">
             Descargar Plantilla(CSV)
@@ -258,12 +256,6 @@
     </button>
     <input type="file" id="fileInputHorario" #fileInputHorario style="display:none" accept=".xlsx, .xls" (change)="manejarArchivoHorario($event)" />
 
-
-
-
-
-
-            
         <!--<button mat-raised-button color="primary" class="" (click)="crearHorario()" *ngIf="mHorarioList.length && confirmedControl.value">
             Guardar Cambios
             <mat-icon>
@@ -271,6 +263,6 @@
             </mat-icon> 
         </button>-->
 
-        <button mat-raised-button color="primary" class="" (click)="guardaHorarios()" *ngIf="mHorarioList.length && confirmedControl.value"> Guardar </button>
+        <button mat-raised-button color="primary" class="" (click)="guardaHorarios()" *ngIf=" confirmedControl.value"> Guardar </button>
     </div>
 </div>

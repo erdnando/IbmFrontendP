@@ -20,12 +20,12 @@ export class StorageService {
   private festivos: any[] = [];
   private festivosAnos: any[] = [];
 
-  private mHorario1List: MCreateHorario[] = [];//new
-  private mHorario2List: MCreateHorario[] = [];//new
-  private mHorario3List: MCreateHorario[] = [];//new
+  //private mHorario1List: MCreateHorario[] = [];//new
+  //private mHorario2List: MCreateHorario[] = [];//new
+  //private mHorario3List: MCreateHorario[] = [];//new
   private tabHorarioSelected: any = "0";//new
-  private fechaHorarioSelected:Date = new Date();//new
-  private usuarioHorario:any = "";//new
+  //private fechaHorarioSelected:Date = new Date();//new
+  //private usuarioHorario:any = "";//new
 
   products = "";
 
@@ -111,7 +111,7 @@ export class StorageService {
 
   //mHorario1...3List
   //-------------------------------------------------------------
-  public setHorario1(horarios: MCreateHorario[]):void{
+  /*public setHorario1(horarios: MCreateHorario[]):void{
    this.mHorario1List=horarios;
   }
   public getHorarios1(): MCreateHorario[]{
@@ -131,7 +131,7 @@ export class StorageService {
    }
    public getHorarios3(): MCreateHorario[]{
      return this.mHorario3List;
-   }
+   }*/
 
    //-------------------------------------------------------------
    public setTabHorarioSelected(tabIndex: any):void{
@@ -141,7 +141,7 @@ export class StorageService {
      return this.tabHorarioSelected;
    }
    //-------------------------------------------------------------
-   public setUsuarioHorario(usuario: any):void{
+  /* public setUsuarioHorario(usuario: any):void{
     this.usuarioHorario=usuario;
    }
    public getUsuarioHorario(): any{
@@ -154,7 +154,7 @@ export class StorageService {
    public getFechaHorarioSelected(): Date{
      return this.fechaHorarioSelected;
    }
-  
+  */
    //------------------------------------------------------------
 
 

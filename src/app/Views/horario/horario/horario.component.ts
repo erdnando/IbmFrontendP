@@ -1,32 +1,32 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PopUpHorarioUpdateComponent } from '../pop-up-horario-update/pop-up-horario-update.component';
-import { PopUpHorarioCreateComponent } from '../pop-up-horario-create/pop-up-horario-create.component';
-import { ApproverListService } from 'src/app/AdminViews/AdminApprover/services/approverList/approver-list.service';
-import { MAprobador } from 'src/app/Models/MAprobador';
+//import { PopUpHorarioUpdateComponent } from '../pop-up-horario-update/pop-up-horario-update.component';
+//import { PopUpHorarioCreateComponent } from '../pop-up-horario-create/pop-up-horario-create.component';
+//import { ApproverListService } from 'src/app/AdminViews/AdminApprover/services/approverList/approver-list.service';
+//import { MAprobador } from 'src/app/Models/MAprobador';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
-import { MUserEntity } from 'src/app/Models/MUserEntity';
+//import { MUserEntity } from 'src/app/Models/MUserEntity';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
-import { MatTableModule } from '@angular/material/table';
+//import { MatTableModule } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { MFestivos } from 'src/app/Models/MFestivos';
 import { Subscription, map } from 'rxjs';
 import { MParameters } from 'src/app/Models/MParameters';
 import { MCountryEntity } from 'src/app/Models/MCountryEntiry';
 import { MCreateHorario } from 'src/app/Models/MHorario';
-import { ParameterUpdateService } from '../../parameters/services/parametersUpdate/parameter-update.service';
+//import { ParameterUpdateService } from '../../parameters/services/parametersUpdate/parameter-update.service';
 import { ParameterConsultService } from '../../parameters/services/parameterConsul/parameter-consult.service';
 import { Guid } from 'guid-typescript';
-import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.service';
+//import { RutaActualService } from 'src/app/Service/rutaActual/ruta-actual.service';
 import { ListCountryService } from 'src/app/AdminViews/AdminCountries/services/list-country/list-country.service';
-import { CalendarOptions } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
+//import { CalendarOptions } from '@fullcalendar/core';
+//import dayGridPlugin from '@fullcalendar/daygrid';
 import * as XLSX from 'xlsx';
-import { PopUpHorarioComponent } from '../../pop-up-horario/pop-up-horario.component';
+//import { PopUpHorarioComponent } from '../../pop-up-horario/pop-up-horario.component';
 import Swal from 'sweetalert2';
 import { HorarioCreateService } from '../../parameters/services/horarioCreate/horario-create.service';
 import { UserConsultByCodeEmService } from '../../user/services/userConsultByCodeEm/user-consult-by-code-em.service';
-import { Time } from '@angular/common';
+//import { Time } from '@angular/common';
 import { LoadArpExcelService } from 'src/app/AdminViews/ImportExcel/services/LoadArpExcel/LoadArpExcel.service';
 import { HorarioService } from 'src/app/Service/horario/horario.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -63,24 +63,24 @@ export class HorarioComponent {
   columnasAMostrar = ['dias', 'inicio','a', 'fin'];
   columnasAMostrar2 = ['dias', 'inicio','a', 'fin'];
   
-  MApprover: MAprobador[];
-  a : MAprobador[];
+ // MApprover: MAprobador[];
+  //a : MAprobador[];
   MUser: any;
   columnasexcel:string[]=["#", "NOMBRE DIA", "HORA INICIO", "HORA FIN", "FECHA", "CODIGO EMP", "PAIS"];
 
   MListCountry: MCountryEntity[];
   ExcelData: any;
-  ListparametersStand: MParameters[];
-  ListparametersOver: MParameters[];
+ // ListparametersStand: MParameters[];
+ // ListparametersOver: MParameters[];
   MParameter: MParameters;
   pais = new FormControl('');
-  limitDay = new FormControl('');
-  limitWeek = new FormControl('');
-  limitMonth = new FormControl('');
-  limitYear = new FormControl('');
-  botonPresionado: string = 'festividades';
-  idParametersStand: string = '';
-  idParametersOver: string = '';
+  //limitDay = new FormControl('');
+  //limitWeek = new FormControl('');
+ // limitMonth = new FormControl('');
+ // limitYear = new FormControl('');
+ // botonPresionado: string = 'festividades';
+ // idParametersStand: string = '';
+  //idParametersOver: string = '';
   agregarFestivos: boolean = false;
   festivos: [] = [];
   MFestivos: MFestivos;
@@ -101,17 +101,24 @@ export class HorarioComponent {
 
   horaInicio = new FormControl('');
   horaFin = new FormControl('');
+
+  horaInicio2 = new FormControl('');//clonado
+  horaFin2 = new FormControl('');//clonado
+
   valoresInicio: { [dia: string]: string[] } = {};
   mHorario: MCreateHorario;
+  mHorario2: MCreateHorario;//clonado
   mHorarioList: MCreateHorario[] = [];
+  mHorarioList2: MCreateHorario[] = [];//clonado
   mHorarioListExcel: MCreateHorario[] = [];
+  mHorarioListExcel2: MCreateHorario[] = [];//clonado
   mHoraioConsult: MCreateHorario[] = [];
   semanaAno: string = '';
 
   habilitarHorario = false;
   habilitarHorariobyFecha = false;
 
-  paisRutaActual = this.rutaActual.globalVar;
+  //paisRutaActual = this.rutaActual.globalVar;
 
   idUserByEmployeCode: string = '';
   hayHorario: boolean = false;
@@ -120,32 +127,37 @@ export class HorarioComponent {
   date = new FormControl(null);
   fechaSemanaAno: string = "";
 
-  calendarOptions: CalendarOptions = {
+  /*calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin],
-  };
+  };*/
 
-  datosTable:any [] = [];
+  //datosTable:any [] = [];
   week1:any[] = [];
-  diasdelHorarios: any[] =[];
+  //diasdelHorarios: any[] =[];
   //new
   nuevoHorario: any[] = [];
+  nuevoHorario2: any[] = [];//clonado
+
   listHoraInicio: any[] = [];
+  listHoraInicio2: any[] = [];//clonado
+
   listHoraFin: any[] = [];
-  horaIniciox: string = "";
+  listHoraFin2: any[] = [];//clonado
+ // horaIniciox: string = "";
   tabSelected: string = "0";
 
-  confirmedControl = new FormControl(false);
+  confirmedControl = new FormControl(true);
   
   constructor(
     public dialog: MatDialog, 
-    private serviceLists: ObtenerlistaService,
-    private storageService: StorageService, 
+   // private serviceLists: ObtenerlistaService,
+    //private storageService: StorageService, 
     private storageFestivos: StorageService,
-    private apiParameters: ParameterUpdateService,
+   // private apiParameters: ParameterUpdateService,
     private apiParametersConsult: ParameterConsultService,
     private serviceList: ObtenerlistaService,
-    private rutaActual: RutaActualService,
+    //private rutaActual: RutaActualService,
     private cdr: ChangeDetectorRef,
     private apiListCountry: ListCountryService,
     private horarioCreate: HorarioCreateService,
@@ -153,20 +165,21 @@ export class HorarioComponent {
     private loadArpExcelService: LoadArpExcelService,
     private horarioService: HorarioService,
   ) {
-    this.MApprover = [];
-    this.a = [];
+    //this.MApprover = [];
+    //this.a = [];
 
     this.MListCountry = [];
     this.EntityFestivos = [];
     this.MFestivosList = [];
     this.mHorario = {} as MCreateHorario;
+    this.mHorario2 = {} as MCreateHorario;//clonado
     this.MParameter = {} as MParameters;
     this.MFestivos = {} as MFestivos;
     this.suscription = new Subscription();
     this.suscriptionFestivosLocal = new Subscription();
     this.suscriptionFestivosdb = new Subscription();
     this.MUser = this.storageFestivos.obtenerDatosMapeados();
-    this.name = 'ExcelSheet.xlsx';
+    //this.name = 'ExcelSheet.xlsx';
 
     this.suscriptionFestivosLocal = this.storageFestivos
       .obtenerDiasFestivos()
@@ -174,18 +187,18 @@ export class HorarioComponent {
         this.festivos = festivos;
       });
 
-    this.ListparametersStand = [];
-    this.ListparametersOver = [];
+    //this.ListparametersStand = [];
+    //this.ListparametersOver = [];
 
     //clean horarios objects
-    this.storageService.setHorario1([]);
-    this.storageService.setHorario2([]);
-    this.storageService.setHorario3([]);
+    //this.storageService.setHorario1([]);
+    //this.storageService.setHorario2([]);
+    //this.storageService.setHorario3([]);
 
 
   }
   
-  openDialog(id: string, name: string, nivel: any) {
+ /* openDialog(id: string, name: string, nivel: any) {
     this.dialog.open(PopUpHorarioUpdateComponent,{
       data: {
         // Aquí puedes agregar los datos que quieras enviar
@@ -194,294 +207,20 @@ export class HorarioComponent {
         nivel: nivel
       }
       });
-  }
+  }*/
 
-  crearUsuario() {
+  /*crearUsuario() {
     this.dialog.open(PopUpHorarioCreateComponent);
-  }
+  }*/
 
   ngOnInit():void{
-    this.consultcountries();
-
-    /* this.serviceLists.loadApprovers().subscribe((approvers) => {
-      this.MApprover = approvers;
-    console.log(this.MApprover);
-    console.log(typeof ((this.MApprover[0]).idAprobador) + " verificacion")
-    });
-
-    this.serviceLists.refreshApprovers$.subscribe((lista) => {
-      this.MApprover= lista;
-    }); */
-
-    /* this.validateRole(); */
+      this.consultcountries();
       this.consultarHorarioEmpleado();
+      this.consultarHorarioEmpleado2();
       this.selectAux(this.MUser.countryEntityId);
     }
 
-    consultcountries() {
-      // SERVICIO PARA TRAER LA LISTA DE PAISES
-      this.apiListCountry
-        .GetCountry().pipe(map((data: MiObjeto) => data)).subscribe((data) => {
-          let lista = data['data'];
-  
-          let MListCountryFilter = lista.filter((x: any) => x.idCounty == this.MUser.countryEntityId);
-          console.log('Rol',this.MUser.rolEntity.nameRole);
-  
-          if (this.MUser.rolEntity.nameRole == 'Super Administrador') {
-            this.MListCountry = lista;
-            this.Approving = true;
-  
-          }else if (this.MUser.rolEntity.nameRole == 'Administrador') {
-            this.MListCountry = MListCountryFilter;
-            this.Approving = true;
-  
-          }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2') {
-            this.MListCountry = lista;
-            this.Approving = true;
-  
-          }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1') {
-            this.MListCountry = lista;
-            this.Approving = true;
-  
-          }else{
-            this.Approving = false
-          }
-        });
-  
-    
-    }
-
-    validateRole(){
-      if (this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
-        this.Approving = true;
-      }
-    }
-
-    select(plan: any) {
-      this.cdr.detectChanges();
-  
-      this.agregarFestivos = false;
-      
-  
-      if (this.pais.value !== null) {
-        this.codeEmployed.reset();
-        this.date.reset();
-        this.mHorarioList = []
-        this.habilitarHorario = false;
-        this.habilitarHorariobyFecha = false;
-        this.habilitarExcel = true
-        this.idCountryGlobal = plan.value;
-        let idCountry: string = plan.value;
-        let guidIdCountry: Guid = Guid.parse(idCountry);
-        this.apiParametersConsult
-          .GetParametersConsult(guidIdCountry)
-          .pipe(map((data: MiObjetoApp) => data))
-          .subscribe((data) => {
-            let listap = data['data'];
-  
-            if (this.pais.value !== '') {
-              this.suscriptionFestivosdb = this.serviceList
-                .loadFestivos(this.pais.value as unknown as string)
-                .subscribe((festivo) => {
-                  festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
-                    - new Date(b.diaFestivo).getTime());
-                  this.MFestivosList = festivo;
-                });
-            }
-   
-            this.ListparametersStand = [];
-            this.ListparametersOver = [];
-  
-            for (let item of listap) {
-              if (item.typeHours == 0) {
-                this.ListparametersStand.push(item);
-                this.idParametersStand = item.idParametersEntity;
-              } else {
-                this.ListparametersOver.push(item);
-                this.idParametersOver = item.idParametersEntity;
-              }
-            }
-          });
-      } else {
-      }
-    }
-
-    validateHorarios () {
-      for (let horario of this.mHorarioList) {
-        if (!this.validateHorario(horario.day, horario.horaInicio, horario.horaFin)) return false;
-      }
-      return true;
-    }
-  
-    validateHorario(day: string, horaInicio: string, horaFin: string) {
-      let startDate = new Date();
-      const [startHour, startMinutes] = horaInicio.split(":");
-      startDate.setHours(+startHour, +startMinutes, 0);
-      let endDate = new Date();
-      const [endHour, endMinutes] = horaFin.split(":");
-      endDate.setHours(+endHour, +endMinutes, 0);
-      if(startDate >= endDate || endDate <= startDate) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'La hora fin debe ser mayor a la hora inicio',
-          confirmButtonColor: '#0A6EBD',
-          allowOutsideClick: false
-        });
-        return false;
-      }
-  
-      return true;
-    }
-
-    guardarValorInicio(dia: any[]) {
-      //this.valoresInicio[dia] = [this.horaInicio.value!,this.horaFin.value!];
-      if (dia.length === 0) {
-        throw new Error('La lista está vacía');
-      }
-
-      
-      if(dia.length === 1){
-        let date = this.obtenerFecha(dia[0]);
-        let week = this.getWeek(date);
-        console.log('este el el primer lengt', dia);
-
-        this.mHorario = {
-          horaInicio: this.horaInicio.value as string,
-          horaFin: this.horaFin.value as string,
-          week: week.toString(),
-          userEntityId: this.idUserByEmployeCode,
-          day: dia[0],
-          fechaWorking: date.toISOString(),
-          ano: date.getFullYear().toString()
-        };
-
-        let index = this.mHorarioList.findIndex(
-          (mHorario) => mHorario.day === this.mHorario.day
-        );
-    
-        if (index !== -1) {
-          this.mHorarioList[index] = this.mHorario;
-        } else {
-          this.mHorarioList.push(this.mHorario);
-        }
-      }
-      else if(dia.length > 1){
-        for(let x of dia){
-          let date = this.obtenerFecha(x.day);
-          let week = this.getWeek(date);
-          this.mHorario= {
-            horaInicio:  this.convertirHoraAMPMa24(x.horaInicio) as string,
-            horaFin: this.convertirHoraAMPMa24(x.horaFin) as string,
-            week: week.toString(),
-            userEntityId: this.idUserByEmployeCode,
-            day: x.day,
-            ano: date.getFullYear().toString(),
-            fechaWorking:date.toISOString(),
-          }; 
-          console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
-          let index = this.mHorarioList.findIndex(
-            (mHorario) => mHorario.day === this.mHorario.day
-          );
-      
-          if (index !== -1) {
-            this.mHorarioList[index] = this.mHorario;
-            this.mHorarioListExcel[index] = this.mHorario;
-          } else {
-            this.mHorarioList
-            this.mHorarioListExcel.push(this.mHorario);
-          }
-        }  
-        console.log(this.mHorarioList)
-        console.log(this.mHorario,' esta es la lista del excel')    
-      }
-  
-    }
-
-    obtenerFecha(diain:string){
-      var dia;
-      var diafor="";
-      switch(diain){
-        case "Lunes":
-          diafor = this.week1[1].toLocaleDateString('es-MX').split("/");
-          break;
-        case "Martes":
-          diafor = this.week1[2].toLocaleDateString('es-MX').split("/");
-          break;
-        case "Miércoles":
-          diafor = this.week1[3].toLocaleDateString('es-MX').split("/");
-          break;
-        case "Jueves":
-          diafor = this.week1[4].toLocaleDateString('es-MX').split("/");
-          break;
-        case "Viernes":
-          diafor = this.week1[5].toLocaleDateString('es-MX').split("/");
-          break;
-        case "Sábado":
-          diafor = this.week1[6].toLocaleDateString('es-MX').split("/");
-          break;
-        case "Domingo":
-          diafor = this.week1[0].toLocaleDateString('es-MX').split("/");
-          break;
-      }
-    
-      /*
-      0: "10"
-      1: "20"
-      2: "2023"
-    */
-      dia = new Date(diafor[2] + "/" + (diafor[1].length==1? "0"+diafor[1]:diafor[1]) +"/"+(diafor[0].length==1? "0"+diafor[0]:diafor[0]));
-      return dia
-    
-    }
-
-    convertirHoraAMPMa24(hora: string): string {
-  
-      let partes = hora.match(/(\d+):(\d+) (\w+)/);
-      let horas = Number(partes![1]);
-      let minutos = Number(partes![2]);
-      let ampm = partes![3];
-    
-      if (ampm === 'p' && horas < 12) {
-        horas = horas + 12;
-      } else if (ampm === 'a' && horas === 12) {
-        horas = 0;
-      }
-    
-      return ('0' + horas).slice(-2) + ':' + ('0' + minutos).slice(-2);
-    }
-  
-    excelHourToAMPM(hora: any) {
-      // Convierte la hora de Excel a una fracción del día
-      let dayFraction = hora - Math.floor(hora);
-    
-      // Convierte la fracción del día a milisegundos
-      let milliseconds = dayFraction * 24 * 60 * 60 * 1000;
-    
-      // Crea una nueva fecha a partir de los milisegundos
-      let date = new Date(milliseconds);
-    
-      // Ajusta la hora para tener en cuenta la diferencia de zona horaria
-      let timezoneOffset = date.getTimezoneOffset() * 60 * 1000;
-      date = new Date(date.getTime() + timezoneOffset);
-    
-      // Formatea la fecha a una cadena en formato AM/PM
-      let options: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
-      let timeString = date.toLocaleTimeString(undefined, options);
-    
-      return timeString;
-  }
-  
-    cargarArchivoHorarios() {
-      let elemento = document.getElementById('input-excel');
-      if(elemento) {
-        elemento.click();
-        this.agregarHorariosexcel = true;
-      } else {
-        console.log("No se encontró el elemento con id 'input-excel'");
-      }
-    }
-
+    //-------------------------COMUNES---------------------------------------------------------------------------------
     //1.- onBlur despues de ingresar el codigo de empleado se dispara este codigo
     //this.habilitarHorario = true;
     applyFilter(event: any) {
@@ -547,12 +286,13 @@ export class HorarioComponent {
       //if(this.habilitarHorariobyFecha && this.habilitarHorario){
         console.log("consultarHorarioEmpleado")
         this.consultarHorarioEmpleado();
+        this.consultarHorarioEmpleado2();
       //}
   
     }
 
     //3.- Busca el horario asignado al empleado para la semana seleccionada
-    consultarHorarioEmpleado(){
+    consultarHorarioEmpleado(){//clonado
 
       this.cdr.detectChanges();
       this.mHorarioListExcel=[];
@@ -615,16 +355,8 @@ export class HorarioComponent {
           this.habilitarHorariobyFecha = true;
           date.setDate(date.getDate() - date.getDay());
 
-
-
-          /*this.nuevoHorario = horario.map(hh => {
-            return { ...hh, editable: hh.horaInicio !== '' && hh.horaFin !== '' };
-          });*/
-
           this.verificacionDias(horario);
 
-         
-  
         }
         else{
           this.hayHorario=false;
@@ -647,7 +379,330 @@ export class HorarioComponent {
     }
 
 
-    verificacionDias(horarios: MCreateHorario[]) {
+    consultcountries() {
+      // SERVICIO PARA TRAER LA LISTA DE PAISES
+      this.apiListCountry
+        .GetCountry().pipe(map((data: MiObjeto) => data)).subscribe((data) => {
+          let lista = data['data'];
+  
+          let MListCountryFilter = lista.filter((x: any) => x.idCounty == this.MUser.countryEntityId);
+          console.log('Rol',this.MUser.rolEntity.nameRole);
+  
+          if (this.MUser.rolEntity.nameRole == 'Super Administrador') {
+            this.MListCountry = lista;
+            this.Approving = true;
+  
+          }else if (this.MUser.rolEntity.nameRole == 'Administrador') {
+            this.MListCountry = MListCountryFilter;
+            this.Approving = true;
+  
+          }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N2') {
+            this.MListCountry = lista;
+            this.Approving = true;
+  
+          }else if (this.MUser.rolEntity.nameRole == 'Usuario Aprobador N1') {
+            this.MListCountry = lista;
+            this.Approving = true;
+  
+          }else{
+            this.Approving = false
+          }
+        });
+  
+    
+    }
+
+    validateHorario(day: string, horaInicio: string, horaFin: string) {
+      let startDate = new Date();
+      const [startHour, startMinutes] = horaInicio.split(":");
+      startDate.setHours(+startHour, +startMinutes, 0);
+      let endDate = new Date();
+      const [endHour, endMinutes] = horaFin.split(":");
+      endDate.setHours(+endHour, +endMinutes, 0);
+      if(startDate >= endDate || endDate <= startDate) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'La hora fin debe ser mayor a la hora inicio',
+          confirmButtonColor: '#0A6EBD',
+          allowOutsideClick: false
+        });
+        return false;
+      }
+  
+      return true;
+    }
+
+     //Selecciona el pais al cargar la vista
+     selectAux(countryId:string){
+      this.cdr.detectChanges();
+  
+      this.agregarFestivos = false;
+      
+  
+      if (this.pais.value !== null) {
+        this.codeEmployed.reset();
+        this.date.reset();
+        this.mHorarioList = [];
+        this.mHorarioList2 = [];
+        this.habilitarHorario = false;
+        this.habilitarHorariobyFecha = false;
+        this.habilitarExcel = true
+        this.idCountryGlobal = countryId;
+        let idCountry: string = countryId;
+        let guidIdCountry: Guid = Guid.parse(idCountry);
+  
+        this.apiParametersConsult
+          .GetParametersConsult(guidIdCountry)
+          .pipe(map((data: MiObjetoApp) => data))
+          .subscribe((data) => {
+            let listap = data['data'];
+  
+            if (this.pais.value !== '') {
+              this.suscriptionFestivosdb = this.serviceList
+                .loadFestivos(this.pais.value as unknown as string)
+                .subscribe((festivo) => {
+                  festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
+                    - new Date(b.diaFestivo).getTime());
+                  this.MFestivosList = festivo;
+                });
+            }
+   
+            /*this.ListparametersStand = [];
+            this.ListparametersOver = [];
+  
+            for (let item of listap) {
+              if (item.typeHours == 0) {
+                this.ListparametersStand.push(item);
+                this.idParametersStand = item.idParametersEntity;
+              } else {
+                this.ListparametersOver.push(item);
+                this.idParametersOver = item.idParametersEntity;
+              }
+            }*/
+          });
+      } else {
+      }
+    }
+    //==========================================================================================================
+
+   
+
+    /*validateRole(){
+      if (this.MUser.rolEntity.nameRole == 'Administrador'||this.MUser.rolEntity.nameRole =='Super Administrador') {
+        this.Approving = true;
+      }
+    }*/
+
+    //select pais
+    select(plan: any) {
+      this.cdr.detectChanges();
+  
+      this.agregarFestivos = false;
+      
+  
+      if (this.pais.value !== null) {
+
+        this.codeEmployed.reset();
+        this.date.reset();
+        this.mHorarioList = [];
+        this.mHorarioList2 = [];//clonado
+
+        this.habilitarHorario = false;
+        this.habilitarHorariobyFecha = false;
+        this.habilitarExcel = true
+        this.idCountryGlobal = plan.value;
+        let idCountry: string = plan.value;
+        let guidIdCountry: Guid = Guid.parse(idCountry);
+
+        this.apiParametersConsult.GetParametersConsult(guidIdCountry)
+          .pipe(map((data: MiObjetoApp) => data))
+          .subscribe((data) => {
+            let listap = data['data'];
+  
+            if (this.pais.value !== '') {
+
+              this.suscriptionFestivosdb = this.serviceList.loadFestivos(this.pais.value as unknown as string)
+                .subscribe((festivo) => {
+                  festivo.sort((a, b) => new Date(a.diaFestivo).getTime() - new Date(b.diaFestivo).getTime());
+                  this.MFestivosList = festivo;
+                });
+            }
+   
+            /*this.ListparametersStand = [];
+            this.ListparametersOver = [];
+  
+            for (let item of listap) {
+              if (item.typeHours == 0) {
+                this.ListparametersStand.push(item);
+                this.idParametersStand = item.idParametersEntity;
+              } else {
+                this.ListparametersOver.push(item);
+                this.idParametersOver = item.idParametersEntity;
+              }
+            }*/
+          });
+      } else {
+      }
+    }
+
+    validateHorarios () {
+      for (let horario of this.mHorarioList) {
+        if (!this.validateHorario(horario.day, horario.horaInicio, horario.horaFin)) return false;
+      }
+      return true;
+    }
+  
+    
+
+   /* guardarValorInicio(dia: any[]) {
+      
+      if (dia.length === 0) {
+        throw new Error('La lista está vacía');
+      }
+
+      
+      if(dia.length === 1){
+        let date = this.obtenerFecha(dia[0]);
+        let week = this.getWeek(date);
+        console.log('este el el primer lengt', dia);
+
+        this.mHorario = {
+          horaInicio: this.horaInicio.value as string,
+          horaFin: this.horaFin.value as string,
+          week: week.toString(),
+          userEntityId: this.idUserByEmployeCode,
+          day: dia[0],
+          fechaWorking: date.toISOString(),
+          ano: date.getFullYear().toString()
+        };
+
+        let index = this.mHorarioList.findIndex(
+          (mHorario) => mHorario.day === this.mHorario.day
+        );
+    
+        if (index !== -1) {
+          this.mHorarioList[index] = this.mHorario;
+        } else {
+          this.mHorarioList.push(this.mHorario);
+        }
+      }
+      else if(dia.length > 1){
+        for(let x of dia){
+          let date = this.obtenerFecha(x.day);
+          let week = this.getWeek(date);
+          this.mHorario= {
+            horaInicio:  this.convertirHoraAMPMa24(x.horaInicio) as string,
+            horaFin: this.convertirHoraAMPMa24(x.horaFin) as string,
+            week: week.toString(),
+            userEntityId: this.idUserByEmployeCode,
+            day: x.day,
+            ano: date.getFullYear().toString(),
+            fechaWorking:date.toISOString(),
+          }; 
+          console.log(x.horaFin, this.convertirHoraAMPMa24(x.horaFin), 'conversion' )
+          let index = this.mHorarioList.findIndex(
+            (mHorario) => mHorario.day === this.mHorario.day
+          );
+      
+          if (index !== -1) {
+            this.mHorarioList[index] = this.mHorario;
+            this.mHorarioListExcel[index] = this.mHorario;
+          } else {
+            this.mHorarioList
+            this.mHorarioListExcel.push(this.mHorario);
+          }
+        }  
+        console.log(this.mHorarioList)
+        console.log(this.mHorario,' esta es la lista del excel')    
+      }
+  
+    }*/
+
+   /* obtenerFecha(diain:string){
+      var dia;
+      var diafor="";
+      switch(diain){
+        case "Lunes":
+          diafor = this.week1[1].toLocaleDateString('es-MX').split("/");
+          break;
+        case "Martes":
+          diafor = this.week1[2].toLocaleDateString('es-MX').split("/");
+          break;
+        case "Miércoles":
+          diafor = this.week1[3].toLocaleDateString('es-MX').split("/");
+          break;
+        case "Jueves":
+          diafor = this.week1[4].toLocaleDateString('es-MX').split("/");
+          break;
+        case "Viernes":
+          diafor = this.week1[5].toLocaleDateString('es-MX').split("/");
+          break;
+        case "Sábado":
+          diafor = this.week1[6].toLocaleDateString('es-MX').split("/");
+          break;
+        case "Domingo":
+          diafor = this.week1[0].toLocaleDateString('es-MX').split("/");
+          break;
+      }
+    
+     
+      dia = new Date(diafor[2] + "/" + (diafor[1].length==1? "0"+diafor[1]:diafor[1]) +"/"+(diafor[0].length==1? "0"+diafor[0]:diafor[0]));
+      return dia
+    
+    }*/
+
+   /* convertirHoraAMPMa24(hora: string): string {
+  
+      let partes = hora.match(/(\d+):(\d+) (\w+)/);
+      let horas = Number(partes![1]);
+      let minutos = Number(partes![2]);
+      let ampm = partes![3];
+    
+      if (ampm === 'p' && horas < 12) {
+        horas = horas + 12;
+      } else if (ampm === 'a' && horas === 12) {
+        horas = 0;
+      }
+    
+      return ('0' + horas).slice(-2) + ':' + ('0' + minutos).slice(-2);
+    }*/
+  
+    /*excelHourToAMPM(hora: any) {
+      // Convierte la hora de Excel a una fracción del día
+      let dayFraction = hora - Math.floor(hora);
+    
+      // Convierte la fracción del día a milisegundos
+      let milliseconds = dayFraction * 24 * 60 * 60 * 1000;
+    
+      // Crea una nueva fecha a partir de los milisegundos
+      let date = new Date(milliseconds);
+    
+      // Ajusta la hora para tener en cuenta la diferencia de zona horaria
+      let timezoneOffset = date.getTimezoneOffset() * 60 * 1000;
+      date = new Date(date.getTime() + timezoneOffset);
+    
+      // Formatea la fecha a una cadena en formato AM/PM
+      let options: Intl.DateTimeFormatOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+      let timeString = date.toLocaleTimeString(undefined, options);
+    
+      return timeString;
+  }*/
+  
+    /*cargarArchivoHorarios() {
+      let elemento = document.getElementById('input-excel');
+      if(elemento) {
+        elemento.click();
+        this.agregarHorariosexcel = true;
+      } else {
+        console.log("No se encontró el elemento con id 'input-excel'");
+      }
+    }*/
+
+   
+
+
+    verificacionDias(horarios: MCreateHorario[]) {//clonado
 
       let diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
       let date = new Date(horarios[0].fechaWorking);
@@ -779,23 +834,6 @@ export class HorarioComponent {
       //0,1 and 2
       this.tabSelected=tabChangeEvent.index.toString();
       console.log("usuario del horario:",this.idUserByEmployeCode);
-
-     /*
-      console.log("fecha seleccionada:" );
-      let fechax = new Date(this.date.value as unknown as Date);
-      if(fechax.getFullYear()==1969){
-       
-        console.log(this.storageService.getFechaHorarioSelected() );
-      }else{
-        console.log(new Date(this.date.value as unknown as Date))
-
-        this.storageService.setFechaHorarioSelected(new Date(this.date.value as unknown as Date));
-  
-        console.log(this.storageService.getFechaHorarioSelected() );
-
-      }*/
-      
-    
     }
 
     guardaHorarios(){
@@ -869,6 +907,7 @@ export class HorarioComponent {
               this.mHorarioList = [];
               this.listHoraInicio=[];
               this.listHoraFin=[];
+              
 
               this.consultarHorarioEmpleado();
             } else {
@@ -888,7 +927,7 @@ export class HorarioComponent {
           confirmButtonColor: '#0A6EBD',
         });
       }
-     
+      //this.confirmedControl.setValue(false);
   
     }
 
@@ -958,7 +997,7 @@ export class HorarioComponent {
               this.mHorarioList = [];
               this.listHoraInicio=[];
               this.listHoraFin=[];
-             // this.consultarHorarioEmpleado();
+              this.consultarHorarioEmpleado();
               
             } else {
               Swal.fire({
@@ -1014,12 +1053,12 @@ export class HorarioComponent {
 
       
       }
-     
+     // this.confirmedControl.setValue(false);
   
     }
 
 
-    guardarValoresInFin(object: any, event: any) {
+   /* guardarValoresInFin(object: any, event: any) {
       console.log('hora inicio', object.horaInicio);
       let horasInicioFiltradas = this.listHoraInicio.
         filter(item => item.dia === object.day).
@@ -1031,9 +1070,7 @@ export class HorarioComponent {
         this.horaInicio = object.horaInicio
       }
   
-      /* if (this.horaInicio && event.value) {
-        if (!this.validateHorario(object.day, this.horaInicio, event.value)) return;
-      } */
+      
   
   
       this.mHorario = {
@@ -1058,11 +1095,11 @@ export class HorarioComponent {
         console.log('nuevo')
         this.mHorarioList.push(this.mHorario);
       }
-    }
+    }*/
 
 
 
-    openDialogHorario(horario: any[]) {
+    /*openDialogHorario(horario: any[]) {
       console.log('esto es open dialog de horario ')
     const dialogRef=  this.dialog.open(PopUpHorarioComponent, {
         data: {
@@ -1081,16 +1118,16 @@ export class HorarioComponent {
   
         )
       )
-    }
+    }*/
 
-    onKeyPressOnlyNumbers(event: KeyboardEvent): void {
+   /* onKeyPressOnlyNumbers(event: KeyboardEvent): void {
       const inputValue = (event.target as HTMLInputElement).value;
       const isDotOrComma = inputValue.includes('.') || inputValue.includes(',');
     
       if (!/[\d.,]/.test(event.key) || (isDotOrComma && (event.key === '.' || event.key === ','))) {
         event.preventDefault();
       }
-    }
+    }*/
     
     onKeyPressOnlyLettersNumbers(event: KeyboardEvent): void {
       const inputValue = (event.target as HTMLInputElement).value;
@@ -1110,7 +1147,7 @@ export class HorarioComponent {
 
     
 
-    readExcelHorario(file: any) {
+   /* readExcelHorario(file: any) {
 
       this.readFileHorario(file.files);
 
@@ -1123,7 +1160,7 @@ export class HorarioComponent {
        // this.barraProgreso(false);
      // }
       
-    }
+    }*/
 
     cargarArchivoHorario() {
       let elemento = document.getElementById('fileInputHorario');
@@ -1135,7 +1172,7 @@ export class HorarioComponent {
       }
     }
 
-    excelDateToJSDate(serial: any) {
+    /*excelDateToJSDate(serial: any) {
       let utc_days  = Math.floor(serial - 25569);
       let utc_value = utc_days * 86400;                                        
       let date_info = new Date(utc_value * 1000);
@@ -1149,7 +1186,7 @@ export class HorarioComponent {
    
       return `${year}-${monthStr}-${dayStr}`;
   
-   }
+   }*/
 
     //subir plantilla
   manejarArchivoHorario(event: any) {
@@ -1311,7 +1348,7 @@ export class HorarioComponent {
       }
     }
 
-    exportToExcelHours(){
+  /*exportToExcelHours(){
 
       let name = "Plantilla_Horarios.xlsx";
       let pais= this.storageFestivos.obtenerDatosMapeados();
@@ -1377,9 +1414,9 @@ export class HorarioComponent {
   
       XLSX.writeFile(book, name);
       console.log(book);
-    }
+    }*/
 
-    crearHorario() {
+   /* crearHorario() {
       this.mHorarioList = this.mHorarioList.
       filter(horario => horario.horaInicio !== '' && horario.horaFin !== '');
   
@@ -1426,7 +1463,7 @@ export class HorarioComponent {
         });
       }
       
-    }
+    }*/
 
     resetEditable() {
       this.Datos.forEach(dato => {
@@ -1434,55 +1471,7 @@ export class HorarioComponent {
       });
     }
 
-    selectAux(countryId:string){
-      this.cdr.detectChanges();
-  
-      this.agregarFestivos = false;
-      
-  
-      if (this.pais.value !== null) {
-        this.codeEmployed.reset();
-        this.date.reset();
-        this.mHorarioList = []
-        this.habilitarHorario = false;
-        this.habilitarHorariobyFecha = false;
-        this.habilitarExcel = true
-        this.idCountryGlobal = countryId;
-        let idCountry: string = countryId;
-        let guidIdCountry: Guid = Guid.parse(idCountry);
-  
-        this.apiParametersConsult
-          .GetParametersConsult(guidIdCountry)
-          .pipe(map((data: MiObjetoApp) => data))
-          .subscribe((data) => {
-            let listap = data['data'];
-  
-            if (this.pais.value !== '') {
-              this.suscriptionFestivosdb = this.serviceList
-                .loadFestivos(this.pais.value as unknown as string)
-                .subscribe((festivo) => {
-                  festivo.sort((a, b) => new Date(a.diaFestivo).getTime()
-                    - new Date(b.diaFestivo).getTime());
-                  this.MFestivosList = festivo;
-                });
-            }
    
-            this.ListparametersStand = [];
-            this.ListparametersOver = [];
-  
-            for (let item of listap) {
-              if (item.typeHours == 0) {
-                this.ListparametersStand.push(item);
-                this.idParametersStand = item.idParametersEntity;
-              } else {
-                this.ListparametersOver.push(item);
-                this.idParametersOver = item.idParametersEntity;
-              }
-            }
-          });
-      } else {
-      }
-    }
 
     downloadTemplate() {
       this.horarioService.getTemplate().subscribe(resp => {
@@ -1513,5 +1502,437 @@ export class HorarioComponent {
         } */
       });
     }
+
+    checkChanged1(event: any, editable: boolean){
+
+    }
+
+//-----------------Horario2---------------------------------------------------------------------------------------------------------------
+
+verificacionDias2(horarios2: MCreateHorario[]) {
+
+  let diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  let date = new Date(horarios2[0].fechaWorking);
+  let dia = date.getUTCDate();
+  let diaSemana = date.getUTCDay();
+  date.setUTCDate(dia - diaSemana);
+
+  // si no existe un dia en el horario guardado, lo añade e inicializa las horas vacias
+  diasSemana.forEach(dia => {
+    let diaEncontrado = horarios2.find(horario2 => horario2.day === dia);
+    let fechaWorking = date.toISOString();
+    if (!diaEncontrado) {
+      horarios2.push({
+        userEntityId: horarios2[0].userEntityId,
+        week: horarios2[0].week,
+        horaInicio: '',
+        horaFin: '',
+        day: dia,
+        ano: horarios2[0].ano,
+        fechaWorking:fechaWorking
+      });
+    }
+
+    date.setUTCDate(date.getUTCDate() + 1);
+  });
+
+  horarios2.sort((a: any, b: any) => diasSemana.indexOf(a.day) - diasSemana.indexOf(b.day));
+
+  console.log(horarios2, 'antes de Mhorariolist')
+  for (let element of horarios2) {
+    this.mHorarioList.push(element)
+
+    console.log(this.mHorarioList, 'mHorarioList')
+  }
+
+  this.nuevoHorario2 = horarios2.map(horario2 => {
+    return { ...horario2, editable: horario2.horaInicio !== '' && horario2.horaFin !== '' };
+  });
+
+}
+
+consultarHorarioEmpleado2(){
+
+  this.cdr.detectChanges();
+  this.mHorarioListExcel2=[];
+  this.mHorarioList2=[];
+  let pais= this.storageFestivos.obtenerDatosMapeados();   
+  let date = new Date(this.date.value as unknown as Date);
+  let fechadia = date.getDate();
+  let fechames = (date.getMonth()+1);
+  let fechaanio = date.getFullYear();
+  
+
+ // if(this.habilitarHorariobyFecha && this.habilitarHorario){
+
+    this.serviceList.loadHorarios(this.idUserByEmployeCode, date).subscribe(horario => {
+      
+      if(horario!=null){
+        this.hayHorario=true;
+
+      horario.forEach(element => {
+
+        let rowseasona ={
+          day: element.day, 
+          horaInicio: element.horaInicio, 
+          horaFin: element.horaFin,
+          userEntityId: element.userEntityId,
+          week: element.week,
+          ano: element.ano,
+          fechaWorking: element.fechaWorking
+        };
+
+        let index = this.mHorarioListExcel2.findIndex(
+          (mHorario) => mHorario.day === element.day
+        );
+    
+        if (index !== -1) {
+          this.mHorarioListExcel2[index] = rowseasona;
+        } else {
+          this.mHorarioListExcel2.push(rowseasona);
+        }
+
+
+
+
+        let index2 = this.mHorarioList2.findIndex(
+          (mHorario) => mHorario.day === element.day
+        );
+    
+        if (index2 !== -1) {
+          this.mHorarioList2[index2] = rowseasona;
+        } else {
+          this.mHorarioList2.push(rowseasona);
+        }
+
+
+      });
+      
+      console.log(horario,  'lista de horarios');
+      
+      //new--------------------------------------------------
+      this.habilitarHorariobyFecha = true;
+      date.setDate(date.getDate() - date.getDay());
+
+      this.verificacionDias2(horario);
+
+    }
+    else{
+      this.hayHorario=false;
+      console.log("Cleaning mHorarioList por q no hay horario")
+    
+
+        date.setDate(date.getDate() - date.getDay());
+        for (let dato of this.Datos) {
+          dato.date = new Date(date);
+          date.setDate(date.getDate()+1);
+          
+        }
+        this.completaHorario2(this.Datos[0].date);
+    }
+
+
+   
+    });
+ 
+}
+
+completaHorario2(fechaIni: Date) {
+
+  let horarios2: MCreateHorario[] = [];
+ 
+
+  let diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  let date = fechaIni ;//new Date(horarios[0].fechaWorking);
+  let dia = date.getUTCDate();
+  let diaSemana = date.getUTCDay();
+  date.setUTCDate(dia - diaSemana);
+
+  // si no existe un dia en el horario guardado, lo añade e inicializa las horas vacias
+  diasSemana.forEach(dia => {
+   // let diaEncontrado = horarios.find(horario => horario.day === dia);
+    let fechaWorking = date.toISOString();
+    //if (!diaEncontrado) {
+      horarios2.push({
+        userEntityId: this.idUserByEmployeCode,
+        week: this.semanaAno,
+        horaInicio: '',
+        horaFin: '',
+        day: dia,
+        ano: this.fechaSemanaAno,
+        fechaWorking:fechaWorking
+      });
+   // }
+
+    date.setUTCDate(date.getUTCDate() + 1);
+  });
+
+  horarios2.sort((a: any, b: any) => diasSemana.indexOf(a.day) - diasSemana.indexOf(b.day));
+
+  console.log(horarios2, 'antes de Mhorariolist')
+  for (let element of horarios2) {
+    this.mHorarioList2.push(element)
+
+    console.log(this.mHorarioList2, 'mHorarioList')
+  }
+
+  this.nuevoHorario2 = horarios2.map(horario => {
+    return { ...horario, editable: horario.horaInicio !== '' && horario.horaFin !== '' };
+  });
+
+}
+
+miFuncion2(event: any, day: string) {
+  let diaHoraInicio = { horaInicio: event.value, dia: day };
+  console.log(diaHoraInicio)
+
+  let index = this.listHoraInicio2.findIndex(
+    (elemento) => elemento.dia === diaHoraInicio.dia
+  );
+
+  if (index !== -1) {
+    console.log('reemplazo')
+    this.listHoraInicio2[index] = diaHoraInicio;
+  } else {
+    console.log('nuevo')
+    this.listHoraInicio2.push(diaHoraInicio)
+  }
+  console.log(this.listHoraInicio2, 'evento');
+}
+
+creaHorario2() {
+  console.log("Actualizando horario 1")
+  console.log(this.listHoraInicio2);
+  console.log(this.listHoraFin2);
+
+  
+  if (this.listHoraInicio2.length) {
+    for (let element of this.listHoraInicio2) {
+      let index = this.mHorarioList2.findIndex( (mHorario) => mHorario.day === element.dia );
+      try{
+        this.mHorarioList2[index].horaInicio = element.horaInicio;
+      }catch(errx){
+        console.log("No indice")
+      }
+     
+    }
+  }
+
+
+  if (this.listHoraFin2.length) {
+    for (let elementFin of this.listHoraFin2) {
+      let index = this.mHorarioList2.findIndex( (mHorario) => mHorario.day === elementFin.dia );
+      
+      try{
+        this.mHorarioList2[index].horaFin = elementFin.horaFin;
+      }catch(errx){
+        console.log("No indice")
+      }
+    }
+  }
+  
+  //cleaning empty values
+  this.mHorarioList2 = this.mHorarioList2.filter((horario: any) => horario.horaInicio != '' && horario.horaFin != '' ) ; 
+
+
+  if (this.mHorarioList2.length) {
+    let valid = this.validateHorarios2();
+    if (!valid) return;
+    
+    //pasar parametro para q indique es 2
+    this.horarioCreate.PostCreateHorario(this.mHorarioList2)
+      .subscribe((data) => {
+        if (data.data) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Horario creado correctamente.',
+            confirmButtonColor: '#0A6EBD',
+          });
+          //this.dialogRef.close();
+          this.mHorarioList2 = [];
+          this.listHoraInicio2=[];
+          this.listHoraFin2=[];
+
+          this.consultarHorarioEmpleado2();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error, los datos no se pudieron cargar',
+            confirmButtonColor: '#0A6EBD',
+          });
+        }
+      });
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Error, esta intentando cargar un horario vacio.',
+      confirmButtonColor: '#0A6EBD',
+    });
+  }
+ 
+
+}
+
+actualizarHorario2() {
+  console.log("Actualizando horario 1")
+  console.log(this.listHoraInicio2);
+
+   this.mHorarioList2 = this.mHorarioList2.filter((value, index, self) =>
+                                index === self.findIndex((t)=>(
+                                  t.day === value.day
+                                ))
+                              )
+  
+  
+  if (this.listHoraInicio2.length) {
+    for (let element of this.listHoraInicio2) {
+      let index = this.mHorarioList2.findIndex((mHorario) => mHorario.day === element.dia );
+      this.mHorarioList2[index].horaInicio = element.horaInicio;
+    }
+  }
+
+  if (this.listHoraFin2.length) {
+    for (let elementFin of this.listHoraFin2) {
+      let index = this.mHorarioList2.findIndex( (mHorario) => mHorario.day === elementFin.dia );
+      this.mHorarioList2[index].horaFin = elementFin.horaFin;
+    }
+  }
+  
+  console.log(this.nuevoHorario2);
+  this.nuevoHorario2.forEach((item,index)=>{
+    if(!item.editable){
+      try{
+        this.mHorarioList2[index].horaFin="";
+        this.mHorarioList2[index].horaInicio="";
+      }catch(errx){
+        console.log("No indice")
+      }
+     
+    }
+  })
+
+
+  //cleaning empty values
+  this.mHorarioList2 = this.mHorarioList2.filter((horario: any) => horario.horaInicio != '' && horario.horaFin != '' ) ; 
+  //this.mHorarioList = this.nuevoHorario.filter(horario => horario.editable);
+
+  console.log(this.mHorarioList2, 'esto es lo que se envia en la actualizacion. ')
+
+  console.log(this.mHorarioList2)
+
+  if (this.mHorarioList2.length) {
+    let valid = this.validateHorarios2();
+    if (!valid) return;
+    //pasar parametro para q indique es 2
+    this.horarioCreate.PostCreateHorario(this.mHorarioList)  
+      .subscribe((data) => {
+        if (data.data) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Actualizacion completada correctamente.',
+            confirmButtonColor: '#0A6EBD',
+          });
+          //this.dialogRef.close();
+          this.mHorarioList2 = [];
+          this.listHoraInicio2=[];
+          this.listHoraFin2=[];
+         // this.consultarHorarioEmpleado();
+          
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error, los datos no se pudieron cargar',
+            confirmButtonColor: '#0A6EBD',
+          });
+        }
+      });
+  } else {
+    //Eliminando horario
+
+    this.mHorario2 = {
+      horaInicio: "delete",
+      horaFin: "",
+      week:this.semanaAno,
+      userEntityId: this.idUserByEmployeCode,
+      day: "",
+      ano: this.fechaSemanaAno,
+      fechaWorking:"2024-04-28T00:00:00-06:00"
+    };
+    
+
+    this.mHorarioList2=[];
+    this.mHorarioList2.push(this.mHorario2);
+
+    //pasar parametro para q indique es 2
+    this.horarioCreate.PostCreateHorario(this.mHorarioList2)  
+      .subscribe((data) => {
+        if (data.data) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Horario eliminado correctamente.',
+            confirmButtonColor: '#0A6EBD',
+          });
+          //this.dialogRef.close();
+          this.mHorarioList2 = [];
+          this.listHoraInicio2=[];
+          this.listHoraFin2=[];
+          this.hayHorario==false;
+          this.consultarHorarioEmpleado2();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Error, no sepudo aplicar el borrado de horario',
+            confirmButtonColor: '#0A6EBD',
+          });
+        }
+      });
+
+
+  
+  }
+ 
+
+}
+
+validateHorarios2 () {
+  for (let horario of this.mHorarioList2) {
+    if (!this.validateHorario2(horario.day, horario.horaInicio, horario.horaFin)) return false;
+  }
+  return true;
+}
+
+validateHorario2(day: string, horaInicio: string, horaFin: string) {
+
+  let startDate = new Date();
+  const [startHour, startMinutes] = horaInicio.split(":");
+  startDate.setHours(+startHour, +startMinutes, 0);
+
+  let endDate = new Date();
+  const [endHour, endMinutes] = horaFin.split(":");
+  endDate.setHours(+endHour, +endMinutes, 0);
+
+  if(startDate >= endDate || endDate <= startDate) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'La hora fin debe ser mayor a la hora inicio',
+      confirmButtonColor: '#0A6EBD',
+      allowOutsideClick: false
+    });
+    return false;
+  }
+
+  return true;
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 }
