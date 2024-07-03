@@ -314,6 +314,38 @@ export class ObtenerlistaService {
     );
   }
 
+  loadHorariosNuevo(id: string, date: Date, tipo:String): Observable<any[]>{
+    if(tipo=="1"){
+      return this.apiConsultHotario.GetHorario1(id, date).pipe(
+        map((data: MiObjeto) => {
+          let lista = data["data"];
+          this.mHorarioList = lista;
+          console.log(this.mHorarioList);
+          return this.mHorarioList;
+        })
+      );
+    }else if(tipo=="2"){
+      return this.apiConsultHotario.GetHorario2(id, date).pipe(
+        map((data: MiObjeto) => {
+          let lista = data["data"];
+          this.mHorarioList = lista;
+          console.log(this.mHorarioList);
+          return this.mHorarioList;
+        })
+      );
+    }else{
+      return this.apiConsultHotario.GetHorario3(id, date).pipe(
+        map((data: MiObjeto) => {
+          let lista = data["data"];
+          this.mHorarioList = lista;
+          console.log(this.mHorarioList);
+          return this.mHorarioList;
+        })
+      );
+    }
+    
+  }
+
   loadApproverTime(idUser: any){
 
     console.log('obteniedno aprobaciones...'+ idUser);

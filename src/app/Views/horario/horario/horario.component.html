@@ -44,7 +44,8 @@
 
 
   
-    <mat-tab-group animationDuration="300ms">
+    <mat-tab-group animationDuration="0ms" (selectedTabChange)="onTabSelected($event)">
+
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">history</mat-icon>
@@ -57,7 +58,7 @@
 
                     <legend>Turnos: </legend>
 
-                    <mat-table [dataSource]="mHorarioVista" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
+                    <mat-table [dataSource]="mHorarioVista1" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
 
                         <!-- Dias -->
                         <ng-container matColumnDef="dias">
@@ -69,7 +70,7 @@
                         <!-- inicio  -->
                         <ng-container matColumnDef="inicio">
                             <mat-cell   *matCellDef="let element">
-                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="onHoraInichanged($event.target, element.day)" type="time" >
+                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="onHoraInichanged1($event.target, element.day)" type="time" >
                             </mat-cell>
                         </ng-container>
                     
@@ -81,7 +82,66 @@
                         <!-- fin  -->
                         <ng-container matColumnDef="fin">
                             <mat-cell  *matCellDef="let element">
-                                <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="onHoraFinchanged($event.target,  element.day)">
+                                <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="onHoraFinchanged1($event.target,  element.day)">
+                            </mat-cell>
+                        </ng-container>
+                    
+                        <!-- editar  -->
+                        <ng-container matColumnDef="checkbox">
+                            <mat-cell *matCellDef="let element">
+                                <mat-checkbox [(ngModel)]="element.editable"  (change)="element.editable = $event.checked"></mat-checkbox>
+                            </mat-cell>
+                        </ng-container>
+                    
+                    
+                        <mat-row *matRowDef="let row; columns: columnasAMostrar.concat('checkbox');"></mat-row>
+                    
+                    </mat-table>
+
+
+                   
+
+                </fieldset>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">history</mat-icon>
+                Horario 2
+            </ng-template>
+            <br>
+
+            <div class="horarios" style="width: 99%;">
+                <fieldset class="table-h">
+
+                    <legend>Turnos: </legend>
+
+                    <mat-table [dataSource]="mHorarioVista2" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
+
+                        <!-- Dias -->
+                        <ng-container matColumnDef="dias">
+                            <mat-cell *matCellDef="let element">
+                                <div>{{element.day}} <div class="date">{{element.fechaWorking | date: "YYYY-MM-dd": 'UTC'}}</div></div>
+                            </mat-cell>
+                        </ng-container>
+                    
+                        <!-- inicio  -->
+                        <ng-container matColumnDef="inicio">
+                            <mat-cell   *matCellDef="let element">
+                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="onHoraInichanged2($event.target, element.day)" type="time" >
+                            </mat-cell>
+                        </ng-container>
+                    
+                        <!-- a  -->
+                        <ng-container matColumnDef="a">
+                            <mat-cell *matCellDef="let element">a</mat-cell>
+                        </ng-container>
+                    
+                        <!-- fin  -->
+                        <ng-container matColumnDef="fin">
+                            <mat-cell  *matCellDef="let element">
+                                <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="onHoraFinchanged2($event.target,  element.day)">
                             </mat-cell>
                         </ng-container>
                     
@@ -105,14 +165,10 @@
         </mat-tab>
 
 
-
-
-
-
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">history</mat-icon>
-                Horario 2
+                Horario 3
             </ng-template>
             <br>
 
@@ -121,7 +177,7 @@
 
                     <legend>Turnos: </legend>
 
-                    <mat-table [dataSource]="nuevoHorario2" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
+                    <mat-table [dataSource]="mHorarioVista3" class="mat-elevation-z8" style="width:90%;margin: 6px;border-radius: 6px;padding: 10px;">
 
                         <!-- Dias -->
                         <ng-container matColumnDef="dias">
@@ -133,7 +189,7 @@
                         <!-- inicio  -->
                         <ng-container matColumnDef="inicio">
                             <mat-cell   *matCellDef="let element">
-                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="onHoraInichanged($event.target, element.day)" type="time" >
+                                <input *ngIf="element.editable" [ngModel]="element.horaInicio" (change)="onHoraInichanged3($event.target, element.day)" type="time" >
                             </mat-cell>
                         </ng-container>
                     
@@ -145,7 +201,7 @@
                         <!-- fin  -->
                         <ng-container matColumnDef="fin">
                             <mat-cell  *matCellDef="let element">
-                                <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="onHoraFinchanged($event.target,  element.day)">
+                                <input *ngIf="element.editable" [ngModel]="element.horaFin" type="time" (change)="onHoraFinchanged3($event.target,  element.day)">
                             </mat-cell>
                         </ng-container>
                     
@@ -197,6 +253,6 @@
 
  
 
-        <button mat-raised-button color="primary" class="" (click)="afectaHorario()" *ngIf=" confirmedControl.value"> Guardar </button>
+        <button mat-raised-button color="primary" class="" (click)="guardaHorarios()" *ngIf=" confirmedControl.value"> Guardar </button>
     </div>
 </div>

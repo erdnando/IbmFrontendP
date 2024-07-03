@@ -24,4 +24,26 @@ export class ConsultaHorarioUserService {
 
   }
 
+  GetHorario1(idUser: string, date: Date):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW1?IdUser="+idUser+"&date="+date.toISOString();
+    console.log(direccion);
+    return this.http.get<MResponse>(direccion);
+
+  }
+  GetHorario2(idUser: string, date: Date):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW2?IdUser="+idUser+"&date="+date.toISOString();
+    console.log(direccion);
+    return this.http.get<MResponse>(direccion);
+
+  }
+  GetHorario3(idUser: string, date: Date):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Horario/ConsultIdUserW3?IdUser="+idUser+"&date="+date.toISOString();
+    console.log(direccion);
+    return this.http.get<MResponse>(direccion);
+
+  }
+
 }

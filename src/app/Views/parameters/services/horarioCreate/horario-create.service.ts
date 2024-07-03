@@ -24,5 +24,29 @@ export class HorarioCreateService {
     return this.http.post<MResponse>(direccion,mHorario);
 
   }
+
+  PostCreateHorario1(mHorario:MCreateHorario[]):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Horario/create1";
+    console.log(direccion);
+    return this.http.post<MResponse>(direccion,mHorario);
+
+  }
+
+  PostCreateHorario2(mHorario:MCreateHorario[]):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Horario/create2";
+    console.log(direccion);
+    return this.http.post<MResponse>(direccion,mHorario);
+
+  }
+
+  PostCreateHorario3(mHorario:MCreateHorario[]):Observable<MResponse>{
+
+    let direccion = this.URLLocal +"Horario/create3";
+    console.log(direccion);
+    return this.http.post<MResponse>(direccion,mHorario);
+
+  }
   
 }
