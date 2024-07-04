@@ -329,7 +329,7 @@ export class PopUpAddLoadComponent {
 
                     
                   
-                    this.intervalSubscriptionFiles = interval(5000).subscribe(() => {
+                    this.intervalSubscriptionFiles = interval(20000).subscribe(() => {
                       //this.barraProgreso(true);
                       this.loadArpExcelService.GetCargaAvance(idCarga).subscribe((data) => {
                         console.log(data);
