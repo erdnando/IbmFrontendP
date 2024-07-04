@@ -1,4 +1,6 @@
 <div class="body viewmodule">
+
+    <app-loader *ngIf="processing"></app-loader>
     <div>
         <h1 style="color: #61677A; font-size: 2em;"><strong>Horarios</strong></h1>
         <div class="div-em">
@@ -10,7 +12,7 @@
     <br/>
 
 
-
+   
     <div class="filters">
         <mat-form-field style="text-align: left; margin-top: 10px; padding: 10px;" appearance="outline">
             <mat-select [formControl]="pais" (selectionChange)="resetStructures()"  [(ngModel)]="this.MUser.countryEntityId" required>

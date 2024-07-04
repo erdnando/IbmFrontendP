@@ -65,7 +65,7 @@ export class HorarioComponent {
   columnasexcel:string[]=["#", "NOMBRE DIA", "HORA INICIO", "HORA FIN", "FECHA", "CODIGO EMP", "PAIS"];
   MListCountry: MCountryEntity[];
   ExcelData: any;
-
+  processing:boolean=false;
   codeEmployed = new FormControl("");
   fechaSeleccionada = new FormControl(null);
   confirmedControl = new FormControl(false);
@@ -123,6 +123,7 @@ export class HorarioComponent {
     }
 
     
+   
     //-------------------------COMUNES---------------------------------------------------------------------------------
 
     //Get country list that full country dropDownList based on roles
@@ -1324,6 +1325,7 @@ cargarArchivoHorario() {
 
 //subir plantilla
 manejarArchivoHorario(event: any) {
+  this.processing=true;
 const target: DataTransfer = <DataTransfer>(event.target);
 
 if (target.files.length == 0) throw new Error('No ha seleccionado ningun archivo');
@@ -1350,7 +1352,7 @@ reader.onload = (e: any) => {
             confirmButtonColor: '#0A6EBD',
           });
           this.fileInputHorario.nativeElement.value = null;
-          // this.activarBarra = false;
+          this.processing=false;
         }else{
           let XL_row_object = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
           let json_object = JSON.stringify(XL_row_object);
@@ -1372,7 +1374,7 @@ reader.onload = (e: any) => {
                 });
                 this.fileInputHorario.nativeElement.value = null;
                 //reload
-                // this.activarBarra = false;
+                this.processing=false;
                // this.consultarHorarioEmpleado1();
                 this.resetStructures();
            
@@ -1380,10 +1382,11 @@ reader.onload = (e: any) => {
                 Swal.fire({
                   icon: 'error',
                   title: 'Oops...',
-                  text: 'Error:  No se pudo cargar el archivo, porfavor reviselo.',
+                  text: 'Error: La carga no se realizo!. Revise los formatos de las fechas. El formato aceptado es dd/MM/yyyy. Y se han encontrado fechas como: (7/17/2024).',
                   confirmButtonColor: '#0A6EBD',
                 });
                 this.fileInputHorario.nativeElement.value = null;
+                this.processing=false;
                 this.resetStructures();
               }
             });
@@ -1397,6 +1400,7 @@ reader.onload = (e: any) => {
             });
             this.fileInputHorario.nativeElement.value = null;
             this.resetStructures();
+            this.processing=false;
           }
             
             console.log("El archivo pasa")
@@ -1410,6 +1414,7 @@ reader.onload = (e: any) => {
             });
             // this.botonHorario = false;
             this.resetStructures();
+            this.processing=false;
           }
         }
 
