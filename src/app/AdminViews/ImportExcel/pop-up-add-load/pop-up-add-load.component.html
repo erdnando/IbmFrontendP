@@ -47,10 +47,25 @@
         color="primary" 
         mode="indeterminate">
     </mat-progress-spinner>
+    <br>
+    <div style="margin-top: 90px;position: absolute;">
+        Procesando sus datos...
+    </div>
+    
     </div>
     
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid" class="">Aceptar</button>
-    <button type="button" mat-raised-button mat-dialog-close>Cancelar</button>
-</mat-dialog-actions>    
+
+<div *ngIf="!isLoading" >
+    <mat-dialog-actions>
+        <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid" class="">Aceptar</button>
+        <button type="button" mat-raised-button mat-dialog-close>Cancelar</button>
+    </mat-dialog-actions>    
+</div>
+
+<div *ngIf="isLoading" >
+    <mat-dialog-actions>
+        <button type="button" mat-raised-button color="primary"  [disabled]="true" class="">Aceptar</button>
+        <button type="button" mat-raised-button mat-dialog-close [disabled]="true">Cancelar</button>
+    </mat-dialog-actions>    
+</div>

@@ -238,8 +238,8 @@ export class PopUpAddLoadComponent {
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
       
-      this.readfilefinal(file1,file2, file3);//old
-      //this.uploadAllfiles(file1,file2, file3);//new
+     // this.readfilefinal(file1,file2, file3);//old
+      this.uploadAllfiles(file1,file2, file3);//new
       
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
@@ -989,7 +989,7 @@ export class PopUpAddLoadComponent {
 
               this.activarBarra = false;
               this.isLoading=false;
-              this.dialogRef.close();
+             // this.dialogRef.close();
 
 
               //refresh data after 5 segs to asses results
@@ -1003,7 +1003,7 @@ export class PopUpAddLoadComponent {
                 
               });*/
 
-              // this.unsubscribeIntervalSubscriptionFiles();
+               // this.unsubscribeIntervalSubscriptionFiles();
 
 
               //return;
@@ -1014,7 +1014,7 @@ export class PopUpAddLoadComponent {
                 soloNotificaciones=true;
               }
 
-                 // this.activarBarra = false;
+                  // this.activarBarra = false;
 
                  let timerInterval: any;
                   Swal.fire({
@@ -1096,10 +1096,14 @@ export class PopUpAddLoadComponent {
                     console.log(result);
                     if(result.isConfirmed){
                       console.log("Continuar proceso:::::::");
-                 
+                      this.isLoading=true;
+                      //disable dialogRef buttons
+
+                      
                         console.log("calling ValidaLimitesExcepcionesOverlapping:::::::");
                         this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping20(idCarga.toString(),idUserEntiyId!).subscribe(data => { 
                           console.log(data);
+                          this.isLoading=false;
                           this.mSummaryFinal=data;
                           
                           Swal.fire({
@@ -1131,6 +1135,7 @@ export class PopUpAddLoadComponent {
                           }).then((result) => {
                            
                             this.onClose();
+                            
                           });
 
 
@@ -1145,6 +1150,7 @@ export class PopUpAddLoadComponent {
                     
                       this.loadArpExcelService.CancelarCarga(idCarga).subscribe( (data: any) => { 
                         this.mResponseLoadGuid = data;
+                        this.isLoading=false;
                         if (data.data.error) {
                           Swal.fire({
                             icon: 'error',
@@ -1208,7 +1214,7 @@ export class PopUpAddLoadComponent {
     } else {
       console.error("No se ha seleccionado ningún archivo.");
       this.isLoading=false;
-      //this.barraProgreso(false);
+    //this.barraProgreso(false);
     }
 
     this.botonARP = false;
