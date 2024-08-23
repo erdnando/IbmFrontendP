@@ -12,8 +12,6 @@ import { timeout } from 'rxjs/operators';
 })
 export class LoadArpExcelService {
 
-  //url:string ="https://ibm-webapp-01.azurewebsites.net/api/v1/";
-  // url:string ="http://localhost:2429/api/v1/";
   private URLLocal = Global.Url;
   private timeoutx = 1000 * 3600;//1 hora
 
@@ -84,6 +82,49 @@ export class LoadArpExcelService {
     return this.http.get<MResponseLoadGuid>(direccion);
   }
 
+  UploadARP20(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
+    let direccion = this.URLLocal + "Load/UploadARP20";
+    console.log(direccion);
+    const requestData= {
+      data:data,
+      paisSel: datpais,
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
+    };
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
+  }
+
+  UploadTSE20(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
+    let direccion = this.URLLocal + "Load/UploadTSE20";
+    console.log(direccion);
+    const requestData= {
+      data:data,
+      paisSel: datpais,
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
+    };
+    return this.http.post<MResponseLoadGuid>(direccion, requestData);
+  }
+
+  UploadSTE20(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MSummary> {
+    let direccion = this.URLLocal + "Load/UploadSTE20";
+    const requestData= {
+      data:data,
+      paisSel: datpais,
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
+    };
+    console.log(direccion);
+    return this.http.post<MSummary>(direccion, requestData);
+  }
+
+
+
+
+
+
+
+
   UploadARP(data: object,datpais:string,idCarga:string,idUserEntiyId:string): Observable<MResponseLoadGuid> {
     let direccion = this.URLLocal + "Load/UploadARP";
     console.log(direccion);
@@ -135,6 +176,18 @@ export class LoadArpExcelService {
 
   ValidaLimitesExcepcionesOverlapping(idCarga:string,idUserEntiyId:string): Observable<MSummaryFinal> {
     let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping";
+   
+    const requestData= {
+      idCarga: idCarga,
+      idUserEntiyId:idUserEntiyId
+    };
+
+    console.log(direccion);
+    return this.http.post<MSummaryFinal>(direccion,requestData);
+  }
+
+  ValidaLimitesExcepcionesOverlapping20(idCarga:string,idUserEntiyId:string): Observable<MSummaryFinal> {
+    let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping20";
    
     const requestData= {
       idCarga: idCarga,

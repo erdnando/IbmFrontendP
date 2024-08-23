@@ -33,51 +33,22 @@
             </ngx-mat-file-input>
         </mat-form-field>
     
-        <!-- <div class="body-excel" style="width: 95%;">
-            <div class="overlay" *ngIf="activarBarra" style="padding:40%;position: fixed;padding-top: 20%;">
-                <mat-spinner [diameter]="50"></mat-spinner>
-
-            </div>
-            <br/>
-            <div>
-                <div class="field-form-pp">
-                    
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label class="mi-etiqueta">
-                        Archivo ARP: <br>
-                        <input [disabled]="activarBarra" type="file" placeholder="Carga archivos ARP:" accept=".xlsx, .xls" (change)="activarARP('ARP',$event)" #fileInput1>
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label class="mi-etiqueta">
-                        Archivo TSE: <br>
-                        <input [disabled]="activarBarra" type="file" placeholder="Carga archivos TSE:" accept=".xlsx, .xls" (change)="activarARP('TSE',$event)" #fileInput2>
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label class="mi-etiqueta">
-                        Archivo STE: <br>
-                        <input [disabled]="activarBarra" type="file" placeholder="Carga archivos STE:" accept=".xlsx, .xls" (change)="activarARP('STE',$event)" #fileInput3>
-                    </label>
-                </div>
-            </div>
-            <div style="text-align: center;">
-                <button  mat-raised-button color="primary" [disabled]="activarBarra" *ngIf="botonARP && botonTSE && botonSTE && paisSeleccionado" (click)="readExcel(fileInput1, fileInput2, fileInput3)">Subir Archivos<mat-icon>cloud_upload</mat-icon></button>
-                <a #downloadARPFileEl style="display:none;"></a>
-            </div>
-        </div> -->
+  
     </form>
     <div style="text-align: justify;">
         <p style="color: #eb5981;"><strong>PARA TENER EN CUENTA</strong></p>
         <p>Señor usuario, recuerde que para realizar su carga de archivos <b>ARP, TSE y STE</b>, debe modificar el nombre de los archivos de excel a <b>PORTAL_ARP, PORTAL_TSE, PORTAL_STE</b>, no olvide que la informacion dentro del excel no debe ser modificada para evitar errores, todos los datos que desee modificar debe hacerlo dentro de las plataformas alternas al portal.</p>
     </div>
+
+
+    <div *ngIf="isLoading" 
+    style="display: flex; justify-content: center; align-items: center; background: white;">
+    <mat-progress-spinner [diameter]="50"
+        color="primary" 
+        mode="indeterminate">
+    </mat-progress-spinner>
+    </div>
+    
 </mat-dialog-content>
 <mat-dialog-actions>
     <button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid" class="">Aceptar</button>

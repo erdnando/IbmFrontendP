@@ -21,6 +21,7 @@ export class PopUpAddLoadComponent {
   @ViewChild('fileInput2') fileInput2: any;
   @ViewChild('fileInput3') fileInput3: any;
 
+  isLoading: boolean =false;
   ExcelData: any;
   ExcelData1: any;
   ExcelData2: any;
@@ -61,6 +62,7 @@ export class PopUpAddLoadComponent {
     this.MUser = this.storageService.obtenerDatosMapeados();
     this.cargaGMT();
     this.buildForm();
+    this.unsubscribeIntervalSubscriptionFiles();
   }
 
   buildForm() {
@@ -232,15 +234,15 @@ export class PopUpAddLoadComponent {
 
   readExcel(file1: any, file2: any, file3: any) {
     
-    this.barraProgreso(true);
+    //this.barraProgreso(true);
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
       
-      this.readfilefinal(file1,file2, file3);
+      this.readfilefinal(file1,file2, file3);//old
+      //this.uploadAllfiles(file1,file2, file3);//new
       
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
-      
     }
   }
 
@@ -266,15 +268,9 @@ export class PopUpAddLoadComponent {
       let fileReader2 = new FileReader();
 
       fileReader.readAsBinaryString(file);
-      
-      
-
       fileReader.onload = (e) => {
           
         
-        
-       
-
           var workBook = XLSX.read(fileReader.result, { type: 'binary' });
           var sheetNames = workBook.SheetNames;
           this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
@@ -699,6 +695,7 @@ export class PopUpAddLoadComponent {
                       
                       this.activarBarra = false;
                       this.form.get('ste')?.setValue(null);
+                     
                     }
             
                  // console.log(willDeletex);
@@ -734,6 +731,484 @@ export class PopUpAddLoadComponent {
       console.error("No se ha seleccionado ningún archivo.");
       
       this.barraProgreso(false);
+    }
+
+    this.botonARP = false;
+    this.botonTSE = false;
+    this.botonSTE = false;
+
+    this.form.reset();
+
+  }
+
+  uploadAllfiles(file: any,file2: any,file3: any){
+
+   // this.unsubscribeIntervalSubscriptionFiles();
+    Swal.fire({
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+      width: 0
+    });
+    this.isLoading=true;
+    
+    let idCarga='00000000-0000-0000-0000-000000000000';
+    var idUserEntiyId=this.MUser.idUser.toString();
+    this.porcentajeCarga = 0;
+    let paisValue = this.form.value.pais;
+
+    if (file && file2 && file3) 
+    {
+      let fileReader = new FileReader();
+      let fileReader1 = new FileReader();
+      let fileReader2 = new FileReader();
+
+      fileReader.readAsBinaryString(file);
+      fileReader.onload = (e) => {
+          
+        
+          var workBook = XLSX.read(fileReader.result, { type: 'binary' });
+          var sheetNames = workBook.SheetNames;
+          this.ExcelData = XLSX.utils.sheet_to_json(workBook.Sheets[sheetNames[0]], { raw: false });
+
+          if (file.name == "PORTAL_ARP.xlsx" || file.name == "PORTAL_ARP.xls"){
+            if(this.ExcelData.length > 0){
+              let valiFile = true;
+              this.columnasARP.forEach(element => {
+                if (this.ExcelData[0][element]==undefined) {
+                  valiFile=false; 
+                }   
+              });
+              if (!valiFile) {
+                this.form.get('arp')?.setValue(null);
+               // this.activarBarra = false;
+               this.isLoading=false;
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'El archivo ARP es inválido por favor verifique: \n * Columnas incorrectas',
+                  confirmButtonColor: '#0A6EBD',
+                });
+                
+              }else{
+
+                 console.log('inicia carga');
+                 console.log(paisValue);
+                 console.log('--------------');
+                var valpais = paisValue?.toString();
+                //var idCarga = '00000000-0000-0000-0000-000000000000' as unknown as Guid;
+
+
+                //Get idCarga
+                this.loadArpExcelService.GetCarga().subscribe( (data: any) => { 
+                    console.log(data);
+                    this.mResponseLoadGuid=data;
+                    if (data.data.error) {
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.data.message,
+                        confirmButtonColor: '#0A6EBD',
+                      });
+
+                     // this.activarBarra = false;
+                     this.isLoading=false;
+                      return;
+                    }
+
+                    idCarga = data.data.data;
+                    console.log("idCarga:::::ARP");
+                    console.log(idCarga);
+
+
+                    //carga ARP
+                    this.loadArpExcelService.UploadARP20(this.ExcelData,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
+                    console.log(data);
+                    this.mResponseLoadGuid=data;
+                    idCarga = data.data;
+    
+                    console.log("idCarga:::::ARP");
+                    console.log(idCarga);
+
+                    this.showImgARP=true;
+                    fileReader1.readAsBinaryString(file2);//Continue with second excel(TSE)
+                    });  
+  
+                 
+                  });  
+
+
+                  
+              }
+
+            }else{
+              this.form.get('arp')?.setValue(null);
+             // this.activarBarra = false;
+             this.isLoading=false;
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo ARP no contiene información, por favor verifique!',
+                confirmButtonColor: '#0A6EBD',
+              });
+            }
+
+          }else{
+            this.form.get('arp')?.setValue(null);
+           // this.activarBarra = false;
+           this.isLoading=false;
+            Swal.fire({
+                icon: 'error',
+                title: 'Oopss ',
+                text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_ARP"!',
+                confirmButtonColor: '#0A6EBD',
+            });
+          }
+      }
+
+
+
+
+      //continuing with second exce (TSE)
+      fileReader1.onload = (e) => {
+        var workBook1 = XLSX.read(fileReader1.result, { type: 'binary' });
+        var sheetNames1 = workBook1.SheetNames;
+        this.ExcelData1 = XLSX.utils.sheet_to_json(workBook1.Sheets[sheetNames1[0]], { raw: false });
+
+        if (file2.name == "PORTAL_TSE.xlsx" || file2.name == "PORTAL_TSE.xls"){
+          if(this.ExcelData1.length > 0){
+            let valiFile = true;
+            this.columnasTSE.forEach(element => {
+              if (this.ExcelData1[0][element]==undefined) {
+                valiFile=false; 
+              }   
+            });
+            if (!valiFile) {
+              this.form.get('tse')?.setValue(null);
+             // this.activarBarra = false;
+             this.isLoading=false;
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo TSE es inválido por favor verifique: \n * Columnas incorrectas',
+                confirmButtonColor: '#0A6EBD',
+              });
+              
+            }else{
+              // console.log(this.ExcelData);
+              var valpais = paisValue?.toString();
+
+              this.loadArpExcelService.UploadTSE20(this.ExcelData1,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
+              console.log(data);
+              this.mResponseLoadGuid=data;
+                idCarga = data.data;
+                console.log("idCarga:::::TSE");
+                console.log(idCarga);
+                
+              this.showImgARP=true;
+              fileReader2.readAsBinaryString(file3);//Continuing with 3rd excel STE
+              });
+              
+            }
+
+          }else{
+            this.form.get('tse')?.setValue(null);
+            //this.activarBarra = false;
+            this.isLoading=false;
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'El archivo TSE no contiene información, por favor verifique!',
+              confirmButtonColor: '#0A6EBD',
+            });
+          }
+
+        }else{
+          this.form.get('tse')?.setValue(null);
+          //this.activarBarra = false;
+          this.isLoading=false;
+          Swal.fire({
+              icon: 'error',
+              title: 'Oopss ',
+              text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_TSE"!',
+              confirmButtonColor: '#0A6EBD',
+          });
+        }
+      }
+
+
+
+      //Continuing with 3rd excel STE
+      fileReader2.onload = (e) => {
+        var workBook2 = XLSX.read(fileReader2.result, { type: 'binary' });
+        var sheetNames2 = workBook2.SheetNames;
+        this.ExcelData2 = XLSX.utils.sheet_to_json(workBook2.Sheets[sheetNames2[0]], { raw: false });
+
+        if (file3.name == "PORTAL_STE.xlsx" || file3.name == "PORTAL_STE.xls"){
+          if(this.ExcelData2.length > 0){
+            let valiFile = true;
+            this.columnasSTE.forEach(element => {
+              if (this.ExcelData2[0][element]==undefined) {
+                valiFile=false; 
+              }   
+            });
+            if (!valiFile) {
+              this.form.get('ste')?.setValue(null);
+              this.activarBarra = false;
+              this.isLoading=false;
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo STE es inválido por favor verifique: \n * Columnas incorrectas',
+                confirmButtonColor: '#0A6EBD',
+              });
+              
+            }else{
+              // console.log(this.ExcelData);
+              var valpais = paisValue?.toString();
+
+              this.loadArpExcelService.UploadSTE20(this.ExcelData2,valpais!,idCarga!,idUserEntiyId!).subscribe( data => { 
+                console.clear();
+                console.log(data);
+              this.mSummary = data;
+
+              console.log("idCarga::::");
+              console.log(idCarga);
+
+              this.showImgARP=true;
+              var soloNotificaciones=false;
+              this.form.get('ste')?.setValue(null);
+
+              /*Swal.fire({
+                icon: 'success',
+                title: 'Carga de archivos',
+                text: "Archivos cargado exitosamente",
+                confirmButtonColor: '#0A6EBD',
+              });*/
+
+              this.activarBarra = false;
+              this.isLoading=false;
+              this.dialogRef.close();
+
+
+              //refresh data after 5 segs to asses results
+             
+              /*this.intervalSubscriptionFiles = interval(5000).subscribe(() => {
+                this.loadArpExcelService.GetCargaAvance(idCarga).subscribe((data) => {
+                  console.log("Obteniendo resultados");
+                  console.log(data);
+               
+                });
+                
+              });*/
+
+              // this.unsubscribeIntervalSubscriptionFiles();
+
+
+              //return;
+
+             // this.unsubscribeIntervalSubscriptionFiles();
+
+              if (this.mSummary.data.eN_PROCESO_ARP=="0" && this.mSummary.data.eN_PROCESO_STE=="0" && this.mSummary.data.eN_PROCESO_TSE =="0" ){
+                soloNotificaciones=true;
+              }
+
+                 // this.activarBarra = false;
+
+                 let timerInterval: any;
+                  Swal.fire({
+                    icon: 'success',
+                    title: this.mSummary.data.mensaje + (soloNotificaciones? "(No se generó ningun overtime)":""),
+                    allowOutsideClick:false,
+                    timer: 120000,
+                    timerProgressBar: true,
+                    html: `
+                    <span>Resumen de la ejecución:</span>
+                    <span>` +this.mSummary.data.idCarga+`</span>
+                    <hr/>
+                    <br>
+                    <ol style='font-size: small;'>
+
+                      <li>Carga ARP <b>(` +this.mSummary.data.arP_CARGA+`)</b></li>
+                      <li>Carga STE <b>(` +this.mSummary.data.stE_CARGA+`)</b></li>
+                      <li>Carga TSE <b>(` +this.mSummary.data.tsE_CARGA+`)</b></li>
+                      <br/>
+                      <br/>
+                      <li>Overtime ARP <b>(` +this.mSummary.data.eN_PROCESO_ARP+`)</b></li>
+                      <li>Overtime STE <b>(` +this.mSummary.data.eN_PROCESO_STE+`)</b></li>
+                      <li>Overtime TSE <b>(` +this.mSummary.data.eN_PROCESO_TSE+`)</b></li>
+                      <br/>
+                      <li>ARP omitidos por Duplicidad <b>(` +this.mSummary.data.arpOmitidosXDuplicidad+`)</b></li>
+                      <li>STE omitidos por Duplicidad <b>(` +this.mSummary.data.steOmitidosXDuplicidad+`)</b></li>
+                      <li>TSE omitidos por Duplicidad <b>(` +this.mSummary.data.tseOmitidosXDuplicidad+`)</b></li>
+                      <br/>
+                      <li>No aplica por horario ARP <b>(` +this.mSummary.data.nO_APLICA_X_HORARIO_ARP+`)</b></li>
+                      <li>No aplica por horario STE <b>(` +this.mSummary.data.nO_APLICA_X_HORARIO_STE+`)</b></li>
+                      <li>No aplica por horario TSE <b>(` +this.mSummary.data.nO_APLICA_X_HORARIO_TSE+`)</b></li>
+                      <br/>
+                      <li>No aplica por overlaping ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
+                      <li>No aplica por overlaping STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
+                      <li>No aplica por overlaping TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
+                      <br/>
+                      <li>No aplica por politica overtime ARP <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_ARP+`)</b></li>
+                      <li>No aplica por politica overtime STE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_STE+`)</b></li>
+                      <li>No aplica por politica overtime TSE <b>(` +this.mSummary.data.nO_APLICA_X_OVERTIME_TSE+`)</b></li>
+                      
+                      <br/>
+                      <li>Reportes con datos inválidos ARP <b>(` +this.mSummary.data.arpxDatosNovalidos+`)</b></li>
+                      <li>Reportes con datos inválidos STE <b>(` +this.mSummary.data.stexDatosNovalidos+`)</b></li>
+                      <li>Reportes con datos inválidos TSE <b>(` +this.mSummary.data.tsexDatosNovalidos+`)</b></li>
+                      <br/>
+                      <li>Carga procesada en <b>(` +this.mSummary.data.​​tiempO_PROCESO+`) minutos</b></li>
+                      * Reportes sin hora inicio, fin o de otros paises no contemplados.                                                     
+                    </ol> 
+                    <div id="timer"></div>
+                        `,
+                    confirmButtonColor: '#0A6EBD',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Continuar proceso' , 
+                    cancelButtonText:'Cancelar carga',
+                    didOpen: () => {
+                      let popup = Swal.getPopup();
+                      if (!popup) return;
+
+                      const timer = popup.querySelector("#timer");
+                      if (!timer) return;
+                      
+                      timerInterval = setInterval(() => {
+                        let timerLeft = Swal.getTimerLeft();
+                        timerLeft = timerLeft? timerLeft : 0;
+                        const date = new Date(timerLeft);
+                        const minutes = date.getMinutes().toString().padStart(2, "0");
+                        const seconds = date.getSeconds().toString().padStart(2, "0");
+                        timer.textContent = `${minutes}:${seconds}`;
+                      }, 100);
+                    },
+                    willClose: () => {
+                      clearInterval(timerInterval);
+                    }
+
+                  }).then((result) => {
+                     
+                    console.log("event after select an option:::::");
+                    console.log(result);
+                    if(result.isConfirmed){
+                      console.log("Continuar proceso:::::::");
+                 
+                        console.log("calling ValidaLimitesExcepcionesOverlapping:::::::");
+                        this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping20(idCarga.toString(),idUserEntiyId!).subscribe(data => { 
+                          console.log(data);
+                          this.mSummaryFinal=data;
+                          
+                          Swal.fire({
+                            icon: 'success',
+                            title: this.mSummaryFinal.data.mensaje,
+                            allowOutsideClick:false,
+                            html: `
+                            <span>Resumen de la ejecución:</span>
+                            <span>` +idCarga.toString()+`</span>
+                            <hr/>
+                            <br>
+                            <ol style='font-size: small;'>
+                              <li style='color: darkblue;'>Registros Insertados en PortalDB <b>(` +this.mSummaryFinal.data.registroS_PORTALDB+`)</b></li>
+                              <br/>
+                              <li>No aplica por overlaping ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_ARP+`)</b></li>
+                              <li>No aplica por overlaping STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_STE+`)</b></li>
+                              <li>No aplica por overlaping TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_OVERLAPING_TSE+`)</b></li>
+                              <li>No aplica por límites de hora ARP <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_ARP+`)</b></li>
+                              <li>No aplica por límites de hora STE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_STE+`)</b></li>
+                              <li>No aplica por límites de hora TSE <b>(` +this.mSummaryFinal.data.nO_APLICA_X_LIMITE_HORAS_TSE+`)</b></li>
+                              
+                              <br/>
+                              <br/>
+                            </ol> 
+                                `,
+                            confirmButtonColor: '#0A6EBD',
+                            showConfirmButton: true,
+                            confirmButtonText:'Aceptar' , 
+                          }).then((result) => {
+                           
+                            this.onClose();
+                          });
+
+
+                       
+            
+                          this.showImgARP=true;
+                          this.activarBarra = false;
+                        });
+                    
+                         //-----------------------------------------------------------
+                    }else if (result.isDenied || result.dismiss) {
+                    
+                      this.loadArpExcelService.CancelarCarga(idCarga).subscribe( (data: any) => { 
+                        this.mResponseLoadGuid = data;
+                        if (data.data.error) {
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.data.message,
+                            confirmButtonColor: '#0A6EBD',
+                          });
+
+                          this.activarBarra = false;
+                         
+                          return;
+                        }
+
+                        Swal.fire({
+                          icon: 'success',
+                          title: 'Carga '+idCarga,
+                          text: data.data.message,
+                          confirmButtonText: 'Aceptar',
+                          confirmButtonColor: '#0A6EBD',
+                        }).then((result) => {
+                          window.parent.location.reload();
+                          });
+
+                        //this.onClose();
+                      });
+                      
+                      this.activarBarra = false;
+                      this.form.get('ste')?.setValue(null);
+                    }
+            
+                });
+              
+              });
+           
+            }
+
+          }else{
+            this.form.get('ste')?.setValue(null);
+            this.activarBarra = false;
+            this.isLoading=false;
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'El archivo STE no contiene información, por favor verifique!',
+              confirmButtonColor: '#0A6EBD',
+            });
+          }
+
+        }else{
+          this.form.get('ste')?.setValue(null);
+          this.activarBarra = false;
+          this.isLoading=false;
+          Swal.fire({
+              icon: 'error',
+              title: 'Oopss ',
+              text: 'Error: El archivo no es válido, ingresa sólo el archivo "PORTAL_STE"!',
+              confirmButtonColor: '#0A6EBD',
+          });
+        }        
+      }
+    } else {
+      console.error("No se ha seleccionado ningún archivo.");
+      this.isLoading=false;
+      //this.barraProgreso(false);
     }
 
     this.botonARP = false;

@@ -28,6 +28,7 @@ export interface MetricasCarga{
     arpxDatosNovalidos:string;
     tsexDatosNovalidos:string;
     stexDatosNovalidos:string;
+    ​​tiempO_PROCESO:string;
 }
 
 export interface MetricasCargaFinal{
