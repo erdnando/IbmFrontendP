@@ -238,8 +238,8 @@ export class PopUpAddLoadComponent {
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
       
-     // this.readfilefinal(file1,file2, file3);//old
-      this.uploadAllfiles(file1,file2, file3);//new
+      this.readfilefinal(file1,file2, file3);//old
+     // this.uploadAllfiles(file1,file2, file3);//new
       
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
@@ -247,7 +247,7 @@ export class PopUpAddLoadComponent {
   }
 
   readfilefinal(file: any,file2: any,file3: any){
-
+    this.barraProgreso(true);
     Swal.fire({
       allowOutsideClick: false,
       allowEscapeKey: false,
