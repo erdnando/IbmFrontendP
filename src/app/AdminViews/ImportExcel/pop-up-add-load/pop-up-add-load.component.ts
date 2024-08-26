@@ -513,6 +513,10 @@ export class PopUpAddLoadComponent {
 
               if (this.mSummary.data.eN_PROCESO_ARP=="0" && this.mSummary.data.eN_PROCESO_STE=="0" && this.mSummary.data.eN_PROCESO_TSE =="0" ){
                 soloNotificaciones=true;
+                this.mSummary.data.mensaje="Error carga en TSE...DB error: Exception while reading from stream"
+              }
+              if(idCarga=="00000000-0000-0000-0000-000000000000"){
+                soloNotificaciones=false;
               }
 
                   this.activarBarra = false;
