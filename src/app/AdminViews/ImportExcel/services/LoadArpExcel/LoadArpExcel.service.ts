@@ -186,8 +186,8 @@ export class LoadArpExcelService {
     return this.http.post<MSummaryFinal>(direccion,requestData);
   }
 
-  ValidaLimitesExcepcionesOverlapping20(idCarga:string,idUserEntiyId:string): Observable<MSummaryFinal> {
-    let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping20";
+  ValidaLimitesExcepcionesOverlapping21(idCarga:string,idUserEntiyId:string): Observable<MSummaryFinal> {
+    let direccion = this.URLLocal + "Load/ValidaLimitesExcepcionesOverlapping21";
    
     const requestData= {
       idCarga: idCarga,

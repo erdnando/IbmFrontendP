@@ -238,8 +238,8 @@ export class PopUpAddLoadComponent {
     
     if (this.validarArchivo(file1) && this.validarArchivo(file2) && this.validarArchivo(file3)) {
       
-      this.readfilefinal(file1,file2, file3);//old
-     // this.uploadAllfiles(file1,file2, file3);//new
+     // this.readfilefinal(file1,file2, file3);//old
+      this.uploadAllfiles(file1,file2, file3);//new
       
     } else {
       console.log('Error: Uno o más archivos no pasaron la validación');
@@ -1105,7 +1105,7 @@ export class PopUpAddLoadComponent {
 
                       
                         console.log("calling ValidaLimitesExcepcionesOverlapping:::::::");
-                        this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping20(idCarga.toString(),idUserEntiyId!).subscribe(data => { 
+                        this.loadArpExcelService.ValidaLimitesExcepcionesOverlapping21(idCarga.toString(),idUserEntiyId!).subscribe(data => { 
                           console.log(data);
                           this.isLoading=false;
                           this.mSummaryFinal=data;
