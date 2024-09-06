@@ -3,5 +3,5 @@ export const Global = {
   //QA
   Url:"https://transversal-portaltls-api.1el8z9mf01yx.br-sao.codeengine.appdomain.cloud/api/v1/"
   //DEV
-  // Url:"http://localhost:5201/api/v1/"
+ //  Url:"http://localhost:5201/api/v1/"
 }

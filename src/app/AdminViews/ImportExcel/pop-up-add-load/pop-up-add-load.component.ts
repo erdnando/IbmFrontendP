@@ -1095,7 +1095,6 @@ export class PopUpAddLoadComponent {
                     }
 
                   }).then((result) => {
-                     
                     console.log("event after select an option:::::");
                     console.log(result);
                     if(result.isConfirmed){
