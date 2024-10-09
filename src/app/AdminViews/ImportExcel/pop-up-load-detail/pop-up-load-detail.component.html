@@ -66,6 +66,7 @@
                 [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
                 (page)="onPaginatorPage($event)"
             ></mat-paginator>
+           
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>TSE</ng-template>
@@ -197,7 +198,38 @@
                 (page)="onPaginatorPage($event)"
             ></mat-paginator>
         </mat-tab>
+       
     </mat-tab-group>
+    
+
+    <table style="width: 150px;font-size: small;font-weight: bold;">
+        <tr>
+            <td>
+                <img class="image" title="ARP procesados" style="cursor: pointer" src="../../../../assets/Images/excel.png" width="24" height="24" (click)="exportAsExcel('ARP')">
+            </td>
+            <td>
+                <img class="image" title="ARP procesados" style="cursor: pointer" src="../../../../assets/Images/excel.png" width="24" height="24" (click)="exportAsExcel('TSE')">
+            </td>
+            <td>
+                <img class="image" title="ARP procesados" style="cursor: pointer" src="../../../../assets/Images/excel.png" width="24" height="24" (click)="exportAsExcel('STE')">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                ARP
+            </td>
+            <td>
+                TSE
+            </td>
+            <td>
+               STE
+            </td>
+        </tr>
+       
+    </table>
+    
+
 </mat-dialog-content>
 <!-- <mat-dialog-actions>
     <button type="button" mat-raised-button color="primary" mat-dialog-close>Aceptar</button>

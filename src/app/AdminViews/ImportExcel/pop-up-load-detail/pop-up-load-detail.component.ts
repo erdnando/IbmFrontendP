@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { ObtenerlistaService } from 'src/app/Service/listados/obtenerlista.service';
 import { LoadService } from 'src/app/Service/load/load.service';
 import { StorageService } from 'src/app/Service/storage-service/storage.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-pop-up-load-detail',
@@ -20,6 +21,7 @@ export class PopUpLoadDetailComponent {
   @ViewChild('arpParametersPaginator') arpParametersPaginator!: MatPaginator;
   @ViewChild('tseParametersPaginator') tseParametersPaginator!: MatPaginator;
   @ViewChild('steParametersPaginator') steParametersPaginator!: MatPaginator;
+
 
   id: number | string = '';
   page: number = 0;
@@ -63,6 +65,33 @@ export class PopUpLoadDetailComponent {
         this.loading = false;
       }
     });
+  }
+
+  exportAsExcel(tipoCarga: any)
+  {
+
+    console.log("Exporting to excell!!!!")
+
+    if(tipoCarga=="ARP"){
+      const workSheet = XLSX.utils.json_to_sheet(this.loadArpDetailsDataSource.data, {header:['employeeCode', 'fechA_REP','estatusProceso']});
+      const workBook: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'arp');
+      XLSX.writeFile(workBook, 'arpProcesado.csv');
+    }
+    else if(tipoCarga=="TSE"){
+      const workSheetTSE = XLSX.utils.json_to_sheet(this.loadTseDetailsDataSource.data, {header:['employeeCode', 'fechA_REP','estatusProceso']});
+      const workBookTSE: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBookTSE, workSheetTSE, 'tse');
+      XLSX.writeFile(workBookTSE, 'tseProcesado.csv');
+    }
+    else{
+      const workSheetSTE = XLSX.utils.json_to_sheet(this.loadSteDetailsDataSource.data, {header:['employeeCode', 'fechA_REP','estatusProceso']});
+      const workBookSTE: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBookSTE, workSheetSTE, 'ste');
+      XLSX.writeFile(workBookSTE, 'steProcesado.csv');
+    }
+   
+
   }
 
   getArpParameters() {
